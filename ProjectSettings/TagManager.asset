@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - CameraCollider
+  - Machine
   layers:
   - Default
   - TransparentFX

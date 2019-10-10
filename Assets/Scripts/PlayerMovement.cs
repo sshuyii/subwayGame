@@ -27,6 +27,5 @@ public class PlayerMovement : MonoBehaviour
         }
         
 //        transform.position = camera.transform.position + offset;
-        print(offset);
     }
 }
