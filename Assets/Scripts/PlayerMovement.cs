@@ -8,12 +8,15 @@ public class PlayerMovement : MonoBehaviour
     public float speed;
     public GameObject camera;
 
+    private CameraController CameraController;
+
     private Vector3 offset;
     public float A;
     
     // Start is called before the first frame update
     void Start()
     {
+        CameraController = camera.GetComponent<CameraController>();
         offset = transform.position - camera.transform.position;
     }
 
@@ -21,9 +24,12 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         Vector3 target = new Vector3(camera.transform.position.x + offset.x, camera.transform.position.y + offset.y,transform.position.z);
-        if(transform.position.x != camera.transform.position.x + offset.x)
+        if(CameraController.shut == 0)
         {
-            transform.position = Vector3.MoveTowards(transform.position, target, speed);
+            if (transform.position.x != camera.transform.position.x + offset.x)
+            {
+                transform.position = Vector3.MoveTowards(transform.position, target, speed);
+            }
         }
         
 //        transform.position = camera.transform.position + offset;

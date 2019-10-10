@@ -11,11 +11,12 @@ public class CameraController : MonoBehaviour
     
     public CanvasGroup clothUI;
 
-    private int shut = 0;
+    public int shut = 0;
     private bool TOF;
+    public Vector3 offsetTap;
+    public GameObject subway;
 
-
- 
+    private Touch touch;
     private enum InputState {
         LeftSwipe,
         RightSwipe,
@@ -33,11 +34,23 @@ public class CameraController : MonoBehaviour
  
     void Update()
     {
+        
+        for (var i = 0; i < Input.touchCount; ++i)
+        {
+            if (Input.GetTouch(i).phase == TouchPhase.Began)
+            {
+                if (Input.GetTouch(i).tapCount == 2)
+                {
+                    Debug.Log("Double Tap");
+                }
+            }
+        }
+        
+        
         print("shut = " + shut);
         if (Input.touchCount == 1) // user is touching the screen with a single touch
         {
-
-            Touch touch = Input.GetTouch(0); // get the touch
+            touch = Input.GetTouch(0); // get the touch
             if (touch.phase == TouchPhase.Began) //check for the first touch
             {
                 fp = touch.position;
@@ -85,7 +98,6 @@ public class CameraController : MonoBehaviour
                 {   //It's a tap as the drag distance is less than 20% of the screen height
                     Debug.Log("Tap");
                     myInputState = InputState.Tap;
-
                 }
             }
         }
@@ -93,26 +105,40 @@ public class CameraController : MonoBehaviour
         
         //tap a washing machine
         if (myInputState == InputState.Tap)
-        {
+        {            
             Ray raycast = Camera.main.ScreenPointToRay(Input.GetTouch(0).position);
             RaycastHit raycastHit;
             if (Physics.Raycast(raycast, out raycastHit))
             {
                 Debug.Log("Something Hit");
-                if (raycastHit.collider.name == "Machine" && shut == 0)
+                if (raycastHit.collider.name == "Machine")
                 {
-                    
-                    //transform.position -= offsetTap;
-                    print("hitting the machine");
-                    shut++;
-                    Show(clothUI);
-                    //backgroundSR.enabled = true;//yellow background
+                    if(shut == 0 && touch.phase == TouchPhase.Ended)
+                    {
+                        subway.transform.position -= offsetTap;
+                        print("hitting the machine");
+                        shut++;
+                        Show(clothUI);
+                    } 
+                    else if (shut == 1)
+                    {
+                        shut = 0;
+                        subway.transform.position += offsetTap;
+                        Hide(clothUI);
+                    }
                 }
                 //if click machine content, don't close UI interface
                 else if (raycastHit.collider.name == "background")
-                {
+                {   
                     Show(clothUI);
 
+                }
+                //if it is a second touch
+                else if (shut == 1)
+                {
+                    shut = 0;
+                    subway.transform.position += offsetTap;
+                    Hide(clothUI);
                 }
                
             }
@@ -121,7 +147,7 @@ public class CameraController : MonoBehaviour
                 if (shut == 1)
                 {
                     shut = 0;
-                    //transform.position += offsetTap;
+                    subway.transform.position += offsetTap;
                     Hide(clothUI);
                     //backgroundSR.enabled = false;
                 }
@@ -136,7 +162,7 @@ public class CameraController : MonoBehaviour
             if (shut == 1)
             {
                 shut = 0;
-                //transform.position += offsetTap;
+                subway.transform.position += offsetTap;
                 Hide(clothUI);
                 //backgroundSR.enabled = false;
             }
