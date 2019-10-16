@@ -40,12 +40,12 @@ public class NewCameraController : MonoBehaviour
                 if (transform.position.x > -2 * distance)
                 {
                     transform.position -= movement;
+
                 }
                 else
                 {
                     myCameraState = CameraState.One;
                     TouchController.isSwipable = false;
-
                 }
             }
             else if(myCameraState == CameraState.Three && TouchController.isSwipable)
@@ -54,11 +54,13 @@ public class NewCameraController : MonoBehaviour
                 if (transform.position.x > 0f)
                 {
                     transform.position -= movement;
+
                 }
                 else
                 {
                     myCameraState = CameraState.Two;
                     TouchController.isSwipable = false;
+
 
                 }
             }
@@ -68,6 +70,7 @@ public class NewCameraController : MonoBehaviour
                 if (transform.position.x > 2 * distance)
                 {
                     transform.position -= movement;
+
                 }
                 else
                 {
@@ -92,6 +95,7 @@ public class NewCameraController : MonoBehaviour
                     myCameraState = CameraState.Three;
                     TouchController.isSwipable = false;
 
+
                 }
             }
             else if(myCameraState == CameraState.Three && TouchController.isSwipable)
@@ -100,11 +104,13 @@ public class NewCameraController : MonoBehaviour
                 if (transform.position.x < 4 * distance)
                 {
                     transform.position += movement;
+
                 }
                 else
                 {
                     myCameraState = CameraState.Four;
                     TouchController.isSwipable = false;
+
 
                 }
             }
@@ -114,15 +120,18 @@ public class NewCameraController : MonoBehaviour
                 if (transform.position.x < 0)
                 {
                     transform.position += movement;
+
                 }
                 else
                 {
                     myCameraState = CameraState.Two;
                     TouchController.isSwipable = false;
 
+
                 }
             }
         }
+        
         
     }
 

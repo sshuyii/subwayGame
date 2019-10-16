@@ -13,7 +13,7 @@ public class TouchController : MonoBehaviour
     public bool isSwipable = false;
     private bool TOF;
    
-    private Touch touch;
+    public Touch touch;
     public enum InputState {
         LeftSwipe,
         RightSwipe,
@@ -50,6 +50,8 @@ public class TouchController : MonoBehaviour
             {
                 fp = touch.position;
                 lp = touch.position;
+
+                myInputState = InputState.None;
                 
                 //for swipe screen
                 isSwipable = true;
