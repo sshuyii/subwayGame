@@ -6,77 +6,100 @@ public class WasherController : MonoBehaviour
 {
     
     public TouchController TouchController;
-    public RandomizeCloth RandomizeCloth;
-    
+    public AllMachines AllMachines;
+    public NewCameraController NewCameraController;
+
 
     public CanvasGroup clothUI;
 
+    public AllMachines.MachineState myMachineState;
+    
+    
     public int shut = 0;
     //public Vector3 offsetTap;
     //public GameObject subway;
 
+    private float timer = 0;
     
     // Start is called before the first frame update
     void Start()
     {
-        
+        myMachineState = AllMachines.MachineState.empty;
+
     }
 
     // Update is called once per frame
     void Update()
     {
-         //tap a washing machine
-        if (TouchController.myInputState == TouchController.InputState.Tap)
-        {            
-            Ray raycast = Camera.main.ScreenPointToRay(Input.GetTouch(0).position);
-            RaycastHit raycastHit;
-            if (Physics.Raycast(raycast, out raycastHit))
+        
+        //if lick a bag of cloth, put them into the machine and start washing
+        if (myMachineState == AllMachines.MachineState.washing)
+        {
+            timer += Time.deltaTime;
+            
+            if (timer > AllMachines.washTime)
             {
-                Debug.Log("Something Hit");
-                if (raycastHit.collider.name == "Machine1")
+                myMachineState = AllMachines.MachineState.finished;
+            }
+        }
+
+        
+        if(myMachineState == AllMachines.MachineState.finished)
+        {
+            //tap a washing machine
+            if (TouchController.myInputState == TouchController.InputState.Tap &&
+                NewCameraController.myCameraState != NewCameraController.CameraState.Closet)
+            {
+                Ray raycast = Camera.main.ScreenPointToRay(Input.GetTouch(0).position);
+                RaycastHit raycastHit;
+                if (Physics.Raycast(raycast, out raycastHit))
                 {
-                    if(shut == 0 && TouchController.touch.phase == TouchPhase.Ended)
+                    Debug.Log("Something Hit");
+                    if (raycastHit.collider.name == "Machine1")
                     {
-                        //subway.transform.position -= offsetTap;
-                        print("hitting the machine");
-                        shut++;
+                        if (shut == 0 && TouchController.touch.phase == TouchPhase.Ended)
+                        {
+                            //subway.transform.position -= offsetTap;
+                            print("hitting the machine");
+                            shut++;
+                            Show(clothUI);
+                            AllMachines.GenerateCloth();
+                        }
+                        //if click machine again, close UI
+                        else if (shut == 1)
+                        {
+                            shut = 0;
+                            //subway.transform.position += offsetTap;
+                            Hide(clothUI);
+                        }
+                    }
+                    //if click machine content, don't close UI interface
+                    else if (raycastHit.collider.name == "background")
+                    {
                         Show(clothUI);
-                        RandomizeCloth.GenerateCloth();
-                    } 
-                    //if click machine again, close UI
+
+                    }
+                    //if it is a second touch
                     else if (shut == 1)
                     {
                         shut = 0;
                         //subway.transform.position += offsetTap;
                         Hide(clothUI);
                     }
-                }
-                //if click machine content, don't close UI interface
-                else if (raycastHit.collider.name == "background")
-                {   
-                    Show(clothUI);
 
                 }
-                //if it is a second touch
-                else if (shut == 1)
+                else
                 {
-                    shut = 0;
-                    //subway.transform.position += offsetTap;
-                    Hide(clothUI);
-                }
-               
-            }
-            else
-            {
-                if (shut == 1)
-                {
-                    shut = 0;
-                    //subway.transform.position += offsetTap;
-                    Hide(clothUI);
-                    //backgroundSR.enabled = false;
-                }
+                    if (shut == 1)
+                    {
+                        shut = 0;
+                        //subway.transform.position += offsetTap;
+                        Hide(clothUI);
+                        //backgroundSR.enabled = false;
+                    }
 
 
+                }
             }
         }
         

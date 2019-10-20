@@ -1,25 +1,24 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class ClothChanging : MonoBehaviour
+public class StationDetails : MonoBehaviour
 {
-    SpriteRenderer mySR;
     // Start is called before the first frame update
     void Start()
     {
-        mySR = GetComponent<SpriteRenderer>();
-
+        
     }
 
     // Update is called once per frame
     void Update()
     {
+        
     }
 
-    public void ChangeClothes(Sprite futureCloth)
+    public void UnfoldDetails()
     {
-        mySR.sprite = futureCloth;
+        
     }
 }
-

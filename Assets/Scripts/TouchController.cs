@@ -14,6 +14,7 @@ public class TouchController : MonoBehaviour
     private bool TOF;
    
     public Touch touch;
+    
     public enum InputState {
         LeftSwipe,
         RightSwipe,
