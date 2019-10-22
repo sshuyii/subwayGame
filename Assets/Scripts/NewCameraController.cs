@@ -184,7 +184,14 @@ public class NewCameraController : MonoBehaviour
         //transform.position = new Vector3(0, 0, -10);
         if(myCameraState == CameraState.Closet || myCameraState == CameraState.Map)
         {
-            myCameraState = lastCameraState;
+            if(lastCameraState != CameraState.Closet && myCameraState != CameraState.Map)
+            {
+                myCameraState = lastCameraState;
+            }
+            else
+            {
+                myCameraState = CameraState.Two;
+            }
         }    
     }
     
@@ -198,10 +205,12 @@ public class NewCameraController : MonoBehaviour
     void Hide(CanvasGroup UIGroup) {
         UIGroup.alpha = 0f; //this makes everything transparent
         UIGroup.blocksRaycasts = false; //this prevents the UI element to receive input events
+        UIGroup.interactable = false;
     }
     
     void Show(CanvasGroup UIGroup) {
         UIGroup.alpha = 1f;
         UIGroup.blocksRaycasts = true;
+        UIGroup.interactable = true;
     }
 }

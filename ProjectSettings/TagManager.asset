@@ -8,6 +8,9 @@ TagManager:
   - Machine
   - Top
   - Shoe
+  - Alex
+  - Bella
+  - Bottom
   layers:
   - Default
   - TransparentFX

@@ -41,10 +41,18 @@ public class ClothToMachine : MonoBehaviour
         for (int i = 0; i < AllMachines.WashingMachines.Count; i++)
         {
 
+            //get machine start washing
             if (WasherControllerList[i].myMachineState == AllMachines.MachineState.empty)
             {
                 WasherControllerList[i].myMachineState = AllMachines.MachineState.washing;
+                //change machine tags to character
+                WasherControllerList[i].transform.gameObject.tag = this.transform.gameObject.tag;
+                break;
             }
+            
+           
+            
+            
         }
     }
    

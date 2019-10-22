@@ -9,7 +9,18 @@ public class CalculateInventory : MonoBehaviour
 
     //all the clothes
     public Sprite TopA1;
-    public Sprite TopA2;
+    public Sprite BottomA1;
+    public Sprite ShoeA1;
+    public Sprite ShoeA2;
+    public Sprite TopB1;
+    public Sprite TopB2;
+    public Sprite TopB3;
+    public Sprite TopB4;
+    public Sprite BottomB1;
+    public Sprite BottomB2;
+    public Sprite ShoeB1;
+
+
 
 
     public GameObject player;
@@ -29,7 +40,19 @@ public class CalculateInventory : MonoBehaviour
     void Start()
     {
         allCloth.Add(TopA1.name, TopA1);
-        allCloth.Add(TopA2.name, TopA2);
+        allCloth.Add(TopB1.name, TopB1);
+        allCloth.Add(TopB2.name, TopB2);
+        allCloth.Add(TopB3.name, TopB3);
+        allCloth.Add(TopB4.name, TopB4);
+        allCloth.Add(BottomA1.name, BottomA1);
+        allCloth.Add(BottomB1.name, BottomB1);
+        allCloth.Add(BottomB2.name, BottomB2);
+        allCloth.Add(ShoeA1.name, ShoeA1);
+        allCloth.Add(ShoeB1.name, ShoeB1);
+        allCloth.Add(ShoeA2.name, ShoeA2);
+
+
+
 
     }
 
@@ -42,9 +65,11 @@ public class CalculateInventory : MonoBehaviour
     
     public void ChangeTop()
     {
+        print("changetop");
         if(allCloth.ContainsKey(top.image.sprite.name))
         {
             topSR.sprite = allCloth[top.image.sprite.name];
+            print("changeTop to image");
         }    
     }
     

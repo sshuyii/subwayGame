@@ -4,23 +4,27 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class AllMachines : MonoBehaviour
-{    
+{
+    private WasherController WasherController;
+    
     //控制所有洗衣机的代码
     //只有这一份
     //all of alex's clothes
-    public List<Button> AlexClothes;
-    private List<Button> alexClothesTemp = new List<Button>();
+    public List<Sprite> AlexClothes;
+    public List<Sprite> alexClothesTemp = new List<Sprite>();
+    
+    public List<Sprite> BellaClothes;
+    public List<Sprite> bellaClothesTemp = new List<Sprite>();
+
 
     private bool isFirstOpen = true;
 
     //all the machines
     public List<GameObject> WashingMachines = new List<GameObject>();
 
-    public GameObject MachineGroup;
 
     public int washTime;
 
-    public bool isWashing;
     private bool isLoad;
     
     public enum MachineState {
@@ -40,8 +44,8 @@ public class AllMachines : MonoBehaviour
     private Sprite[] UIsprites;
 
     //all possible positions of buttons on the interface
-    public Vector3[] buttonPositions;
-    
+//    public Vector3[] buttonPositions;
+
 
 
     // Start is called before the first frame update
@@ -52,7 +56,12 @@ public class AllMachines : MonoBehaviour
         {
             alexClothesTemp.Add(AlexClothes[i]);
         }
-        print(alexClothesTemp.Count);
+
+        //make a copy of the list of clothes
+        for (int i = 0; i < BellaClothes.Count; i++)
+        {
+            bellaClothesTemp.Add(BellaClothes[i]);
+        }
 
     }
 
@@ -63,42 +72,71 @@ public class AllMachines : MonoBehaviour
         
     }
 
-    public void GenerateCloth()
+//    public void GenerateCloth(string tagName)
+//    {
+//        
+//        //randomly generate clothes when player opens the machine
+//        if(isFirstOpen)
+//        { 
+//            for (int i = 0; i < WasherController.buttons.Length; i++)
+//            {
+//                if(tagName == "Alex")
+//                {
+//                    print("alexxxxxx");
+//                    int randomIndex = Random.Range(0, alexClothesTemp.Count);
+//                    print("random = " + randomIndex);
+////                  clothesInMachine[i].image.sprite = AlexClothes[randomIndex];
+//
+////                    Button ClothInMachine =
+////                        Instantiate(alexClothesTemp[randomIndex], buttonPositions[i], Quaternion.identity) as Button;
+//
+//                    Image buttonImage = WasherController.buttons[i].GetComponent<Image>();
+//                    buttonImage.sprite = alexClothesTemp[randomIndex];
+//                        
+//                    alexClothesTemp.Remove(alexClothesTemp[randomIndex]);
+//                    //as child of the folder
+//                    //doesn't work for some reason I don't understand
+//                    //ClothInMachine.transform.SetParent(MachineGroup.transform, false);
+//                    //ClothInMachine.transform.SetParent(MachineGroup.transform, false);
+//
+//
+//                }
+//                else if (tagName == "Bella")
+//                {
+//                    int randomIndex = Random.Range(0, bellaClothesTemp.Count);
+//                    print("random = " + randomIndex);
+////                  clothesInMachine[i].image.sprite = AlexClothes[randomIndex];
+//
+////                    Button ClothInMachine =
+////                        Instantiate(bellaClothesTemp[randomIndex], buttonPositions[i], Quaternion.identity) as Button;
+//
+//                    Image buttonImage = WasherController.buttons[i].GetComponent<Image>();
+//                    buttonImage.sprite = alexClothesTemp[randomIndex];
+//                    
+//                    bellaClothesTemp.Remove(bellaClothesTemp[randomIndex]);
+//                    //as child of the folder
+//                    //doesn't work for some reason I don't understand
+//
+//                    //ClothInMachine.transform.SetParent(MachineGroup.transform, false);
+//
+//                }
+//                
+//               
+//                //this will make scale a lot bigger than it should be
+////              ClothInMachine.transform.parent = MachineGroup.transform;
+//
+//            
+//
+//            }
+//
+//            isFirstOpen = false;
+//        }
+//        
+//    }
+
+    private void GenerateClothByTag()
     {
         
-        //randomly generate clothes when player opens the machine
-        if(isFirstOpen && isLoad == false)
-        { 
-            for (int i = 0; i < buttonPositions.Length; i++)
-            {
-                int randomIndex = Random.Range(0, alexClothesTemp.Count);
-                print("random = " + randomIndex);
-//                clothesInMachine[i].image.sprite = AlexClothes[randomIndex];
-
-                Button ClothInMachine = Instantiate(alexClothesTemp[randomIndex], buttonPositions[i], Quaternion.identity) as Button;
-
-                alexClothesTemp.Remove(alexClothesTemp[randomIndex]);
-                
-                //as child of the folder
-                ClothInMachine.transform.SetParent(MachineGroup.transform, false);
-
-                //this will make scale a lot bigger than it should be
-//              ClothInMachine.transform.parent = MachineGroup.transform;
-
-            
-
-            }
-
-            isFirstOpen = false;
-            isLoad = true;
-        }
-        
     }
-
-    public void ClothToMachine()
-    {
-        
-    }
-    
     
 }

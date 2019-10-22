@@ -17,12 +17,17 @@ public class SubwayMovement : MonoBehaviour
     
     public List<GameObject> arrows;
 
-    public List<Vector3> stationPos;
+//    public List<Vector3> stationPos;
+
+    public List<GameObject> highlights;
 
     public List<Vector3> bagPos;
     public List<Button> clothBags;
     private bool bagFirst = true;
     public GameObject clothBagGroup;
+
+    public GameObject detailBackground;
+    private SpriteRenderer dSR;
 
 
     
@@ -45,6 +50,8 @@ public class SubwayMovement : MonoBehaviour
 
         aSR = arrow.GetComponent<SpriteRenderer>();
         hSR = highlight.GetComponent<SpriteRenderer>();
+
+        dSR = detailBackground.GetComponent<SpriteRenderer>();
 
         
         currentStation = 0;
@@ -78,17 +85,21 @@ public class SubwayMovement : MonoBehaviour
         //decide which station is highlighted on screen
         if (isMoving == false)
         {
-            highlight.transform.localPosition = stationPos[currentStation];
+            //highlight.transform.localPosition = stationPos[currentStation];
+                
+            highlight.transform.position = highlights[currentStation].transform.position;
+            highlight.transform.rotation = Quaternion.Euler(new Vector3 (highlights[currentStation].transform.rotation.eulerAngles.x, highlights[currentStation].transform.rotation.eulerAngles.y, highlights[currentStation].transform.rotation.eulerAngles.z));
+
             aSR.enabled = false;
             hSR.enabled = true;
 
             //open doors
-            if (left1.transform.position.x > -11.2)
+            if (left1.transform.position.x > -11.5)
             {
                 left1.transform.position -= new Vector3(doorMovement, 0, 0);
             }
             
-            if (right1.transform.position.x < -5.4)
+            if (right1.transform.position.x < -5.35)
             {
                 right1.transform.position += new Vector3(doorMovement, 0, 0);
             }
@@ -122,12 +133,12 @@ public class SubwayMovement : MonoBehaviour
             arrow.transform.rotation = Quaternion.Euler(new Vector3 (arrows[currentStation].transform.rotation.eulerAngles.x, arrows[currentStation].transform.rotation.eulerAngles.y, arrows[currentStation].transform.rotation.eulerAngles.z));
             
             //close doors
-            if (left1.transform.position.x < -9)
+            if (left1.transform.position.x < -9.48)
             {
                 left1.transform.position += new Vector3(doorMovement, 0, 0);
             }
             
-            if (right1.transform.position.x > -7.2)
+            if (right1.transform.position.x > -7.5)
             {
                 right1.transform.position -= new Vector3(doorMovement, 0, 0);
             }
@@ -159,6 +170,18 @@ public class SubwayMovement : MonoBehaviour
         yield return new WaitForSeconds (time);
         currentStation++;
 
+    }
+
+    public void StationDetails()
+    {
+        if (dSR.enabled == false)
+        {
+            dSR.enabled = true;
+        }
+        else if (dSR.enabled == true)
+        {
+            dSR.enabled = false;
+        }
     }
     
     
