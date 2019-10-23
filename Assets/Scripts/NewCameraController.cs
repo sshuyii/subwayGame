@@ -11,9 +11,11 @@ public class NewCameraController : MonoBehaviour
         Three,
         Four,
         Closet,
-        Map
+        Map,
+        App
     }
 
+    public CanvasGroup GoBack;
     private CameraState lastCameraState;
     
     public CameraState myCameraState;
@@ -21,6 +23,7 @@ public class NewCameraController : MonoBehaviour
     public float distance;
     public CanvasGroup inventory;
     public CanvasGroup machine;
+    public CanvasGroup basicUI;
 
     
     // Start is called before the first frame update
@@ -36,16 +39,35 @@ public class NewCameraController : MonoBehaviour
     void Update()
     {
         
-        print("lastCameraState = " + lastCameraState);
+//        print("lastCameraState = " + lastCameraState);
         //if changing clothes, don't show some UIs
-        if (myCameraState == CameraState.Closet)
+        if (myCameraState == CameraState.Map || myCameraState == CameraState.App)
         {
             Hide(machine);
-            Show(inventory);
+            Hide(inventory);
+            Show(GoBack);
+            Hide(basicUI);
         }
+
+        else if(myCameraState == CameraState.Closet)
+        {
+            Show(inventory);
+            Hide(machine);
+            Hide(basicUI);
+
+            Show(GoBack);
+
+ 
+        }
+        
         else
         {
             Hide(inventory);
+            Hide(GoBack);
+            Show(basicUI);
+            Show(machine);
+
+            
         }
         
         if (TouchController.myInputState == TouchController.InputState.RightSwipe)
@@ -173,7 +195,7 @@ public class NewCameraController : MonoBehaviour
 
     public void ChangeToCloth()
     {
-        print("myCameraState = " + myCameraState);
+        //print("myCameraState = " + myCameraState);
         lastCameraState = myCameraState;
         myCameraState = CameraState.Closet;
         transform.position = new Vector3(0, -14, -10);
@@ -182,9 +204,9 @@ public class NewCameraController : MonoBehaviour
     public void ChangeToSubway()
     {
         //transform.position = new Vector3(0, 0, -10);
-        if(myCameraState == CameraState.Closet || myCameraState == CameraState.Map)
+        if(myCameraState == CameraState.Closet || myCameraState == CameraState.Map || myCameraState == CameraState.App)
         {
-            if(lastCameraState != CameraState.Closet && myCameraState != CameraState.Map)
+            if(lastCameraState != CameraState.Closet && lastCameraState != CameraState.Map && lastCameraState != CameraState.App)
             {
                 myCameraState = lastCameraState;
             }
@@ -192,7 +214,18 @@ public class NewCameraController : MonoBehaviour
             {
                 myCameraState = CameraState.Two;
             }
-        }    
+        }
+
+        Hide(machine.GetComponent<CanvasGroup>());
+    }
+    
+    public void ChangeToApp()
+    {
+        //transform.position = new Vector3(0, 0, -10);
+        lastCameraState = myCameraState;
+        myCameraState = CameraState.App;
+        transform.position = new Vector3(11, 13, -10);
+          
     }
     
     public void ChangeToMap()

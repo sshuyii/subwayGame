@@ -16,7 +16,6 @@ public class DoInventory : MonoBehaviour
     public Button selfButton;
     
     
-    
    
 
     // Start is called before the first frame update
@@ -43,38 +42,56 @@ public class DoInventory : MonoBehaviour
         print("pressed");
         selfButton = GetComponent<Button>();
         currentSprite = selfButton.image.sprite;
-        print("currentSpriteName = " + currentSprite.name);
+//        print("currentSpriteName = " + currentSprite.name);
 
-
-
-        
 
         Sprite buttonSprite = currentSprite;
-        print("SpriteName = " + currentSprite.name);
+//        print("SpriteName = " + currentSprite.name);
+
+
+        print("occupiedI = " + CalculateInventory.occupiedI);
+        
+        if(CalculateInventory.occupiedI < 10)
+        {
+            CalculateInventory.occupiedI++;
+
+        }
+        else
+        {
+            CalculateInventory.occupiedI = 1;
+            
+        }
+        
+        CalculateInventory.inventory[CalculateInventory.occupiedI].GetComponent<Image>().sprite= buttonSprite;
 
         
-
-        //if the current button is labeled as top
-        if (buttonSprite.name.Contains("Top")
-        )
-        {
-            print("change to top");
-            CalculateInventory.top.image.sprite = currentSprite;
-        }
-        else if(buttonSprite.name.Contains("shoe"))
-        {
-            print("change to shoe");
-
-            CalculateInventory.shoe.image.sprite = currentSprite;
-        }
-        else if(buttonSprite.name.Contains("Bottom"))
-        {
-            print("change to bottom");
-
-            CalculateInventory.other.image.sprite = currentSprite;
-        }
-
         
+/*three fixed inventory: top shoe bottom
+//        //if the current button is labeled as top
+//        if (buttonSprite.name.Contains("Top")
+//        )
+//        {
+////            print("change to top");
+//            CalculateInventory.top.image.sprite = currentSprite;
+//        }
+//        else if(buttonSprite.name.Contains("shoe"))
+//        {
+////            print("change to shoe");
+//
+//            CalculateInventory.shoe.image.sprite = currentSprite;
+//        }
+//        else if(buttonSprite.name.Contains("Bottom"))
+//        {
+////            print("change to bottom");
+//
+//            CalculateInventory.other.image.sprite = currentSprite;
+//        }
+*/
+
+        //image disappear
+        selfButton.image.enabled = false;
+        selfButton.enabled = false;
+
         //selfButton.enabled = false;
 
     }

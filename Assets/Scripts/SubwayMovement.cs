@@ -79,8 +79,8 @@ public class SubwayMovement : MonoBehaviour
         
         
         //train needs 1 minute on its way
-        print("currentStation = " + currentStation);
-        print("isMoving =  " + isMoving);
+//        print("currentStation = " + currentStation);
+//        print("isMoving =  " + isMoving);
 
         //decide which station is highlighted on screen
         if (isMoving == false)
@@ -116,13 +116,9 @@ public class SubwayMovement : MonoBehaviour
                     clothBag1.transform.SetParent(clothBagGroup.transform, false);
                     clothBag2.transform.SetParent(clothBagGroup.transform, false);
 
-
                     bagFirst = false;
-            
                 }
             }
-            
-            
         }
         else
         {

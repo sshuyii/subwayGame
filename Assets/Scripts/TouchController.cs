@@ -38,7 +38,7 @@ public class TouchController : MonoBehaviour
             {
                 if (Input.GetTouch(i).tapCount == 2)
                 {
-                    Debug.Log("Double Tap");
+//                    Debug.Log("Double Tap");
                 }
             }
         }

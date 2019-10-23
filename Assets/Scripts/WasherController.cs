@@ -5,13 +5,19 @@ using UnityEngine.UI;
 
 public class WasherController : MonoBehaviour
 {
-    
+
+    public int number;
+    public SpriteRenderer emptySR;
     public TouchController TouchController;
     public AllMachines AllMachines;
     public NewCameraController NewCameraController;
 
 
+    public Collider myCollider;
+    
+    private Animator myAnimator;
     public CanvasGroup ClothUI;
+    public CanvasGroup AllClothUI;
     
     private bool isFirstOpen = true;
 
@@ -31,7 +37,10 @@ public class WasherController : MonoBehaviour
     void Start()
     {
         myMachineState = AllMachines.MachineState.empty;
-        
+
+        myAnimator = GetComponentInChildren<Animator>();
+
+
 //        btns = ButtonGroup.gameObject.GetComponents<Button>();
 
 
@@ -40,15 +49,26 @@ public class WasherController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (myMachineState == AllMachines.MachineState.empty)
+        {
+            
+        }
         
-        //if lick a bag of cloth, put them into the machine and start washing
+        //if click a bag of cloth, put them into the machine and start washing
         if (myMachineState == AllMachines.MachineState.washing)
         {
+            myAnimator.SetBool("isWashing", true);
+            emptySR.enabled = false;
+            
             timer += Time.deltaTime;
+            
+            
             
             if (timer > AllMachines.washTime)
             {
                 myMachineState = AllMachines.MachineState.finished;
+                myAnimator.SetBool("isWashing", false);
+
             }
         }
 
@@ -58,6 +78,9 @@ public class WasherController : MonoBehaviour
             //tap a washing machine
             if (TouchController.myInputState == TouchController.InputState.Tap &&
                 NewCameraController.myCameraState != NewCameraController.CameraState.Closet &&
+                NewCameraController.myCameraState != NewCameraController.CameraState.Map &&
+                NewCameraController.myCameraState != NewCameraController.CameraState.App &&
+                //so make sure there is a touch
                 Input.touchCount > 0)
             {
                 Ray raycast = Camera.main.ScreenPointToRay(Input.GetTouch(0).position);
@@ -70,8 +93,9 @@ public class WasherController : MonoBehaviour
                         if (shut == 0 && TouchController.touch.phase == TouchPhase.Ended)
                         {
                             //subway.transform.position -= offsetTap;
-                            print("hitting the machine");
+                            print("hitting the machine" + gameObject.name);
                             shut++;
+                            Hide(AllClothUI);
                             Show(ClothUI);
                            
                             GenerateCloth(this.transform.gameObject.tag);
@@ -85,12 +109,16 @@ public class WasherController : MonoBehaviour
                         }
                     }
                     //if click machine content, don't close UI interface
-                    else if (raycastHit.collider.name == "background")
+                    else if (raycastHit.collider.name == "background" + number.ToString())
                     {
+                        print("hitting the background" + number.ToString());
+                        
+                        Hide(AllClothUI);
+
                         Show(ClothUI);
 
                     }
-                    //if it is a second touch
+                    //if it is a second touch else where, close UI interface
                     else if (shut == 1)
                     {
                         shut = 0;
@@ -127,21 +155,29 @@ public class WasherController : MonoBehaviour
         }
 
         
-        void Hide(CanvasGroup UIGroup) {
-            UIGroup.alpha = 0f; //this makes everything transparent
-            UIGroup.blocksRaycasts = false; //this prevents the UI element to receive input events
-            UIGroup.interactable = false;
+        
+    }
+
+    void Hide(CanvasGroup UIGroup) {
+        UIGroup.alpha = 0f; //this makes everything transparent
+        UIGroup.blocksRaycasts = false; //this prevents the UI element to receive input events
+        UIGroup.interactable = false;
+
+        myCollider.enabled = false;
 
 //            foreach (Button btn in btns)
 //            {
 //                btn.enabled = false;
 //            }            
-        }
+    }
     
-        void Show(CanvasGroup UIGroup) {
-            UIGroup.alpha = 1f;
-            UIGroup.blocksRaycasts = true;
-            UIGroup.interactable = true;
+    void Show(CanvasGroup UIGroup) {
+        UIGroup.alpha = 1f;
+        UIGroup.blocksRaycasts = true;
+        UIGroup.interactable = true;
+        
+        myCollider.enabled = true;
+
 
             
 //            foreach (Button btn in btns)
@@ -149,14 +185,21 @@ public class WasherController : MonoBehaviour
 //                btn.enabled = true;
 //            }
             
-        }
     }
-    
-    
+
+    public void clickBackground()
+    {
+        Hide(AllClothUI);
+
+        Show(ClothUI);
+    }
     
     
     public void GenerateCloth(string tagName)
     {
+        
+        //need to get all button reset, because they are disabled when clicked last time
+        
         
         //randomly generate clothes when player opens the machine
         if(isFirstOpen)
@@ -171,8 +214,10 @@ public class WasherController : MonoBehaviour
 
 //                    Button ClothInMachine =
 //                        Instantiate(alexClothesTemp[randomIndex], buttonPositions[i], Quaternion.identity) as Button;
-
+                    buttons[i].GetComponent<Button>().enabled = true;
+    
                     Image buttonImage = buttons[i].GetComponent<Image>();
+                    buttonImage.enabled = true;
                     buttonImage.sprite = AllMachines.alexClothesTemp[randomIndex];
                     
                         
@@ -196,6 +241,8 @@ public class WasherController : MonoBehaviour
 //                        Instantiate(bellaClothesTemp[randomIndex], buttonPositions[i], Quaternion.identity) as Button;
 
                     Image buttonImage = buttons[i].GetComponent<Image>();
+                    buttonImage.enabled = true;
+
                     buttonImage.sprite = AllMachines.bellaClothesTemp[randomIndex];
                     
                     AllMachines.bellaClothesTemp.Remove(AllMachines.bellaClothesTemp[randomIndex]);

@@ -7,6 +7,7 @@ public class CalculateInventory : MonoBehaviour
 {
     public Dictionary<string, Sprite> allCloth = new Dictionary<string, Sprite>();
 
+    public List<Sprite> allClothList;
     //all the clothes
     public Sprite TopA1;
     public Sprite BottomA1;
@@ -20,7 +21,8 @@ public class CalculateInventory : MonoBehaviour
     public Sprite BottomB2;
     public Sprite ShoeB1;
 
-
+    
+    public int occupiedI = 0;
 
 
     public GameObject player;
@@ -32,9 +34,12 @@ public class CalculateInventory : MonoBehaviour
 
     
     //three slots above
-    public Button top;
-    public Button shoe;
-    public Button other;
+    public List<GameObject> inventory;
+
+    public List<Sprite> inventorySR;
+//    public Button top;
+//    public Button shoe;
+//    public Button other;
     
     // Start is called before the first frame update
     void Start()
@@ -51,7 +56,10 @@ public class CalculateInventory : MonoBehaviour
         allCloth.Add(ShoeB1.name, ShoeB1);
         allCloth.Add(ShoeA2.name, ShoeA2);
 
-
+        for (int i = 0; i < inventory.Count; i++)
+        {
+            inventorySR.Add(inventory[i].GetComponent<Button>().image.sprite);
+        }
 
 
     }
@@ -63,30 +71,44 @@ public class CalculateInventory : MonoBehaviour
         
     }
     
-    public void ChangeTop()
-    {
-        print("changetop");
-        if(allCloth.ContainsKey(top.image.sprite.name))
-        {
-            topSR.sprite = allCloth[top.image.sprite.name];
-            print("changeTop to image");
-        }    
-    }
+//    public void ChangeCloth()
+//    {
+//        Sprite buttonSprite = gameObject.GetComponent<Button>().image.sprite;
+//        
+//        if(allCloth.ContainsKey(buttonSprite.name))
+//        {
+//            if(buttonSprite.name.Contains("Top"))
+//            {
+//                topSR.sprite = allCloth[buttonSprite.name];
+//                print("change top");
+//            }
+//            else if(buttonSprite.name.Contains("Bottom"))
+//            {
+//                otherSR.sprite = allCloth[buttonSprite.name];
+//                print("change bottom");
+//            }
+//            else if(buttonSprite.name.Contains("shoe"))
+//            {
+//                shoeSR.sprite = allCloth[buttonSprite.name];
+//                print("change shoe");
+//            }
+//        }    
+//    }
     
-    public void ChangeShoe()
-    {
-        if(allCloth.ContainsKey(shoe.image.sprite.name))
-        {
-            shoeSR.sprite = allCloth[shoe.image.sprite.name];
-        }    
-    }
-    
-    public void ChangeOther()
-    {
-        if (allCloth.ContainsKey(other.image.sprite.name))
-        {
-            otherSR.sprite = allCloth[other.image.sprite.name];
-
-        }
-    }
+//    public void ChangeShoe()
+//    {
+//        if(allCloth.ContainsKey(shoe.image.sprite.name))
+//        {
+//            shoeSR.sprite = allCloth[shoe.image.sprite.name];
+//        }    
+//    }
+//    
+//    public void ChangeOther()
+//    {
+//        if (allCloth.ContainsKey(other.image.sprite.name))
+//        {
+//            otherSR.sprite = allCloth[other.image.sprite.name];
+//
+//        }
+//    }
 }
