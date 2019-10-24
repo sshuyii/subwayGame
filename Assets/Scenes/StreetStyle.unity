@@ -583,7 +583,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 190.65, y: -889}
+  m_AnchoredPosition: {x: 190.65, y: -1491}
   m_SizeDelta: {x: 120, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &151124455
@@ -599,8 +599,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   workCloth: {fileID: 441239130}
-  whiteShirt: {fileID: 0}
-  blackPants: {fileID: 0}
+  whiteShirt: {fileID: 688945709}
+  blackPants: {fileID: 1995904654}
 --- !u!114 &151124456
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1075,7 +1075,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 195.30997, y: -1148}
+  m_AnchoredPosition: {x: 195.30997, y: -964}
   m_SizeDelta: {x: 120, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &245280550
@@ -1091,8 +1091,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   workCloth: {fileID: 441239130}
-  whiteShirt: {fileID: 0}
-  blackPants: {fileID: 0}
+  whiteShirt: {fileID: 688945709}
+  blackPants: {fileID: 1995904654}
 --- !u!114 &245280551
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1955,7 +1955,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 454510396}
   m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: -1.89, y: -12.6, z: -1}
+  m_LocalPosition: {x: -1.99, y: -13.91, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1435318192}
@@ -1974,7 +1974,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 0.02
-  startPoint: 2
+  endPoint: 1.76
 --- !u!212 &454510399
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2633,7 +2633,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 0.05
-  startPoint: 10
+  endPoint: 7.4
 --- !u!1 &639432238
 GameObject:
   m_ObjectHideFlags: 0
@@ -3276,8 +3276,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   workCloth: {fileID: 441239130}
-  whiteShirt: {fileID: 0}
-  blackPants: {fileID: 0}
+  whiteShirt: {fileID: 688945709}
+  blackPants: {fileID: 1995904654}
 --- !u!114 &801811654
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3384,7 +3384,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 195.30994, y: -1547}
+  m_AnchoredPosition: {x: 195.30994, y: -1363.0001}
   m_SizeDelta: {x: 120, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &853353152
@@ -5053,8 +5053,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   workCloth: {fileID: 441239130}
-  whiteShirt: {fileID: 0}
-  blackPants: {fileID: 0}
+  whiteShirt: {fileID: 688945709}
+  blackPants: {fileID: 1995904654}
 --- !u!114 &1360753373
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5161,7 +5161,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 190.65, y: -1409}
+  m_AnchoredPosition: {x: 190.65, y: -1225.0001}
   m_SizeDelta: {x: 120, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1367119714
@@ -5300,8 +5300,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   workCloth: {fileID: 441239130}
-  whiteShirt: {fileID: 0}
-  blackPants: {fileID: 0}
+  whiteShirt: {fileID: 688945709}
+  blackPants: {fileID: 1995904654}
 --- !u!114 &1375854845
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5408,7 +5408,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 197, y: -1670}
+  m_AnchoredPosition: {x: 197, y: -1621}
   m_SizeDelta: {x: 120, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1385916998
@@ -7340,7 +7340,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 196.99997, y: -1277}
+  m_AnchoredPosition: {x: 196.99997, y: -1093.0001}
   m_SizeDelta: {x: 120, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1960389168
@@ -7356,8 +7356,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   workCloth: {fileID: 441239130}
-  whiteShirt: {fileID: 0}
-  blackPants: {fileID: 0}
+  whiteShirt: {fileID: 688945709}
+  blackPants: {fileID: 1995904654}
 --- !u!114 &1960389169
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8050,7 +8050,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 190.65, y: -1019}
+  m_AnchoredPosition: {x: 190.65, y: -835}
   m_SizeDelta: {x: 120, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2058138981
@@ -8114,7 +8114,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2058138979}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -8156,8 +8156,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   workCloth: {fileID: 441239130}
-  whiteShirt: {fileID: 0}
-  blackPants: {fileID: 0}
+  whiteShirt: {fileID: 688945709}
+  blackPants: {fileID: 1995904654}
 --- !u!1 &2134405664
 GameObject:
   m_ObjectHideFlags: 0
