@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8f1ee1adc36a8a04a8d7c42ac5d6bc27, type: 3}
-  m_Name: Scene1
+  m_Name: Scene1.fade
   m_EditorClassIdentifier: 
   MotionName: Assets/Resources/character2 live2d test/animation/Scene1.motion3.json
   FadeInTime: 1
