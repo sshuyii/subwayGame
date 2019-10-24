@@ -340,7 +340,6 @@ namespace Live2D.Cubism.Rendering
             // Update swap info.
             LastSwap = ThisSwap;
 
-
             ResetSwapInfoFlags();
 
 
@@ -469,13 +468,20 @@ namespace Live2D.Cubism.Rendering
         /// <param name="newVertexPositions">Vertex positions to set.</param>
         internal void OnDrawableVertexPositionsDidChange(Vector3[] newVertexPositions)
         {
+//            Mesh newMesh = new Mesh();
             var mesh = Mesh;
 
-
+            //added to the original script, not sure if it works
+//            newMesh.vertices = Mesh.vertices;
+//            newMesh.triangles = Mesh.triangles;
+//            
+//            Color c = new Color(1, 0, 0, 0.5f);
+//            MeshFilter meshFilter = (MeshFilter) transform.
+            
             // Apply positions and update bounds.
             mesh.vertices = newVertexPositions;
 
-
+            
             mesh.RecalculateBounds();
 
 
