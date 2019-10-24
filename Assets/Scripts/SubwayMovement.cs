@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Boo.Lang.Environments;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -39,6 +40,9 @@ public class SubwayMovement : MonoBehaviour
     //doors
     public GameObject left1;
     public GameObject right1;
+    
+    public GameObject left2;
+    public GameObject right2;
 
     public float moveTime;
     public float stayTime;
@@ -119,6 +123,17 @@ public class SubwayMovement : MonoBehaviour
                     bagFirst = false;
                 }
             }
+            
+            //open back doors
+            if (left2.transform.position.x > -11.5 + 17.93)
+            {
+                left2.transform.position -= new Vector3(doorMovement, 0, 0);
+            }
+            
+            if (right2.transform.position.x < -5.35 + 17.93)
+            {
+                right2.transform.position += new Vector3(doorMovement, 0, 0);
+            }
         }
         else
         {
@@ -137,6 +152,17 @@ public class SubwayMovement : MonoBehaviour
             if (right1.transform.position.x > -7.5)
             {
                 right1.transform.position -= new Vector3(doorMovement, 0, 0);
+            }
+            
+            //close backdoors
+            if (left2.transform.position.x < -9.48 + 17.93)
+            {
+                left2.transform.position += new Vector3(doorMovement, 0, 0);
+            }
+            
+            if (right2.transform.position.x > -7.5 + 17.93)
+            {
+                right2.transform.position -= new Vector3(doorMovement, 0, 0);
             }
         }
     }

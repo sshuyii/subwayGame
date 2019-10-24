@@ -31,6 +31,7 @@ public class CalculateInventory : MonoBehaviour
     public SpriteRenderer topSR;
     public SpriteRenderer shoeSR;
     public SpriteRenderer otherSR;
+    public SpriteRenderer everythingSR;
 
     
     //three slots above
