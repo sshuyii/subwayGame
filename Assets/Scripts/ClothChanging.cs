@@ -35,7 +35,7 @@ public class ClothChanging : MonoBehaviour
     void Update()
     {
         currentSprite = GetComponent<Button>().image.sprite;
-        print("pressed " + currentSprite.name);
+//        print("pressed " + currentSprite.name);
 
     }
 
@@ -45,7 +45,7 @@ public class ClothChanging : MonoBehaviour
         //currentSprite = GetComponent<Button>().image.sprite;
 
         
-        print("inMethodpressed " + this.gameObject.name);
+        //print("inMethodpressed " + this.gameObject.name);
         
         if(CalculateInventory.allCloth.ContainsKey(currentSprite.name))
         {
@@ -81,6 +81,8 @@ public class ClothChanging : MonoBehaviour
                 print("change everything");
                 
                 workCloth.enabled = false;
+                CalculateInventory.topSR.sprite = null;
+                CalculateInventory.otherSR.sprite = null;
 
                 blackPants.enabled = true;
                 whiteShirt.enabled = true;

@@ -5,16 +5,17 @@ using UnityEngine;
 public class TouchController : MonoBehaviour
 {
     private Vector3 fp;   //First touch position
-    private Vector3 lp;   //Last touch position
+    public Vector3 lp;   //Last touch position
     private float dragDistance;  //minimum distance for a swipe to be registered
-    
-    
-    public int shut = 0;
+
+
     public bool isSwipable = false;
     private bool TOF;
    
     public Touch touch;
-    
+
+    public float offsetX;
+    public Transform camTransform;
     public enum InputState {
         LeftSwipe,
         RightSwipe,
@@ -52,6 +53,12 @@ public class TouchController : MonoBehaviour
                 fp = touch.position;
                 lp = touch.position;
 
+                offsetX = camTransform.position.x - lp.x;
+                
+//                print("offsetX = " + offsetX);
+//                print("lp = " + lp);
+                
+                
                 myInputState = InputState.None;
                 
                 //for swipe screen
@@ -60,11 +67,17 @@ public class TouchController : MonoBehaviour
             else if (touch.phase == TouchPhase.Moved) // update the last position based on where they moved
             {
                 lp = touch.position;
+//                print("lp = " + lp);
+
+                
+
             }
             else if (touch.phase == TouchPhase.Ended) //check if the finger is removed from the screen
             {
                 lp = touch.position;  //last touch position. Ommitted if you use list
- 
+
+                offsetX = 0;
+                
                 //Check if drag distance is greater than 20% of the screen height
                 if (Mathf.Abs(lp.x - fp.x) > dragDistance || Mathf.Abs(lp.y - fp.y) > dragDistance)
                 {//It's a drag

@@ -15,6 +15,7 @@ public class SubwayMovement : MonoBehaviour
     private SpriteRenderer aSR;
 
     public float doorMovement;
+    public float doorWidth;
     
     public List<GameObject> arrows;
 
@@ -43,6 +44,12 @@ public class SubwayMovement : MonoBehaviour
     
     public GameObject left2;
     public GameObject right2;
+    
+    //door initial positions
+    private float left1Pos;
+    private float right1Pos;
+    private float left2Pos;
+    private float right2Pos;
 
     public float moveTime;
     public float stayTime;
@@ -59,6 +66,14 @@ public class SubwayMovement : MonoBehaviour
 
         
         currentStation = 0;
+        
+        //get all the doors position when game starts
+        left1Pos = left1.transform.position.x;
+        right1Pos = right1.transform.position.x;
+        left2Pos = left2.transform.position.x;
+        right2Pos = right2.transform.position.x;
+
+        
 
         //get all station names into the dictionary
         for (var i = 0; i < stationNames.Count; ++i)
@@ -70,9 +85,6 @@ public class SubwayMovement : MonoBehaviour
         //isMoving = false for 30 seconds, then isMoving = true for 60 seconds
         InvokeRepeating("trainMove", stayTime, stayTime + moveTime);
         InvokeRepeating("trainStop", stayTime + moveTime, stayTime + moveTime);
-
-
-
 
     }
 
@@ -98,12 +110,12 @@ public class SubwayMovement : MonoBehaviour
             hSR.enabled = true;
 
             //open doors
-            if (left1.transform.position.x > -11.5)
+            if (left1.transform.position.x > left1Pos - doorWidth)
             {
                 left1.transform.position -= new Vector3(doorMovement, 0, 0);
             }
             
-            if (right1.transform.position.x < -5.35)
+            if (right1.transform.position.x < right1Pos + doorWidth)
             {
                 right1.transform.position += new Vector3(doorMovement, 0, 0);
             }
@@ -125,12 +137,12 @@ public class SubwayMovement : MonoBehaviour
             }
             
             //open back doors
-            if (left2.transform.position.x > -11.5 + 17.93)
+            if (left2.transform.position.x > left2Pos - doorWidth)
             {
                 left2.transform.position -= new Vector3(doorMovement, 0, 0);
             }
             
-            if (right2.transform.position.x < -5.35 + 17.93)
+            if (right2.transform.position.x < right2Pos + doorWidth)
             {
                 right2.transform.position += new Vector3(doorMovement, 0, 0);
             }
@@ -144,23 +156,23 @@ public class SubwayMovement : MonoBehaviour
             arrow.transform.rotation = Quaternion.Euler(new Vector3 (arrows[currentStation].transform.rotation.eulerAngles.x, arrows[currentStation].transform.rotation.eulerAngles.y, arrows[currentStation].transform.rotation.eulerAngles.z));
             
             //close doors
-            if (left1.transform.position.x < -9.48)
+            if (left1.transform.position.x < left1Pos)
             {
                 left1.transform.position += new Vector3(doorMovement, 0, 0);
             }
             
-            if (right1.transform.position.x > -7.5)
+            if (right1.transform.position.x > right1Pos)
             {
                 right1.transform.position -= new Vector3(doorMovement, 0, 0);
             }
             
             //close backdoors
-            if (left2.transform.position.x < -9.48 + 17.93)
+            if (left2.transform.position.x < left2Pos)
             {
                 left2.transform.position += new Vector3(doorMovement, 0, 0);
             }
             
-            if (right2.transform.position.x > -7.5 + 17.93)
+            if (right2.transform.position.x > right2Pos)
             {
                 right2.transform.position -= new Vector3(doorMovement, 0, 0);
             }

@@ -8,6 +8,7 @@ public class WasherController : MonoBehaviour
 
     public int number;
     public SpriteRenderer emptySR;
+    public SpriteRenderer fullSR;
     public TouchController TouchController;
     public AllMachines AllMachines;
     public NewCameraController NewCameraController;
@@ -51,7 +52,12 @@ public class WasherController : MonoBehaviour
     {
         if (myMachineState == AllMachines.MachineState.empty)
         {
-            
+            fullSR.enabled = false;
+
+        }
+        else
+        {
+            fullSR.enabled = true;
         }
         
         //if click a bag of cloth, put them into the machine and start washing

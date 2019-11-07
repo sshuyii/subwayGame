@@ -5,19 +5,30 @@ using UnityEngine;
 public class NewCameraController : MonoBehaviour
 {
     public TouchController TouchController;
-    public enum CameraState {
+
+    public enum CameraState
+    {
         One,
         Two,
         Three,
         Four,
         Closet,
         Map,
-        App
+        App,
+        Ad
     }
+
+
+    public List<float> pageCount = new List<float>();
+
+    public int nearestPage;
+
+
+    public float speed;
 
     public CanvasGroup GoBack;
     private CameraState lastCameraState;
-    
+
     public CameraState myCameraState;
     private Vector3 movement;
     public float distance;
@@ -25,24 +36,33 @@ public class NewCameraController : MonoBehaviour
     public CanvasGroup machine;
     public CanvasGroup basicUI;
 
-    
+
+    private float offsetX;
+
     // Start is called before the first frame update
     void Start()
     {
+
         myCameraState = CameraState.Two;
-        movement = new Vector3(2*distance, 0, 0);
-        
+        movement = new Vector3(2 * distance, 0, 0);
+
+        //add all the subway pages to the list
+        pageCount.Add(-2 * distance);
+        pageCount.Add(0 * distance);
+        pageCount.Add(2 * distance);
+        pageCount.Add(4 * distance);
     }
 
-    
+
     // Update is called once per frame
     void Update()
     {
-        
+
 //        print("lastCameraState = " + lastCameraState);
         //if changing clothes, don't show some UIs
-        if (myCameraState == CameraState.Map || myCameraState == CameraState.App)
-        {
+        if (myCameraState == CameraState.Map || myCameraState == CameraState.App || myCameraState == CameraState.Ad)
+
+{
             Hide(machine);
             Hide(inventory);
             Show(GoBack);
@@ -56,8 +76,6 @@ public class NewCameraController : MonoBehaviour
             Hide(basicUI);
 
             Show(GoBack);
-
- 
         }
         
         else
@@ -66,129 +84,153 @@ public class NewCameraController : MonoBehaviour
             Hide(GoBack);
             Show(basicUI);
             Show(machine);
+        }
 
-            
+        //move camera according touch position
+        if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Moved)
+        {
+            Vector2 touchDeltaPosition = Input.GetTouch(0).deltaPosition;
+            transform.Translate(-touchDeltaPosition.x * speed, transform.position.y, 0);
         }
         
-        if (TouchController.myInputState == TouchController.InputState.RightSwipe)
+       GetCurrentPage();
+       GetNearestPage();
+       
+        //if touch ends, decide which state the camera goes to
+        if (myCameraState == CameraState.Map || myCameraState == CameraState.App || myCameraState == CameraState.Ad)
         {
-            //two to one
-            if (myCameraState == CameraState.Two && TouchController.isSwipable)
-            {
-                //swipe to left
-                if (transform.position.x > -2 * distance)
-                {
-                    transform.position -= movement;
-
-                }
-                else
-                {
-                    myCameraState = CameraState.One;
-                    TouchController.isSwipable = false;
-                }
-            }
-            else if(myCameraState == CameraState.Three && TouchController.isSwipable)
-            {
-                //swipe to left
-                if (transform.position.x > 0f)
-                {
-                    transform.position -= movement;
-
-                }
-                else
-                {
-                    myCameraState = CameraState.Two;
-                    TouchController.isSwipable = false;
-
-
-                }
-            }
-            else if(myCameraState == CameraState.Four && TouchController.isSwipable)
-            {
-                //swipe to left
-                if (transform.position.x > 2 * distance)
-                {
-                    transform.position -= movement;
-
-                }
-                else
-                {
-                    myCameraState = CameraState.Three;
-                    TouchController.isSwipable = false;
-
-                }
-            }
-        }
-        else if (TouchController.myInputState == TouchController.InputState.LeftSwipe)
-        {
-            //two to one
-            if (myCameraState == CameraState.Two && TouchController.isSwipable)
-            {
-                //swipe to left
-                if (transform.position.x < 2 * distance)
-                {
-                    transform.position += movement;
-                }
-                else
-                {
-                    myCameraState = CameraState.Three;
-                    TouchController.isSwipable = false;
-
-
-                }
-            }
-            else if(myCameraState == CameraState.Three && TouchController.isSwipable)
-            {
-                //swipe to left
-                if (transform.position.x < 4 * distance)
-                {
-                    transform.position += movement;
-
-                }
-                else
-                {
-                    myCameraState = CameraState.Four;
-                    TouchController.isSwipable = false;
-
-
-                }
-            }
-            else if(myCameraState == CameraState.One && TouchController.isSwipable)
-            {
-                //swipe to left
-                if (transform.position.x < 0)
-                {
-                    transform.position += movement;
-
-                }
-                else
-                {
-                    myCameraState = CameraState.Two;
-                    TouchController.isSwipable = false;
-
-
-                }
-            }
+            
         }
         else
         {
-            if (myCameraState == CameraState.One)
+            if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended)
             {
-                transform.position = new Vector3(-2 * distance, 0, -10);
-            }
-            else if (myCameraState == CameraState.Two)
-            {
-                transform.position = new Vector3(0, 0, -10);
-            }
-            else if (myCameraState == CameraState.Three)
-            {
-                transform.position = new Vector3(2 * distance, 0, -10);
-            }
-            else if (myCameraState == CameraState.Four)
-            {
-                transform.position = new Vector3(4 * distance, 0, -10);
+            
+                transform.position = new Vector3((nearestPage - 1) * 2 * distance, transform.position.y, transform.position.z);
+
             }
         }
+        
+
+//        if (TouchController.myInputState == TouchController.InputState.RightSwipe)
+//        {
+//            //two to one
+//            if (myCameraState == CameraState.Two && TouchController.isSwipable)
+//            {
+//                //swipe to left
+//                if (transform.position.x > -2 * distance)
+//                {
+//                    transform.position -= movement;
+//
+//                }
+//                else
+//                {
+//                    myCameraState = CameraState.One;
+//                    TouchController.isSwipable = false;
+//                }
+//            }
+//            else if(myCameraState == CameraState.Three && TouchController.isSwipable)
+//            {
+//                //swipe to left
+//                if (transform.position.x > 0f)
+//                {
+//                    transform.position -= movement;
+//
+//                }
+//                else
+//                {
+//                    myCameraState = CameraState.Two;
+//                    TouchController.isSwipable = false;
+//
+//
+//                }
+//            }
+//            else if(myCameraState == CameraState.Four && TouchController.isSwipable)
+//            {
+//                //swipe to left
+//                if (transform.position.x > 2 * distance)
+//                {
+//                    transform.position -= movement;
+//
+//                }
+//                else
+//                {
+//                    myCameraState = CameraState.Three;
+//                    TouchController.isSwipable = false;
+//
+//                }
+//            }
+//        }
+//        else if (TouchController.myInputState == TouchController.InputState.LeftSwipe)
+//        {
+//            //two to one
+//            if (myCameraState == CameraState.Two && TouchController.isSwipable)
+//            {
+//                //swipe to left
+//                if (transform.position.x < 2 * distance)
+//                {
+//                    transform.position += movement;
+//                }
+//                else
+//                {
+//                    myCameraState = CameraState.Three;
+//                    TouchController.isSwipable = false;
+//
+//
+//                }
+//            }
+//            else if(myCameraState == CameraState.Three && TouchController.isSwipable)
+//            {
+//                //swipe to left
+//                if (transform.position.x < 4 * distance)
+//                {
+//                    transform.position += movement;
+//
+//                }
+//                else
+//                {
+//                    myCameraState = CameraState.Four;
+//                    TouchController.isSwipable = false;
+//
+//
+//                }
+//            }
+//            else if(myCameraState == CameraState.One && TouchController.isSwipable)
+//            {
+//                //swipe to left
+//                if (transform.position.x < 0)
+//                {
+//                    transform.position += movement;
+//
+//                }
+//                else
+//                {
+//                    myCameraState = CameraState.Two;
+//                    TouchController.isSwipable = false;
+//
+//
+//                }
+//            }
+//        }
+//        else
+//        {
+//            if (myCameraState == CameraState.One)
+//            {
+//                transform.position = new Vector3(-2 * distance, 0, -10);
+//            }
+//            else if (myCameraState == CameraState.Two)
+//            {
+//                transform.position = new Vector3(0, 0, -10);
+//            }
+//            else if (myCameraState == CameraState.Three)
+//            {
+//                transform.position = new Vector3(2 * distance, 0, -10);
+//            }
+//            else if (myCameraState == CameraState.Four)
+//            {
+//                transform.position = new Vector3(4 * distance, 0, -10);
+//            }
+//        }
         
         
     }
@@ -204,11 +246,12 @@ public class NewCameraController : MonoBehaviour
     public void ChangeToSubway()
     {
         //transform.position = new Vector3(0, 0, -10);
-        if(myCameraState == CameraState.Closet || myCameraState == CameraState.Map || myCameraState == CameraState.App)
+        if(myCameraState == CameraState.Closet || myCameraState == CameraState.Map || myCameraState == CameraState.App || myCameraState == CameraState.Ad)
         {
-            if(lastCameraState != CameraState.Closet && lastCameraState != CameraState.Map && lastCameraState != CameraState.App)
+            if(lastCameraState != CameraState.Closet && lastCameraState != CameraState.Map && lastCameraState != CameraState.App && myCameraState != CameraState.Ad)
             {
                 myCameraState = lastCameraState;
+               
             }
             else
             {
@@ -217,6 +260,10 @@ public class NewCameraController : MonoBehaviour
         }
 
         Hide(machine.GetComponent<CanvasGroup>());
+        
+        GoSubwayPart();
+        
+       
     }
     
     public void ChangeToApp()
@@ -245,5 +292,77 @@ public class NewCameraController : MonoBehaviour
         UIGroup.alpha = 1f;
         UIGroup.blocksRaycasts = true;
         UIGroup.interactable = true;
+    }
+    private void GetNearestPage()
+    {
+        for (int i = 0; i < pageCount.Count; i++) {
+            float testDist = Mathf.Abs(transform.position.x - pageCount[i]);
+            if (testDist < distance) {
+                nearestPage = i;
+                
+            }
+        }
+    }
+    private void GetCurrentPage() {
+
+        if (transform.position.y == 0f)
+        {
+            if (transform.position.x < -2 * distance)
+            {
+                myCameraState = CameraState.One;
+            
+            }
+            else if (transform.position.x > -2 * distance && transform.position.x < 0)
+            {
+                myCameraState = CameraState.Two;
+            }
+            else if (transform.position.x >  0 && transform.position.x < 2 * distance)
+            {
+                myCameraState = CameraState.Three;
+            }
+            else if (transform.position.x > 2 * distance && transform.position.x < 4.1 * distance)
+            {
+                myCameraState = CameraState.Four;
+            }
+        }
+        
+        // based on distance from current position, find nearest page
+        Vector2 currentPosition = transform.position;
+    }
+    
+//    private void LerpToPage(int aPageIndex) {
+//        aPageIndex = Mathf.Clamp(aPageIndex, 0, _pageCount - 1);
+//        _lerpTo = _pagePositions[aPageIndex];
+//        _lerp = true;
+//        _currentPage = aPageIndex;
+//    }
+
+    private void GoSubwayPart()
+    {
+        //temporary way of putting camera back to subway, need to be replaced
+        if (myCameraState == CameraState.One)
+        {
+            transform.position = new Vector3(-2 * distance, 0, -10);
+        }
+        else if (myCameraState == CameraState.Two)
+        {
+            transform.position = new Vector3(0, 0, -10);
+        }
+        else if (myCameraState == CameraState.Three)
+        {
+            transform.position = new Vector3(2 * distance, 0, -10);
+        }
+        else if (myCameraState == CameraState.Four)
+        {
+            transform.position = new Vector3(4 * distance, 0, -10);
+        }
+    }
+
+    public void GoAdvertisement()
+    {
+        lastCameraState = myCameraState;
+        transform.position = new Vector3(24, 0, -10);
+        myCameraState = CameraState.Ad;
+        
     }
 }
