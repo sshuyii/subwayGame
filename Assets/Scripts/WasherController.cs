@@ -53,6 +53,7 @@ public class WasherController : MonoBehaviour
         if (myMachineState == AllMachines.MachineState.empty)
         {
             fullSR.enabled = false;
+            emptySR.enabled = true;
 
         }
         else

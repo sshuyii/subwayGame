@@ -24,7 +24,15 @@ public class TouchController : MonoBehaviour
     }
     public InputState myInputState;
     
-    // Start is called before the first frame update
+
+    public bool isFastSwipe;
+    private float startTime;
+    private float diffTime;
+    private float swipeDistance;
+
+    private float swipeSpeed;
+
+// Start is called before the first frame update
     void Start()
     {
         myInputState = InputState.None;
@@ -53,6 +61,8 @@ public class TouchController : MonoBehaviour
                 fp = touch.position;
                 lp = touch.position;
 
+                startTime = Time.time;
+                
                 offsetX = camTransform.position.x - lp.x;
                 
 //                print("offsetX = " + offsetX);
@@ -75,8 +85,22 @@ public class TouchController : MonoBehaviour
             else if (touch.phase == TouchPhase.Ended) //check if the finger is removed from the screen
             {
                 lp = touch.position;  //last touch position. Ommitted if you use list
-
+        
                 offsetX = 0;
+                
+                //check if this is a fast swipe
+                diffTime = startTime - Time.time;
+                swipeDistance = Vector2.Distance(fp,lp);
+                swipeSpeed = Mathf.Abs(swipeDistance / diffTime);//<<<<<<<<
+                print("swipeSpeed =" + swipeSpeed);
+                if (swipeSpeed > 500)
+                {
+                    isFastSwipe = true;
+                }
+                else
+                {
+                    isFastSwipe = false;
+                }
                 
                 //Check if drag distance is greater than 20% of the screen height
                 if (Mathf.Abs(lp.x - fp.x) > dragDistance || Mathf.Abs(lp.y - fp.y) > dragDistance)

@@ -12,6 +12,8 @@ TagManager:
   - Bella
   - Bottom
   - Everything
+  - Draggable
+  - PlayerBody
   layers:
   - Default
   - TransparentFX

@@ -22,6 +22,7 @@ public class NewCameraController : MonoBehaviour
     public List<float> pageCount = new List<float>();
 
     public int nearestPage;
+    private int currentPage;
 
 
     public float speed;
@@ -86,25 +87,27 @@ public class NewCameraController : MonoBehaviour
             Show(machine);
         }
 
-        //move camera according touch position
-        if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Moved)
-        {
-            Vector2 touchDeltaPosition = Input.GetTouch(0).deltaPosition;
-            transform.Translate(-touchDeltaPosition.x * speed, transform.position.y, 0);
-        }
+       
         
        GetCurrentPage();
        GetNearestPage();
        
         //if touch ends, decide which state the camera goes to
-        if (myCameraState == CameraState.Map || myCameraState == CameraState.App || myCameraState == CameraState.Ad)
+        if (myCameraState == CameraState.Map || myCameraState == CameraState.App || myCameraState == CameraState.Ad || myCameraState == CameraState.Closet)
         {
             
         }
         else
         {
-            if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended)
+            //move camera according to touch position
+            if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Moved)
             {
+                Vector2 touchDeltaPosition = Input.GetTouch(0).deltaPosition;
+                transform.Translate(-touchDeltaPosition.x * speed, transform.position.y, 0);
+            }
+            else if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended)
+            {
+                print("isFastSwipe has end = " + TouchController.isFastSwipe);
             
                 transform.position = new Vector3((nearestPage - 1) * 2 * distance, transform.position.y, transform.position.z);
 
@@ -240,7 +243,7 @@ public class NewCameraController : MonoBehaviour
         //print("myCameraState = " + myCameraState);
         lastCameraState = myCameraState;
         myCameraState = CameraState.Closet;
-        transform.position = new Vector3(0, -14, -10);
+        transform.position = new Vector3(-25, 0, -10);
     }
 
     public void ChangeToSubway()
@@ -262,8 +265,6 @@ public class NewCameraController : MonoBehaviour
         Hide(machine.GetComponent<CanvasGroup>());
         
         GoSubwayPart();
-        
-       
     }
     
     public void ChangeToApp()
@@ -271,7 +272,7 @@ public class NewCameraController : MonoBehaviour
         //transform.position = new Vector3(0, 0, -10);
         lastCameraState = myCameraState;
         myCameraState = CameraState.App;
-        transform.position = new Vector3(11, 13, -10);
+        transform.position = new Vector3(34, 0, -10);
           
     }
     
@@ -295,34 +296,73 @@ public class NewCameraController : MonoBehaviour
     }
     private void GetNearestPage()
     {
-        for (int i = 0; i < pageCount.Count; i++) {
-            float testDist = Mathf.Abs(transform.position.x - pageCount[i]);
-            if (testDist < distance) {
-                nearestPage = i;
-                
+//        for (int i = 0; i < pageCount.Count; i++)
+//            {
+//                float testDist = Mathf.Abs(transform.position.x - pageCount[i]);
+//                if (testDist < distance)
+//                {
+//                    nearestPage = i;
+//                }
+//            }
+//        
+        if(TouchController.isFastSwipe == false)
+        {
+            for (int i = 0; i < pageCount.Count; i++)
+            {
+                float testDist = Mathf.Abs(transform.position.x - pageCount[i]);
+                if (testDist < distance)
+                {
+                    nearestPage = i;
+                }
             }
+        }
+        else
+        {
+            if (TouchController.myInputState == TouchController.InputState.LeftSwipe)
+            {
+                nearestPage = currentPage++;
+                TouchController.isFastSwipe = false;
+            }
+            else if (TouchController.myInputState == TouchController.InputState.RightSwipe)
+            {
+                nearestPage = currentPage--;
+                TouchController.isFastSwipe = false;
+            }
+        }
+        
+        //keep nearest page between 0-3
+        if (nearestPage < 0)
+        {
+            nearestPage = 0;
+        }
+        else if (nearestPage > 3)
+        {
+            nearestPage = 3;
         }
     }
     private void GetCurrentPage() {
 
         if (transform.position.y == 0f)
         {
-            if (transform.position.x < -2 * distance)
+            if (transform.position.x < -2 * distance && transform.position.x > -3 * distance)
             {
                 myCameraState = CameraState.One;
-            
+                currentPage = 0;
             }
             else if (transform.position.x > -2 * distance && transform.position.x < 0)
             {
                 myCameraState = CameraState.Two;
+                currentPage = 1;
             }
             else if (transform.position.x >  0 && transform.position.x < 2 * distance)
             {
                 myCameraState = CameraState.Three;
+                currentPage = 2;
             }
             else if (transform.position.x > 2 * distance && transform.position.x < 4.1 * distance)
             {
                 myCameraState = CameraState.Four;
+                currentPage = 3;
             }
         }
         

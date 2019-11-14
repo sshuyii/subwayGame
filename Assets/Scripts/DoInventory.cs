@@ -16,8 +16,6 @@ public class DoInventory : MonoBehaviour
     public Button selfButton;
     
     
-   
-
     // Start is called before the first frame update
     void Start()
     {
@@ -39,7 +37,7 @@ public class DoInventory : MonoBehaviour
 
     public void AddClothToInventory()
     {
-        print("pressed");
+        //print("pressed");
         selfButton = GetComponent<Button>();
         currentSprite = selfButton.image.sprite;
 //        print("currentSpriteName = " + currentSprite.name);
@@ -62,7 +60,11 @@ public class DoInventory : MonoBehaviour
             
         }
         
-        CalculateInventory.inventory[CalculateInventory.occupiedI].GetComponent<Image>().sprite= buttonSprite;
+        //inventory used to be buttons
+        //CalculateInventory.inventory[CalculateInventory.occupiedI].GetComponent<Image>().sprite= buttonSprite;
+        
+        CalculateInventory.inventory[CalculateInventory.occupiedI].GetComponent<SpriteRenderer>().sprite = buttonSprite;
+        
 
         
         
