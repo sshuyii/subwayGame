@@ -16,6 +16,7 @@ public class DoInventory : MonoBehaviour
     public Button selfButton;
     
     
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -61,9 +62,9 @@ public class DoInventory : MonoBehaviour
         }
         
         //inventory used to be buttons
-        //CalculateInventory.inventory[CalculateInventory.occupiedI].GetComponent<Image>().sprite= buttonSprite;
+        CalculateInventory.inventory[CalculateInventory.occupiedI].GetComponent<Image>().sprite= buttonSprite;
         
-        CalculateInventory.inventory[CalculateInventory.occupiedI].GetComponent<SpriteRenderer>().sprite = buttonSprite;
+        //CalculateInventory.inventory[CalculateInventory.occupiedI].GetComponent<SpriteRenderer>().sprite = buttonSprite;
         
 
         

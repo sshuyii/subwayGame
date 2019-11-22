@@ -14,6 +14,8 @@ public class TouchController : MonoBehaviour
    
     public Touch touch;
 
+    public bool leftSwipe;
+    
     public float offsetX;
     public Transform camTransform;
     public enum InputState {
@@ -41,6 +43,9 @@ public class TouchController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
+        print("leftSwipe = " + leftSwipe);
+        
         for (var i = 0; i < Input.touchCount; ++i)
         {
             if (Input.GetTouch(i).phase == TouchPhase.Began)
@@ -55,6 +60,7 @@ public class TouchController : MonoBehaviour
         
         if (Input.touchCount == 1) // user is touching the screen with a single touch
         {
+            
             touch = Input.GetTouch(0); // get the touch
             if (touch.phase == TouchPhase.Began) //check for the first touch
             {
@@ -92,8 +98,9 @@ public class TouchController : MonoBehaviour
                 diffTime = startTime - Time.time;
                 swipeDistance = Vector2.Distance(fp,lp);
                 swipeSpeed = Mathf.Abs(swipeDistance / diffTime);//<<<<<<<<
-                print("swipeSpeed =" + swipeSpeed);
-                if (swipeSpeed > 500)
+//                print("diffTime =" + diffTime);
+//                print("swipeSpeed =" + swipeSpeed);
+                if (swipeSpeed > 500 && Mathf.Abs(diffTime) < 0.2f)
                 {
                     isFastSwipe = true;
                 }
@@ -111,11 +118,14 @@ public class TouchController : MonoBehaviour
                         if ((lp.x > fp.x))  //If the movement was to the right)
                         {   //Right swipe
                             Debug.Log("Right Swipe");
+                            leftSwipe = false;
                             myInputState = InputState.RightSwipe;
                         }
                         else
                         {   //Left swipe
                             Debug.Log("Left Swipe");
+                            leftSwipe = true;
+                            
                             myInputState = InputState.LeftSwipe;
 
                         }
@@ -136,8 +146,10 @@ public class TouchController : MonoBehaviour
                 {   //It's a tap as the drag distance is less than 20% of the screen height
                     Debug.Log("Tap");
                     myInputState = InputState.Tap;
+                    
                 }
             }
         }
+        
     }
 }

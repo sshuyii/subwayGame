@@ -7,27 +7,47 @@ public class CalculateInventory : MonoBehaviour
 {
     public Dictionary<string, Sprite> allCloth = new Dictionary<string, Sprite>();
     public Dictionary<string, Sprite> allClothUI = new Dictionary<string, Sprite>();
+    public Dictionary<string, Sprite> allSubwayCloth = new Dictionary<string, Sprite>();
 
 
     public List<Sprite> allClothList;
     //all the clothes
- 
+
     public List<Sprite> allClothUIList;
+    
+    public List<Sprite> allSubwayClothList;
+
     
     public int occupiedI = 0;
 
-
-    public GameObject player;
+    public List<Image> checks;
 
     //clothes the character is wearing
     public SpriteRenderer topSR;
     public SpriteRenderer shoeSR;
     public SpriteRenderer otherSR;
     public SpriteRenderer everythingSR;
+    
+    //clothes the character wears on subway
+    public Image topSSR;
+    public Image shoeSSR;
+    public Image otherSSR;
+    public Image everythingSSR;
+
+
+    //closet buttons as a record
+    public Button topButton;
+    public Button bottomButton;
+    public Button shoeButton;
+    public Button everythingButton;
 
     
-    //three slots above
+    public List<Image> inventoryCheckList;
+
+    
+    //six slots on the right
     public List<GameObject> inventory;
+    
 
     public List<Sprite> inventorySprite;
 //    public Button top;
@@ -35,8 +55,11 @@ public class CalculateInventory : MonoBehaviour
 //    public Button other;
     
     // Start is called before the first frame update
+    
+    
     void Start()
     {
+       
         for (int i = 0; i < allClothList.Count; i++)
         {
             allCloth.Add(allClothList[i].name, allClothList[i]);
@@ -47,13 +70,19 @@ public class CalculateInventory : MonoBehaviour
             allClothUI.Add(allClothUIList[i].name, allClothUIList[i]);
         }
         
+        for (int i = 0; i < allSubwayClothList.Count; i++)
+        {
+            allSubwayCloth.Add(allSubwayClothList[i].name, allSubwayClothList[i]);
+            print(allSubwayClothList[i].name);
+        }
+        
         
         for (int i = 0; i < inventory.Count; i++)
         {
             //inventory used to be buttons
-            //inventorySR.Add(inventory[i].GetComponent<Button>().image.sprite);
+            inventorySprite.Add(inventory[i].GetComponent<Button>().image.sprite);
             
-            inventorySprite.Add(inventory[i].GetComponent<SpriteRenderer>().sprite);
+            //inventorySprite.Add(inventory[i].GetComponent<SpriteRenderer>().sprite);
 
         }
 

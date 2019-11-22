@@ -8,6 +8,10 @@ public class ClothChanging : MonoBehaviour
     public Text text;
     private Vector3 startPos;
     public Sprite worn;
+
+    public Image checkImage;
+
+    private bool firstTime;
     
     private CalculateInventory CalculateInventory;
 
@@ -23,13 +27,22 @@ public class ClothChanging : MonoBehaviour
     public SpriteRenderer whiteShirt;
     public SpriteRenderer blackPants;
     
+    //subway clothes
+    public Image workClothS;
+
+    public Image whiteShirtS;
+    public Image blackPantsS;
+    
     //drag
     private float dist;
     private bool dragging = false;
     private Vector3 offset;
     private Transform toDrag;
-   
 
+    private Button selfButton;
+
+    private List<Button> inventoryButtonList;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -37,10 +50,23 @@ public class ClothChanging : MonoBehaviour
         CalculateInventory = InventoryController.GetComponent<CalculateInventory>();
         startPos = transform.position;
 
+        inventoryButtonList = new List<Button>();
+
+        firstTime = true;
 //        selfButton.onClick.AddListener(AddClothToInventory);
 
-        currentSprite = GetComponent<SpriteRenderer>().sprite;
+        //currentSprite = GetComponent<SpriteRenderer>().sprite;
+        
+        currentSprite = GetComponent<Image>().sprite;
 
+        selfButton = GetComponent<Button>();
+
+
+        for (var i = 0; i < CalculateInventory.inventory.Count; i++)
+        {
+            inventoryButtonList.Add(CalculateInventory.inventory[i].GetComponent<Button>());
+        }
+        
 
     }
 
@@ -118,21 +144,36 @@ public class ClothChanging : MonoBehaviour
 
     public void ChangeCloth()
     {
-        currentSprite = GetComponent<SpriteRenderer>().sprite;
+        //currentSprite = GetComponenft<SpriteRenderer>().sprite;
+        currentSprite = GetComponent<Image>().sprite;
+
 
         if(CalculateInventory.allCloth.ContainsKey(currentSprite.name))
         {
             
-            
             if(currentSprite.name.Contains("Top"))
             {
-                buttonChangeBack(CalculateInventory.topSR.sprite);
                 
+                buttonChangeBack();
+
+                //record the button
+                CalculateInventory.topButton = selfButton;
+                
+                
+
                 CalculateInventory.topSR.sprite = CalculateInventory.allCloth[currentSprite.name];
-                print("change top");
+                print(currentSprite.name);
+
+                CalculateInventory.topSSR.sprite = CalculateInventory.allSubwayCloth[currentSprite.name];
                 
                 whiteShirt.enabled = false;
                 workCloth.enabled = false;
+                
+                
+                workClothS.enabled = false;
+                whiteShirtS.enabled = false;
+
+                
                 
                 //player talks
                 if(currentSprite.name.Contains("A1"))
@@ -145,40 +186,74 @@ public class ClothChanging : MonoBehaviour
             }
             else if(currentSprite.name.Contains("Bottom"))
             {
-                buttonChangeBack(CalculateInventory.otherSR.sprite);
+                buttonChangeBack();
+
+                //record the button
+                CalculateInventory.bottomButton = selfButton;
+                
 
                 CalculateInventory.otherSR.sprite = CalculateInventory.allCloth[currentSprite.name];
+                CalculateInventory.otherSSR.sprite = CalculateInventory.allSubwayCloth[currentSprite.name];
+
                 print("change bottom");
                 
                 workCloth.enabled = false;
-
                 blackPants.enabled = false;
+                
+                workClothS.enabled = false;
+                blackPantsS.enabled = false;
+
             }
             else if(currentSprite.name.Contains("shoe"))
             {
-                buttonChangeBack(CalculateInventory.shoeSR.sprite);
+                buttonChangeBack();
+
+                //record the button
+                CalculateInventory.shoeButton = selfButton;
+                
 
                 CalculateInventory.shoeSR.sprite = CalculateInventory.allCloth[currentSprite.name];
+                CalculateInventory.shoeSSR.sprite = CalculateInventory.allSubwayCloth[currentSprite.name];
+
                 print("change shoe");
+               
             }
             else if(currentSprite.name.Contains("Everything"))
             {
-                buttonChangeBack(CalculateInventory.everythingSR.sprite);
+                buttonChangeBack();
+            
+                //record the button
+                CalculateInventory.everythingButton = selfButton;
+                
 
                 CalculateInventory.everythingSR.sprite = CalculateInventory.allCloth[currentSprite.name];
+                CalculateInventory.everythingSSR.sprite = CalculateInventory.allSubwayCloth[currentSprite.name];
+
+                
                 print("change everything");
                 
                 workCloth.enabled = false;
+                
+                workClothS.enabled = false;
+
                 CalculateInventory.topSR.sprite = null;
                 CalculateInventory.otherSR.sprite = null;
 
                 blackPants.enabled = true;
                 whiteShirt.enabled = true;
+
+                whiteShirtS.enabled = true;
+                blackPantsS.enabled = true;
+
+
             }
         }
         else
         {
+            //when the button is workCloth
             workCloth.enabled = !workCloth.enabled;
+            workClothS.enabled = !workClothS.enabled;
+
 
 
             CalculateInventory.topSR.sprite = null;
@@ -187,37 +262,104 @@ public class ClothChanging : MonoBehaviour
         
             blackPants.enabled = true;
             whiteShirt.enabled = true;
+
+
+            whiteShirtS.enabled = true;
+            blackPantsS.enabled = true;
         }
-        GetComponent<SpriteRenderer>().sprite = worn;
-        transform.position = startPos;
+        //GetComponent<Image>().sprite = worn;
+        //transform.position = startPos;
+
+        
+        //now the button cannot be pressed
+        checkImage.enabled = true;
+        selfButton.enabled = false;
+
+        firstTime = false;
+
     }
 
     public void ChangeWorkCloth()
     {
         workCloth.enabled = !workCloth.enabled;
+        workClothS.enabled = !workClothS.enabled;
 
 
+      
         CalculateInventory.topSR.sprite = null;
         CalculateInventory.otherSR.sprite = null;
         CalculateInventory.everythingSR.sprite = null;
+
+        CalculateInventory.topSSR.sprite = null;
+        CalculateInventory.otherSSR.sprite = null;
+        CalculateInventory.everythingSSR.sprite = null;
+
+        
         
         blackPants.enabled = true;
         whiteShirt.enabled = true;
+
+        whiteShirtS.enabled = true;
+        blackPants.enabled = true;
+        
+        //enable all buttons
+        for (var i = 0; i < inventoryButtonList.Count; i++)
+        {
+            inventoryButtonList[i].enabled = true;
+            
+        }
+        
+        //disable all checks
+        for (var i = 0; i < CalculateInventory.inventoryCheckList.Count; i++)
+        {
+            CalculateInventory.inventoryCheckList[i].enabled = false;
+        }
+        
     }
 
-    public void buttonChangeBack(Sprite topOrBottomOrShoe)
+    private void buttonChangeBack()
     {
-        //get the worn inventory back to the cloth the character is wearing
-        for (int i = 0; i < CalculateInventory.inventory.Count; i++)
-        {
-            if (CalculateInventory.inventory[i].GetComponent<SpriteRenderer>().sprite == worn 
-                && topOrBottomOrShoe != null)
+        
+            if (CalculateInventory.allCloth.ContainsKey(currentSprite.name))
             {
-                CalculateInventory.inventory[i].GetComponent<SpriteRenderer>().sprite =
-                    CalculateInventory.allClothUI[topOrBottomOrShoe.name];
-                        
-            }
+                if (currentSprite.name.Contains("Top") && whiteShirt.enabled == false)
+                {
+                    print("toppppppp");
+                    CalculateInventory.topButton.enabled = true;
+                    CalculateInventory.topButton.GetComponent<ClothChanging>().checkImage.enabled = false;
+                }
+                else if (currentSprite.name.Contains("Bottom") && blackPants.enabled == false)
+                {
+                    CalculateInventory.bottomButton.enabled = true;
+                    CalculateInventory.bottomButton.GetComponent<ClothChanging>().checkImage.enabled = false;
+                }
+                else if (currentSprite.name.Contains("Shoe"))
+                {
+                    CalculateInventory.shoeButton.enabled = true;
+                    CalculateInventory.shoeButton.GetComponent<ClothChanging>().checkImage.enabled = false;
+                }
+                else if (currentSprite.name.Contains("Everything"))
+                {
+                    CalculateInventory.everythingButton.enabled = true;
+                    CalculateInventory.everythingButton.GetComponent<ClothChanging>().checkImage.enabled = false;
+                }
+            
         }
+        
+
+//        //get the worn inventory back to the cloth the character is wearing
+//        for (int i = 0; i < CalculateInventory.inventory.Count; i++)
+//        {
+//            if (CalculateInventory.inventory[i].GetComponent<Image>().sprite == worn 
+//                && topOrBottomOrShoe != null)
+//            {
+//                CalculateInventory.inventory[i].GetComponent<Image>().sprite =
+//                    CalculateInventory.allClothUI[topOrBottomOrShoe.name];
+//
+//                break;
+//
+//            }
+//        }
     }
     
 }
