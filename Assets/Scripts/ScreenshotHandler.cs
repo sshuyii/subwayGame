@@ -5,16 +5,20 @@ using UnityEngine.UI;
 
 public class ScreenshotHandler : MonoBehaviour
 {
-    
-    
+    //a list of all the posts
 
+
+    public InstagramController instagramController;
+
+    private GameObject toothpastePost;
+    private int postNum;
     private static ScreenshotHandler instance;
 
     private Camera myCamera;
     private bool takeScreenshotOnNextFrame;
 
     private Image postImage;
-    
+   
     private string ScreenCapDirectory;
 
     private Texture2D myScreenshot;
@@ -26,8 +30,8 @@ public class ScreenshotHandler : MonoBehaviour
         
         ScreenCapDirectory = Application.persistentDataPath;
 
-        postImage = GetComponent<Image>();
-        print(postImage.name);
+//        postImage = GetComponent<Image>();
+//        print(postImage.name);
     }
     
     public void TakeScreenshot()
@@ -41,6 +45,13 @@ public class ScreenshotHandler : MonoBehaviour
         print(myScreenshot.name + "aaaaaaaa");
 
         TexToPng(CropImage());
+        
+        for (int i = 0; i < instagramController.postList.Count; i++)
+        {
+            instagramController.postList[i].transform.SetSiblingIndex(i);
+            print(i + "dddd");
+            print(instagramController.postList[i].transform.name + instagramController.postList[i].transform.GetSiblingIndex());
+        }
     }
 
  
@@ -64,16 +75,27 @@ public class ScreenshotHandler : MonoBehaviour
         tex.Apply();
         return tex;
     }
-        
-        
-    
 
     private void TexToPng(Texture2D tex)
     {
         Texture2D sprites = tex;
         Rect rec = new Rect(0, 0, sprites.width, sprites.height);
-        postImage.sprite = Sprite.Create(sprites,rec,new Vector2(0,0),100f);
-//        postImage.sprite = null;
+//        if(this.name == "Toothpaste")
+//        {
+            toothpastePost = Instantiate(instagramController.postPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+            toothpastePost.transform.parent = instagramController.postParent.transform;
+            
+            //move to the first of the list
+            instagramController.postList.Insert(0,toothpastePost);
+            
+            //get the post child
+            postImage = toothpastePost.transform.Find("Post").gameObject.GetComponent<Image>();
+            print(postImage.name);
+
+            postImage.sprite = Sprite.Create(sprites,rec,new Vector2(0,0),100f);
+
+            print("toothpaste generated");
+//        }
     }
 
   

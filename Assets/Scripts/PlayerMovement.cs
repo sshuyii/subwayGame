@@ -16,7 +16,6 @@ public class PlayerMovement : MonoBehaviour
     private IEnumerator coroutine;
     private bool isMoving;
 
-
     public SpriteRenderer playerBody;
     public SpriteRenderer playerHelmet;
     public SpriteRenderer playerCloth;
@@ -26,7 +25,6 @@ public class PlayerMovement : MonoBehaviour
     private Sprite wornHelmet;
     private Sprite wornCloth;
     private Sprite wornShoe;
-//
 //    
 //    public Sprite playerIdleBody;
 //    public Sprite playerIdleCloth;

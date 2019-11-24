@@ -1228,6 +1228,12 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 151124453}
   m_CullTransparentMesh: 0
+--- !u!1 &170167609 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 183266606125567563, guid: e4080445ad2334b05816bf36a1368612,
+    type: 3}
+  m_PrefabInstance: {fileID: 742654783}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &170355879
 GameObject:
   m_ObjectHideFlags: 0
@@ -3046,6 +3052,12 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 318715321}
   m_CullTransparentMesh: 0
+--- !u!1 &338610951 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 183266606125567563, guid: e4080445ad2334b05816bf36a1368612,
+    type: 3}
+  m_PrefabInstance: {fileID: 1709854121}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &355950569
 GameObject:
   m_ObjectHideFlags: 0
@@ -7510,6 +7522,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 067551500fa3843bcb2f141592fa9fd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  instagramController: {fileID: 1188720988}
 --- !u!1 &711510251
 GameObject:
   m_ObjectHideFlags: 0
@@ -12132,6 +12145,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1188720987}
+  - component: {fileID: 1188720988}
   m_Layer: 0
   m_Name: ---InstagramController
   m_TagString: Untagged
@@ -12153,6 +12167,24 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1188720988
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1188720986}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43b0f112bf2744506966d357df23bd85, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  postList:
+  - {fileID: 338610951}
+  - {fileID: 170167609}
+  postPrefab: {fileID: 183266606125567563, guid: e4080445ad2334b05816bf36a1368612,
+    type: 3}
+  postParent: {fileID: 901265893}
 --- !u!1 &1191812685
 GameObject:
   m_ObjectHideFlags: 0
