@@ -1,12 +1,25 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking.Match;
 
 public class NewCameraController : MonoBehaviour
 {
     public TouchController TouchController;
 
     private bool fastSwipeBool;
+
+
+    public enum AppState
+    {
+        Mainpage,
+        KararaPage,
+        RetroPage,
+        Post
+        
+    }
+
+    private AppState lastAppState;
 
     public enum CameraState
     {
@@ -34,11 +47,23 @@ public class NewCameraController : MonoBehaviour
     private CameraState lastCameraState;
 
     public CameraState myCameraState;
+    public AppState myAppState;
     private Vector3 movement;
     public float distance;
     public CanvasGroup inventory;
     public CanvasGroup machine;
     public CanvasGroup basicUI;
+
+    public CanvasGroup appBackground;
+    public CanvasGroup mainpage;
+    public CanvasGroup postpage;
+    public CanvasGroup KararaPage;
+    public CanvasGroup RetroPage;
+    public CanvasGroup DesignerPage;
+
+    public List<CanvasGroup> pageList = new List<CanvasGroup>();
+
+    
 
 
     private float offsetX;
@@ -48,6 +73,7 @@ public class NewCameraController : MonoBehaviour
     {
 
         myCameraState = CameraState.Two;
+        myAppState = AppState.Mainpage;
         movement = new Vector3(2 * distance, 0, 0);
 
         //add all the subway pages to the list
@@ -55,6 +81,17 @@ public class NewCameraController : MonoBehaviour
         pageCount.Add(0 * distance);
         pageCount.Add(2 * distance);
         pageCount.Add(4 * distance);
+        
+        pageList.Add(RetroPage);
+        pageList.Add(KararaPage);
+        pageList.Add(DesignerPage);
+
+
+        Hide(mainpage);
+        Hide(postpage);
+        HideAllPersonalPages();
+
+        
     }
 
     
@@ -75,6 +112,7 @@ public class NewCameraController : MonoBehaviour
                 Hide(inventory);
                 Hide(GoBack);
                 Hide(basicUI);
+                Show(appBackground);
             }
             else
             {
@@ -82,6 +120,8 @@ public class NewCameraController : MonoBehaviour
                 Hide(inventory);
                 Show(GoBack);
                 Hide(basicUI);
+                Hide(appBackground);
+
             }
         }
 
@@ -92,6 +132,8 @@ public class NewCameraController : MonoBehaviour
             Hide(basicUI);
 
             Show(GoBack);
+            Hide(appBackground);
+
         }
         
         else
@@ -100,6 +142,8 @@ public class NewCameraController : MonoBehaviour
             Hide(GoBack);
             Show(basicUI);
             Show(machine);
+            Hide(appBackground);
+
         }
 
        
@@ -161,13 +205,39 @@ public class NewCameraController : MonoBehaviour
             lastCameraState = myCameraState;
             myCameraState = CameraState.Closet;
             transform.position = new Vector3(-25, 0, -10);
-        
-        
+    }
+
+    public void AppBackButton()
+    {
+       if (myAppState == AppState.Post)
+       {
+           
+            Show(KararaPage);
+            Hide(mainpage);
+            HideAllPersonalPages();
+            myAppState = AppState.KararaPage;
+
+
+       }
+       else if (myAppState == AppState.Mainpage)
+       {
+            ChangeToSubway();
+       }
+       else if(myAppState == AppState.RetroPage || myAppState == AppState.KararaPage)
+       {
+           Show(mainpage);
+           HideAllPersonalPages();
+
+           myAppState = AppState.Mainpage;
+       }
+       
+
+      
     }
 
     public void ChangeToSubway()
     {
-        
+       
             //transform.position = new Vector3(0, 0, -10);
             if (myCameraState == CameraState.Closet || myCameraState == CameraState.Map ||
                 myCameraState == CameraState.App || myCameraState == CameraState.Ad)
@@ -184,6 +254,7 @@ public class NewCameraController : MonoBehaviour
             }
 
             Hide(machine.GetComponent<CanvasGroup>());
+            Hide(mainpage);
 
             GoSubwayPart();
         
@@ -193,10 +264,16 @@ public class NewCameraController : MonoBehaviour
     {
         
             //transform.position = new Vector3(0, 0, -10);
+            
             lastCameraState = myCameraState;
             myCameraState = CameraState.App;
+            myAppState = AppState.Mainpage;
+            
             transform.position = new Vector3(35, 0, -10);
-        
+
+            print("mainpageeeeee");
+            Show(mainpage);
+
     }
     
     public void ChangeToMap()
@@ -375,16 +452,26 @@ public class NewCameraController : MonoBehaviour
             transform.position = new Vector3(24, 0, -10);
             myCameraState = CameraState.Ad;
         
-        
     }
     
     public void GoMainpage()
     {
             transform.position = new Vector3(35, 0, -10);        
+            Show(mainpage);
+
     }
     public void GoPersonalpage()
     {
         transform.position = new Vector3(55, 0, -10);        
+        Hide(mainpage);
+
     }
 
+    public void HideAllPersonalPages()
+    {
+        for (var i = 0; i < pageList.Count; i++)
+        {
+            Hide(pageList[i]);
+        }
+    }
 }

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.PlayerLoop;
 using UnityEngine.UI;
 
 public class ScreenshotHandler : MonoBehaviour
@@ -23,8 +24,21 @@ public class ScreenshotHandler : MonoBehaviour
 
     private Texture2D myScreenshot;
 
+
+    private Texture2D renderResult;
+
+    private IEnumerator coroutine;
+
+    
+    private int width = Screen.width;
+    private int height = Screen.height;
+    
+    void Awake()
+    {
+    }
     void Start()
     {
+        //height = width;
         instance = this;
         myCamera = gameObject.GetComponent<Camera>();
         
@@ -33,6 +47,115 @@ public class ScreenshotHandler : MonoBehaviour
 //        postImage = GetComponent<Image>();
 //        print(postImage.name);
     }
+
+
+    public void TakeScreenShotSprite()
+    {
+        
+        //instantiate new post object     
+        toothpastePost = Instantiate(instagramController.PosturePostPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+        //set parent(probably a better way to do
+        toothpastePost.transform.parent = instagramController.postParent.transform;
+            
+        //move to the first of the list
+        instagramController.postList.Insert(0,toothpastePost);
+            
+        //get the post child
+        Image[] postImageList = toothpastePost.transform.Find("PostFolder").gameObject.GetComponentsInChildren<Image>();
+        
+        //get the background
+
+
+        for (int i = 0; i < postImageList.Length; i++)
+        {
+            
+            //print(postImageList[i].sprite.name + " post name");
+            postImageList[i].sprite = instagramController.PosturePostImageList[i].sprite;
+        }
+        
+        //move to the first of the list
+        instagramController.postList.Insert(0,toothpastePost);
+        
+        for (int i = 0; i < instagramController.postList.Count; i++)
+        {
+            instagramController.postList[i].transform.SetSiblingIndex(i);
+        }
+    }
+    
+    private void OnPostRender()
+    {
+        if (takeScreenshotOnNextFrame)
+        {
+            takeScreenshotOnNextFrame = false;
+            RenderTexture renderTexture = myCamera.targetTexture;
+
+            renderResult =
+                new Texture2D(renderTexture.width, renderTexture.height, TextureFormat.ARGB32, false);
+            Rect rect = new Rect(0, 0, renderTexture.width, renderTexture.height);
+            renderResult.ReadPixels(rect, 0, 0);
+
+            byte[] byteArray = renderResult.EncodeToPNG();
+            System.IO.File.WriteAllBytes(Application.dataPath + "/Resources/Screenshots/CameraScreenshot.png", byteArray);
+
+            Debug.Log("Saved CameraScreenshot.png");
+            
+            RenderTexture.ReleaseTemporary(renderTexture);
+            myCamera.targetTexture = null;
+        }
+    }
+
+   
+    IEnumerator screenShotCoroutine()
+    {
+        yield return new WaitForEndOfFrame();
+        string path = Application.dataPath + "/Resources/Screenshots/CameraScreenshot.png";
+
+        Debug.Log("Saved CameraScreenshot.png");
+
+        Texture2D screenImage = new Texture2D(Screen.width, Screen.height);
+
+        //Get Image from screen
+        screenImage.ReadPixels(new Rect(0, 0, Screen.width, Screen.height), 0, 0);
+ 
+        //Wait for a long time
+        for (int i = 0; i < 15; i++)
+        {
+            yield return null;
+        }
+
+        screenImage.Apply();
+
+        //Wait for a long time
+        for (int i = 0; i < 15; i++)
+        {
+            yield return null;
+        }
+
+        //Convert to png(Expensive)
+        byte[] imageBytes = screenImage.EncodeToPNG();
+
+        //Wait for a long time
+        for (int i = 0; i < 15; i++)
+        {
+            yield return null;
+        }
+
+        //Create new thread then save image to file
+        new System.Threading.Thread(() =>
+        {
+            System.Threading.Thread.Sleep(100);
+            System.IO.File.WriteAllBytes(path, imageBytes);
+        }).Start();
+    }
+    
+    
+    private void TakeScreenshot(int width, int height)
+    {
+        myCamera.targetTexture = RenderTexture.GetTemporary(width, height, 16);
+        takeScreenshotOnNextFrame = true;
+
+    }
+    
     
     public void TakeScreenshot()
     {
@@ -40,12 +163,17 @@ public class ScreenshotHandler : MonoBehaviour
 //        takeScreenshotOnNextFrame = true;
         //ScreenCapture.CaptureScreenshot(Application.dataPath + "/Resources/Screenshots/CameraScreenshot.png");
         
-        myScreenshot = Resources.Load<Texture2D>("Screenshots/CameraScreenshot");
+        TakeScreenshot(width, height);
 
-        print(myScreenshot.name + "aaaaaaaa");
+//        coroutine = screenShotCoroutine();
+//        StartCoroutine(coroutine);
+        
+        //myScreenshot = Resources.Load<Texture2D>("Screenshots/CameraScreenshot");        
+
+        //print(myScreenshot.name + "aaaaaaaa");
 
         TexToPng(CropImage());
-        
+                
         for (int i = 0; i < instagramController.postList.Count; i++)
         {
             instagramController.postList[i].transform.SetSiblingIndex(i);
@@ -54,12 +182,9 @@ public class ScreenshotHandler : MonoBehaviour
         }
     }
 
- 
+
     Texture2D CropImage()
     {
-        int width = Screen.width;
-        int height = Screen.width;
-
         Texture2D tex = new Texture2D(width, height, TextureFormat.RGB24, false);
         
         //Height of image in pixels
@@ -68,7 +193,7 @@ public class ScreenshotHandler : MonoBehaviour
             //Width of image in pixels
             for (int x = 0; x < tex.width; x++)
             {
-                Color cPixelColour = myScreenshot.GetPixel(x, y + 200);
+                Color cPixelColour = renderResult.GetPixel(x, y + 200);
                 tex.SetPixel(x, y, cPixelColour);
             }
         }
@@ -99,8 +224,4 @@ public class ScreenshotHandler : MonoBehaviour
     }
 
   
-//    public static void TakeScreenshot_Static(int width, int height)
-//    {
-//        instance.TakeScreenshot(width, height);
-//    }
 }
