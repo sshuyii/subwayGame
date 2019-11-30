@@ -1,20 +1,34 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class CalculateInventory : MonoBehaviour
 {
+    public int posNum = 1;
+
+    
     public Dictionary<string, Sprite> allCloth = new Dictionary<string, Sprite>();
     public Dictionary<string, Sprite> allClothUI = new Dictionary<string, Sprite>();
     public Dictionary<string, Sprite> allSubwayCloth = new Dictionary<string, Sprite>();
+    public Dictionary<string, Sprite> allAdCloth = new Dictionary<string, Sprite>();
 
+    public List<Dictionary<string, Sprite>> postureDictionaryList = new List<Dictionary<string, Sprite>>();
 
-    public List<Sprite> allClothList;
-    //all the clothes
+    //all clothes for each postures
+    public List<Sprite> ClothPos1;
+    public List<Sprite> ClothPos2;
+    public List<Sprite> ClothPos3;
 
-    public List<Sprite> allClothUIList;
+    public Dictionary<string, Sprite> AllClothPos1 = new Dictionary<string, Sprite>();
+    public Dictionary<string, Sprite> AllClothPos2 = new Dictionary<string, Sprite>();
+    public Dictionary<string, Sprite> AllClothPos3 = new Dictionary<string, Sprite>();
+
     
+    //all the clothes
+    public List<Sprite> allClothUIList;
+    public List<Sprite> allClothList;
     public List<Sprite> allSubwayClothList;
 
     
@@ -33,6 +47,12 @@ public class CalculateInventory : MonoBehaviour
     public Image shoeSSR;
     public Image otherSSR;
     public Image everythingSSR;
+
+    //clothes the character wears in advertisement
+    public Image topASR;
+    public Image shoeASR;
+    public Image otherASR;
+    public Image everythingASR;
 
 
     //closet buttons as a record
@@ -85,6 +105,20 @@ public class CalculateInventory : MonoBehaviour
             //inventorySprite.Add(inventory[i].GetComponent<SpriteRenderer>().sprite);
 
         }
+
+        for (int i = 0; i < ClothPos1.Count; i++)
+        {
+            AllClothPos1.Add(ClothPos1[i].name, ClothPos1[i]);
+            AllClothPos2.Add(ClothPos2[i].name, ClothPos2[i]);
+            AllClothPos3.Add(ClothPos3[i].name, ClothPos3[i]);
+
+        }
+
+        postureDictionaryList.Add(AllClothPos1);
+        postureDictionaryList.Add(AllClothPos2);
+        postureDictionaryList.Add(AllClothPos3);
+        
+        allAdCloth = postureDictionaryList[posNum];
 
 
     }

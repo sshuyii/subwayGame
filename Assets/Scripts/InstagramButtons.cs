@@ -6,12 +6,19 @@ using UnityEngine.UI;
 public class InstagramButtons : MonoBehaviour
 {
     private Sprite currentSprite;
+    public Sprite transparent;
+
+    private Image myImage;
     public Image gotoImage;
+    private Button myButton;
 
     public InstagramController InstagramController;
+    public CalculateInventory CalculateInventory;
     private Text username;
 
     private NewCameraController NewCameraController;
+    
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -20,12 +27,25 @@ public class InstagramButtons : MonoBehaviour
         
         NewCameraController = GameObject.Find("Main Camera").GetComponent<NewCameraController>();
 
+        myImage = GetComponent<Image>();
+        myButton = GetComponent<Button>();
+
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (myImage.sprite == transparent)
+        {
+            myButton.enabled = false;
+           
+        }
+        else
+        {
+            myButton.enabled = true;
+        }
+            
     }
 
     public void ChangeToPersonalPage()
@@ -68,23 +88,44 @@ public class InstagramButtons : MonoBehaviour
 
     public void ChangePosture()
     {
-        for (int i = 0; i < InstagramController.postureList.Count; i++)
+
+        if(CalculateInventory.posNum < 3)
         {
-            if (InstagramController.postureList[i] == currentSprite)
-            {
-                if(i != InstagramController.postureList.Count - 1)
-                {
-                    currentSprite = InstagramController.postureList[i + 1];
-                }
-                else
-                {
-                    currentSprite = InstagramController.postureList[0];
-
-                }
-            }
+            CalculateInventory.posNum++;
         }
-
+        else
+        {
+            CalculateInventory.posNum = 1;
+        }
+//        for (int i = 0; i < InstagramController.postureList.Count; i++)
+//        {
+//            print("InstagramController.postureList.Count = " + InstagramController.postureList.Count);
+//                if (myImage.sprite == InstagramController.postureList[i])
+//                {
+//                    //if not the last pose
+//
+//                    if (i != InstagramController.postureList.Count - 1)
+//                    {
+//                        myImage.sprite = InstagramController.postureList[i + 1];
+//                        CalculateInventory.posNum = i + 1;
+//                        CalculateInventory.allAdCloth = CalculateInventory.postureDictionaryList[CalculateInventory.posNum];
+//                        print("posNum = " + CalculateInventory.posNum);
+//                        break;
+//                    }
+//                    else
+//                    {
+//                        myImage.sprite = InstagramController.postureList[0];
+//                        CalculateInventory.posNum = 1;
+//                        CalculateInventory.allAdCloth = CalculateInventory.postureDictionaryList[CalculateInventory.posNum];
+//
+//                        break;
+//                    }
+//                }
+//        }
     }
+
+  
+    
     
     void Hide(CanvasGroup UIGroup) {
         UIGroup.alpha = 0f; //this makes everything transparent
@@ -98,4 +139,5 @@ public class InstagramButtons : MonoBehaviour
         UIGroup.interactable = true;
     }
 
+    
 }

@@ -6,15 +6,24 @@ using UnityEngine.UI;
 public class InstagramController : MonoBehaviour
 {
     public List<GameObject> postList = new List<GameObject>();
-    
+
+    public CalculateInventory CalculateInventory;
+
+    public Image adBodyImage;
     
     public GameObject postPrefab;
     public GameObject postParent;
+    
+    //change post in karara's page
+    public GameObject filmParent;
+    public GameObject photoPostPrefab;
+    
     
     //take picture page gameobjects
     public GameObject PosturePostPrefab;
     public GameObject originalPosture;
     public Image[] PosturePostImageList;
+    
     
     //record background, clothes and posture
     public List<Sprite> profileList;
@@ -28,6 +37,10 @@ public class InstagramController : MonoBehaviour
     public List<Sprite> backAdList;
     public Dictionary<string, Sprite> allBackAd = new Dictionary<string, Sprite>();
 
+    
+    //workcloth list
+    public List<Sprite> workclothList;
+    public Image workClothImage;
     
     // Start is called before the first frame update
     void Start()
@@ -50,6 +63,7 @@ public class InstagramController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        adBodyImage.sprite = postureList[CalculateInventory.posNum - 1];
+        workClothImage.sprite = workclothList[CalculateInventory.posNum - 1];
     }
 }

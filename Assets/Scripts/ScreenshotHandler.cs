@@ -15,7 +15,7 @@ public class ScreenshotHandler : MonoBehaviour
     private int postNum;
     private static ScreenshotHandler instance;
 
-    private Camera myCamera;
+    public Camera myCamera;
     private bool takeScreenshotOnNextFrame;
 
     private Image postImage;
@@ -40,7 +40,7 @@ public class ScreenshotHandler : MonoBehaviour
     {
         //height = width;
         instance = this;
-        myCamera = gameObject.GetComponent<Camera>();
+        //myCamera = gameObject.GetComponent<Camera>();
         
         ScreenCapDirectory = Application.persistentDataPath;
 
@@ -48,6 +48,21 @@ public class ScreenshotHandler : MonoBehaviour
 //        print(postImage.name);
     }
 
+    private void addToKararaPage()
+    {
+        //instantiate new post object     
+        var newPost = Instantiate(instagramController.photoPostPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+        //set parent(probably a better way to do
+        newPost.transform.parent = instagramController.filmParent.transform;
+        
+        Texture2D sprites = CropImage();
+
+        Rect rec = new Rect(0, 0, sprites.width, sprites.height);
+
+        //change sprite to the newly taken photo
+        newPost.GetComponent<Image>().sprite = Sprite.Create(sprites,rec,new Vector2(0,0),100f);
+
+    }
 
     public void TakeScreenShotSprite()
     {
@@ -64,22 +79,33 @@ public class ScreenshotHandler : MonoBehaviour
         Image[] postImageList = toothpastePost.transform.Find("PostFolder").gameObject.GetComponentsInChildren<Image>();
         
         //get the background
-
-
         for (int i = 0; i < postImageList.Length; i++)
         {
-            
-            //print(postImageList[i].sprite.name + " post name");
             postImageList[i].sprite = instagramController.PosturePostImageList[i].sprite;
         }
         
-        //move to the first of the list
-        instagramController.postList.Insert(0,toothpastePost);
-        
+        //re-arrange children object, so the latest is displayed as the first
         for (int i = 0; i < instagramController.postList.Count; i++)
         {
             instagramController.postList[i].transform.SetSiblingIndex(i);
         }
+        
+        StartCoroutine(ExampleCoroutine());
+
+    }
+    
+    IEnumerator ExampleCoroutine()
+    {
+        //Print the time of when the function is first called.
+        Debug.Log("Started Coroutine at timestamp : " + Time.time);
+
+        //yield on a new YieldInstruction that waits for 5 seconds.
+        yield return new WaitForSeconds(5);
+        addToKararaPage();
+
+        //After we have waited 5 seconds print the time again.
+        Debug.Log("Finished Coroutine at timestamp : " + Time.time);
+        
     }
     
     private void OnPostRender()
@@ -98,7 +124,7 @@ public class ScreenshotHandler : MonoBehaviour
             System.IO.File.WriteAllBytes(Application.dataPath + "/Resources/Screenshots/CameraScreenshot.png", byteArray);
 
             Debug.Log("Saved CameraScreenshot.png");
-            
+            renderResult.Apply();
             RenderTexture.ReleaseTemporary(renderTexture);
             myCamera.targetTexture = null;
         }
@@ -172,20 +198,20 @@ public class ScreenshotHandler : MonoBehaviour
 
         //print(myScreenshot.name + "aaaaaaaa");
 
-        TexToPng(CropImage());
+//        TexToPng(CropImage());
                 
-        for (int i = 0; i < instagramController.postList.Count; i++)
-        {
-            instagramController.postList[i].transform.SetSiblingIndex(i);
-            print(i + "dddd");
-            print(instagramController.postList[i].transform.name + instagramController.postList[i].transform.GetSiblingIndex());
-        }
+//        for (int i = 0; i < instagramController.postList.Count; i++)
+//        {
+//            instagramController.postList[i].transform.SetSiblingIndex(i);
+//            print(i + "dddd");
+//            print(instagramController.postList[i].transform.name + instagramController.postList[i].transform.GetSiblingIndex());
+//        }
     }
 
 
     Texture2D CropImage()
     {
-        Texture2D tex = new Texture2D(width, height, TextureFormat.RGB24, false);
+        Texture2D tex = new Texture2D(width, width, TextureFormat.RGB24, false);
         
         //Height of image in pixels
         for (int y = 0; y < tex.height; y++)
@@ -193,7 +219,7 @@ public class ScreenshotHandler : MonoBehaviour
             //Width of image in pixels
             for (int x = 0; x < tex.width; x++)
             {
-                Color cPixelColour = renderResult.GetPixel(x, y + 200);
+                Color cPixelColour = renderResult.GetPixel(x , y + 200);
                 tex.SetPixel(x, y, cPixelColour);
             }
         }
@@ -222,6 +248,7 @@ public class ScreenshotHandler : MonoBehaviour
             print("toothpaste generated");
 //        }
     }
+   
 
   
 }

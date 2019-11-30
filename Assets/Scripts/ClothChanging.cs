@@ -11,6 +11,7 @@ public class ClothChanging : MonoBehaviour
 
     public Image checkImage;
 
+    
     private bool firstTime;
     
     private CalculateInventory CalculateInventory;
@@ -160,10 +161,11 @@ public class ClothChanging : MonoBehaviour
                 CalculateInventory.topButton = selfButton;
                 
                 
-
+                //change inventory clothes
                 CalculateInventory.topSR.sprite = CalculateInventory.allCloth[currentSprite.name];
                 print(currentSprite.name);
 
+                //change subway clothes
                 CalculateInventory.topSSR.sprite = CalculateInventory.allSubwayCloth[currentSprite.name];
                 
                 whiteShirt.enabled = false;
@@ -172,6 +174,10 @@ public class ClothChanging : MonoBehaviour
                 
                 workClothS.enabled = false;
                 whiteShirtS.enabled = false;
+
+                
+                //change clothes in advertisement
+                CalculateInventory.topASR.sprite = CalculateInventory.allAdCloth[currentSprite.name];
 
                 
                 
@@ -194,6 +200,8 @@ public class ClothChanging : MonoBehaviour
 
                 CalculateInventory.otherSR.sprite = CalculateInventory.allCloth[currentSprite.name];
                 CalculateInventory.otherSSR.sprite = CalculateInventory.allSubwayCloth[currentSprite.name];
+                //change clothes in advertisement
+                CalculateInventory.otherASR.sprite = CalculateInventory.allAdCloth[currentSprite.name];
 
                 print("change bottom");
                 
@@ -214,6 +222,8 @@ public class ClothChanging : MonoBehaviour
 
                 CalculateInventory.shoeSR.sprite = CalculateInventory.allCloth[currentSprite.name];
                 CalculateInventory.shoeSSR.sprite = CalculateInventory.allSubwayCloth[currentSprite.name];
+                //change clothes in advertisement
+                CalculateInventory.shoeASR.sprite = CalculateInventory.allAdCloth[currentSprite.name];
 
                 print("change shoe");
                
@@ -228,6 +238,8 @@ public class ClothChanging : MonoBehaviour
 
                 CalculateInventory.everythingSR.sprite = CalculateInventory.allCloth[currentSprite.name];
                 CalculateInventory.everythingSSR.sprite = CalculateInventory.allSubwayCloth[currentSprite.name];
+                //change clothes in advertisement
+                CalculateInventory.everythingASR.sprite = CalculateInventory.allAdCloth[currentSprite.name];
 
                 
                 print("change everything");
@@ -345,6 +357,8 @@ public class ClothChanging : MonoBehaviour
                 }
             
         }
+
+          
         
 
 //        //get the worn inventory back to the cloth the character is wearing
@@ -361,6 +375,8 @@ public class ClothChanging : MonoBehaviour
 //            }
 //        }
     }
+    
+    
     
 }
 

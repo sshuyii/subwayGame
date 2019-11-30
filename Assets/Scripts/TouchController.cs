@@ -43,9 +43,7 @@ public class TouchController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
-        print("leftSwipe = " + leftSwipe);
-        
+                
         for (var i = 0; i < Input.touchCount; ++i)
         {
             if (Input.GetTouch(i).phase == TouchPhase.Began)
