@@ -17,13 +17,13 @@ public class CalculateInventory : MonoBehaviour
     public List<Dictionary<string, Sprite>> postureDictionaryList = new List<Dictionary<string, Sprite>>();
 
     //all clothes for each postures
+    public List<Sprite> ClothPos0;
     public List<Sprite> ClothPos1;
     public List<Sprite> ClothPos2;
-    public List<Sprite> ClothPos3;
 
+    public Dictionary<string, Sprite> AllClothPos0 = new Dictionary<string, Sprite>();
     public Dictionary<string, Sprite> AllClothPos1 = new Dictionary<string, Sprite>();
     public Dictionary<string, Sprite> AllClothPos2 = new Dictionary<string, Sprite>();
-    public Dictionary<string, Sprite> AllClothPos3 = new Dictionary<string, Sprite>();
 
     
     //all the clothes
@@ -108,25 +108,23 @@ public class CalculateInventory : MonoBehaviour
 
         for (int i = 0; i < ClothPos1.Count; i++)
         {
+            AllClothPos0.Add(ClothPos0[i].name, ClothPos0[i]);
             AllClothPos1.Add(ClothPos1[i].name, ClothPos1[i]);
             AllClothPos2.Add(ClothPos2[i].name, ClothPos2[i]);
-            AllClothPos3.Add(ClothPos3[i].name, ClothPos3[i]);
 
         }
 
+        postureDictionaryList.Add(AllClothPos0);
         postureDictionaryList.Add(AllClothPos1);
         postureDictionaryList.Add(AllClothPos2);
-        postureDictionaryList.Add(AllClothPos3);
         
         allAdCloth = postureDictionaryList[posNum];
-
-
     }
 
     // Update is called once per frame
     void Update()
     {
-    
+
         
     }
     

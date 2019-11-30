@@ -25,6 +25,9 @@ public class InstagramController : MonoBehaviour
     public Image[] PosturePostImageList;
     
     
+    //ad clothes game objects
+    public List<Image> adClothes;
+  
     //record background, clothes and posture
     public List<Sprite> profileList;
     public Dictionary<string, Sprite> allProfile = new Dictionary<string, Sprite>();
@@ -63,7 +66,6 @@ public class InstagramController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        adBodyImage.sprite = postureList[CalculateInventory.posNum - 1];
-        workClothImage.sprite = workclothList[CalculateInventory.posNum - 1];
+       
     }
 }

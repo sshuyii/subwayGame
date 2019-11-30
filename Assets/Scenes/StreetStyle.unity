@@ -3449,12 +3449,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 333998888}
   m_CullTransparentMesh: 0
---- !u!1 &338610951 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 183266606125567563, guid: e4080445ad2334b05816bf36a1368612,
-    type: 3}
-  m_PrefabInstance: {fileID: 1709854121}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &355950569
 GameObject:
   m_ObjectHideFlags: 0
@@ -6601,11 +6595,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 910985697}
     m_Modifications:
-    - target: {fileID: 6192975836087052513, guid: 2a53be3b3953f40cfbc5f75ffdffefd6,
-        type: 3}
-      propertyPath: m_Name
-      value: Post (1)
-      objectReference: {fileID: 0}
     - target: {fileID: 6192975836087052512, guid: 2a53be3b3953f40cfbc5f75ffdffefd6,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -6710,6 +6699,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6192975836087052513, guid: 2a53be3b3953f40cfbc5f75ffdffefd6,
+        type: 3}
+      propertyPath: m_Name
+      value: Post (1)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2a53be3b3953f40cfbc5f75ffdffefd6, type: 3}
@@ -13374,8 +13368,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43b0f112bf2744506966d357df23bd85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  postList:
-  - {fileID: 338610951}
+  postList: []
   CalculateInventory: {fileID: 1637310587}
   adBodyImage: {fileID: 1604163511}
   postPrefab: {fileID: 183266606125567563, guid: e4080445ad2334b05816bf36a1368612,
@@ -13388,6 +13381,11 @@ MonoBehaviour:
     type: 3}
   originalPosture: {fileID: 1011156274}
   PosturePostImageList: []
+  adClothes:
+  - {fileID: 745248396}
+  - {fileID: 1667206850}
+  - {fileID: 217718307}
+  - {fileID: 517096045}
   profileList:
   - {fileID: 21300000, guid: 514a807f45a1c4c88a184ff05b2c7052, type: 3}
   - {fileID: 21300000, guid: b0bc0817b321e44dcaab993420bd182a, type: 3}
@@ -13416,7 +13414,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdd8f8bef2a014104a5eae543ae14134, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  posTotalNum: 0
 --- !u!1 &1191812685
 GameObject:
   m_ObjectHideFlags: 0
@@ -18259,7 +18256,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   posNum: 1
-  ClothPos1:
+  ClothPos0:
   - {fileID: 21300000, guid: 0b3e6f83e0fa343b08edbdd30538289f, type: 3}
   - {fileID: 21300000, guid: 5e85ce91cbeb74454a9b194a5cc2bf6a, type: 3}
   - {fileID: 21300000, guid: 741422ba7461f42159b3b99b0da73bca, type: 3}
@@ -18271,6 +18268,18 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 8acada224bd3a4ff5bfa8eb8f9d72b35, type: 3}
   - {fileID: 21300000, guid: ac5fc99f87d3b4381b9914f17a41a735, type: 3}
   - {fileID: 21300000, guid: 91c4e7fa2b4a846158fab1be52089edd, type: 3}
+  ClothPos1:
+  - {fileID: 21300000, guid: f0d5c9b0d3cd04e0c901deef4863d8be, type: 3}
+  - {fileID: 21300000, guid: fe9bc6f6c1da64c88819457f971097e3, type: 3}
+  - {fileID: 21300000, guid: 0141222ef9acc4c1fa353c9299d0e7f9, type: 3}
+  - {fileID: 21300000, guid: e63aaca08d3c140518425c77b1a0a6eb, type: 3}
+  - {fileID: 21300000, guid: 68625fd5a7db34a0a934cb838d2fc3c0, type: 3}
+  - {fileID: 21300000, guid: 80a8695a6db324a70a738ebc600515c9, type: 3}
+  - {fileID: 21300000, guid: 15abda19ff60f42938223e20c260e075, type: 3}
+  - {fileID: 21300000, guid: 76729c99bce9443ff93ac5bb774781e9, type: 3}
+  - {fileID: 21300000, guid: 3746a9ff903c449fb8ae1606561d9c6d, type: 3}
+  - {fileID: 21300000, guid: 5185d3e7ec309433daf9b45c7cd7254b, type: 3}
+  - {fileID: 21300000, guid: e75590b49aae348f5b05d8e491a1b923, type: 3}
   ClothPos2:
   - {fileID: 21300000, guid: 44317fac2fae94dd7845a1ee759009a4, type: 3}
   - {fileID: 21300000, guid: 97dbc19d23a89426d9ceda612349ea50, type: 3}
@@ -18283,18 +18292,6 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 85c777c53079f47f78bcbde57ade0977, type: 3}
   - {fileID: 21300000, guid: 576132a4fd9a349a9a1a3fd31880bfb8, type: 3}
   - {fileID: 21300000, guid: fd609b85d931e417795fad049c94fb78, type: 3}
-  ClothPos3:
-  - {fileID: 21300000, guid: f0d5c9b0d3cd04e0c901deef4863d8be, type: 3}
-  - {fileID: 21300000, guid: fe9bc6f6c1da64c88819457f971097e3, type: 3}
-  - {fileID: 21300000, guid: 0141222ef9acc4c1fa353c9299d0e7f9, type: 3}
-  - {fileID: 21300000, guid: e63aaca08d3c140518425c77b1a0a6eb, type: 3}
-  - {fileID: 21300000, guid: 68625fd5a7db34a0a934cb838d2fc3c0, type: 3}
-  - {fileID: 21300000, guid: 80a8695a6db324a70a738ebc600515c9, type: 3}
-  - {fileID: 21300000, guid: 15abda19ff60f42938223e20c260e075, type: 3}
-  - {fileID: 21300000, guid: 76729c99bce9443ff93ac5bb774781e9, type: 3}
-  - {fileID: 21300000, guid: 3746a9ff903c449fb8ae1606561d9c6d, type: 3}
-  - {fileID: 21300000, guid: 5185d3e7ec309433daf9b45c7cd7254b, type: 3}
-  - {fileID: 21300000, guid: e75590b49aae348f5b05d8e491a1b923, type: 3}
   allClothUIList:
   - {fileID: 21300000, guid: 3fe2dcd35015f4cdba7733bd23ce6238, type: 3}
   - {fileID: 21300000, guid: 8c166fade0ac64b29aacfe4736180324, type: 3}
@@ -23885,11 +23882,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 910985697}
     m_Modifications:
-    - target: {fileID: 6192975836087052513, guid: 2a53be3b3953f40cfbc5f75ffdffefd6,
-        type: 3}
-      propertyPath: m_Name
-      value: Post
-      objectReference: {fileID: 0}
     - target: {fileID: 6192975836087052512, guid: 2a53be3b3953f40cfbc5f75ffdffefd6,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -23994,6 +23986,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6192975836087052513, guid: 2a53be3b3953f40cfbc5f75ffdffefd6,
+        type: 3}
+      propertyPath: m_Name
+      value: Post
       objectReference: {fileID: 0}
     - target: {fileID: 6192975836087052526, guid: 2a53be3b3953f40cfbc5f75ffdffefd6,
         type: 3}

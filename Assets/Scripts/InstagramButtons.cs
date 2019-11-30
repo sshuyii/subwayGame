@@ -89,14 +89,59 @@ public class InstagramButtons : MonoBehaviour
     public void ChangePosture()
     {
 
-        if(CalculateInventory.posNum < 3)
+        if(CalculateInventory.posNum < 2)
         {
             CalculateInventory.posNum++;
         }
         else
         {
-            CalculateInventory.posNum = 1;
+            CalculateInventory.posNum = 0;
         }
+        
+        CalculateInventory.allAdCloth = CalculateInventory.postureDictionaryList[CalculateInventory.posNum];
+
+        
+        InstagramController.adBodyImage.sprite = InstagramController.postureList[CalculateInventory.posNum];
+        InstagramController.workClothImage.sprite = InstagramController.workclothList[CalculateInventory.posNum];
+        
+        //change clothes after posture changes
+        for(int i = 0; i < InstagramController.adClothes.Count; i ++)
+        {
+            if (InstagramController.adClothes[i].sprite.name.Contains("Top"))
+            {
+                CalculateInventory.topASR.sprite = CalculateInventory.allAdCloth[InstagramController.adClothes[i].sprite.name];
+                print("change top ad");
+            }
+            else if (InstagramController.adClothes[i].sprite.name.Contains("Bottom"))
+            {
+                CalculateInventory.otherASR.sprite = CalculateInventory.allAdCloth[InstagramController.adClothes[i].sprite.name];
+
+            }
+            else if (InstagramController.adClothes[i].sprite.name.Contains("Shoe"))
+            {
+                CalculateInventory.shoeASR.sprite = CalculateInventory.allAdCloth[InstagramController.adClothes[i].sprite.name];
+
+            }
+            else if (InstagramController.adClothes[i].sprite.name.Contains("Everything"))
+            {
+                CalculateInventory.everythingASR.sprite = CalculateInventory.allAdCloth[InstagramController.adClothes[i].sprite.name];
+
+            }
+            else
+            {
+                print("nothing ad");
+
+            }
+        }
+
+        for (int i = 0; i < InstagramController.adClothes.Count; i++)
+        {
+            print(InstagramController.adClothes[i].name);
+        }
+
+        
+        
+        
 //        for (int i = 0; i < InstagramController.postureList.Count; i++)
 //        {
 //            print("InstagramController.postureList.Count = " + InstagramController.postureList.Count);
