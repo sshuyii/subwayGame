@@ -10,9 +10,15 @@ public class InstagramController : MonoBehaviour
     public CalculateInventory CalculateInventory;
 
     public Image adBodyImage;
+
+    public Sprite transparent;
+    public Image gotoImage;
     
     public GameObject postPrefab;
     public GameObject postParent;
+
+    public GameObject commentPrefab;
+    
     
     //change post in karara's page
     public GameObject filmParent;
@@ -21,6 +27,8 @@ public class InstagramController : MonoBehaviour
     
     //take picture page gameobjects
     public GameObject PosturePostPrefab;
+    public GameObject PosturePostPrefabNew;
+
     public GameObject originalPosture;
     public Image[] PosturePostImageList;
     

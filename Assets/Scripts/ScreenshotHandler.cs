@@ -24,7 +24,6 @@ public class ScreenshotHandler : MonoBehaviour
 
     private Texture2D myScreenshot;
 
-
     private Texture2D renderResult;
 
     private IEnumerator coroutine;
@@ -61,8 +60,18 @@ public class ScreenshotHandler : MonoBehaviour
 
         //change sprite to the newly taken photo
         newPost.GetComponent<Image>().sprite = Sprite.Create(sprites,rec,new Vector2(0,0),100f);
+        
+        toothpastePost.transform.Find("Post").gameObject.GetComponent<Image>().sprite = Sprite.Create(sprites,rec,new Vector2(0,0),100f);
+    
+        //create comments
+        var newComment = Instantiate(instagramController.commentPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+        //set parent(probably a better way to do
+        newComment.transform.parent = toothpastePost.transform.Find("Comments");
 
+        //get the text child
+        newComment.transform.GetComponentInChildren<Text>().text = "I don't like the environment.";
     }
+    
 
     public void TakeScreenShotSprite()
     {
@@ -100,9 +109,11 @@ public class ScreenshotHandler : MonoBehaviour
         Debug.Log("Started Coroutine at timestamp : " + Time.time);
 
         //yield on a new YieldInstruction that waits for 5 seconds.
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(2);
         addToKararaPage();
-
+        
+       
+        
         //After we have waited 5 seconds print the time again.
         Debug.Log("Finished Coroutine at timestamp : " + Time.time);
         
@@ -190,6 +201,25 @@ public class ScreenshotHandler : MonoBehaviour
         //ScreenCapture.CaptureScreenshot(Application.dataPath + "/Resources/Screenshots/CameraScreenshot.png");
         
         TakeScreenshot(width, height);
+        
+        //instantiate new post object     
+        toothpastePost = Instantiate(instagramController.PosturePostPrefabNew, new Vector3(0, 0, 0), Quaternion.identity);
+        //set parent(probably a better way to do
+        toothpastePost.transform.parent = instagramController.postParent.transform;
+            
+        //move to the first of the list
+        instagramController.postList.Insert(0,toothpastePost);
+            
+        StartCoroutine(ExampleCoroutine());
+
+      
+        //re-arrange children object, so the latest is displayed as the first
+        for (int i = 0; i < instagramController.postList.Count; i++)
+        {
+            instagramController.postList[i].transform.SetSiblingIndex(i);
+        }
+        
+        
 
 //        coroutine = screenShotCoroutine();
 //        StartCoroutine(coroutine);

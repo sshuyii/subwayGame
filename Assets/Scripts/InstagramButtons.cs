@@ -6,10 +6,8 @@ using UnityEngine.UI;
 public class InstagramButtons : MonoBehaviour
 {
     private Sprite currentSprite;
-    public Sprite transparent;
 
     private Image myImage;
-    public Image gotoImage;
     private Button myButton;
 
     public InstagramController InstagramController;
@@ -36,7 +34,7 @@ public class InstagramButtons : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (myImage.sprite == transparent)
+        if (myImage.sprite == InstagramController.transparent)
         {
             myButton.enabled = false;
            
@@ -77,9 +75,15 @@ public class InstagramButtons : MonoBehaviour
     
     public void ClickInsPost()
     {
+        
+        Hide(NewCameraController.mainpage);
+        NewCameraController.HideAllPersonalPages();
+        
+        Show(NewCameraController.postpage);
+        
         Camera.main.transform.position = new Vector3(65, Camera.main.transform.position.y, Camera.main.transform.position.z);
 
-        gotoImage.sprite = currentSprite;
+        InstagramController.gotoImage.sprite = currentSprite;
         
         NewCameraController.myAppState = NewCameraController.AppState.Post;
 

@@ -214,6 +214,7 @@ public class NewCameraController : MonoBehaviour
            
             Show(KararaPage);
             Hide(mainpage);
+            Hide(postpage);
             HideAllPersonalPages();
             myAppState = AppState.KararaPage;
 
@@ -227,6 +228,8 @@ public class NewCameraController : MonoBehaviour
        {
            Show(mainpage);
            HideAllPersonalPages();
+           Hide(postpage);
+
 
            myAppState = AppState.Mainpage;
        }

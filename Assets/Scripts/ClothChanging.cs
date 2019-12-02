@@ -212,7 +212,7 @@ public class ClothChanging : MonoBehaviour
                 blackPantsS.enabled = false;
 
             }
-            else if(currentSprite.name.Contains("shoe"))
+            else if(currentSprite.name.Contains("Shoe"))
             {
                 buttonChangeBack();
 
@@ -350,7 +350,7 @@ public class ClothChanging : MonoBehaviour
                     CalculateInventory.shoeButton.enabled = true;
                     CalculateInventory.shoeButton.GetComponent<ClothChanging>().checkImage.enabled = false;
                 }
-                else if (currentSprite.name.Contains("Everything"))
+                else if (currentSprite.name.Contains("Everything") && workCloth.enabled == false)
                 {
                     CalculateInventory.everythingButton.enabled = true;
                     CalculateInventory.everythingButton.GetComponent<ClothChanging>().checkImage.enabled = false;
