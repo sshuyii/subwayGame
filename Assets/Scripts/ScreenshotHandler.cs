@@ -9,7 +9,7 @@ public class ScreenshotHandler : MonoBehaviour
     //a list of all the posts
 
 
-    public InstagramController instagramController;
+    public InstagramController InstagramController;
 
     private GameObject toothpastePost;
     private int postNum;
@@ -28,9 +28,12 @@ public class ScreenshotHandler : MonoBehaviour
 
     private IEnumerator coroutine;
 
+    public Image photoBackground;
     
     private int width = Screen.width;
     private int height = Screen.height;
+    
+ 
     
     void Awake()
     {
@@ -50,9 +53,9 @@ public class ScreenshotHandler : MonoBehaviour
     private void addToKararaPage()
     {
         //instantiate new post object     
-        var newPost = Instantiate(instagramController.photoPostPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+        var newPost = Instantiate(InstagramController.photoPostPrefab, new Vector3(0, 0, 0), Quaternion.identity);
         //set parent(probably a better way to do
-        newPost.transform.parent = instagramController.filmParent.transform;
+        newPost.transform.parent = InstagramController.filmParent.transform;
         
         Texture2D sprites = CropImage();
 
@@ -64,12 +67,37 @@ public class ScreenshotHandler : MonoBehaviour
         toothpastePost.transform.Find("Post").gameObject.GetComponent<Image>().sprite = Sprite.Create(sprites,rec,new Vector2(0,0),100f);
     
         //create comments
-        var newComment = Instantiate(instagramController.commentPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+        var newComment = Instantiate(InstagramController.commentPrefab, new Vector3(0, 0, 0), Quaternion.identity);
         //set parent(probably a better way to do
         newComment.transform.parent = toothpastePost.transform.Find("Comments");
 
+        newComment.transform.localPosition = new Vector3(0f, 0f, 0);
+
+
         //get the text child
-        newComment.transform.GetComponentInChildren<Text>().text = "I don't like the environment.";
+        var CommentText = newComment.transform.GetComponentInChildren<Text>();
+        //get the profile
+        var ProfileImage = newComment.GetComponent<Image>();
+        
+        InstagramController.replyParent = toothpastePost.transform.Find("Reply");
+
+        
+        //generate different comment for each post
+        if (InstagramController.currentBackground == "RV")
+        {
+            CommentText.text = "That RV looks amazing. I'm gonna get one for myself.";
+            ProfileImage.sprite = InstagramController.allProfile["nico"];
+            
+        }
+        else if (InstagramController.currentBackground == "Toothpaste")
+        {
+            CommentText.text = "Your clothes.";
+            ProfileImage.sprite = InstagramController.allProfile["ojisan"];
+            
+            print("finddddddd");
+
+        }
+        
     }
     
 
@@ -77,12 +105,12 @@ public class ScreenshotHandler : MonoBehaviour
     {
         
         //instantiate new post object     
-        toothpastePost = Instantiate(instagramController.PosturePostPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+        toothpastePost = Instantiate(InstagramController.PosturePostPrefab, new Vector3(0, 0, 0), Quaternion.identity);
         //set parent(probably a better way to do
-        toothpastePost.transform.parent = instagramController.postParent.transform;
+        toothpastePost.transform.parent = InstagramController.postParent.transform;
             
         //move to the first of the list
-        instagramController.postList.Insert(0,toothpastePost);
+        InstagramController.postList.Insert(0,toothpastePost);
             
         //get the post child
         Image[] postImageList = toothpastePost.transform.Find("PostFolder").gameObject.GetComponentsInChildren<Image>();
@@ -90,13 +118,13 @@ public class ScreenshotHandler : MonoBehaviour
         //get the background
         for (int i = 0; i < postImageList.Length; i++)
         {
-            postImageList[i].sprite = instagramController.PosturePostImageList[i].sprite;
+            postImageList[i].sprite = InstagramController.PosturePostImageList[i].sprite;
         }
         
         //re-arrange children object, so the latest is displayed as the first
-        for (int i = 0; i < instagramController.postList.Count; i++)
+        for (int i = 0; i < InstagramController.postList.Count; i++)
         {
-            instagramController.postList[i].transform.SetSiblingIndex(i);
+            InstagramController.postList[i].transform.SetSiblingIndex(i);
         }
         
         StartCoroutine(ExampleCoroutine());
@@ -203,20 +231,20 @@ public class ScreenshotHandler : MonoBehaviour
         TakeScreenshot(width, height);
         
         //instantiate new post object     
-        toothpastePost = Instantiate(instagramController.PosturePostPrefabNew, new Vector3(0, 0, 0), Quaternion.identity);
+        toothpastePost = Instantiate(InstagramController.PosturePostPrefabNew, new Vector3(0, 0, 0), Quaternion.identity);
         //set parent(probably a better way to do
-        toothpastePost.transform.parent = instagramController.postParent.transform;
+        toothpastePost.transform.parent = InstagramController.postParent.transform;
             
         //move to the first of the list
-        instagramController.postList.Insert(0,toothpastePost);
+        InstagramController.postList.Insert(0,toothpastePost);
             
         StartCoroutine(ExampleCoroutine());
 
       
         //re-arrange children object, so the latest is displayed as the first
-        for (int i = 0; i < instagramController.postList.Count; i++)
+        for (int i = 0; i < InstagramController.postList.Count; i++)
         {
-            instagramController.postList[i].transform.SetSiblingIndex(i);
+            InstagramController.postList[i].transform.SetSiblingIndex(i);
         }
         
         
@@ -263,11 +291,11 @@ public class ScreenshotHandler : MonoBehaviour
         Rect rec = new Rect(0, 0, sprites.width, sprites.height);
 //        if(this.name == "Toothpaste")
 //        {
-            toothpastePost = Instantiate(instagramController.postPrefab, new Vector3(0, 0, 0), Quaternion.identity);
-            toothpastePost.transform.parent = instagramController.postParent.transform;
+            toothpastePost = Instantiate(InstagramController.postPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+            toothpastePost.transform.parent = InstagramController.postParent.transform;
             
             //move to the first of the list
-            instagramController.postList.Insert(0,toothpastePost);
+            InstagramController.postList.Insert(0,toothpastePost);
             
             //get the post child
             postImage = toothpastePost.transform.Find("Post").gameObject.GetComponent<Image>();

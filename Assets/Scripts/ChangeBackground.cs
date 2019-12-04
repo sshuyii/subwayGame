@@ -35,5 +35,7 @@ public class ChangeBackground : MonoBehaviour
     public void clickBackground()
     {
         photoBackground.sprite = InstagramController.allBackAd[transform.name];
+
+        InstagramController.currentBackground = transform.name;
     }
 }

@@ -15,11 +15,11 @@ public class NewCameraController : MonoBehaviour
         Mainpage,
         KararaPage,
         RetroPage,
+        DesignerPage,
         Post
-        
     }
 
-    private AppState lastAppState;
+    public AppState lastAppState;
 
     public enum CameraState
     {
@@ -99,7 +99,6 @@ public class NewCameraController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         GetCurrentPageEverytime();
             
 //        print("lastCameraState = " + lastCameraState);
@@ -121,7 +120,6 @@ public class NewCameraController : MonoBehaviour
                 Show(GoBack);
                 Hide(basicUI);
                 Hide(appBackground);
-
             }
         }
 
@@ -212,11 +210,27 @@ public class NewCameraController : MonoBehaviour
        if (myAppState == AppState.Post)
        {
            
-            Show(KararaPage);
-            Hide(mainpage);
+            //Hide(mainpage);
             Hide(postpage);
             HideAllPersonalPages();
-            myAppState = AppState.KararaPage;
+            
+            //go back to the personal page the post belongs to
+            if (lastAppState == AppState.KararaPage)
+            {
+                Show(KararaPage);
+                myAppState = AppState.KararaPage;
+            }
+            else if (lastAppState == AppState.RetroPage)
+            {
+                Show(RetroPage);
+                myAppState = AppState.RetroPage;
+            }
+            else if (lastAppState == AppState.DesignerPage)
+            {
+                Show(DesignerPage);
+                myAppState = AppState.DesignerPage;
+            }
+            
 
 
        }
@@ -224,7 +238,7 @@ public class NewCameraController : MonoBehaviour
        {
             ChangeToSubway();
        }
-       else if(myAppState == AppState.RetroPage || myAppState == AppState.KararaPage)
+       else if(myAppState == AppState.RetroPage || myAppState == AppState.KararaPage || myAppState == AppState.DesignerPage)
        {
            Show(mainpage);
            HideAllPersonalPages();
@@ -450,11 +464,9 @@ public class NewCameraController : MonoBehaviour
 
     public void GoAdvertisement()
     {
-        
             lastCameraState = myCameraState;
             transform.position = new Vector3(24, 0, -10);
             myCameraState = CameraState.Ad;
-        
     }
     
     public void GoMainpage()
@@ -466,7 +478,7 @@ public class NewCameraController : MonoBehaviour
     public void GoPersonalpage()
     {
         transform.position = new Vector3(55, 0, -10);        
-        Hide(mainpage);
+        //Hide(mainpage);
 
     }
 

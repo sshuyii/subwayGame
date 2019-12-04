@@ -10,8 +10,8 @@ public class InstagramButtons : MonoBehaviour
     private Image myImage;
     private Button myButton;
 
-    public InstagramController InstagramController;
-    public CalculateInventory CalculateInventory;
+    private InstagramController InstagramController;
+    private CalculateInventory CalculateInventory;
     private Text username;
 
     private NewCameraController NewCameraController;
@@ -28,6 +28,9 @@ public class InstagramButtons : MonoBehaviour
         myImage = GetComponent<Image>();
         myButton = GetComponent<Button>();
 
+
+        InstagramController = GameObject.Find("---InstagramController").GetComponent<InstagramController>();
+        CalculateInventory = GameObject.Find("---InventoryController").GetComponent<CalculateInventory>();
 
     }
 
@@ -48,6 +51,8 @@ public class InstagramButtons : MonoBehaviour
 
     public void ChangeToPersonalPage()
     {
+        NewCameraController.lastAppState = NewCameraController.myAppState;
+
         Hide(NewCameraController.mainpage);
         NewCameraController.HideAllPersonalPages();
 
@@ -71,11 +76,21 @@ public class InstagramButtons : MonoBehaviour
 
 
         }       
+        else if (username.text == "Alex")
+        {
+            Camera.main.transform.position =
+                new Vector3(55, Camera.main.transform.position.y, Camera.main.transform.position.z);
+            NewCameraController.myAppState = NewCameraController.AppState.DesignerPage;
+            Show(NewCameraController.DesignerPage);
+
+
+        }       
     }
     
     public void ClickInsPost()
     {
-        
+        NewCameraController.lastAppState = NewCameraController.myAppState;
+
         Hide(NewCameraController.mainpage);
         NewCameraController.HideAllPersonalPages();
         
