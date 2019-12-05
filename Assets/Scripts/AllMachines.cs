@@ -6,6 +6,13 @@ using UnityEngine.UI;
 public class AllMachines : MonoBehaviour
 {
     private WasherController WasherController;
+
+    public GameObject generatedNotice;
+    public GameObject currentBag;
+    
+    
+    public GameObject returnNotice;
+    public GameObject noticeParent;
     
     //控制所有洗衣机的代码
     //只有这一份

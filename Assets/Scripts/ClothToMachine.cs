@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,6 +15,7 @@ public class ClothToMachine : MonoBehaviour
     private WasherController WasherController;
 
     private int hitTime;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -39,6 +41,34 @@ public class ClothToMachine : MonoBehaviour
     }
 
 
+    public void returnClothYes()
+    {
+       
+       
+        for (int i = 0; i < AllMachines.WashingMachines.Count; i++)
+        {
+            if (WasherControllerList[i].CompareTag(AllMachines.currentBag.tag))
+            {
+                print("AllMachines.currentBag.tag = " + AllMachines.currentBag.tag);
+
+                WasherControllerList[i].transform.tag = "untagged";
+                WasherControllerList[i].myMachineState = AllMachines.MachineState.empty;
+                Destroy(AllMachines.generatedNotice);
+                Destroy(AllMachines.currentBag);
+                
+                
+                break;
+            }
+        }
+    }
+
+
+    public void returnClothNo()
+    {
+        
+        Destroy(AllMachines.generatedNotice);
+
+    }
     public void putClothIn()
     {
         if(hitTime == 0)
@@ -58,7 +88,7 @@ public class ClothToMachine : MonoBehaviour
                 }
             }
         }
-        else if (hitTime == 1)
+        else if (hitTime > 0)
         {
             //get the machine with clothes from this bag
             for (int i = 0; i < AllMachines.WashingMachines.Count; i++)
@@ -67,9 +97,15 @@ public class ClothToMachine : MonoBehaviour
                 {
                     if(WasherControllerList[i].myMachineState == AllMachines.MachineState.finished)
                     {
-                        WasherControllerList[i].myMachineState = AllMachines.MachineState.empty;
+                        //WasherControllerList[i].myMachineState = AllMachines.MachineState.empty;
 
-                        GetComponent<Image>().enabled = false;
+                        //generate the notice
+                        AllMachines.generatedNotice = Instantiate(AllMachines.returnNotice,  new Vector3(0, 0, 0),
+                            Quaternion.identity, AllMachines.noticeParent.transform);
+
+                        AllMachines.currentBag = this.gameObject;
+                        
+                        print("AllMachines.currentBag.tag = " + AllMachines.currentBag.tag);
 
                         hitTime++;
                         break;

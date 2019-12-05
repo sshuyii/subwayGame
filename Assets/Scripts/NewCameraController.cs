@@ -65,9 +65,7 @@ public class NewCameraController : MonoBehaviour
 
 
     public List<CanvasGroup> pageList = new List<CanvasGroup>();
-
     
-
 
     private float offsetX;
 

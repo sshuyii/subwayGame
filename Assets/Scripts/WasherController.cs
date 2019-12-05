@@ -70,11 +70,11 @@ public class WasherController : MonoBehaviour
             timer += Time.deltaTime;
             
             
-            
             if (timer > AllMachines.washTime)
             {
                 myMachineState = AllMachines.MachineState.finished;
                 myAnimator.SetBool("isWashing", false);
+                timer = 0;
 
             }
         }
