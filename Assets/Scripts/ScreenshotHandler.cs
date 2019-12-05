@@ -8,10 +8,11 @@ public class ScreenshotHandler : MonoBehaviour
 {
     //a list of all the posts
 
-
+    
     public InstagramController InstagramController;
     private NewCameraController NewCameraController;
 
+    private int entryTime = 50;
 
     private GameObject toothpastePost;
     private int postNum;
@@ -68,10 +69,13 @@ public class ScreenshotHandler : MonoBehaviour
         }
     }
 
+   
     private void addToKararaPage()
     {
         //instantiate new post object     
         var newPost = Instantiate(InstagramController.photoPostPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+        
+        
         //set parent(probably a better way to do
         newPost.transform.parent = InstagramController.filmParent.transform;
         
@@ -105,7 +109,6 @@ public class ScreenshotHandler : MonoBehaviour
         //generate different comment for each post
         if (InstagramController.currentBackground == "RV")
         {
-           
             CommentText.text = "That RV looks amazing. I'm gonna get one for myself.";
             ProfileImage.sprite = InstagramController.allProfile["nico"];
             
@@ -114,6 +117,14 @@ public class ScreenshotHandler : MonoBehaviour
         {
             CommentText.text = "Your clothes.";
             ProfileImage.sprite = InstagramController.allProfile["ojisan"];
+            
+        }
+        else if(InstagramController.currentBackground == "FruitStand")
+        {
+
+        }
+        else if (InstagramController.currentBackground == "Park")
+        {
             
         }
 
@@ -261,6 +272,10 @@ public class ScreenshotHandler : MonoBehaviour
             
         //move to the first of the list
         InstagramController.postList.Insert(0,toothpastePost);
+        
+        toothpastePost.GetComponent<EntryTime>().time = entryTime;
+
+        entryTime += 10;
             
         StartCoroutine(ExampleCoroutine());
 

@@ -10,6 +10,8 @@ public class InstagramController : MonoBehaviour
     public CalculateInventory CalculateInventory;
 
     public Image adBodyImage;
+    
+    public SortedDictionary<GameObject, int> allPostsDict = new SortedDictionary<GameObject, int>();
 
     public Sprite transparent;
     public Image gotoImage;
@@ -71,6 +73,8 @@ public class InstagramController : MonoBehaviour
     public Transform ParkReply;
 
     
+    //a list recording all retro girls photos
+    public List<Sprite> retroPostList = new List<Sprite>();
     
     // Start is called before the first frame update
     void Start()
