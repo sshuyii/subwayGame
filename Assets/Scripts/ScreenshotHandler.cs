@@ -10,6 +10,8 @@ public class ScreenshotHandler : MonoBehaviour
 
 
     public InstagramController InstagramController;
+    private NewCameraController NewCameraController;
+
 
     private GameObject toothpastePost;
     private int postNum;
@@ -34,6 +36,8 @@ public class ScreenshotHandler : MonoBehaviour
     private int height = Screen.height;
     
  
+    public CanvasGroup myFlash;
+    private bool flash = false;
     
     void Awake()
     {
@@ -45,9 +49,23 @@ public class ScreenshotHandler : MonoBehaviour
         //myCamera = gameObject.GetComponent<Camera>();
         
         ScreenCapDirectory = Application.persistentDataPath;
+        NewCameraController = GetComponent<NewCameraController>();
 
 //        postImage = GetComponent<Image>();
 //        print(postImage.name);
+    }
+
+    private void Update()
+    {
+        if (flash)
+        {
+            myFlash.alpha = myFlash.alpha - Time.deltaTime;
+            if (myFlash.alpha <= 0)
+            {
+                myFlash.alpha = 0;
+                flash = false;
+            }
+        }
     }
 
     private void addToKararaPage()
@@ -81,10 +99,13 @@ public class ScreenshotHandler : MonoBehaviour
         
         InstagramController.replyParent = toothpastePost.transform.Find("Reply");
 
+        //now this background cannot be used again
+        InstagramController.AdAlreadyTakenList[InstagramController.currentBackground] = false;
         
         //generate different comment for each post
         if (InstagramController.currentBackground == "RV")
         {
+           
             CommentText.text = "That RV looks amazing. I'm gonna get one for myself.";
             ProfileImage.sprite = InstagramController.allProfile["nico"];
             
@@ -94,10 +115,9 @@ public class ScreenshotHandler : MonoBehaviour
             CommentText.text = "Your clothes.";
             ProfileImage.sprite = InstagramController.allProfile["ojisan"];
             
-            print("finddddddd");
-
         }
-        
+
+        NewCameraController.ChangeToApp();
     }
     
 
@@ -135,9 +155,13 @@ public class ScreenshotHandler : MonoBehaviour
     {
         //Print the time of when the function is first called.
         Debug.Log("Started Coroutine at timestamp : " + Time.time);
+        
+        yield return new WaitForSeconds(0.5f);
 
+        flash = true;
+        myFlash.alpha = 1;
         //yield on a new YieldInstruction that waits for 5 seconds.
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(0.1f);
         addToKararaPage();
         
        

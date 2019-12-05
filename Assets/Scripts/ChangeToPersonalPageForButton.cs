@@ -11,11 +11,17 @@ public class ChangeToPersonalPageForButton : MonoBehaviour
     private InstagramController InstagramController;
     
     private Sprite mySprite;
+
+    private Image myImage;
+    private bool likeBool = true;
+    
     // Start is called before the first frame update
     void Start()
     {
         NewCameraController = GameObject.Find("Main Camera").GetComponent<NewCameraController>();
         InstagramController = GameObject.Find("---InstagramController").GetComponent<InstagramController>();
+
+        myImage = GetComponent<Image>();
 
         mySprite = GetComponent<Image>().sprite;
     }
@@ -56,13 +62,29 @@ public class ChangeToPersonalPageForButton : MonoBehaviour
             NewCameraController.myAppState = NewCameraController.AppState.DesignerPage;
             Show(NewCameraController.DesignerPage);
         }       
+        else if (mySprite.name.Contains("NPC"))
+        {
+            Camera.main.transform.position =
+                new Vector3(55, Camera.main.transform.position.y, Camera.main.transform.position.z);
+            NewCameraController.myAppState = NewCameraController.AppState.NPCPage;
+            Show(NewCameraController.NPCPage);
+            if (mySprite.name.Contains("gNPC"))
+            {
+                
+            }
+        }       
+        
     }
 
     public void DoReply()
     {
+        
         var reply1 = Instantiate(InstagramController.replyPrefab, new Vector3(0, 0, 0), Quaternion.identity);
         var reply2 = Instantiate(InstagramController.replyPrefab, new Vector3(0, 0, 0), Quaternion.identity);
         
+        InstagramController.replyList.Add(reply1);
+        InstagramController.replyList.Add(reply2);
+
        
         var replyText1 = reply1.GetComponentInChildren<Text>();
         var replyText2 = reply2.GetComponentInChildren<Text>();
@@ -93,7 +115,35 @@ public class ChangeToPersonalPageForButton : MonoBehaviour
         }
 
     }
-    
+
+    public void ClickReply()
+    {
+
+
+        for (int i = 0; i < InstagramController.replyList.Count; i++)
+        {
+            if (InstagramController.replyList[i] !=  this.gameObject.transform.parent.gameObject
+            )
+            {
+                Destroy(InstagramController.replyList[i]); 
+
+            }
+        }
+    }
+
+    public void Like()
+    {
+        if (likeBool)
+        {
+            myImage.sprite = InstagramController.likeFUll;
+            likeBool = false;
+        }
+        else
+        {
+            myImage.sprite = mySprite;
+            likeBool = true;
+        }
+    }
     
     void Hide(CanvasGroup UIGroup) {
         UIGroup.alpha = 0f; //this makes everything transparent

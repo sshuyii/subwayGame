@@ -22,12 +22,15 @@ public class InstagramController : MonoBehaviour
 
 
     public GameObject commentPrefab;
-    
-  
+
+
+    public Sprite likeFUll;
     //change post in karara's page
     public GameObject filmParent;
     public GameObject photoPostPrefab;
     
+    //reply list
+    public List<GameObject> replyList = new List<GameObject>();
     
     //take picture page gameobjects
     public GameObject PosturePostPrefab;
@@ -53,9 +56,8 @@ public class InstagramController : MonoBehaviour
     public Dictionary<string, Sprite> allBackAd = new Dictionary<string, Sprite>();
     public Dictionary<string, bool> AdAlreadyTakenList = new Dictionary<string, bool>();
 
-
     
-    //workcloth list
+    //work cloth list
     public List<Sprite> workclothList;
     public Image workClothImage;
 
@@ -84,9 +86,9 @@ public class InstagramController : MonoBehaviour
             allBackAd.Add(backAdList[i].name, backAdList[i]);
         }
 
-        for (int i = 0; i < AdAlreadyTakenList.Count; i++)
+        for (int i = 0; i < backAdList.Count; i++)
         {
-            AdAlreadyTakenList.Add(backAdList[i].name, false);
+            AdAlreadyTakenList.Add(backAdList[i].name, true);
         }
 
         PosturePostImageList = originalPosture.GetComponentsInChildren<Image>();

@@ -9,6 +9,8 @@ public class ChangeBackground : MonoBehaviour
 
     private InstagramController InstagramController;
     public Image photoBackground;
+
+    private Button myButton;
     
     //public Dictionary<string, Sprite> allSubAd = new Dictionary<string, Sprite>();
 
@@ -23,6 +25,7 @@ public class ChangeBackground : MonoBehaviour
 //        }
 
         InstagramController = GameObject.Find("---InstagramController").GetComponent<InstagramController>();
+        myButton = GetComponent<Button>();
 
     }
 
@@ -34,8 +37,15 @@ public class ChangeBackground : MonoBehaviour
 
     public void clickBackground()
     {
-        photoBackground.sprite = InstagramController.allBackAd[transform.name];
+        
+        if(InstagramController.AdAlreadyTakenList[transform.name])
+        {
+            photoBackground.sprite = InstagramController.allBackAd[transform.name];
 
-        InstagramController.currentBackground = transform.name;
+            InstagramController.currentBackground = transform.name;
+            myButton.enabled = false;
+
+        }
+        
     }
 }
