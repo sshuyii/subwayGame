@@ -7,7 +7,7 @@ public class ClothChanging : MonoBehaviour
 {
     public Text text;
     private Vector3 startPos;
-    public Sprite worn;
+    public Sprite transparent;
 
     public Image checkImage;
 
@@ -152,6 +152,8 @@ public class ClothChanging : MonoBehaviour
         if(CalculateInventory.allCloth.ContainsKey(currentSprite.name))
         {
             
+            checkImage.enabled = true;
+
             if(currentSprite.name.Contains("Top"))
             {
                 
@@ -248,8 +250,8 @@ public class ClothChanging : MonoBehaviour
                 
                 workClothS.enabled = false;
 
-                CalculateInventory.topSR.sprite = null;
-                CalculateInventory.otherSR.sprite = null;
+                CalculateInventory.topSR.sprite = transparent;
+                CalculateInventory.otherSR.sprite = transparent;
 
                 blackPants.enabled = true;
                 whiteShirt.enabled = true;
@@ -259,35 +261,42 @@ public class ClothChanging : MonoBehaviour
 
 
             }
+            else
+            {
+                checkImage.enabled = true;
+                selfButton.enabled = false;
+
+                firstTime = false;
+            }
         }
         else
         {
-            //when the button is workCloth
-            workCloth.enabled = !workCloth.enabled;
-            workClothS.enabled = !workClothS.enabled;
-
-
-
-            CalculateInventory.topSR.sprite = null;
-            CalculateInventory.otherSR.sprite = null;
-            CalculateInventory.everythingSR.sprite = null;
-        
-            blackPants.enabled = true;
-            whiteShirt.enabled = true;
-
-
-            whiteShirtS.enabled = true;
-            blackPantsS.enabled = true;
+            
+            //now the button cannot be pressed
+          
+            
+//            //when the button is workCloth
+//            workCloth.enabled = !workCloth.enabled;
+//            workClothS.enabled = !workClothS.enabled;
+//
+//
+//
+//            CalculateInventory.topSR.sprite = null;
+//            CalculateInventory.otherSR.sprite = null;
+//            CalculateInventory.everythingSR.sprite = null;
+//        
+//            blackPants.enabled = true;
+//            whiteShirt.enabled = true;
+//
+//
+//            whiteShirtS.enabled = true;
+//            blackPantsS.enabled = true;
         }
         //GetComponent<Image>().sprite = worn;
         //transform.position = startPos;
 
         
-        //now the button cannot be pressed
-        checkImage.enabled = true;
-        selfButton.enabled = false;
-
-        firstTime = false;
+       
 
     }
 
@@ -298,13 +307,13 @@ public class ClothChanging : MonoBehaviour
 
 
       
-        CalculateInventory.topSR.sprite = null;
-        CalculateInventory.otherSR.sprite = null;
-        CalculateInventory.everythingSR.sprite = null;
+        CalculateInventory.topSR.sprite = transparent;
+        CalculateInventory.otherSR.sprite = transparent;
+        CalculateInventory.everythingSR.sprite = transparent;
 
-        CalculateInventory.topSSR.sprite = null;
-        CalculateInventory.otherSSR.sprite = null;
-        CalculateInventory.everythingSSR.sprite = null;
+        CalculateInventory.topSSR.sprite = transparent;
+        CalculateInventory.otherSSR.sprite = transparent;
+        CalculateInventory.everythingSSR.sprite = transparent;
 
         
         
@@ -359,8 +368,6 @@ public class ClothChanging : MonoBehaviour
         }
 
           
-        
-
 //        //get the worn inventory back to the cloth the character is wearing
 //        for (int i = 0; i < CalculateInventory.inventory.Count; i++)
 //        {

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,8 +17,10 @@ public class ChangeToPersonalPageForButton : MonoBehaviour
     private bool likeBool = true;
 
     private bool replyBool = true;
+    private bool replyChosen = false;
 
     private List<GameObject> replyList = new List<GameObject>();
+    
     
     // Start is called before the first frame update
     void Start()
@@ -33,7 +36,6 @@ public class ChangeToPersonalPageForButton : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        print("replyBool = " + replyBool);
     }
     
     public void ChangeToPersonalPage()
@@ -83,60 +85,61 @@ public class ChangeToPersonalPageForButton : MonoBehaviour
     public void DoReply()
     {
 
-        
-        
-        if(replyBool)
+        if(replyChosen == false)
         {
-            replyBool = false;
-            
-            var reply1 = Instantiate(InstagramController.replyPrefab, new Vector3(0, 0, 0), Quaternion.identity);
-            var reply2 = Instantiate(InstagramController.replyPrefab, new Vector3(0, 0, 0), Quaternion.identity);
 
-            replyList.Add(reply1);
-            replyList.Add(reply2);
-
-            
-            InstagramController.replyList.Add(reply1);
-            InstagramController.replyList.Add(reply2);
-
-
-            var replyText1 = reply1.GetComponentInChildren<Text>();
-            var replyText2 = reply2.GetComponentInChildren<Text>();
-
-            reply1.transform.SetParent(InstagramController.replyParent.transform);
-            reply2.transform.SetParent(InstagramController.replyParent.transform);
-
-
-
-
-            if (InstagramController.currentBackground == "Toothpaste")
+            if (replyBool)
             {
+                replyBool = false;
+
+                var reply1 = Instantiate(InstagramController.replyPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+                var reply2 = Instantiate(InstagramController.replyPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+
+                replyList.Add(reply1);
+                replyList.Add(reply2);
+
+
+                InstagramController.replyList.Add(reply1);
+                InstagramController.replyList.Add(reply2);
+
+
+                var replyText1 = reply1.GetComponentInChildren<TextMeshProUGUI>();
+                var replyText2 = reply2.GetComponentInChildren<TextMeshProUGUI>();
+
+                reply1.transform.SetParent(InstagramController.replyParent.transform);
+                reply2.transform.SetParent(InstagramController.replyParent.transform);
+
+
+
+                if (InstagramController.currentBackground == "Toothpaste")
+                {
 //            reply1.transform.SetParent(InstagramController.ToothpasteReply.transform);
 //            reply2.transform.SetParent(InstagramController.ToothpasteReply.transform);
 
 
-                replyText1.text = "xxxxx";
-                replyText2.text = "ddddd";
+                    replyText1.text = "xxxxx";
+                    replyText2.text = "ddddd";
 
-            }
-            else if (InstagramController.currentBackground == "RV")
-            {
+                }
+                else if (InstagramController.currentBackground == "RV")
+                {
 //            reply1.transform.SetParent(InstagramController.RVReply.transform);
 //            reply2.transform.SetParent(InstagramController.RVReply.transform);
 
-                replyText1.text = "xxxxd";
-                replyText2.text = "ddddx";
-            }
-            
-        }
-        else if (replyBool == false)
-        {
-            replyBool = true;
-            for (int i = 0; i < replyList.Count; i++)
-            {
-                Destroy(replyList[i]);
-            }
+                    replyText1.text = "Highly recommend! It is amazing!";
+                    replyText2.text = "And it matches my clothes so well!";
+                }
 
+            }
+            else if (replyBool == false)
+            {
+                replyBool = true;
+                for (int i = 0; i < replyList.Count; i++)
+                {
+                    Destroy(replyList[i]);
+                }
+
+            }
         }
 
     }
@@ -188,11 +191,12 @@ public class ChangeToPersonalPageForButton : MonoBehaviour
     {
         for (int i = 0; i < InstagramController.replyList.Count; i++)
         {
-            if (InstagramController.replyList[i] !=  this.gameObject.transform.parent.gameObject
-            )
+            if (InstagramController.replyList[i] !=  this.gameObject.transform.parent.gameObject)
             {
-                Destroy(InstagramController.replyList[i]); 
-
+                Destroy(InstagramController.replyList[i]);
+                //cannot generate replies once chosen one
+                replyChosen = true;
+                print(replyChosen);
             }
         }
     }

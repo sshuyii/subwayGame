@@ -9,6 +9,7 @@ public class NewCameraController : MonoBehaviour
 
     private bool fastSwipeBool;
 
+    public bool isSwipping = false;
 
     public enum AppState
     {
@@ -100,6 +101,15 @@ public class NewCameraController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (TouchController.isSwiping == true)
+        {
+            isSwipping = true;
+        }
+        else
+        {
+            isSwipping = false;
+        }
+
         GetCurrentPageEverytime();
             
 //        print("lastCameraState = " + lastCameraState);
@@ -200,10 +210,13 @@ public class NewCameraController : MonoBehaviour
     public void ChangeToCloth()
     {
         
+        if(isSwipping == false)
+        {
             //print("myCameraState = " + myCameraState);
             lastCameraState = myCameraState;
             myCameraState = CameraState.Closet;
             transform.position = new Vector3(-25, 0, -10);
+        }
     }
 
     public void AppBackButton()
@@ -282,25 +295,29 @@ public class NewCameraController : MonoBehaviour
     
     public void ChangeToApp()
     {
-        
+        if(isSwipping == false)
+        {
             //transform.position = new Vector3(0, 0, -10);
-            
+
             lastCameraState = myCameraState;
             myCameraState = CameraState.App;
             myAppState = AppState.Mainpage;
-            
+
             transform.position = new Vector3(35, 0, -10);
 
             print("mainpageeeeee");
             Show(mainpage);
-
+        }
     }
     
     public void ChangeToMap()
-    {
+    {  
+        if(isSwipping == false)
+        {
             lastCameraState = myCameraState;
             myCameraState = CameraState.Map;
             transform.position = new Vector3(0, 13, -10);
+        }
         
     }
 
@@ -467,6 +484,7 @@ public class NewCameraController : MonoBehaviour
 
     public void GoAdvertisement()
     {
+        
             lastCameraState = myCameraState;
             transform.position = new Vector3(24, 0, -10);
             myCameraState = CameraState.Ad;

@@ -9,6 +9,7 @@ public class TouchController : MonoBehaviour
     private float dragDistance;  //minimum distance for a swipe to be registered
 
 
+    public bool isSwiping = false;
     public bool isSwipable = false;
     private bool TOF;
    
@@ -38,6 +39,7 @@ public class TouchController : MonoBehaviour
     void Start()
     {
         myInputState = InputState.None;
+        dragDistance = Screen.height * 8 / 100;
     }
 
     // Update is called once per frame
@@ -83,6 +85,17 @@ public class TouchController : MonoBehaviour
                 lp = touch.position;
 //                print("lp = " + lp);
 
+                if (Mathf.Abs(lp.y - fp.y) > dragDistance/4 || Mathf.Abs(lp.x - fp.x) > dragDistance/4)
+                {
+                    isSwiping = true;
+                }
+                else
+                { 
+                    
+                    isSwiping = false;
+
+                }
+
                 
 
             }
@@ -91,6 +104,7 @@ public class TouchController : MonoBehaviour
                 lp = touch.position;  //last touch position. Ommitted if you use list
         
                 offsetX = 0;
+                isSwiping = false;
                 
                 //check if this is a fast swipe
                 diffTime = startTime - Time.time;
@@ -101,6 +115,7 @@ public class TouchController : MonoBehaviour
                 if (swipeSpeed > 500 && Mathf.Abs(diffTime) < 0.2f)
                 {
                     isFastSwipe = true;
+                    
                 }
                 else
                 {

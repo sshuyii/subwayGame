@@ -8,6 +8,8 @@ public class ChangeBackground : MonoBehaviour
 
 
     private InstagramController InstagramController;
+    private FinalCameraController FinalCameraController;
+
     public Image photoBackground;
 
     private Button myButton;
@@ -25,6 +27,8 @@ public class ChangeBackground : MonoBehaviour
 //        }
 
         InstagramController = GameObject.Find("---InstagramController").GetComponent<InstagramController>();
+        FinalCameraController = GameObject.Find("Main Camera").GetComponent<FinalCameraController>();
+
         myButton = GetComponent<Button>();
 
     }
@@ -32,19 +36,21 @@ public class ChangeBackground : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       
+
     }
 
     public void clickBackground()
     {
-        
-        if(InstagramController.AdAlreadyTakenList[transform.name])
+
+        if(FinalCameraController.isSwipping == false)
         {
-            photoBackground.sprite = InstagramController.allBackAd[transform.name];
+            if (InstagramController.AdAlreadyTakenList[transform.name])
+            {
+                photoBackground.sprite = InstagramController.allBackAd[transform.name];
+                InstagramController.currentBackground = transform.name;
 
-            InstagramController.currentBackground = transform.name;
-            myButton.enabled = false;
-
+                FinalCameraController.GoAdvertisement();
+            }
         }
         
     }

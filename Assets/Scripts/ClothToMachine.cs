@@ -14,6 +14,8 @@ public class ClothToMachine : MonoBehaviour
 
     private WasherController WasherController;
 
+    private NewCameraController NewCameraController;
+
     private int hitTime;
 
     // Start is called before the first frame update
@@ -22,6 +24,8 @@ public class ClothToMachine : MonoBehaviour
         hitTime = 0;
         
         ClothInMachineController = GameObject.Find("---ClothInMachineController");
+        NewCameraController = GameObject.Find("Main Camera").GetComponent<NewCameraController>();
+        
         AllMachines = ClothInMachineController.GetComponent<AllMachines>();
         WasherControllerList = new List<WasherController>();
         
@@ -56,6 +60,10 @@ public class ClothToMachine : MonoBehaviour
                 Destroy(AllMachines.generatedNotice);
                 Destroy(AllMachines.currentBag);
                 
+                //reset hitTime so the machine contain different bag of clothes next time
+                hitTime = 0;
+                WasherControllerList[i].isFirstOpen = true;
+                
                 
                 break;
             }
@@ -69,46 +77,53 @@ public class ClothToMachine : MonoBehaviour
         Destroy(AllMachines.generatedNotice);
 
     }
+    
+    
+    
     public void putClothIn()
     {
-        if(hitTime == 0)
+        if(NewCameraController.isSwipping == false)
         {
-            for (int i = 0; i < AllMachines.WashingMachines.Count; i++)
+            if (hitTime == 0)
             {
-                //get machine start washing
-                if (WasherControllerList[i].myMachineState == AllMachines.MachineState.empty)
+                for (int i = 0; i < AllMachines.WashingMachines.Count; i++)
                 {
-                    WasherControllerList[i].myMachineState = AllMachines.MachineState.washing;
-                    //change machine tags to character
-                    WasherControllerList[i].transform.gameObject.tag = this.transform.gameObject.tag;
-                    transform.position = AllMachines.WashingMachines[i].transform.position + new Vector3(0, -2.5f, 0);
-
-                    hitTime++;
-                    break;
-                }
-            }
-        }
-        else if (hitTime > 0)
-        {
-            //get the machine with clothes from this bag
-            for (int i = 0; i < AllMachines.WashingMachines.Count; i++)
-            {
-                if (WasherControllerList[i].CompareTag(this.transform.gameObject.tag))
-                {
-                    if(WasherControllerList[i].myMachineState == AllMachines.MachineState.finished)
+                    //get machine start washing
+                    if (WasherControllerList[i].myMachineState == AllMachines.MachineState.empty)
                     {
-                        //WasherControllerList[i].myMachineState = AllMachines.MachineState.empty;
-
-                        //generate the notice
-                        AllMachines.generatedNotice = Instantiate(AllMachines.returnNotice,  new Vector3(0, 0, 0),
-                            Quaternion.identity, AllMachines.noticeParent.transform);
-
-                        AllMachines.currentBag = this.gameObject;
-                        
-                        print("AllMachines.currentBag.tag = " + AllMachines.currentBag.tag);
+                        WasherControllerList[i].myMachineState = AllMachines.MachineState.washing;
+                        //change machine tags to character
+                        WasherControllerList[i].transform.gameObject.tag = this.transform.gameObject.tag;
+                        transform.position =
+                            AllMachines.WashingMachines[i].transform.position + new Vector3(0, -2.5f, 0);
 
                         hitTime++;
                         break;
+                    }
+                }
+            }
+            else if (hitTime > 0)
+            {
+                //get the machine with clothes from this bag
+                for (int i = 0; i < AllMachines.WashingMachines.Count; i++)
+                {
+                    if (WasherControllerList[i].CompareTag(this.transform.gameObject.tag))
+                    {
+                        if (WasherControllerList[i].myMachineState == AllMachines.MachineState.finished)
+                        {
+                            //WasherControllerList[i].myMachineState = AllMachines.MachineState.empty;
+
+                            //generate the notice
+                            AllMachines.generatedNotice = Instantiate(AllMachines.returnNotice, new Vector3(0, 0, 0),
+                                Quaternion.identity, AllMachines.noticeParent.transform);
+
+                            AllMachines.currentBag = this.gameObject;
+
+                            //print("AllMachines.currentBag.tag = " + AllMachines.currentBag.tag);
+
+                            hitTime++;
+                            break;
+                        }
                     }
                 }
             }

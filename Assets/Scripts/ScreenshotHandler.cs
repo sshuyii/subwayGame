@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
 using UnityEngine.UI;
+using TMPro;
 
 public class ScreenshotHandler : MonoBehaviour
 {
@@ -10,7 +11,7 @@ public class ScreenshotHandler : MonoBehaviour
 
     
     public InstagramController InstagramController;
-    private NewCameraController NewCameraController;
+    private FinalCameraController FinalCameraController;
 
     private int entryTime = 50;
 
@@ -50,7 +51,7 @@ public class ScreenshotHandler : MonoBehaviour
         //myCamera = gameObject.GetComponent<Camera>();
         
         ScreenCapDirectory = Application.persistentDataPath;
-        NewCameraController = GetComponent<NewCameraController>();
+        FinalCameraController = GetComponent<FinalCameraController>();
 
 //        postImage = GetComponent<Image>();
 //        print(postImage.name);
@@ -89,15 +90,16 @@ public class ScreenshotHandler : MonoBehaviour
         toothpastePost.transform.Find("Post").gameObject.GetComponent<Image>().sprite = Sprite.Create(sprites,rec,new Vector2(0,0),100f);
     
         //create comments
-        var newComment = Instantiate(InstagramController.commentPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+        var newComment = Instantiate(InstagramController.commentPrefab, new Vector3(0, 0, 0), Quaternion.identity, toothpastePost.transform.Find("Comments"));
         //set parent(probably a better way to do
-        newComment.transform.parent = toothpastePost.transform.Find("Comments");
+//        newComment.transform.parent = toothpastePost.transform.Find("Comments");
 
         newComment.transform.localPosition = new Vector3(0f, 0f, 0);
 
-
         //get the text child
-        var CommentText = newComment.transform.GetComponentInChildren<Text>();
+        var CommentText = newComment.GetComponentInChildren<TextMeshProUGUI>();
+        
+        print(CommentText.name);
         //get the profile
         var ProfileImage = newComment.GetComponent<Image>();
         
@@ -115,7 +117,7 @@ public class ScreenshotHandler : MonoBehaviour
         }
         else if (InstagramController.currentBackground == "Toothpaste")
         {
-            CommentText.text = "Your clothes.";
+            CommentText.text = "I like the way you dress.";
             ProfileImage.sprite = InstagramController.allProfile["ojisan"];
             
         }
@@ -128,7 +130,7 @@ public class ScreenshotHandler : MonoBehaviour
             
         }
 
-        NewCameraController.ChangeToApp();
+        FinalCameraController.ChangeToApp();
     }
     
 

@@ -56,6 +56,7 @@ public class InstagramController : MonoBehaviour
     //change backgrounds
     public List<Sprite> backAdList;
     public Dictionary<string, Sprite> allBackAd = new Dictionary<string, Sprite>();
+    
     public Dictionary<string, bool> AdAlreadyTakenList = new Dictionary<string, bool>();
 
     
@@ -75,6 +76,10 @@ public class InstagramController : MonoBehaviour
     
     //a list recording all retro girls photos
     public List<Sprite> retroPostList = new List<Sprite>();
+    
+    
+    public bool replyChosen = false;
+
     
     // Start is called before the first frame update
     void Start()

@@ -7,8 +7,8 @@ public class WasherController : MonoBehaviour
 {
 
     public int number;
-    public SpriteRenderer emptySR;
-    public SpriteRenderer fullSR;
+    public Image emptyImage;
+    public Image fullImage;
     public TouchController TouchController;
     public AllMachines AllMachines;
     public NewCameraController NewCameraController;
@@ -20,7 +20,7 @@ public class WasherController : MonoBehaviour
     public CanvasGroup ClothUI;
     public CanvasGroup AllClothUI;
     
-    private bool isFirstOpen = true;
+    public bool isFirstOpen = true;
 
 
     public AllMachines.MachineState myMachineState;
@@ -52,20 +52,21 @@ public class WasherController : MonoBehaviour
     {
         if (myMachineState == AllMachines.MachineState.empty)
         {
-            fullSR.enabled = false;
-            emptySR.enabled = true;
+            fullImage.enabled = false;
+            emptyImage.enabled = true;
 
         }
         else
         {
-            fullSR.enabled = true;
+            fullImage.enabled = true;
         }
         
         //if click a bag of cloth, put them into the machine and start washing
         if (myMachineState == AllMachines.MachineState.washing)
         {
             myAnimator.SetBool("isWashing", true);
-            emptySR.enabled = false;
+            
+            emptyImage.enabled = false;
             
             timer += Time.deltaTime;
             
@@ -75,96 +76,51 @@ public class WasherController : MonoBehaviour
                 myMachineState = AllMachines.MachineState.finished;
                 myAnimator.SetBool("isWashing", false);
                 timer = 0;
-
-            }
-        }
-
-        
-        if(myMachineState == AllMachines.MachineState.finished)
-        {
-            //tap a washing machine
-            if (TouchController.myInputState == TouchController.InputState.Tap &&
-                NewCameraController.myCameraState != NewCameraController.CameraState.Closet &&
-                NewCameraController.myCameraState != NewCameraController.CameraState.Map &&
-                NewCameraController.myCameraState != NewCameraController.CameraState.App &&
-                //so make sure there is a touch
-                Input.touchCount > 0)
-            {
-                Ray raycast = Camera.main.ScreenPointToRay(Input.GetTouch(0).position);
-                RaycastHit raycastHit;
-                if (Physics.Raycast(raycast, out raycastHit))
-                {
-                    Debug.Log("Something Hit");
-                    if (raycastHit.collider.name == this.gameObject.name)
-                    {
-                        if (shut == 0 && TouchController.touch.phase == TouchPhase.Ended)
-                        {
-                            //subway.transform.position -= offsetTap;
-                            print("hitting the machine" + gameObject.name);
-                            shut++;
-                            Hide(AllClothUI);
-                            Show(ClothUI);
-                           
-                            GenerateCloth(this.transform.gameObject.tag);
-                        }
-                        //if click machine again, close UI
-                        else if (shut == 1)
-                        {
-                            shut = 0;
-                            //subway.transform.position += offsetTap;
-                            Hide(ClothUI);
-                        }
-                    }
-                    //if click machine content, don't close UI interface
-                    else if (raycastHit.collider.name == "background" + number.ToString())
-                    {
-                        print("hitting the background" + number.ToString());
-                        
-                        Hide(AllClothUI);
-
-                        Show(ClothUI);
-
-                    }
-                    //if it is a second touch else where, close UI interface
-                    else if (shut == 1)
-                    {
-                        shut = 0;
-                        //subway.transform.position += offsetTap;
-                        Hide(ClothUI);
-                    }
-
-                }
-                else
-                {
-                    if (shut == 1)
-                    {
-                        shut = 0;
-                        //subway.transform.position += offsetTap;
-                        Hide(ClothUI);
-                        //backgroundSR.enabled = false;
-                    }
-
-
-                }
             }
         }
         
-        //any touch cancels cloth UI
-        else if(TouchController.myInputState != TouchController.InputState.None)
-        {
-            if (shut == 1)
-            {
-                shut = 0;
-                //subway.transform.position += offsetTap;
-                Hide(ClothUI);
-                //backgroundSR.enabled = false;
-            }
-        }
+   
+//        
+//        //any touch cancels cloth UI
+//        else if(TouchController.myInputState != TouchController.InputState.None)
+//        {
+//            if (shut == 1)
+//            {
+//                shut = 0;
+//                //subway.transform.position += offsetTap;
+//                Hide(ClothUI);
+//                //backgroundSR.enabled = false;
+//            }
+//        }
 
         
         
     }
 
+    public void clickMachine()
+    {
+        if (myMachineState == AllMachines.MachineState.finished)
+        {
+           
+            if (shut == 0)
+            {
+                shut++;
+                Hide(AllClothUI);
+                Show(ClothUI);
+
+                GenerateCloth(this.transform.gameObject.tag);
+            }
+            //if click machine again, close UI
+            else if (shut == 1)
+            {
+                shut = 0;
+                Hide(ClothUI);
+            }
+        }
+
+    }
+    
+    
     void Hide(CanvasGroup UIGroup) {
         UIGroup.alpha = 0f; //this makes everything transparent
         UIGroup.blocksRaycasts = false; //this prevents the UI element to receive input events
@@ -194,13 +150,13 @@ public class WasherController : MonoBehaviour
             
     }
 
-    public void clickBackground()
-    {
-        Hide(AllClothUI);
-
-        Show(ClothUI);
-    }
-    
+//    public void clickBackground()
+//    {
+//        Hide(AllClothUI);
+//
+//        Show(ClothUI);
+//    }
+//    
     
     public void GenerateCloth(string tagName)
     {
@@ -216,8 +172,6 @@ public class WasherController : MonoBehaviour
                 if(tagName == "Alex")
                 {
                     int randomIndex = Random.Range(0, AllMachines.alexClothesTemp.Count);
-                    //print("random = " + randomIndex);
-//                  clothesInMachine[i].image.sprite = AlexClothes[randomIndex];
 
 //                    Button ClothInMachine =
 //                        Instantiate(alexClothesTemp[randomIndex], buttonPositions[i], Quaternion.identity) as Button;
