@@ -96,6 +96,11 @@ public class WasherController : MonoBehaviour
         
         
     }
+    
+    public void CancelPanel()
+    {
+        Hide(ClothUI);
+    }
 
     public void clickMachine()
     {
