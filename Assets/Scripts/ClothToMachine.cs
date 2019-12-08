@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class ClothToMachine : MonoBehaviour
 {
@@ -14,7 +13,7 @@ public class ClothToMachine : MonoBehaviour
 
     private WasherController WasherController;
 
-    private NewCameraController NewCameraController;
+    private FinalCameraController FinalCameraController;
 
     private int hitTime;
 
@@ -24,7 +23,7 @@ public class ClothToMachine : MonoBehaviour
         hitTime = 0;
         
         ClothInMachineController = GameObject.Find("---ClothInMachineController");
-        NewCameraController = GameObject.Find("Main Camera").GetComponent<NewCameraController>();
+        FinalCameraController = GameObject.Find("Main Camera").GetComponent<FinalCameraController>();
         
         AllMachines = ClothInMachineController.GetComponent<AllMachines>();
         WasherControllerList = new List<WasherController>();
@@ -40,8 +39,14 @@ public class ClothToMachine : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
 
+        if (FinalCameraController.isSwipping)
+        {
+            Destroy(AllMachines.generatedNotice);
+            AllMachines.alreadyNotice = false;
+
+            
+        }
     }
 
 
@@ -75,14 +80,15 @@ public class ClothToMachine : MonoBehaviour
     {
         
         Destroy(AllMachines.generatedNotice);
+        AllMachines.alreadyNotice = false;
+
 
     }
     
     
-    
     public void putClothIn()
     {
-        if(NewCameraController.isSwipping == false)
+        if(FinalCameraController.isSwipping == false)
         {
             if (hitTime == 0)
             {
@@ -94,6 +100,9 @@ public class ClothToMachine : MonoBehaviour
                         WasherControllerList[i].myMachineState = AllMachines.MachineState.washing;
                         //change machine tags to character
                         WasherControllerList[i].transform.gameObject.tag = this.transform.gameObject.tag;
+                        
+                        this.gameObject.transform.SetParent(WasherControllerList[i].gameObject.transform);
+
                         transform.position =
                             AllMachines.WashingMachines[i].transform.position + new Vector3(0, -2.5f, 0);
 
@@ -113,11 +122,17 @@ public class ClothToMachine : MonoBehaviour
                         {
                             //WasherControllerList[i].myMachineState = AllMachines.MachineState.empty;
 
-                            //generate the notice
-                            AllMachines.generatedNotice = Instantiate(AllMachines.returnNotice, new Vector3(0, 0, 0),
-                                Quaternion.identity, AllMachines.noticeParent.transform);
+                            if(AllMachines.alreadyNotice == false)
+                            {
+                                
+                                //generate the notice
+                                AllMachines.generatedNotice = Instantiate(AllMachines.returnNotice,
+                                    new Vector3(0, 0, 0),
+                                    Quaternion.identity, WasherControllerList[i].gameObject.transform);
 
-                            AllMachines.currentBag = this.gameObject;
+                                AllMachines.currentBag = this.gameObject;
+                                AllMachines.alreadyNotice = true;
+                            }
 
                             //print("AllMachines.currentBag.tag = " + AllMachines.currentBag.tag);
 

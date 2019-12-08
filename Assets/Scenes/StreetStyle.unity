@@ -837,6 +837,7 @@ GameObject:
   - component: {fileID: 38627794}
   - component: {fileID: 38627793}
   - component: {fileID: 38627792}
+  - component: {fileID: 38627795}
   m_Layer: 5
   m_Name: PlayerButton
   m_TagString: Untagged
@@ -953,6 +954,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 38627790}
   m_CullTransparentMesh: 0
+--- !u!114 &38627795
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 38627790}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22757922dd9d4064d8186fbef72b0772, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &42675088
 GameObject:
   m_ObjectHideFlags: 0
@@ -1804,7 +1817,7 @@ Transform:
   m_LocalScale: {x: 79.0552, y: 79.0552, z: 142.29936}
   m_Children: []
   m_Father: {fileID: 1997395242}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &170355881
 BoxCollider:
@@ -8518,7 +8531,7 @@ Transform:
   - {fileID: 302331288}
   - {fileID: 38627791}
   m_Father: {fileID: 1997395242}
-  m_RootOrder: 6
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &658266932
 GameObject:
@@ -19347,7 +19360,7 @@ Transform:
   - {fileID: 1385916999}
   - {fileID: 1530853326}
   m_Father: {fileID: 1997395242}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1504880309
 MonoBehaviour:
@@ -21877,7 +21890,7 @@ RectTransform:
   - {fileID: 429661803}
   - {fileID: 1758958632}
   m_Father: {fileID: 1997395242}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -26015,10 +26028,10 @@ RectTransform:
   - {fileID: 2022370568}
   - {fileID: 1037891195}
   - {fileID: 1433667403}
+  - {fileID: 652127164}
   - {fileID: 1727758888}
   - {fileID: 170355880}
   - {fileID: 1504880308}
-  - {fileID: 652127164}
   m_Father: {fileID: 1331761659}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

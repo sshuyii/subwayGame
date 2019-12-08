@@ -13,6 +13,8 @@ public class AllMachines : MonoBehaviour
     
     public GameObject returnNotice;
     public GameObject noticeParent;
+
+    public bool alreadyNotice = false;
     
     //控制所有洗衣机的代码
     //只有这一份

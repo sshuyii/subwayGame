@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1630564389944166423}
   - component: {fileID: 1630564389944166425}
   - component: {fileID: 1630564389944166424}
-  - component: {fileID: 2664554469223016043}
+  - component: {fileID: 997707937438165446}
   m_Layer: 5
   m_Name: Notice
   m_TagString: Untagged
@@ -28,7 +28,7 @@ RectTransform:
   m_GameObject: {fileID: 1630564389944166422}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -7.95}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_Children:
   - {fileID: 8750866145400299667}
   - {fileID: 664125152156486695}
@@ -76,7 +76,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &2664554469223016043
+--- !u!114 &997707937438165446
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -99,7 +99,6 @@ GameObject:
   - component: {fileID: 8750866145400299667}
   - component: {fileID: 9210778057930872628}
   - component: {fileID: 3818797219085860578}
-  - component: {fileID: 4094205810013530416}
   - component: {fileID: 7342145952133736040}
   m_Layer: 5
   m_Name: No
@@ -163,18 +162,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &4094205810013530416
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4648509231977690181}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 983fcfa504c9f497ca53462b46b56cbd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &7342145952133736040
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -218,7 +205,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2664554469223016043}
+      - m_Target: {fileID: 997707937438165446}
         m_MethodName: returnClothNo
         m_Mode: 1
         m_Arguments:
@@ -240,7 +227,6 @@ GameObject:
   - component: {fileID: 664125152156486695}
   - component: {fileID: 5775178033690626022}
   - component: {fileID: 9102752531236389739}
-  - component: {fileID: 7250277511766078187}
   - component: {fileID: 2455955418099500579}
   m_Layer: 5
   m_Name: Yes
@@ -304,18 +290,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &7250277511766078187
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6810934225421813149}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 983fcfa504c9f497ca53462b46b56cbd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &2455955418099500579
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -359,7 +333,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2664554469223016043}
+      - m_Target: {fileID: 997707937438165446}
         m_MethodName: returnClothYes
         m_Mode: 1
         m_Arguments:

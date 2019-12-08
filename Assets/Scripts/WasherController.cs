@@ -11,8 +11,8 @@ public class WasherController : MonoBehaviour
     public Image fullImage;
     public TouchController TouchController;
     public AllMachines AllMachines;
-    public NewCameraController NewCameraController;
 
+    public bool alreadyNotice;
 
     public Collider myCollider;
     
@@ -100,6 +100,7 @@ public class WasherController : MonoBehaviour
     public void CancelPanel()
     {
         Hide(ClothUI);
+        shut = 0;
     }
 
     public void clickMachine()
