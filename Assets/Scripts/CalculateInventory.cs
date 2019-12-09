@@ -53,6 +53,9 @@ public class CalculateInventory : MonoBehaviour
     public Image shoeASR;
     public Image otherASR;
     public Image everythingASR;
+    public Image workClothASR;
+    public Image whiteShirtASR;
+    public Image blackPantsASR;
 
 
     //closet buttons as a record

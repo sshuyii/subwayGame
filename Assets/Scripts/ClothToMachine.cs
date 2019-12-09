@@ -60,7 +60,7 @@ public class ClothToMachine : MonoBehaviour
             {
                 print("AllMachines.currentBag.tag = " + AllMachines.currentBag.tag);
 
-                WasherControllerList[i].transform.tag = "untagged";
+                WasherControllerList[i].transform.tag = null;
                 WasherControllerList[i].myMachineState = AllMachines.MachineState.empty;
                 Destroy(AllMachines.generatedNotice);
                 Destroy(AllMachines.currentBag);

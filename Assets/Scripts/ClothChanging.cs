@@ -180,6 +180,9 @@ public class ClothChanging : MonoBehaviour
                 
                 //change clothes in advertisement
                 CalculateInventory.topASR.sprite = CalculateInventory.allAdCloth[currentSprite.name];
+                //Take off workcloth
+                CalculateInventory.workClothASR.sprite = transparent;
+                
 
                 
                 
@@ -204,6 +207,8 @@ public class ClothChanging : MonoBehaviour
                 CalculateInventory.otherSSR.sprite = CalculateInventory.allSubwayCloth[currentSprite.name];
                 //change clothes in advertisement
                 CalculateInventory.otherASR.sprite = CalculateInventory.allAdCloth[currentSprite.name];
+                //Take off workcloth
+                CalculateInventory.workClothASR.sprite = transparent;
 
                 print("change bottom");
                 
@@ -212,6 +217,8 @@ public class ClothChanging : MonoBehaviour
                 
                 workClothS.enabled = false;
                 blackPantsS.enabled = false;
+                
+                
 
             }
             else if(currentSprite.name.Contains("Shoe"))
@@ -226,7 +233,7 @@ public class ClothChanging : MonoBehaviour
                 CalculateInventory.shoeSSR.sprite = CalculateInventory.allSubwayCloth[currentSprite.name];
                 //change clothes in advertisement
                 CalculateInventory.shoeASR.sprite = CalculateInventory.allAdCloth[currentSprite.name];
-
+                
                 print("change shoe");
                
             }
@@ -242,6 +249,8 @@ public class ClothChanging : MonoBehaviour
                 CalculateInventory.everythingSSR.sprite = CalculateInventory.allSubwayCloth[currentSprite.name];
                 //change clothes in advertisement
                 CalculateInventory.everythingASR.sprite = CalculateInventory.allAdCloth[currentSprite.name];
+                //Take off workcloth
+                CalculateInventory.workClothASR.sprite = transparent;
 
                 
                 print("change everything");
