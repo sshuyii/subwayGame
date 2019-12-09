@@ -9,7 +9,6 @@ public class WasherController : MonoBehaviour
     public int number;
     public Image emptyImage;
     public Image fullImage;
-    public TouchController TouchController;
     public AllMachines AllMachines;
 
     public bool alreadyNotice;
@@ -24,6 +23,9 @@ public class WasherController : MonoBehaviour
 
 
     public AllMachines.MachineState myMachineState;
+    
+    private FinalCameraController FinalCameraController;
+
 
 //    private Button[] btns;
     private int shut = 0;
@@ -40,9 +42,8 @@ public class WasherController : MonoBehaviour
         myMachineState = AllMachines.MachineState.empty;
 
         myAnimator = GetComponentInChildren<Animator>();
-
-
-//        btns = ButtonGroup.gameObject.GetComponents<Button>();
+        
+        FinalCameraController = GameObject.Find("Main Camera").GetComponent<FinalCameraController>();
 
 
     }
@@ -114,6 +115,7 @@ public class WasherController : MonoBehaviour
                 Hide(AllClothUI);
                 Show(ClothUI);
 
+
                 GenerateCloth(this.transform.gameObject.tag);
             }
             //if click machine again, close UI
@@ -132,8 +134,11 @@ public class WasherController : MonoBehaviour
         UIGroup.blocksRaycasts = false; //this prevents the UI element to receive input events
         UIGroup.interactable = false;
 
-        myCollider.enabled = false;
 
+        if (UIGroup == ClothUI)
+        {
+            FinalCameraController.alreadyClothUI = false;
+        }
 //            foreach (Button btn in btns)
 //            {
 //                btn.enabled = false;
@@ -145,8 +150,11 @@ public class WasherController : MonoBehaviour
         UIGroup.blocksRaycasts = true;
         UIGroup.interactable = true;
         
-        myCollider.enabled = true;
-
+        if (UIGroup == ClothUI)
+        {
+            FinalCameraController.alreadyClothUI = true;
+            FinalCameraController.currentClothUI = ClothUI;
+        }
 
             
 //            foreach (Button btn in btns)
@@ -155,14 +163,6 @@ public class WasherController : MonoBehaviour
 //            }
             
     }
-
-//    public void clickBackground()
-//    {
-//        Hide(AllClothUI);
-//
-//        Show(ClothUI);
-//    }
-//    
     
     public void GenerateCloth(string tagName)
     {

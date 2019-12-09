@@ -42,8 +42,8 @@ public class ClothToMachine : MonoBehaviour
 
         if (FinalCameraController.isSwipping)
         {
-            Destroy(AllMachines.generatedNotice);
-            AllMachines.alreadyNotice = false;
+            Destroy(FinalCameraController.generatedNotice);
+            FinalCameraController.alreadyNotice = false;
 
             
         }
@@ -62,7 +62,7 @@ public class ClothToMachine : MonoBehaviour
 
                 WasherControllerList[i].transform.tag = null;
                 WasherControllerList[i].myMachineState = AllMachines.MachineState.empty;
-                Destroy(AllMachines.generatedNotice);
+                Destroy(FinalCameraController.generatedNotice);
                 Destroy(AllMachines.currentBag);
                 
                 //reset hitTime so the machine contain different bag of clothes next time
@@ -79,8 +79,8 @@ public class ClothToMachine : MonoBehaviour
     public void returnClothNo()
     {
         
-        Destroy(AllMachines.generatedNotice);
-        AllMachines.alreadyNotice = false;
+        Destroy(FinalCameraController.generatedNotice);
+        FinalCameraController.alreadyNotice = false;
 
 
     }
@@ -122,16 +122,15 @@ public class ClothToMachine : MonoBehaviour
                         {
                             //WasherControllerList[i].myMachineState = AllMachines.MachineState.empty;
 
-                            if(AllMachines.alreadyNotice == false)
+                            if(FinalCameraController.alreadyNotice == false)
                             {
-                                
                                 //generate the notice
-                                AllMachines.generatedNotice = Instantiate(AllMachines.returnNotice,
+                                FinalCameraController.generatedNotice = Instantiate(AllMachines.returnNotice,
                                     new Vector3(0, 0, 0),
                                     Quaternion.identity, WasherControllerList[i].gameObject.transform);
 
                                 AllMachines.currentBag = this.gameObject;
-                                AllMachines.alreadyNotice = true;
+                                FinalCameraController.alreadyNotice = true;
                             }
 
                             //print("AllMachines.currentBag.tag = " + AllMachines.currentBag.tag);

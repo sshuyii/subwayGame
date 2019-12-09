@@ -42,15 +42,23 @@ public class ChangeBackground : MonoBehaviour
     public void clickBackground()
     {
 
-        if(FinalCameraController.isSwipping == false)
+        if(!FinalCameraController.alreadyNotice)
         {
-            if (InstagramController.AdAlreadyTakenList[transform.name])
+            if (FinalCameraController.isSwipping == false)
             {
-                photoBackground.sprite = InstagramController.allBackAd[transform.name];
-                InstagramController.currentBackground = transform.name;
+                if (InstagramController.AdAlreadyTakenList[transform.name])
+                {
+                    photoBackground.sprite = InstagramController.allBackAd[transform.name];
+                    InstagramController.currentBackground = transform.name;
 
-                FinalCameraController.GoAdvertisement();
+                    FinalCameraController.GoAdvertisement();
+                }
             }
+        }
+        else
+        {
+            Destroy(FinalCameraController.generatedNotice);
+
         }
         
     }

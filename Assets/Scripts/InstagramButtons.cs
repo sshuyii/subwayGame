@@ -14,7 +14,7 @@ public class InstagramButtons : MonoBehaviour
     private CalculateInventory CalculateInventory;
     private Text username;
 
-    private NewCameraController NewCameraController;
+    private FinalCameraController FinalCameraController;
     
     
     // Start is called before the first frame update
@@ -23,7 +23,7 @@ public class InstagramButtons : MonoBehaviour
         currentSprite = GetComponent<Image>().sprite;
         username = GetComponentInChildren<Text>();
         
-        NewCameraController = GameObject.Find("Main Camera").GetComponent<NewCameraController>();
+        FinalCameraController = GameObject.Find("Main Camera").GetComponent<FinalCameraController>();
 
         myImage = GetComponent<Image>();
         myButton = GetComponent<Button>();
@@ -51,10 +51,10 @@ public class InstagramButtons : MonoBehaviour
 
     public void ChangeToPersonalPage()
     {
-        NewCameraController.lastAppState = NewCameraController.myAppState;
+        FinalCameraController.lastAppState = FinalCameraController.myAppState;
 
-        Hide(NewCameraController.mainpage);
-        NewCameraController.HideAllPersonalPages();
+        Hide(FinalCameraController.frontPage);
+        FinalCameraController.HideAllPersonalPages();
 
         
         if (username.text == "Karara")
@@ -62,8 +62,8 @@ public class InstagramButtons : MonoBehaviour
             Camera.main.transform.position =
                 new Vector3(45, Camera.main.transform.position.y, Camera.main.transform.position.z);
             
-            NewCameraController.myAppState = NewCameraController.AppState.KararaPage;
-            Show(NewCameraController.KararaPage);
+            FinalCameraController.myAppState = FinalCameraController.AppState.KararaPage;
+            Show(FinalCameraController.KararaPage);
             
 
         }    
@@ -71,8 +71,8 @@ public class InstagramButtons : MonoBehaviour
         {
             Camera.main.transform.position =
                 new Vector3(55, Camera.main.transform.position.y, Camera.main.transform.position.z);
-            NewCameraController.myAppState = NewCameraController.AppState.RetroPage;
-            Show(NewCameraController.RetroPage);
+            FinalCameraController.myAppState = FinalCameraController.AppState.RetroPage;
+            Show(FinalCameraController.RetroPage);
 
 
         }       
@@ -80,8 +80,8 @@ public class InstagramButtons : MonoBehaviour
         {
             Camera.main.transform.position =
                 new Vector3(55, Camera.main.transform.position.y, Camera.main.transform.position.z);
-            NewCameraController.myAppState = NewCameraController.AppState.DesignerPage;
-            Show(NewCameraController.DesignerPage);
+            FinalCameraController.myAppState = FinalCameraController.AppState.DesignerPage;
+            Show(FinalCameraController.DesignerPage);
 
 
         }       
@@ -89,18 +89,18 @@ public class InstagramButtons : MonoBehaviour
     
     public void ClickInsPost()
     {
-        NewCameraController.lastAppState = NewCameraController.myAppState;
+        FinalCameraController.lastAppState = FinalCameraController.myAppState;
 
-        Hide(NewCameraController.mainpage);
-        NewCameraController.HideAllPersonalPages();
+        Hide(FinalCameraController.frontPage);
+        FinalCameraController.HideAllPersonalPages();
         
-        Show(NewCameraController.postpage);
+        Show(FinalCameraController.postpage);
         
         Camera.main.transform.position = new Vector3(65, Camera.main.transform.position.y, Camera.main.transform.position.z);
 
         InstagramController.gotoImage.sprite = currentSprite;
         
-        NewCameraController.myAppState = NewCameraController.AppState.Post;
+        FinalCameraController.myAppState = FinalCameraController.AppState.Post;
 
 
     }

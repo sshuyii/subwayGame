@@ -30,7 +30,6 @@ public class SubwayMovement : MonoBehaviour
     public GameObject detailBackground;
     private SpriteRenderer dSR;
 
-
     
     private Dictionary<string, int> allStation = new Dictionary<string, int>();
     public List<string> stationNames;

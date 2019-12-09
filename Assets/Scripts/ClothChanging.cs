@@ -179,9 +179,10 @@ public class ClothChanging : MonoBehaviour
 
                 
                 //change clothes in advertisement
+                print("GIven key = " + currentSprite.name);
                 CalculateInventory.topASR.sprite = CalculateInventory.allAdCloth[currentSprite.name];
                 //Take off workcloth
-                CalculateInventory.workClothASR.sprite = transparent;
+                CalculateInventory.workClothASR.enabled = false;
                 
 
                 
@@ -208,7 +209,7 @@ public class ClothChanging : MonoBehaviour
                 //change clothes in advertisement
                 CalculateInventory.otherASR.sprite = CalculateInventory.allAdCloth[currentSprite.name];
                 //Take off workcloth
-                CalculateInventory.workClothASR.sprite = transparent;
+                CalculateInventory.workClothASR.enabled = false;
 
                 print("change bottom");
                 
@@ -218,8 +219,6 @@ public class ClothChanging : MonoBehaviour
                 workClothS.enabled = false;
                 blackPantsS.enabled = false;
                 
-                
-
             }
             else if(currentSprite.name.Contains("Shoe"))
             {
@@ -250,7 +249,7 @@ public class ClothChanging : MonoBehaviour
                 //change clothes in advertisement
                 CalculateInventory.everythingASR.sprite = CalculateInventory.allAdCloth[currentSprite.name];
                 //Take off workcloth
-                CalculateInventory.workClothASR.sprite = transparent;
+                CalculateInventory.workClothASR.enabled = false;
 
                 
                 print("change everything");
@@ -324,7 +323,8 @@ public class ClothChanging : MonoBehaviour
         CalculateInventory.otherSSR.sprite = transparent;
         CalculateInventory.everythingSSR.sprite = transparent;
 
-        
+
+        CalculateInventory.workClothASR.enabled = true;
         
         blackPants.enabled = true;
         whiteShirt.enabled = true;

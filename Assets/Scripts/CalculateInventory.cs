@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class CalculateInventory : MonoBehaviour
 {
-    public int posNum = 1;
+    public int posNum = 0;
 
     
     public Dictionary<string, Sprite> allCloth = new Dictionary<string, Sprite>();
@@ -114,6 +114,7 @@ public class CalculateInventory : MonoBehaviour
             AllClothPos0.Add(ClothPos0[i].name, ClothPos0[i]);
             AllClothPos1.Add(ClothPos1[i].name, ClothPos1[i]);
             AllClothPos2.Add(ClothPos2[i].name, ClothPos2[i]);
+            allAdCloth.Add(ClothPos0[i].name, ClothPos0[i]);
 
         }
 

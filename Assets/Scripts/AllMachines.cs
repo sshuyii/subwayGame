@@ -7,7 +7,6 @@ public class AllMachines : MonoBehaviour
 {
     private WasherController WasherController;
 
-    public GameObject generatedNotice;
     public GameObject currentBag;
     
     
@@ -25,7 +24,7 @@ public class AllMachines : MonoBehaviour
     public List<Sprite> BellaClothes;
     public List<Sprite> bellaClothesTemp = new List<Sprite>();
 
-
+   
     private bool isFirstOpen = true;
 
     //all the machines
@@ -35,7 +34,7 @@ public class AllMachines : MonoBehaviour
     public int washTime;
 
     private bool isLoad;
-    
+
     public enum MachineState {
         empty,
         washing,

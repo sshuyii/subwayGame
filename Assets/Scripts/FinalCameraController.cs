@@ -34,6 +34,17 @@ public class FinalCameraController : MonoBehaviour
         App,
         Ad
     }
+    
+    //if notice UI is on display, this is true
+    public bool alreadyNotice = false;
+    public bool alreadyClothUI = false;
+    public CanvasGroup currentClothUI;
+    
+    
+    
+    public GameObject generatedNotice;
+
+
 
     private bool isLerp = false;
 
@@ -65,8 +76,6 @@ public class FinalCameraController : MonoBehaviour
 
         myCameraState = CameraState.Two;
         myAppState = AppState.Mainpage;
-
-    
         
         pageList.Add(RetroPage);
         pageList.Add(KararaPage);
@@ -76,8 +85,6 @@ public class FinalCameraController : MonoBehaviour
         Hide(frontPage);
         Hide(postpage);
         HideAllPersonalPages();
-
-        
     }
 
     
@@ -139,14 +146,26 @@ public class FinalCameraController : MonoBehaviour
     
     public void ChangeToCloth()
     {
-        Hide(subwayBackground);
-
-        if(isSwipping == false)
+        if(alreadyClothUI == false)
         {
-            //print("myCameraState = " + myCameraState);
-            lastCameraState = myCameraState;
-            myCameraState = CameraState.Closet;
-            transform.position = new Vector3(-25, 0, -10);
+            Hide(subwayBackground);
+
+            if (isSwipping == false)
+            {
+                //print("myCameraState = " + myCameraState);
+                lastCameraState = myCameraState;
+                myCameraState = CameraState.Closet;
+                transform.position = new Vector3(-25, 0, -10);
+            }
+            
+            print("Doesn't Hideeee");
+        }
+        else
+        {
+            Destroy(generatedNotice);
+            Hide(currentClothUI);
+            print("Hideeeee");
+
         }
     }
 
@@ -226,32 +245,45 @@ public class FinalCameraController : MonoBehaviour
     
     public void ChangeToApp()
     {
-        Hide(subwayBackground);
+        if(alreadyClothUI == false)        {
+            Hide(subwayBackground);
 
-        if(isSwipping == false)
+            if (isSwipping == false)
+            {
+                //transform.position = new Vector3(0, 0, -10);
+
+
+                lastCameraState = myCameraState;
+                myCameraState = CameraState.App;
+                myAppState = AppState.Mainpage;
+
+                transform.position = new Vector3(35, 0, -10);
+                Show(frontPage);
+            }
+        }
+        else
         {
-            //transform.position = new Vector3(0, 0, -10);
+            Destroy(generatedNotice);
+            Hide(currentClothUI);
 
-            
-            lastCameraState = myCameraState;
-            myCameraState = CameraState.App;
-            myAppState = AppState.Mainpage;
-
-            transform.position = new Vector3(35, 0, -10);
-
-            print("mainpageeeeee");
-            Show(frontPage);
         }
     }
     
     public void ChangeToMap()
     {  
-        Hide(subwayBackground);
-        if(isSwipping == false)
+        if(alreadyClothUI == false)        {
+            Hide(subwayBackground);
+            if (isSwipping == false)
+            {
+                lastCameraState = myCameraState;
+                myCameraState = CameraState.Map;
+                transform.position = new Vector3(0, 13, -10);
+            }
+        }
+        else
         {
-            lastCameraState = myCameraState;
-            myCameraState = CameraState.Map;
-            transform.position = new Vector3(0, 13, -10);
+            Destroy(generatedNotice);
+            Hide(currentClothUI);
         }
         
     }
