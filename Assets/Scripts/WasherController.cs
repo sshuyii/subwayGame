@@ -51,6 +51,16 @@ public class WasherController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //close all ui if swipping the screen
+        if (FinalCameraController.isSwipping)
+        {
+            Destroy(FinalCameraController.generatedNotice);
+            FinalCameraController.alreadyNotice = false;
+            Hide(ClothUI);
+            FinalCameraController.alreadyClothUI = false;
+
+        }
+        
         if (myMachineState == AllMachines.MachineState.empty)
         {
             fullImage.enabled = false;

@@ -101,8 +101,26 @@ public class InstagramButtons : MonoBehaviour
         InstagramController.gotoImage.sprite = currentSprite;
         
         FinalCameraController.myAppState = FinalCameraController.AppState.Post;
+        
+        for (int i = 0; i < InstagramController.retroPostList.Count; i++)
+        {
+            if (InstagramController.retroPostList[i] == currentSprite)
+            {
+                InstagramController.gotoProfile.sprite = InstagramController.allProfile["nico"];
+                InstagramController.gotoText.GetComponent<Text>().text = "nico";
+            }
+        }
+        
+        for (int i = 0; i < InstagramController.designerPostList.Count; i++)
+        {
+            if (InstagramController.designerPostList[i] == currentSprite)
+            {
+                InstagramController.gotoProfile.sprite = InstagramController.allProfile["ojisan"];
+                InstagramController.gotoText.GetComponent<Text>().text = "ojisan";
+            }
+        }
 
-
+       
     }
 
     public void ChangePosture()

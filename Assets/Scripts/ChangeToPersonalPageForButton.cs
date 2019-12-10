@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class ChangeToPersonalPageForButton : MonoBehaviour
 {
-    private NewCameraController NewCameraController;
+    private FinalCameraController FinalCameraController;
 
     private InstagramController InstagramController;
     
@@ -20,12 +20,15 @@ public class ChangeToPersonalPageForButton : MonoBehaviour
     private bool replyChosen = false;
 
     private List<GameObject> replyList = new List<GameObject>();
+
+    public GameObject privateAccount;
+    public GameObject posts;
     
     
-    // Start is called before the first frame update
+    // Start is called before the first frame updateGroup
     void Start()
     {
-        NewCameraController = GameObject.Find("Main Camera").GetComponent<NewCameraController>();
+        FinalCameraController = GameObject.Find("Main Camera").GetComponent<FinalCameraController>();
         InstagramController = GameObject.Find("---InstagramController").GetComponent<InstagramController>();
 
         myImage = GetComponent<Image>();
@@ -41,8 +44,8 @@ public class ChangeToPersonalPageForButton : MonoBehaviour
     public void ChangeToPersonalPage()
     {
         
-        Hide(NewCameraController.mainpage);
-        NewCameraController.HideAllPersonalPages();
+        Hide(FinalCameraController.frontPage);
+        FinalCameraController.HideAllPersonalPages();
 
         
         if (mySprite.name.Contains("karara"))
@@ -50,30 +53,30 @@ public class ChangeToPersonalPageForButton : MonoBehaviour
             Camera.main.transform.position =
                 new Vector3(45, Camera.main.transform.position.y, Camera.main.transform.position.z);
             
-            NewCameraController.myAppState = NewCameraController.AppState.KararaPage;
-            Show(NewCameraController.KararaPage);
+            FinalCameraController.myAppState = FinalCameraController.AppState.KararaPage;
+            Show(FinalCameraController.KararaPage);
             
         }    
         else if (mySprite.name.Contains("nico"))
         {
             Camera.main.transform.position =
                 new Vector3(55, Camera.main.transform.position.y, Camera.main.transform.position.z);
-            NewCameraController.myAppState = NewCameraController.AppState.RetroPage;
-            Show(NewCameraController.RetroPage);
+            FinalCameraController.myAppState = FinalCameraController.AppState.RetroPage;
+            Show(FinalCameraController.RetroPage);
         }       
         else if (mySprite.name.Contains("ojisan"))
         {
             Camera.main.transform.position =
                 new Vector3(55, Camera.main.transform.position.y, Camera.main.transform.position.z);
-            NewCameraController.myAppState = NewCameraController.AppState.DesignerPage;
-            Show(NewCameraController.DesignerPage);
+            FinalCameraController.myAppState = FinalCameraController.AppState.DesignerPage;
+            Show(FinalCameraController.DesignerPage);
         }       
         else if (mySprite.name.Contains("NPC"))
         {
             Camera.main.transform.position =
                 new Vector3(55, Camera.main.transform.position.y, Camera.main.transform.position.z);
-            NewCameraController.myAppState = NewCameraController.AppState.NPCPage;
-            Show(NewCameraController.NPCPage);
+            FinalCameraController.myAppState = FinalCameraController.AppState.NPCPage;
+            Show(FinalCameraController.NPCPage);
             if (mySprite.name.Contains("gNPC"))
             {
                 
@@ -146,35 +149,85 @@ public class ChangeToPersonalPageForButton : MonoBehaviour
 
     public void FollowNico()
     {
-        int retroTime = 3;
-
-        for (int i = 0; i < InstagramController.retroPostList.Count; i++)
+        if(InstagramController.followNico == false)
         {
-            var newPost = Instantiate(InstagramController.PosturePostPrefabNew, new Vector3(0, 0, 0), Quaternion.identity);
-        
-
-            newPost.GetComponent<EntryTime>().time = retroTime;
-
-            newPost.transform.Find("Post").gameObject.GetComponent<Image>().sprite =
-                InstagramController.retroPostList[i];
-
-            //set parent(probably a better way to do
-            newPost.transform.SetParent(InstagramController.postParent.transform);
+            //change private account to posts
+            //need a list for all the film lists
+//            privateAccount.SetActive(false);
+//            posts.SetActive(true);
             
-            retroTime += 10;
+            //change othters
+            InstagramController.followNico = true;
+            myImage.sprite = InstagramController.unfollow;
+            int retroTime = 3;
+
+            for (int i = 0; i < InstagramController.retroPostList.Count; i++)
+            {
+                var newPost = Instantiate(InstagramController.PosturePostPrefabNew, new Vector3(0, 0, 0),
+                    Quaternion.identity);
+                newPost.GetComponent<EntryTime>().time = retroTime;
+
+                newPost.transform.Find("Post").gameObject.GetComponent<Image>().sprite =
+                    InstagramController.retroPostList[i];
+
+                var profileNicoImage = newPost.transform.Find("Profile").gameObject.GetComponent<Image>();
+                
+                profileNicoImage.sprite = InstagramController.allProfile["nico"];
+
+                profileNicoImage.GetComponentInChildren<Text>().text = "Nico";
+
+                //set parent(probably a better way to do
+                newPost.transform.SetParent(InstagramController.postParent.transform);
+
+                retroTime += 10;
+            }
+
+            rearrangePosts();
         }
-
-        rearrangePosts();
-
-
-
-        //change sprite to the newly taken photo
-//        newPost.GetComponent<Image>().sprite = Sprite.Create(sprites,rec,new Vector2(0,0),100f);
-//        
-//        toothpastePost.transform.Find("Post").gameObject.GetComponent<Image>().sprite = Sprite.Create(sprites,rec,new Vector2(0,0),100f);
+        
 
     }
 
+    public void FollowDesigner()
+    {
+        if(InstagramController.followDesigner == false)
+        {
+            //change private account to postsDesigner
+            //need a list for all the film lists
+//            privateAccount.SetActive(false);
+//            posts.SetActive(true);
+            
+            //change othters
+            InstagramController.followDesigner = true;
+            myImage.sprite = InstagramController.unfollow;
+            int designerTime = 2;
+
+            for (int i = 0; i < InstagramController.designerPostList.Count; i++)
+            {
+                var newPost = Instantiate(InstagramController.PosturePostPrefabNew, new Vector3(0, 0, 0),
+                    Quaternion.identity);
+                newPost.GetComponent<EntryTime>().time = designerTime;
+
+                newPost.transform.Find("Post").gameObject.GetComponent<Image>().sprite =
+                    InstagramController.designerPostList[i];
+
+                var profileImage = newPost.transform.Find("Profile").gameObject.GetComponent<Image>();
+                
+                profileImage.sprite = InstagramController.allProfile["ojisan"];
+
+                profileImage.GetComponentInChildren<Text>().text = "Ojisan";
+
+                //set parent(probably a better way to do
+                newPost.transform.SetParent(InstagramController.postParent.transform);
+
+                designerTime += 10;
+            }
+
+            rearrangePosts();
+        }
+        
+
+    }
     private void rearrangePosts()
     {
        

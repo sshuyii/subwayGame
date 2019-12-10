@@ -261,8 +261,6 @@ public class ClothChanging : MonoBehaviour
                 CalculateInventory.wearingTop = false;
                 CalculateInventory.wearingBottom = false;
 
-
-
                 //record the button
                 CalculateInventory.everythingButton = selfButton;
                 

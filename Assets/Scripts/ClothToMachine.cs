@@ -40,13 +40,7 @@ public class ClothToMachine : MonoBehaviour
     void Update()
     {
 
-        if (FinalCameraController.isSwipping)
-        {
-            Destroy(FinalCameraController.generatedNotice);
-            FinalCameraController.alreadyNotice = false;
-
-            
-        }
+        
     }
 
 

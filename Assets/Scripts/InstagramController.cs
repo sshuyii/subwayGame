@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Net.Mime;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.UIElements;
+using Image = UnityEngine.UI.Image;
 
 public class InstagramController : MonoBehaviour
 {
@@ -15,6 +17,9 @@ public class InstagramController : MonoBehaviour
 
     public Sprite transparent;
     public Image gotoImage;
+    public Image gotoProfile;
+    public GameObject gotoText;
+
     
     public GameObject postPrefab;
     public GameObject postParent;
@@ -26,6 +31,7 @@ public class InstagramController : MonoBehaviour
     public GameObject commentPrefab;
 
 
+    
     public Sprite likeFUll;
     //change post in karara's page
     public GameObject filmParent;
@@ -76,9 +82,16 @@ public class InstagramController : MonoBehaviour
     
     //a list recording all retro girls photos
     public List<Sprite> retroPostList = new List<Sprite>();
+    public List<Sprite> designerPostList = new List<Sprite>();
+
     
     
     public bool replyChosen = false;
+
+    public Sprite unfollow;
+
+    public bool followNico;
+    public bool followDesigner;
 
     
     // Start is called before the first frame update
