@@ -42,7 +42,7 @@ public class ChangeBackground : MonoBehaviour
     public void clickBackground()
     {
 
-        if(!FinalCameraController.alreadyNotice)
+        if(!FinalCameraController.alreadyClothUI)
         {
             if (FinalCameraController.isSwipping == false)
             {
@@ -58,6 +58,8 @@ public class ChangeBackground : MonoBehaviour
         else
         {
             Destroy(FinalCameraController.generatedNotice);
+            Destroy(FinalCameraController.currentClothUI);
+            FinalCameraController.alreadyClothUI = false;
 
         }
         

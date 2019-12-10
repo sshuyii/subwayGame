@@ -164,7 +164,8 @@ public class FinalCameraController : MonoBehaviour
         {
             Destroy(generatedNotice);
             Hide(currentClothUI);
-            print("Hideeeee");
+            alreadyClothUI = false;
+
 
         }
     }
@@ -265,6 +266,7 @@ public class FinalCameraController : MonoBehaviour
         {
             Destroy(generatedNotice);
             Hide(currentClothUI);
+            alreadyClothUI = false;
 
         }
     }
@@ -284,6 +286,7 @@ public class FinalCameraController : MonoBehaviour
         {
             Destroy(generatedNotice);
             Hide(currentClothUI);
+            alreadyClothUI = false;
         }
         
     }

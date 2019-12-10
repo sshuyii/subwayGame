@@ -8,6 +8,12 @@ public class CalculateInventory : MonoBehaviour
 {
     public int posNum = 0;
 
+
+    public bool wearingTop;
+    public bool wearingBottom;
+    public bool wearingEverything;
+    public bool wearingShoe;
+    
     
     public Dictionary<string, Sprite> allCloth = new Dictionary<string, Sprite>();
     public Dictionary<string, Sprite> allClothUI = new Dictionary<string, Sprite>();
