@@ -140,6 +140,14 @@ public class InstagramButtons : MonoBehaviour
         
         InstagramController.adBodyImage.sprite = InstagramController.postureList[CalculateInventory.posNum];
         InstagramController.workClothImage.sprite = InstagramController.workclothList[CalculateInventory.posNum];
+        if(CalculateInventory.wearingTop == false)
+        {
+            CalculateInventory.whiteShirtASR.sprite = CalculateInventory.allAdCloth["WhiteShirt"];
+        }  
+        if(CalculateInventory.wearingBottom == false)
+        {
+            CalculateInventory.blackPantsASR.sprite = CalculateInventory.allAdCloth["BlackPants"];
+        }
         
         //change clothes after posture changes
         for(int i = 0; i < InstagramController.adClothes.Count; i ++)

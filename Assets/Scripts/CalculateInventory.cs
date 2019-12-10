@@ -128,6 +128,7 @@ public class CalculateInventory : MonoBehaviour
         postureDictionaryList.Add(AllClothPos1);
         postureDictionaryList.Add(AllClothPos2);
         
+        
         allAdCloth = postureDictionaryList[posNum];
     }
 

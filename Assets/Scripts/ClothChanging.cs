@@ -74,6 +74,7 @@ public class ClothChanging : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
         if (Input.touchCount > 0)
         {
             Touch touch = Input.touches[0];
@@ -165,7 +166,6 @@ public class ClothChanging : MonoBehaviour
                 //record the button
                 CalculateInventory.topButton = selfButton;
                 
-                
                 //change inventory clothes
                 CalculateInventory.topSR.sprite = CalculateInventory.allCloth[currentSprite.name];
                 print(currentSprite.name);
@@ -173,33 +173,36 @@ public class ClothChanging : MonoBehaviour
                 //change subway clothes
                 CalculateInventory.topSSR.sprite = CalculateInventory.allSubwayCloth[currentSprite.name];
                 
+                
+                
                 whiteShirt.enabled = false;
                 workCloth.enabled = false;
-                
+                                
                 
                 workClothS.enabled = false;
                 whiteShirtS.enabled = false;
 
                 
                 //change clothes in advertisement
-                print("GIven key = " + currentSprite.name);
+                print("Given key = " + currentSprite.name);
                 CalculateInventory.topASR.sprite = CalculateInventory.allAdCloth[currentSprite.name];
+                
                 //Take off workcloth
                 CalculateInventory.workClothASR.enabled = false;
+                CalculateInventory.whiteShirtASR.sprite = transparent;
+                //CalculateInventory.blackPantsASR.sprite = CalculateInventory.allAdCloth["BlackPants"];
+
                 
                 //take off one piece
                 CalculateInventory.everythingSR.sprite = transparent;
                 CalculateInventory.everythingASR.sprite = transparent;
-
-                
+                CalculateInventory.everythingSSR.sprite = transparent;
                 
                 //player talks
                 if(currentSprite.name.Contains("A1"))
                 {
                     text.text = "<b>Karara</b>: Do people wear Hawaii shirts in Hawaii?";
                 }
-                
-                
 
             }
             else if(currentSprite.name.Contains("Bottom"))
@@ -220,10 +223,15 @@ public class ClothChanging : MonoBehaviour
                 CalculateInventory.otherASR.sprite = CalculateInventory.allAdCloth[currentSprite.name];
                 //Take off workcloth
                 CalculateInventory.workClothASR.enabled = false;
+                //CalculateInventory.whiteShirtASR.sprite = CalculateInventory.allAdCloth["WhiteShirt"];
+                CalculateInventory.blackPantsASR.sprite = transparent;
+
 
                 //take off one piece
                 CalculateInventory.everythingSR.sprite = transparent;
                 CalculateInventory.everythingASR.sprite = transparent;
+                CalculateInventory.everythingSSR.sprite = transparent;
+
 
                 
                 print("change bottom");
@@ -278,6 +286,9 @@ public class ClothChanging : MonoBehaviour
                 
                 CalculateInventory.otherASR.sprite = transparent;
                 CalculateInventory.topASR.sprite = transparent;
+                
+                CalculateInventory.otherSSR.sprite = transparent;
+                CalculateInventory.topSSR.sprite = transparent;
 
                 
                 print("change everything");
@@ -295,6 +306,8 @@ public class ClothChanging : MonoBehaviour
                 whiteShirtS.enabled = true;
                 blackPantsS.enabled = true;
 
+                CalculateInventory.whiteShirtASR.sprite = CalculateInventory.allAdCloth["WhiteShirt"];
+                CalculateInventory.blackPantsASR.sprite = CalculateInventory.allAdCloth["BlackPants"];
 
             }
             else
@@ -341,6 +354,8 @@ public class ClothChanging : MonoBehaviour
     {
         workCloth.enabled = !workCloth.enabled;
         workClothS.enabled = !workClothS.enabled;
+        CalculateInventory.workClothASR.enabled = !CalculateInventory.workClothASR.enabled;
+
 
 
       
@@ -351,21 +366,27 @@ public class ClothChanging : MonoBehaviour
         CalculateInventory.topSSR.sprite = transparent;
         CalculateInventory.otherSSR.sprite = transparent;
         CalculateInventory.everythingSSR.sprite = transparent;
+        
+        CalculateInventory.topASR.sprite = transparent;
+        CalculateInventory.otherASR.sprite = transparent;
+        CalculateInventory.everythingASR.sprite = transparent;
 
 
-        CalculateInventory.workClothASR.enabled = true;
         
         blackPants.enabled = true;
         whiteShirt.enabled = true;
 
         whiteShirtS.enabled = true;
         blackPants.enabled = true;
+
+        CalculateInventory.whiteShirtASR.sprite = CalculateInventory.allAdCloth["WhiteShirt"];
+        CalculateInventory.blackPantsASR.sprite = CalculateInventory.allAdCloth["BlackPants"];
+        
         
         //enable all buttons
         for (var i = 0; i < inventoryButtonList.Count; i++)
         {
             inventoryButtonList[i].enabled = true;
-            
         }
         
         //disable all checks
@@ -378,47 +399,49 @@ public class ClothChanging : MonoBehaviour
 
     private void buttonChangeBack()
     {
-        
-            if (CalculateInventory.allCloth.ContainsKey(currentSprite.name))
+
+        if (CalculateInventory.allCloth.ContainsKey(currentSprite.name))
+        {
+            if (currentSprite.name.Contains("Top") || currentSprite.name != CalculateInventory.topSR.sprite.name)
             {
-                if (currentSprite.name.Contains("Top"))
+                if (CalculateInventory.wearingTop)
                 {
-                    if(CalculateInventory.wearingTop)
-                    {
-                        print("toppppppp");
-                        CalculateInventory.topButton.enabled = true;
-                        CalculateInventory.topButton.GetComponent<ClothChanging>().checkImage.enabled = false;
-                    }
-                    else if(CalculateInventory.wearingEverything)
-                    {
-                        //set everything button back
-                        CalculateInventory.everythingButton.enabled = true;
-                        CalculateInventory.everythingButton.GetComponent<ClothChanging>().checkImage.enabled = false;
-                    }
+                    print("toppppppp");
+                    CalculateInventory.topButton.enabled = true;
+                    CalculateInventory.topButton.GetComponent<ClothChanging>().checkImage.enabled = false;
                 }
-                else if (currentSprite.name.Contains("Bottom") )
+                else if (CalculateInventory.wearingEverything)
                 {
-                    if(CalculateInventory.wearingBottom)
-                    {
-                        CalculateInventory.bottomButton.enabled = true;
-                        CalculateInventory.bottomButton.GetComponent<ClothChanging>().checkImage.enabled = false;
-                    }
-                    
-                    else if(CalculateInventory.wearingEverything)
-                    {
-                        //set everything button back
-                        CalculateInventory.everythingButton.enabled = true;
-                        CalculateInventory.everythingButton.GetComponent<ClothChanging>().checkImage.enabled = false;
-                    }
+                    //set everything button back
+                    CalculateInventory.everythingButton.enabled = true;
+                    CalculateInventory.everythingButton.GetComponent<ClothChanging>().checkImage.enabled = false;
                 }
-                else if (currentSprite.name.Contains("Shoe") && CalculateInventory.wearingShoe)
+            }
+            else if (currentSprite.name.Contains("Bottom") || currentSprite.name != CalculateInventory.otherSR.sprite.name)
+            {
+                if (CalculateInventory.wearingBottom)
                 {
-                    CalculateInventory.shoeButton.enabled = true;
-                    CalculateInventory.shoeButton.GetComponent<ClothChanging>().checkImage.enabled = false;
+                    CalculateInventory.bottomButton.enabled = true;
+                    CalculateInventory.bottomButton.GetComponent<ClothChanging>().checkImage.enabled = false;
                 }
-                else if (currentSprite.name.Contains("Everything"))
+
+                else if (CalculateInventory.wearingEverything)
                 {
-                    if(CalculateInventory.wearingTop)
+                    //set everything button back
+                    CalculateInventory.everythingButton.enabled = true;
+                    CalculateInventory.everythingButton.GetComponent<ClothChanging>().checkImage.enabled = false;
+                }
+            }
+            else if (currentSprite.name.Contains("Shoe") && CalculateInventory.wearingShoe)
+            {
+                CalculateInventory.shoeButton.enabled = true;
+                CalculateInventory.shoeButton.GetComponent<ClothChanging>().checkImage.enabled = false;
+            }
+            else if (currentSprite.name.Contains("Everything") ||
+                     currentSprite.name != CalculateInventory.everythingSR.sprite.name)
+            {
+                {
+                    if (CalculateInventory.wearingTop)
                     {
                         //set top and bottom buttons back
                         CalculateInventory.topButton.enabled = true;
@@ -430,19 +453,19 @@ public class ClothChanging : MonoBehaviour
                         CalculateInventory.bottomButton.enabled = true;
                         CalculateInventory.bottomButton.GetComponent<ClothChanging>().checkImage.enabled = false;
                     }
-                    
-                    if(CalculateInventory.wearingEverything)
+
+                    if (CalculateInventory.wearingEverything)
                     {
-                       
+
                         CalculateInventory.everythingButton.enabled = true;
                         CalculateInventory.everythingButton.GetComponent<ClothChanging>().checkImage.enabled = false;
                     }
-                    
-                }
-            
-        }
 
-          
+                }
+
+            }
+
+
 //        //get the worn inventory back to the cloth the character is wearing
 //        for (int i = 0; i < CalculateInventory.inventory.Count; i++)
 //        {
@@ -456,9 +479,9 @@ public class ClothChanging : MonoBehaviour
 //
 //            }
 //        }
+        }
+
+
     }
-    
-    
-    
 }
 
