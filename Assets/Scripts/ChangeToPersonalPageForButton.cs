@@ -169,6 +169,23 @@ public class ChangeToPersonalPageForButton : MonoBehaviour
 
     }
 
+    private bool isfishTalking = false;
+    public void BossTalk()
+    {
+        if(isfishTalking == false)
+        {
+            Show(InstagramController.FishBoss);
+            isfishTalking = true;
+        }
+        else
+        {
+            Hide(InstagramController.FishBoss);
+            isfishTalking = false;
+        }
+        
+    }
+    
+    
     public void FollowNico()
     {
         if(InstagramController.followNico == false)

@@ -31,6 +31,7 @@ public class InstagramController : MonoBehaviour
     public Transform replyParent;
 
 
+    public CanvasGroup FishBoss;
     public GameObject commentPrefab;
 
     public List<Sprite> NPCspriteList;

@@ -528,9 +528,9 @@ public class ClothChanging : MonoBehaviour
     {
         CancelReturn();
 
-        workCloth.enabled = !workCloth.enabled;
-        workClothS.enabled = !workClothS.enabled;
-        CalculateInventory.workClothASR.enabled = !CalculateInventory.workClothASR.enabled;
+//        workCloth.enabled = !workCloth.enabled;
+//        workClothS.enabled = !workClothS.enabled;
+//        CalculateInventory.workClothASR.enabled = !CalculateInventory.workClothASR.enabled;
 
         CalculateInventory.wearingWorkCloth = !CalculateInventory.wearingWorkCloth;
 
@@ -570,6 +570,9 @@ public class ClothChanging : MonoBehaviour
             CalculateInventory.workShoeSR.enabled = true;
             CalculateInventory.workShoeSSR.enabled = true;
 
+            workCloth.enabled = true;
+            workClothS.enabled = true;
+            CalculateInventory.workClothASR.enabled = true;
 
         }
         else
@@ -578,6 +581,9 @@ public class ClothChanging : MonoBehaviour
             CalculateInventory.workShoeSR.enabled = false;
             CalculateInventory.workShoeSSR.enabled = false;
 
+            workCloth.enabled = false;
+            workClothS.enabled = false;
+            CalculateInventory.workClothASR.enabled = false;
 
         }
         
