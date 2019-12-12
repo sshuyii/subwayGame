@@ -75,8 +75,7 @@ public class ScreenshotHandler : MonoBehaviour
     {
         //instantiate new post object     
         var newPost = Instantiate(InstagramController.photoPostPrefab, new Vector3(0, 0, 0), Quaternion.identity);
-        
-        
+
         //set parent(probably a better way to do
         newPost.transform.parent = InstagramController.filmParent.transform;
         
@@ -116,6 +115,10 @@ public class ScreenshotHandler : MonoBehaviour
         //generate different comment for each post
         if (InstagramController.currentBackground == "RV")
         {
+            //record background
+            newPost.GetComponent<RecordBackgroundPosture>().backgroundName = 0;
+
+            
             CommentText.text = "That RV looks amazing. I'm gonna get one for myself.";
             ProfileImage.sprite = InstagramController.allProfile["nico"];
             
@@ -132,6 +135,9 @@ public class ScreenshotHandler : MonoBehaviour
 //        }
         else if(InstagramController.currentBackground == "FruitStand")
         {
+            //record background
+            newPost.GetComponent<RecordBackgroundPosture>().backgroundName = 1;
+            
             CommentText.text = "Oranges.";
             ProfileImage.sprite = InstagramController.allProfile["ojisan"];
             
@@ -141,6 +147,9 @@ public class ScreenshotHandler : MonoBehaviour
         }
         else if (InstagramController.currentBackground == "Park")
         {
+            //record background
+            newPost.GetComponent<RecordBackgroundPosture>().backgroundName = 2;
+            
             CommentText.text = "Amusement parks nowadays are so boring.";
             ProfileImage.sprite = InstagramController.allProfile["nico"];
             

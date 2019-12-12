@@ -8,6 +8,7 @@ public class CalculateInventory : MonoBehaviour
 {
     public int posNum = 0;
 
+    public bool isreturning;
 
     public bool wearingTop;
     public bool wearingBottom;
@@ -17,6 +18,7 @@ public class CalculateInventory : MonoBehaviour
     
     public Sprite transparent;
 
+    public List<Image> returnImageList;
     
     public Dictionary<string, Sprite> allCloth = new Dictionary<string, Sprite>();
     public Dictionary<string, Sprite> allClothUI = new Dictionary<string, Sprite>();

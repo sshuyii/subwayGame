@@ -141,11 +141,18 @@ public class ChangeToPersonalPageForButton : MonoBehaviour
                 }
                 else if (InstagramController.currentBackground == "RV")
                 {
-//            reply1.transform.SetParent(InstagramController.RVReply.transform);
-//            reply2.transform.SetParent(InstagramController.RVReply.transform);
-
                     replyText1.text = "Highly recommend! It is amazing!";
                     replyText2.text = "And it matches my clothes so well!";
+                }
+                else if (InstagramController.currentBackground == "FruitStand")
+                {
+                    replyText1.text = "Apples!";
+                    replyText2.text = "Orange is my favorite color.";
+                }
+                else if (InstagramController.currentBackground == "Park")
+                {
+                    replyText1.text = "It is boring for you.";
+                    replyText2.text = "......";
                 }
 
             }

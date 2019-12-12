@@ -5,12 +5,13 @@ using UnityEngine.UI;
 
 public class ClothChanging : MonoBehaviour
 {
+    
     public Text text;
     private Vector3 startPos;
     public Sprite transparent;
 
     public Image checkImage;
-    public Image crossImage;
+    public GameObject crossImage;
 
 
     //used for lont tap
@@ -97,8 +98,10 @@ public class ClothChanging : MonoBehaviour
         {
             if (TouchController.isLongTap)
             {
-                crossImage.enabled = true;
+                crossImage.SetActive(true);
                 tapStart = false;
+
+                CalculateInventory.isreturning = true;
             }
         }
         
@@ -191,7 +194,7 @@ public class ClothChanging : MonoBehaviour
                     {
                         buttonList[a].GetComponent<Image>().sprite = myImage.sprite;
                         myImage.sprite = startSprite;
-                        crossImage.sprite = transparent;
+                        crossImage.SetActive(false);
 
                         takeOffCloth();
                         break;
@@ -200,6 +203,11 @@ public class ClothChanging : MonoBehaviour
             }
         }
 
+    }
+
+    public void ReturnClothNo()
+    {
+        crossImage.SetActive(false);
     }
 
 
@@ -300,6 +308,14 @@ public class ClothChanging : MonoBehaviour
     
     public void ChangeCloth()
     {
+        if(CalculateInventory.isreturning)
+        {
+            CancelReturn();
+            CalculateInventory.isreturning = false;
+        }
+        
+        
+        
         //currentSprite = GetComponenft<SpriteRenderer>().sprite;
         currentSprite = GetComponent<Image>().sprite;
 
@@ -355,7 +371,7 @@ public class ClothChanging : MonoBehaviour
                 //player talks
                 if(currentSprite.name.Contains("A1"))
                 {
-                    text.text = "<b>Karara</b>: Do people wear Hawaii shirts in Hawaii?";
+                    //text.text = "<b>Karara</b>: Do people wear Hawaii shirts in Hawaii?";
                 }
 
             }
@@ -510,6 +526,7 @@ public class ClothChanging : MonoBehaviour
 
     public void ChangeWorkCloth()
     {
+        CancelReturn();
 
         workCloth.enabled = !workCloth.enabled;
         workClothS.enabled = !workClothS.enabled;
@@ -579,6 +596,13 @@ public class ClothChanging : MonoBehaviour
         
     }
 
+    public void CancelReturn()
+    {
+        foreach (var returnImage in CalculateInventory.returnImageList)
+        {
+            returnImage.enabled = false;
+        }
+    }
     private void buttonChangeBack()
     {
 

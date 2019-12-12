@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6192975836087052526}
   - component: {fileID: 891175842245111201}
   - component: {fileID: -6732609313760496175}
+  - component: {fileID: 104764771623767942}
   m_Layer: 5
   m_Name: PhotoPost
   m_TagString: Untagged
@@ -142,8 +143,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78335a47a2d1c4b2e960851c50e2a657, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  InstagramController: {fileID: 0}
-  CalculateInventory: {fileID: 0}
+--- !u!114 &104764771623767942
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6192975836087052513}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd66b307f423c4d7aa3e189b15965c66, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  backgroundName: 0
 --- !u!1 &6192975836472025282
 GameObject:
   m_ObjectHideFlags: 0

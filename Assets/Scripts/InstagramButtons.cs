@@ -17,6 +17,7 @@ public class InstagramButtons : MonoBehaviour
     private Text username;
 
     private FinalCameraController FinalCameraController;
+    private int myBackgroundName;
     
     
     // Start is called before the first frame update
@@ -33,6 +34,8 @@ public class InstagramButtons : MonoBehaviour
 
         InstagramController = GameObject.Find("---InstagramController").GetComponent<InstagramController>();
         CalculateInventory = GameObject.Find("---InventoryController").GetComponent<CalculateInventory>();
+
+        myBackgroundName = this.GetComponent<RecordBackgroundPosture>().backgroundName;
 
     }
 
@@ -109,6 +112,27 @@ public class InstagramButtons : MonoBehaviour
         
         FinalCameraController.myAppState = FinalCameraController.AppState.Post;
         
+        //if it is karara's page
+        if (FinalCameraController.lastAppState == FinalCameraController.AppState.KararaPage)
+        {
+            InstagramController.gotoProfile.sprite = InstagramController.allProfile["karara"];
+            InstagramController.gotoText.GetComponent<Text>().text = "karara";
+            //change post text according to background
+            if (myBackgroundName == 0)
+            {
+                InstagramController.postText.text =
+                    "<b>Karara</b> That RV looks amazing. I'm gonna get one for myself.";
+            }
+            else if (myBackgroundName == 1)
+            {
+                InstagramController.postText.text =
+                    "<b>Karara</b> Fresh and tasty.";
+            }
+            else if (myBackgroundName == 2)
+            {
+                InstagramController.postText.text = "<b>Karara</b> Amusement parks nowadays are so boring.";
+            }
+        }
         for (int i = 0; i < InstagramController.retroPostList.Count; i++)
         {
             if (InstagramController.retroPostList[i] == currentSprite)
@@ -129,6 +153,8 @@ public class InstagramButtons : MonoBehaviour
 
             }
         }
+        
+        
         
         
         //change post text and comments
