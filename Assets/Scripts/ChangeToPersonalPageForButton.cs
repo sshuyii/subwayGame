@@ -45,7 +45,9 @@ public class ChangeToPersonalPageForButton : MonoBehaviour
     {
         
         Hide(FinalCameraController.frontPage);
+        Hide(FinalCameraController.postpage);
         FinalCameraController.HideAllPersonalPages();
+        
 
         
         if (mySprite.name.Contains("karara"))
@@ -77,10 +79,23 @@ public class ChangeToPersonalPageForButton : MonoBehaviour
                 new Vector3(55, Camera.main.transform.position.y, Camera.main.transform.position.z);
             FinalCameraController.myAppState = FinalCameraController.AppState.NPCPage;
             Show(FinalCameraController.NPCPage);
-            if (mySprite.name.Contains("gNPC"))
+            if (mySprite.name.Contains("aNPC"))
             {
-                
+                InstagramController.NPCProfile.sprite = InstagramController.NPCspriteList[0];
             }
+            else if (mySprite.name.Contains("gNPC"))
+            {
+                InstagramController.NPCProfile.sprite = InstagramController.NPCspriteList[1];
+            }
+            else if (mySprite.name.Contains("rNPC"))
+            {
+                InstagramController.NPCProfile.sprite = InstagramController.NPCspriteList[2];
+            }
+            else if (mySprite.name.Contains("zNPC"))
+            {
+                InstagramController.NPCProfile.sprite = InstagramController.NPCspriteList[3];
+            }
+            
         }       
         
     }

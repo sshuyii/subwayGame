@@ -192,7 +192,7 @@ public class WasherController : MonoBehaviour
 //                    Button ClothInMachine =
 //                        Instantiate(alexClothesTemp[randomIndex], buttonPositions[i], Quaternion.identity) as Button;
                     buttons[i].GetComponent<Button>().enabled = true;
-    
+                    buttons[i].tag = "Alex";
                     Image buttonImage = buttons[i].GetComponent<Image>();
                     buttonImage.enabled = true;
                     buttonImage.sprite = AllMachines.alexClothesTemp[randomIndex];
@@ -212,6 +212,8 @@ public class WasherController : MonoBehaviour
                     int randomIndex = Random.Range(0, AllMachines.bellaClothesTemp.Count);
                     print("random = " + randomIndex);
                     print(AllMachines.bellaClothesTemp.Count);
+                    buttons[i].tag = "Bella";
+
 //                  clothesInMachine[i].image.sprite = AlexClothes[randomIndex];
 
 //                    Button ClothInMachine =

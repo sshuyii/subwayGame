@@ -62,7 +62,8 @@ public class DoInventory : MonoBehaviour
         }
         
         //inventory used to be buttons
-        CalculateInventory.inventory[CalculateInventory.occupiedI].GetComponent<Image>().sprite= buttonSprite;
+        CalculateInventory.inventory[CalculateInventory.occupiedI].GetComponent<Image>().sprite = buttonSprite;
+        CalculateInventory.inventory[CalculateInventory.occupiedI].tag = this.tag;
         
         //CalculateInventory.inventory[CalculateInventory.occupiedI].GetComponent<SpriteRenderer>().sprite = buttonSprite;
         
@@ -92,8 +93,8 @@ public class DoInventory : MonoBehaviour
 */
 
         //image disappear
-        selfButton.image.enabled = false;
-        selfButton.enabled = false;
+        selfButton.image.sprite = CalculateInventory.transparent;
+        //selfButton.enabled = false;
 
         //selfButton.enabled = false;
 

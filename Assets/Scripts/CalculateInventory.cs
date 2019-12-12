@@ -13,7 +13,10 @@ public class CalculateInventory : MonoBehaviour
     public bool wearingBottom;
     public bool wearingEverything;
     public bool wearingShoe;
+    public bool wearingWorkCloth;
     
+    public Sprite transparent;
+
     
     public Dictionary<string, Sprite> allCloth = new Dictionary<string, Sprite>();
     public Dictionary<string, Sprite> allClothUI = new Dictionary<string, Sprite>();
@@ -47,12 +50,14 @@ public class CalculateInventory : MonoBehaviour
     public SpriteRenderer shoeSR;
     public SpriteRenderer otherSR;
     public SpriteRenderer everythingSR;
+    public SpriteRenderer workShoeSR;
     
     //clothes the character wears on subway
     public Image topSSR;
     public Image shoeSSR;
     public Image otherSSR;
     public Image everythingSSR;
+    public Image workShoeSSR;
 
     //clothes the character wears in advertisement
     public Image topASR;
@@ -62,6 +67,7 @@ public class CalculateInventory : MonoBehaviour
     public Image workClothASR;
     public Image whiteShirtASR;
     public Image blackPantsASR;
+    public Image workShoeASR;
 
 
     //closet buttons as a record

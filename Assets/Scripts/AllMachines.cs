@@ -8,7 +8,7 @@ public class AllMachines : MonoBehaviour
     private WasherController WasherController;
 
     public GameObject currentBag;
-    
+
     
     public GameObject returnNotice;
     public GameObject noticeParent;

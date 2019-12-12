@@ -10,8 +10,12 @@ public class ClothChanging : MonoBehaviour
     public Sprite transparent;
 
     public Image checkImage;
+    public Image crossImage;
 
-    
+
+    //used for lont tap
+    private bool tapStart = false;
+        
     private bool firstTime;
     
     private CalculateInventory CalculateInventory;
@@ -43,11 +47,23 @@ public class ClothChanging : MonoBehaviour
     private Button selfButton;
 
     private List<Button> inventoryButtonList;
-    
+
+    private TouchController TouchController;
+
+    private Sprite startSprite;
+    private Image myImage;
+
+
+    private AllMachines AllMachines;
     // Start is called before the first frame update
     void Start()
     {
+        
         InventoryController = GameObject.Find("---InventoryController");
+        TouchController = GameObject.Find("---TouchController").GetComponent<TouchController>();
+        AllMachines = GameObject.Find("---ClothInMachineController").GetComponent<AllMachines>();
+
+
         CalculateInventory = InventoryController.GetComponent<CalculateInventory>();
         startPos = transform.position;
 
@@ -57,9 +73,11 @@ public class ClothChanging : MonoBehaviour
 //        selfButton.onClick.AddListener(AddClothToInventory);
 
         //currentSprite = GetComponent<SpriteRenderer>().sprite;
-        
-        currentSprite = GetComponent<Image>().sprite;
 
+        myImage = GetComponent<Image>();
+
+        startSprite = GetComponent<Image>().sprite;
+    
         selfButton = GetComponent<Button>();
 
 
@@ -74,6 +92,15 @@ public class ClothChanging : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //for long tap
+        if (tapStart)
+        {
+            if (TouchController.isLongTap)
+            {
+                crossImage.enabled = true;
+                tapStart = false;
+            }
+        }
         
         if (Input.touchCount > 0)
         {
@@ -120,13 +147,13 @@ public class ClothChanging : MonoBehaviour
                 {
                     ChangeCloth();
                     
-                    
+        
                 }
             }
         }
 
     }
-
+        
 
     private void OnTriggerEnter(Collider other)
     {
@@ -144,6 +171,133 @@ public class ClothChanging : MonoBehaviour
         }
     }
 
+
+    public void ReturnClothPre()
+    {
+        tapStart = true;
+    }
+
+    public void ReturnCloth()
+    {
+
+        for (int i = 0; i < AllMachines.WashingMachines.Count; i++)
+        {
+            if (this.CompareTag(AllMachines.WashingMachines[i].tag))
+            {
+                var buttonList = AllMachines.WashingMachines[i].GetComponent<WasherController>().buttons;
+                for (int a = 0; a < buttonList.Length; a++)
+                {
+                    if (buttonList[a].GetComponent<Image>().sprite == transparent)
+                    {
+                        buttonList[a].GetComponent<Image>().sprite = myImage.sprite;
+                        myImage.sprite = startSprite;
+                        crossImage.sprite = transparent;
+
+                        takeOffCloth();
+                        break;
+                    }
+                }
+            }
+        }
+
+    }
+
+
+    private void takeOffCloth()
+    {
+        if (currentSprite.name.Contains("Top"))
+        {
+            CalculateInventory.wearingTop = false;
+
+            //change inventory clothes
+            CalculateInventory.topSR.sprite = transparent;
+               
+
+            //change subway clothes
+            CalculateInventory.topSSR.sprite = transparent;
+                
+            whiteShirt.enabled = true;
+                                
+            whiteShirtS.enabled = true;
+
+                
+            //change clothes in advertisement
+            CalculateInventory.topASR.sprite = transparent;
+                
+            CalculateInventory.whiteShirtASR.sprite = CalculateInventory.allCloth["WhiteShirt"];
+        }
+        else if (currentSprite.name.Contains("Bottom"))
+        {
+            CalculateInventory.wearingBottom = false;
+
+            //change inventory clothes
+            CalculateInventory.otherSR.sprite = transparent;
+               
+
+            //change subway clothes
+            CalculateInventory.otherSSR.sprite = transparent;
+                
+            blackPants.enabled = true;
+                                
+            blackPantsS.enabled = true;
+
+                
+            //change clothes in advertisement
+            CalculateInventory.otherASR.sprite = transparent;
+                
+            CalculateInventory.blackPantsASR.sprite = CalculateInventory.allCloth["BlackPants"];
+
+        }
+        else if(currentSprite.name.Contains("Shoe"))
+        {
+            CalculateInventory.wearingShoe = false;
+
+            //change inventory clothes
+            CalculateInventory.shoeSR.sprite = transparent;
+               
+
+            //change subway clothes
+            CalculateInventory.shoeSSR.sprite = transparent;
+                
+//            blackPants.enabled = true;
+//                                
+//            blackPantsS.enabled = true;
+
+                
+            //change clothes in advertisement
+            CalculateInventory.shoeASR.sprite = transparent;
+                
+//            CalculateInventory.blackPantsASR.sprite = CalculateInventory.allCloth["BlackPants"];
+
+        }
+        else if(currentSprite.name.Contains("Everything"))
+        {
+            CalculateInventory.wearingEverything = false;
+
+            //change inventory clothes
+            CalculateInventory.everythingSR.sprite = transparent;
+               
+
+            //change subway clothes
+            CalculateInventory.everythingSSR.sprite = transparent;
+                
+            blackPants.enabled = true;        
+            blackPantsS.enabled = true;
+            whiteShirt.enabled = true;    
+            whiteShirtS.enabled = true;
+
+                
+            //change clothes in advertisement
+            CalculateInventory.everythingASR.sprite = transparent;
+                
+            CalculateInventory.blackPantsASR.sprite = CalculateInventory.allCloth["BlackPants"];
+            CalculateInventory.whiteShirtASR.sprite = CalculateInventory.allCloth["WhiteShirt"];
+
+
+        }
+       
+    }
+    
     public void ChangeCloth()
     {
         //currentSprite = GetComponenft<SpriteRenderer>().sprite;
@@ -153,12 +307,12 @@ public class ClothChanging : MonoBehaviour
         if(CalculateInventory.allCloth.ContainsKey(currentSprite.name))
         {
             
-            checkImage.enabled = true;
+            //checkImage.enabled = true;
 
             if(currentSprite.name.Contains("Top"))
             {
                 
-                buttonChangeBack();
+                //buttonChangeBack();
                 CalculateInventory.wearingTop = true;
                 CalculateInventory.wearingEverything = false;
 
@@ -207,7 +361,7 @@ public class ClothChanging : MonoBehaviour
             }
             else if(currentSprite.name.Contains("Bottom"))
             {
-                buttonChangeBack();
+                //buttonChangeBack();
 
                 CalculateInventory.wearingBottom = true;
                 CalculateInventory.wearingEverything = false;
@@ -245,7 +399,7 @@ public class ClothChanging : MonoBehaviour
             }
             else if(currentSprite.name.Contains("Shoe"))
             {
-                buttonChangeBack();
+                //buttonChangeBack();
 
                 CalculateInventory.wearingShoe = true;
                     
@@ -259,11 +413,15 @@ public class ClothChanging : MonoBehaviour
                 CalculateInventory.shoeASR.sprite = CalculateInventory.allAdCloth[currentSprite.name];
                 
                 print("change shoe");
-               
+
+                CalculateInventory.workShoeSR.enabled = false;
+                CalculateInventory.workShoeSSR.enabled = false;
+                CalculateInventory.workShoeASR.sprite = transparent;
+
             }
             else if(currentSprite.name.Contains("Everything"))
             {
-                buttonChangeBack();
+                //buttonChangeBack();
             
                 CalculateInventory.wearingEverything = true;
                 CalculateInventory.wearingTop = false;
@@ -352,24 +510,29 @@ public class ClothChanging : MonoBehaviour
 
     public void ChangeWorkCloth()
     {
+
         workCloth.enabled = !workCloth.enabled;
         workClothS.enabled = !workClothS.enabled;
         CalculateInventory.workClothASR.enabled = !CalculateInventory.workClothASR.enabled;
 
-
+        CalculateInventory.wearingWorkCloth = !CalculateInventory.wearingWorkCloth;
 
       
         CalculateInventory.topSR.sprite = transparent;
         CalculateInventory.otherSR.sprite = transparent;
         CalculateInventory.everythingSR.sprite = transparent;
+        CalculateInventory.shoeSR.sprite = transparent;
 
         CalculateInventory.topSSR.sprite = transparent;
         CalculateInventory.otherSSR.sprite = transparent;
         CalculateInventory.everythingSSR.sprite = transparent;
-        
+        CalculateInventory.shoeSSR.sprite = transparent; 
+
+         
         CalculateInventory.topASR.sprite = transparent;
         CalculateInventory.otherASR.sprite = transparent;
         CalculateInventory.everythingASR.sprite = transparent;
+        CalculateInventory.shoeASR.sprite = transparent;
 
 
         
@@ -377,23 +540,42 @@ public class ClothChanging : MonoBehaviour
         whiteShirt.enabled = true;
 
         whiteShirtS.enabled = true;
-        blackPants.enabled = true;
+        blackPantsS.enabled = true;
+        
 
-        CalculateInventory.whiteShirtASR.sprite = CalculateInventory.allAdCloth["WhiteShirt"];
-        CalculateInventory.blackPantsASR.sprite = CalculateInventory.allAdCloth["BlackPants"];
-        
-        
-        //enable all buttons
-        for (var i = 0; i < inventoryButtonList.Count; i++)
+        if(CalculateInventory.wearingWorkCloth)
         {
-            inventoryButtonList[i].enabled = true;
+            CalculateInventory.workShoeASR.enabled = true;
+
+            CalculateInventory.whiteShirtASR.sprite = CalculateInventory.allAdCloth["WhiteShirt"];
+            CalculateInventory.blackPantsASR.sprite = CalculateInventory.allAdCloth["BlackPants"];
+            CalculateInventory.workShoeASR.sprite = CalculateInventory.allAdCloth["WorkShoe"];
+            CalculateInventory.workShoeSR.enabled = true;
+            CalculateInventory.workShoeSSR.enabled = true;
+
+
+        }
+        else
+        {
+            CalculateInventory.workShoeASR.enabled = false;
+            CalculateInventory.workShoeSR.enabled = false;
+            CalculateInventory.workShoeSSR.enabled = false;
+
+
         }
         
-        //disable all checks
-        for (var i = 0; i < CalculateInventory.inventoryCheckList.Count; i++)
-        {
-            CalculateInventory.inventoryCheckList[i].enabled = false;
-        }
+        
+//        //enable all buttons
+//        for (var i = 0; i < inventoryButtonList.Count; i++)
+//        {
+//            inventoryButtonList[i].enabled = true;
+//        }
+//        
+//        //disable all checks
+//        for (var i = 0; i < CalculateInventory.inventoryCheckList.Count; i++)
+//        {
+//            CalculateInventory.inventoryCheckList[i].enabled = false;
+//        }
         
     }
 

@@ -98,7 +98,7 @@ public class ClothToMachine : MonoBehaviour
                         this.gameObject.transform.SetParent(WasherControllerList[i].gameObject.transform);
 
                         transform.position =
-                            AllMachines.WashingMachines[i].transform.position + new Vector3(0, -2.5f, 0);
+                            AllMachines.WashingMachines[i].transform.position + new Vector3(0, -2.9f, 0);
 
                         hitTime++;
                         break;

@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
+
 
 public class InstagramButtons : MonoBehaviour
 {
@@ -89,6 +91,11 @@ public class InstagramButtons : MonoBehaviour
     
     public void ClickInsPost()
     {
+        //destroy all previous generated comments
+        foreach (Transform child in InstagramController.postReplyParent.transform) {
+            GameObject.Destroy(child.gameObject);
+        }
+        
         FinalCameraController.lastAppState = FinalCameraController.myAppState;
 
         Hide(FinalCameraController.frontPage);
@@ -106,6 +113,7 @@ public class InstagramButtons : MonoBehaviour
         {
             if (InstagramController.retroPostList[i] == currentSprite)
             {
+                
                 InstagramController.gotoProfile.sprite = InstagramController.allProfile["nico"];
                 InstagramController.gotoText.GetComponent<Text>().text = "nico";
             }
@@ -117,8 +125,62 @@ public class InstagramButtons : MonoBehaviour
             {
                 InstagramController.gotoProfile.sprite = InstagramController.allProfile["ojisan"];
                 InstagramController.gotoText.GetComponent<Text>().text = "ojisan";
+                
+
             }
         }
+        
+        
+        //change post text and comments
+        if (currentSprite.name == "designDoc")
+        {
+            InstagramController.postText.text =
+                "<b>Ojisan</b> Just found this sketch from the bottom of my bookshelf. I doubt the design might already be outdated nowadays.";
+            var reply1 = Instantiate(InstagramController.commentPrefab, new Vector3(0, 0, 0), Quaternion.identity, InstagramController.postReplyParent.transform);
+            reply1.GetComponentInChildren<Image>().sprite = InstagramController.NPCspriteList[1];
+            var replyText1 = reply1.GetComponentInChildren<TextMeshProUGUI>();
+            replyText1.text = "Not at all! I like this design :)";
+
+        }
+        
+        else if(currentSprite.name == "Gallery")
+        {
+            InstagramController.postText.text =
+                "<b>Nico</b> Who took this picture of me???";
+            var reply1 = Instantiate(InstagramController.commentPrefab, new Vector3(0, 0, 0), Quaternion.identity, InstagramController.postReplyParent.transform);
+            reply1.GetComponentInChildren<Image>().sprite = InstagramController.NPCspriteList[3];
+            var replyText1 = reply1.GetComponentInChildren<TextMeshProUGUI>();
+            replyText1.text = "Let me guess!";
+
+        }
+        else if(currentSprite.name == "icecream")
+        {
+            InstagramController.postText.text =
+                "<b>Nico</b> Nightmare. I screamed.";
+            var reply1 = Instantiate(InstagramController.commentPrefab, new Vector3(0, 0, 0), Quaternion.identity, InstagramController.postReplyParent.transform);
+            reply1.GetComponentInChildren<Image>().sprite = InstagramController.NPCspriteList[3];
+            var replyText1 = reply1.GetComponentInChildren<TextMeshProUGUI>();
+            replyText1.text = "(╯°Д°)╯︵凸 ICE CREEEEEEEEEEAM!!!!";
+
+        }
+        
+        else if(currentSprite.name == "akunohana")
+        {
+            InstagramController.postText.text =
+                "<b>Nico</b> Human nature is a joke";
+
+        }
+        else if(currentSprite.name == "gotoschool")
+        {
+            InstagramController.postText.text =
+                "<b>Nico</b> First day of school. Feels okay.";
+            var reply1 = Instantiate(InstagramController.commentPrefab, new Vector3(0, 0, 0), Quaternion.identity, InstagramController.postReplyParent.transform);
+            reply1.GetComponentInChildren<Image>().sprite = InstagramController.NPCspriteList[3];
+            var replyText1 = reply1.GetComponentInChildren<TextMeshProUGUI>();
+            replyText1.text = "Come on! We’re happy to see you again!";
+
+        }
+
 
        
     }
@@ -140,6 +202,8 @@ public class InstagramButtons : MonoBehaviour
         
         InstagramController.adBodyImage.sprite = InstagramController.postureList[CalculateInventory.posNum];
         InstagramController.workClothImage.sprite = InstagramController.workclothList[CalculateInventory.posNum];
+        
+        
         if(CalculateInventory.wearingTop == false)
         {
             CalculateInventory.whiteShirtASR.sprite = CalculateInventory.allAdCloth["WhiteShirt"];
@@ -147,6 +211,10 @@ public class InstagramButtons : MonoBehaviour
         if(CalculateInventory.wearingBottom == false)
         {
             CalculateInventory.blackPantsASR.sprite = CalculateInventory.allAdCloth["BlackPants"];
+        }
+        if(CalculateInventory.wearingShoe == false)
+        {
+            CalculateInventory.workShoeASR.sprite = CalculateInventory.allAdCloth["WorkShoe"];
         }
         
         //change clothes after posture changes
@@ -179,39 +247,6 @@ public class InstagramButtons : MonoBehaviour
             }
         }
 
-        for (int i = 0; i < InstagramController.adClothes.Count; i++)
-        {
-            print(InstagramController.adClothes[i].name);
-        }
-
-        
-        
-        
-//        for (int i = 0; i < InstagramController.postureList.Count; i++)
-//        {
-//            print("InstagramController.postureList.Count = " + InstagramController.postureList.Count);
-//                if (myImage.sprite == InstagramController.postureList[i])
-//                {
-//                    //if not the last pose
-//
-//                    if (i != InstagramController.postureList.Count - 1)
-//                    {
-//                        myImage.sprite = InstagramController.postureList[i + 1];
-//                        CalculateInventory.posNum = i + 1;
-//                        CalculateInventory.allAdCloth = CalculateInventory.postureDictionaryList[CalculateInventory.posNum];
-//                        print("posNum = " + CalculateInventory.posNum);
-//                        break;
-//                    }
-//                    else
-//                    {
-//                        myImage.sprite = InstagramController.postureList[0];
-//                        CalculateInventory.posNum = 1;
-//                        CalculateInventory.allAdCloth = CalculateInventory.postureDictionaryList[CalculateInventory.posNum];
-//
-//                        break;
-//                    }
-//                }
-//        }
     }
 
   

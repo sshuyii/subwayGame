@@ -26,8 +26,9 @@ public class TouchController : MonoBehaviour
         None,
     }
     public InputState myInputState;
-    
 
+
+    public bool isLongTap;
     public bool isFastSwipe;
     private float startTime;
     private float diffTime;
@@ -96,7 +97,23 @@ public class TouchController : MonoBehaviour
 
                 }
 
-                
+                if (Mathf.Abs(lp.x - fp.x) > dragDistance || Mathf.Abs(lp.y - fp.y) > dragDistance)
+                {
+                    
+                }
+                else
+                {
+                    //it is a long tap
+                    if (Time.time - startTime > 0.8f)
+                    {
+                        isLongTap = true;
+                    }
+                    else
+                    {
+                        isLongTap = false;
+                    }
+                }
+
 
             }
             else if (touch.phase == TouchPhase.Ended) //check if the finger is removed from the screen
@@ -159,6 +176,7 @@ public class TouchController : MonoBehaviour
                 {   //It's a tap as the drag distance is less than 20% of the screen height
                     Debug.Log("Tap");
                     myInputState = InputState.Tap;
+                    
                     
                 }
             }

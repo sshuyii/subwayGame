@@ -87,7 +87,11 @@ public class ScreenshotHandler : MonoBehaviour
         //change sprite to the newly taken photo
         newPost.GetComponent<Image>().sprite = Sprite.Create(sprites,rec,new Vector2(0,0),100f);
         
+        //get the post text
         toothpastePost.transform.Find("Post").gameObject.GetComponent<Image>().sprite = Sprite.Create(sprites,rec,new Vector2(0,0),100f);
+        var textList = toothpastePost.transform.Find("Post").gameObject.GetComponentsInChildren<Text>();
+        
+        
     
         //create comments
         var newComment = Instantiate(InstagramController.commentPrefab, new Vector3(0, 0, 0), Quaternion.identity, toothpastePost.transform.Find("Comments"));
@@ -98,6 +102,7 @@ public class ScreenshotHandler : MonoBehaviour
 
         //get the text child
         var CommentText = newComment.GetComponentInChildren<TextMeshProUGUI>();
+        
         
         print(CommentText.name);
         //get the profile
@@ -114,20 +119,34 @@ public class ScreenshotHandler : MonoBehaviour
             CommentText.text = "That RV looks amazing. I'm gonna get one for myself.";
             ProfileImage.sprite = InstagramController.allProfile["nico"];
             
+            //change the post text
+            textList[0].text = "<b>Karara</b> Best way to travel.";
+            textList[1].text = "Today";
+
         }
-        else if (InstagramController.currentBackground == "Toothpaste")
-        {
-            CommentText.text = "I like the way you dress.";
-            ProfileImage.sprite = InstagramController.allProfile["ojisan"];
-            
-        }
+//        else if (InstagramController.currentBackground == "Toothpaste")
+//        {
+//            CommentText.text = "I like the way you dress.";
+//            ProfileImage.sprite = InstagramController.allProfile["ojisan"];
+//            
+//        }
         else if(InstagramController.currentBackground == "FruitStand")
         {
-
+            CommentText.text = "Oranges.";
+            ProfileImage.sprite = InstagramController.allProfile["ojisan"];
+            
+            //change the post text
+            textList[0].text = "<b>Karara</b> Fresh and tasty.";
+            textList[1].text = "Today";
         }
         else if (InstagramController.currentBackground == "Park")
         {
+            CommentText.text = "Amusement parks nowadays are so boring.";
+            ProfileImage.sprite = InstagramController.allProfile["nico"];
             
+            //change the post text
+            textList[0].text = "<b>Karara</b> Had a lot of fun here.";
+            textList[1].text = "Today";
         }
 
         FinalCameraController.ChangeToApp();

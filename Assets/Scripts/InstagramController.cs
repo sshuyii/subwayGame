@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net.Mime;
 using UnityEngine;
 using UnityEngine.UIElements;
+using UnityEngine.UI;
 using Image = UnityEngine.UI.Image;
 
 public class InstagramController : MonoBehaviour
@@ -11,7 +12,6 @@ public class InstagramController : MonoBehaviour
 
     public CalculateInventory CalculateInventory;
 
-    public Image adBodyImage;
     
     public SortedDictionary<GameObject, int> allPostsDict = new SortedDictionary<GameObject, int>();
 
@@ -19,8 +19,11 @@ public class InstagramController : MonoBehaviour
     public Image gotoImage;
     public Image gotoProfile;
     public GameObject gotoText;
+    public Text postText;
+    public GameObject postReplyParent;
 
     
+   
     public GameObject postPrefab;
     public GameObject postParent;
     
@@ -30,8 +33,9 @@ public class InstagramController : MonoBehaviour
 
     public GameObject commentPrefab;
 
+    public List<Sprite> NPCspriteList;
 
-    
+    public Image NPCProfile;
     public Sprite likeFUll;
     //change post in karara's page
     public GameObject filmParent;
@@ -66,9 +70,12 @@ public class InstagramController : MonoBehaviour
     public Dictionary<string, bool> AdAlreadyTakenList = new Dictionary<string, bool>();
 
     
+    public Image adBodyImage;
+
     //work cloth list
     public List<Sprite> workclothList;
     public Image workClothImage;
+    public Image workShoeImage;
 
 
     public string currentBackground;
