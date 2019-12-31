@@ -7,7 +7,6 @@ using UnityEngine.UI;
 public class CalculateInventory : MonoBehaviour
 {
     public int posNum = 0;
-
     public bool isreturning;
 
     public bool wearingTop;
@@ -15,6 +14,8 @@ public class CalculateInventory : MonoBehaviour
     public bool wearingEverything;
     public bool wearingShoe;
     public bool wearingWorkCloth;
+
+    public CanvasGroup InventoryFull;
     
     public Sprite transparent;
 

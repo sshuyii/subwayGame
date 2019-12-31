@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.UIElements;
+using Button = UnityEngine.UI.Button;
+using Image = UnityEngine.UI.Image;
 
 public class WasherController : MonoBehaviour
 {
@@ -18,6 +20,7 @@ public class WasherController : MonoBehaviour
     private Animator myAnimator;
     public CanvasGroup ClothUI;
     public CanvasGroup AllClothUI;
+
     
     public bool isFirstOpen = true;
 
@@ -25,6 +28,7 @@ public class WasherController : MonoBehaviour
     public AllMachines.MachineState myMachineState;
     
     private FinalCameraController FinalCameraController;
+    private CalculateInventory CalculateInventory;
 
 
 //    private Button[] btns;
@@ -35,6 +39,8 @@ public class WasherController : MonoBehaviour
     private float timer = 0;
 
     public GameObject[] buttons;
+    private bool fulltemp = false;
+
     
     // Start is called before the first frame update
     void Start()
@@ -44,13 +50,36 @@ public class WasherController : MonoBehaviour
         myAnimator = GetComponentInChildren<Animator>();
         
         FinalCameraController = GameObject.Find("Main Camera").GetComponent<FinalCameraController>();
+        CalculateInventory = GameObject.Find("---InventoryController").GetComponent<CalculateInventory>();
+
 
 
     }
 
+    public void CloseFullNotice()
+    {
+        Hide(CalculateInventory.InventoryFull);
+    }
+    
+    
     // Update is called once per frame
     void Update()
     {
+        //if already five items taken
+        if (CalculateInventory.occupiedI > 5 && fulltemp == false)
+        {
+            Hide(ClothUI);
+            Show(CalculateInventory.InventoryFull);
+            fulltemp = true;
+        }
+
+        if (CalculateInventory.occupiedI < 5)
+        {
+            fulltemp = false;
+        }
+        
+        
+        
         //close all ui if swipping the screen
         if (FinalCameraController.isSwipping)
         {

@@ -35,8 +35,10 @@ public class InstagramButtons : MonoBehaviour
         InstagramController = GameObject.Find("---InstagramController").GetComponent<InstagramController>();
         CalculateInventory = GameObject.Find("---InventoryController").GetComponent<CalculateInventory>();
 
-        myBackgroundName = this.GetComponent<RecordBackgroundPosture>().backgroundName;
-
+        if(GetComponent<RecordBackgroundPosture>() != null)
+        {
+            myBackgroundName = this.GetComponent<RecordBackgroundPosture>().backgroundName;
+        }
     }
 
     // Update is called once per frame

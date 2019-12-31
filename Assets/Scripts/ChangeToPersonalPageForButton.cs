@@ -170,6 +170,7 @@ public class ChangeToPersonalPageForButton : MonoBehaviour
     }
 
     private bool isfishTalking = false;
+    private int clickBoss = 0;
     public void BossTalk()
     {
         if(isfishTalking == false)

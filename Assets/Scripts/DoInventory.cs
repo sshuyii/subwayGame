@@ -50,20 +50,23 @@ public class DoInventory : MonoBehaviour
 
         print("occupiedI = " + CalculateInventory.occupiedI);
         
-        if(CalculateInventory.occupiedI < 10)
+        //inventory used to be buttons
+        CalculateInventory.inventory[CalculateInventory.occupiedI].GetComponent<Image>().sprite = buttonSprite;
+        CalculateInventory.inventory[CalculateInventory.occupiedI].tag = this.tag;
+        
+        if(CalculateInventory.occupiedI < 6)
         {
             CalculateInventory.occupiedI++;
 
         }
         else
         {
+            return;
             CalculateInventory.occupiedI = 1;
             
         }
         
-        //inventory used to be buttons
-        CalculateInventory.inventory[CalculateInventory.occupiedI].GetComponent<Image>().sprite = buttonSprite;
-        CalculateInventory.inventory[CalculateInventory.occupiedI].tag = this.tag;
+       
         
         //CalculateInventory.inventory[CalculateInventory.occupiedI].GetComponent<SpriteRenderer>().sprite = buttonSprite;
         

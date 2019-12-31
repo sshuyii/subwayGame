@@ -93,6 +93,19 @@ public class ClothChanging : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        int inventoryTemp = 0;
+        for (int i = 0; i < CalculateInventory.inventory.Count; i++)
+        {
+            
+            if (CalculateInventory.inventory[i].GetComponent<Image>().sprite.name != "arrow")
+            {
+                inventoryTemp++;
+
+            }
+        }
+
+        CalculateInventory.occupiedI = inventoryTemp;
         //for long tap
         if (tapStart)
         {
@@ -197,6 +210,7 @@ public class ClothChanging : MonoBehaviour
                         crossImage.SetActive(false);
 
                         takeOffCloth();
+                        CalculateInventory.occupiedI = CalculateInventory.occupiedI - 1;
                         break;
                     }
                 }
@@ -253,7 +267,7 @@ public class ClothChanging : MonoBehaviour
             //change clothes in advertisement
             CalculateInventory.otherASR.sprite = transparent;
                 
-            CalculateInventory.blackPantsASR.sprite = CalculateInventory.allCloth["BlackPants"];
+            CalculateInventory.blackPantsASR.sprite = CalculateInventory.allAdCloth["BlackPants"];
 
         }
         else if(currentSprite.name.Contains("Shoe"))
@@ -298,8 +312,8 @@ public class ClothChanging : MonoBehaviour
             //change clothes in advertisement
             CalculateInventory.everythingASR.sprite = transparent;
                 
-            CalculateInventory.blackPantsASR.sprite = CalculateInventory.allCloth["BlackPants"];
-            CalculateInventory.whiteShirtASR.sprite = CalculateInventory.allCloth["WhiteShirt"];
+            CalculateInventory.blackPantsASR.sprite = CalculateInventory.allAdCloth["BlackPants"];
+            CalculateInventory.whiteShirtASR.sprite = CalculateInventory.allAdCloth["WhiteShirt"];
 
 
         }
