@@ -2,9 +2,13 @@
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using UnityEngine;
+using UnityEngine.UI;
+
+using UnityEngine.UI.Extensions;
 
 public class ClothToMachine : MonoBehaviour
 {
+    private HorizontalScrollSnap myHSS;
     private GameObject ClothInMachineController;
 
     private AllMachines AllMachines;
@@ -17,9 +21,16 @@ public class ClothToMachine : MonoBehaviour
 
     private int hitTime;
 
+    private Image myImage;
+
     // Start is called before the first frame update
     void Start()
     {
+        //find the horizontal scroll snap script
+        myHSS = GameObject.Find("Horizontal Scroll Snap").GetComponent<HorizontalScrollSnap>();
+
+
+        myImage = GetComponent<Image>();
         hitTime = 0;
         
         ClothInMachineController = GameObject.Find("---ClothInMachineController");
@@ -76,10 +87,10 @@ public class ClothToMachine : MonoBehaviour
         Destroy(FinalCameraController.generatedNotice);
         FinalCameraController.alreadyNotice = false;
 
-
     }
-    
-    
+
+
+ 
     public void putClothIn()
     {
         if(FinalCameraController.isSwipping == false)
@@ -88,10 +99,10 @@ public class ClothToMachine : MonoBehaviour
             {
                 for (int i = 0; i < AllMachines.WashingMachines.Count; i++)
                 {
-                    //get machine start washing
-                    if (WasherControllerList[i].myMachineState == AllMachines.MachineState.empty)
-                    {
-                        WasherControllerList[i].myMachineState = AllMachines.MachineState.washing;
+//                    //get machine start washing
+//                    if (WasherControllerList[i].myMachineState == AllMachines.MachineState.empty)
+//                    {
+//                        WasherControllerList[i].myMachineState = AllMachines.MachineState.washing;
                         //change machine tags to character
                         WasherControllerList[i].transform.gameObject.tag = this.transform.gameObject.tag;
                         
@@ -99,13 +110,37 @@ public class ClothToMachine : MonoBehaviour
 
                         transform.position =
                             AllMachines.WashingMachines[i].transform.position + new Vector3(0, -2.9f, 0);
+                        
+                        myHSS.GetComponent<HorizontalScrollSnap>().GoToScreen(2);
+                        
 
                         hitTime++;
                         break;
-                    }
                 }
             }
-            else if (hitTime > 0)
+            
+            else if (hitTime == 1)
+            {
+                //点第二次换成打开的包
+                print("tag = " + tag);
+                myImage.sprite = AllMachines.openBagsDic[this.tag];
+                
+                for (int i = 0; i < AllMachines.WashingMachines.Count; i++)
+                {
+                    //get machine start washing
+                    if (WasherControllerList[i].myMachineState == AllMachines.MachineState.empty)
+                    {
+                        WasherControllerList[i].myMachineState = AllMachines.MachineState.full;
+                        //change machine tags to character
+                        WasherControllerList[i].transform.gameObject.tag = this.transform.gameObject.tag;
+                        
+                        break;
+                    }
+                }
+                
+            }
+             
+            else if (hitTime > 1)
             {
                 //get the machine with clothes from this bag
                 for (int i = 0; i < AllMachines.WashingMachines.Count; i++)

@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Net.Mime;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.UIElements;
 using Button = UnityEngine.UI.Button;
 using Image = UnityEngine.UI.Image;
@@ -18,9 +20,13 @@ public class WasherController : MonoBehaviour
     public Collider myCollider;
     
     private Animator myAnimator;
+
+    public Animator lightAnimator;
     public CanvasGroup ClothUI;
     public CanvasGroup AllClothUI;
 
+    public Text timerNum;
+    private float realTimer;
     
     public bool isFirstOpen = true;
 
@@ -45,6 +51,7 @@ public class WasherController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        
         myMachineState = AllMachines.MachineState.empty;
 
         myAnimator = GetComponentInChildren<Animator>();
@@ -60,11 +67,47 @@ public class WasherController : MonoBehaviour
     {
         Hide(CalculateInventory.InventoryFull);
     }
+
+    public void ClickStart()
+    {
+        myMachineState = AllMachines.MachineState.washing;
+        print("pressssssssed");
+    }
     
     
     // Update is called once per frame
     void Update()
     {
+
+        realTimer = AllMachines.washTime - timer;
+        if (Mathf.RoundToInt(timer / 60) < 10)
+        {
+            if (Mathf.RoundToInt(realTimer % 60) < 10)
+            {
+                timerNum.text = "0" + Mathf.RoundToInt(realTimer / 60).ToString() + ":" + "0" +
+                                Mathf.RoundToInt(realTimer % 60).ToString();
+            }
+            else
+            {
+                timerNum.text = "0" + Mathf.RoundToInt(realTimer / 60).ToString() + ":" +
+                                Mathf.RoundToInt(realTimer % 60).ToString();
+            }
+
+        }
+        else
+        {
+            if (Mathf.RoundToInt(realTimer % 60) < 10)
+            {
+                timerNum.text = Mathf.RoundToInt(realTimer / 60).ToString() + ":" + "0" +
+                                Mathf.RoundToInt(realTimer % 60).ToString();
+            }
+            else
+            {
+                timerNum.text = Mathf.RoundToInt(realTimer / 60).ToString() + ":" +
+                                Mathf.RoundToInt(realTimer % 60).ToString();
+            }
+
+        }
         //if already five items taken
         if (CalculateInventory.occupiedI > 5 && fulltemp == false)
         {
@@ -96,6 +139,12 @@ public class WasherController : MonoBehaviour
             emptyImage.enabled = true;
 
         }
+        else if (myMachineState == AllMachines.MachineState.full)
+        {
+            emptyImage.enabled = false;
+            fullImage.enabled = true;
+
+        }
         else
         {
             fullImage.enabled = true;
@@ -105,6 +154,7 @@ public class WasherController : MonoBehaviour
         if (myMachineState == AllMachines.MachineState.washing)
         {
             myAnimator.SetBool("isWashing", true);
+            lightAnimator.SetBool("isWashing", true);
             
             emptyImage.enabled = false;
             
@@ -115,6 +165,8 @@ public class WasherController : MonoBehaviour
             {
                 myMachineState = AllMachines.MachineState.finished;
                 myAnimator.SetBool("isWashing", false);
+                lightAnimator.SetBool("isWashing", false);
+
                 timer = 0;
             }
         }

@@ -14,6 +14,9 @@ public class AllMachines : MonoBehaviour
     public GameObject noticeParent;
 
     public bool alreadyNotice = false;
+
+    public List<Sprite> openBags;
+    public Dictionary<string, Sprite> openBagsDic = new Dictionary<string, Sprite>();
     
     //控制所有洗衣机的代码
     //只有这一份
@@ -37,6 +40,7 @@ public class AllMachines : MonoBehaviour
 
     public enum MachineState {
         empty,
+        full,
         washing,
         finished
     }
@@ -69,6 +73,11 @@ public class AllMachines : MonoBehaviour
         for (int i = 0; i < BellaClothes.Count; i++)
         {
             bellaClothesTemp.Add(BellaClothes[i]);
+        }
+
+        for (int i = 0; i < openBags.Count; i++)
+        {
+            openBagsDic.Add(openBags[i].name, openBags[i]);
         }
 
     }
