@@ -15,11 +15,15 @@ public class WasherController : MonoBehaviour
     public Image fullImage;
     public AllMachines AllMachines;
 
+    public Animator ClothUiAnimator;
+    
     public bool alreadyNotice;
 
     public Collider myCollider;
     
     private Animator myAnimator;
+
+    public CanvasGroup backgroundUI;
 
     public Animator lightAnimator;
     public CanvasGroup ClothUI;
@@ -192,21 +196,29 @@ public class WasherController : MonoBehaviour
     public void CancelPanel()
     {
         Hide(ClothUI);
+        Hide(backgroundUI);
+
         shut = 0;
     }
 
     public void clickMachine()
     {
+        print("presssssssed");
         if (myMachineState == AllMachines.MachineState.finished)
         {
            
             if (shut == 0)
             {
                 shut++;
+                
+                Show(backgroundUI);
+                ClothUiAnimator.SetBool("isUnfold",true);
+
+                StartCoroutine("WaitFor2Seconds");
+
                 Hide(AllClothUI);
-                Show(ClothUI);
 
-
+                
                 GenerateCloth(this.transform.gameObject.tag);
             }
             //if click machine again, close UI
@@ -214,11 +226,20 @@ public class WasherController : MonoBehaviour
             {
                 shut = 0;
                 Hide(ClothUI);
+                Hide(backgroundUI);
+                ClothUiAnimator.SetBool("isUnfold",false);
+
             }
         }
 
     }
-    
+
+    IEnumerator WaitFor2Seconds()
+    {
+        yield return new WaitForSeconds(1);
+        Show(ClothUI);
+
+    }
     
     void Hide(CanvasGroup UIGroup) {
         UIGroup.alpha = 0f; //this makes everything transparent

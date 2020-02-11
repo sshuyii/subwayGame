@@ -100,22 +100,31 @@ public class ClothToMachine : MonoBehaviour
                 for (int i = 0; i < AllMachines.WashingMachines.Count; i++)
                 {
 //                    //get machine start washing
-//                    if (WasherControllerList[i].myMachineState == AllMachines.MachineState.empty)
-//                    {
-//                        WasherControllerList[i].myMachineState = AllMachines.MachineState.washing;
+                    if (WasherControllerList[i].myMachineState == AllMachines.MachineState.empty)
+                    {
+                        //WasherControllerList[i].myMachineState = AllMachines.MachineState.full;
                         //change machine tags to character
                         WasherControllerList[i].transform.gameObject.tag = this.transform.gameObject.tag;
-                        
+
                         this.gameObject.transform.SetParent(WasherControllerList[i].gameObject.transform);
 
                         transform.position =
                             AllMachines.WashingMachines[i].transform.position + new Vector3(0, -2.9f, 0);
-                        
-                        myHSS.GetComponent<HorizontalScrollSnap>().GoToScreen(2);
-                        
+                        if (i == 0)
+                        {
+                            myHSS.GetComponent<HorizontalScrollSnap>().GoToScreen(1);
+
+                        }
+                        else
+                        {
+                            myHSS.GetComponent<HorizontalScrollSnap>().GoToScreen(2);
+
+                        }
+
 
                         hitTime++;
                         break;
+                    }
                 }
             }
             
