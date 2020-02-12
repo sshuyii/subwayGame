@@ -2736,8 +2736,9 @@ RectTransform:
   - {fileID: 964778980}
   - {fileID: 1012601519}
   - {fileID: 1431000928}
+  - {fileID: 764378107}
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -5061,8 +5062,10 @@ MonoBehaviour:
   emptyImage: {fileID: 371481901}
   fullImage: {fileID: 1984459478}
   AllMachines: {fileID: 388099769}
+  ClothUiAnimator: {fileID: 0}
   alreadyNotice: 0
   myCollider: {fileID: 1399267000}
+  backgroundUI: {fileID: 0}
   lightAnimator: {fileID: 2033540362}
   ClothUI: {fileID: 1418722290}
   AllClothUI: {fileID: 945820210}
@@ -6653,8 +6656,10 @@ MonoBehaviour:
   emptyImage: {fileID: 1782733566}
   fullImage: {fileID: 1967755671}
   AllMachines: {fileID: 388099769}
+  ClothUiAnimator: {fileID: 0}
   alreadyNotice: 0
   myCollider: {fileID: 1399267000}
+  backgroundUI: {fileID: 0}
   lightAnimator: {fileID: 2128595554}
   ClothUI: {fileID: 1512041472}
   AllClothUI: {fileID: 945820210}
@@ -7661,7 +7666,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &390549063
 GameObject:
@@ -9218,7 +9223,7 @@ Transform:
   - {fileID: 1427118347}
   - {fileID: 1388091706}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &476918420
 GameObject:
@@ -12024,7 +12029,7 @@ Transform:
   - {fileID: 224059491}
   - {fileID: 886753683}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &673626756
 GameObject:
@@ -13440,6 +13445,112 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 762749061}
   m_CullTransparentMesh: 0
+--- !u!1 &764378106
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 764378107}
+  - component: {fileID: 764378110}
+  - component: {fileID: 764378109}
+  - component: {fileID: 764378108}
+  - component: {fileID: 764378111}
+  m_Layer: 5
+  m_Name: TouchCircle
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &764378107
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 764378106}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 128282055}
+  m_RootOrder: 14
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!95 &764378108
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 764378106}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: ea8a317326638413f90791790677dc41, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &764378109
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 764378106}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.69411767}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: f2cbaf1a52f624ac28d5096682c6de9d, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &764378110
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 764378106}
+  m_CullTransparentMesh: 0
+--- !u!225 &764378111
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 764378106}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
 --- !u!1 &770543507
 GameObject:
   m_ObjectHideFlags: 0
@@ -14158,7 +14269,7 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -17402,7 +17513,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1022291981
 GameObject:
@@ -17966,7 +18077,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1049543673
 GameObject:
@@ -20666,7 +20777,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1205198113
 GameObject:
@@ -24398,8 +24509,10 @@ MonoBehaviour:
   emptyImage: {fileID: 30152350}
   fullImage: {fileID: 386274773}
   AllMachines: {fileID: 388099769}
+  ClothUiAnimator: {fileID: 0}
   alreadyNotice: 0
   myCollider: {fileID: 1399267000}
+  backgroundUI: {fileID: 0}
   lightAnimator: {fileID: 593756751}
   ClothUI: {fileID: 520627978}
   AllClothUI: {fileID: 945820210}
@@ -26575,7 +26688,7 @@ Transform:
   m_Children:
   - {fileID: 1787633975}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1469599890
 GameObject:
@@ -27494,7 +27607,7 @@ GameObject:
   - component: {fileID: 1518452665}
   - component: {fileID: 1518452664}
   m_Layer: 5
-  m_Name: Text
+  m_Name: DialogueText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -27682,8 +27795,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   KararaImage: {fileID: 127089880}
   DialogueBubble: {fileID: 1431000927}
+  FinalCameraController: {fileID: 1595186208}
   DialogueImageList: []
   myText: {fileID: 0}
+  poster: {fileID: 1543421269}
+  touch: {fileID: 764378106}
+  touchImage: {fileID: 764378109}
+  TakeScreenshot: {fileID: 1523356049}
+  touchAnimator: {fileID: 764378108}
+  ProfileImage: {fileID: 37270311}
+  KararaProfile: {fileID: 21300000, guid: 3e1f13652468e4b16a0c35cdd33864c4, type: 3}
+  FishProfile: {fileID: 21300000, guid: 4e66548ec03394403a1ee1f62ddcc15a, type: 3}
+  pressScreenshot: 0
+  myFlash: {fileID: 964778981}
 --- !u!1 &1523356049
 GameObject:
   m_ObjectHideFlags: 0
@@ -28496,7 +28620,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1557680284
 GameObject:
@@ -28982,6 +29106,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   InstagramController: {fileID: 1197818957}
+  TutorialManager: {fileID: 1522229831}
   myCamera: {fileID: 1205198114}
   photoBackground: {fileID: 540014177}
   myFlash: {fileID: 964778981}
@@ -28998,7 +29123,7 @@ RectTransform:
   m_Children:
   - {fileID: 1205198115}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -29019,6 +29144,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TouchController: {fileID: 1013849935}
   isSwipping: 0
+  isTutorial: 1
   lastAppState: 0
   alreadyNotice: 0
   alreadyClothUI: 0
@@ -29809,7 +29935,7 @@ Transform:
   - {fileID: 377379738}
   - {fileID: 431001178}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1648698410
 GameObject:
@@ -31882,8 +32008,10 @@ MonoBehaviour:
   emptyImage: {fileID: 0}
   fullImage: {fileID: 0}
   AllMachines: {fileID: 388099769}
+  ClothUiAnimator: {fileID: 0}
   alreadyNotice: 0
   myCollider: {fileID: 0}
+  backgroundUI: {fileID: 0}
   lightAnimator: {fileID: 0}
   ClothUI: {fileID: 1102202211}
   AllClothUI: {fileID: 945820210}
@@ -33892,7 +34020,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1893200452
 GameObject:

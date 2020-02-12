@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class SubwayMovement : MonoBehaviour
 {
+    private FinalCameraController FinalCameraController;
 
     public int currentStation;
     public GameObject highlight;
@@ -56,6 +57,8 @@ public class SubwayMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
+        FinalCameraController = GameObject.Find("Main Camera").GetComponent<FinalCameraController>();
 
         aSR = arrow.GetComponent<SpriteRenderer>();
         hSR = highlight.GetComponent<SpriteRenderer>();
@@ -121,7 +124,7 @@ public class SubwayMovement : MonoBehaviour
             {
                 //if arrives at a station and door already opened
                 //这里的衣服应该随机产生，现在先写成了固定两包衣服：Alex + 路人
-                if (currentStation == 0 && bagFirst)
+                if (currentStation == 0 && bagFirst && !FinalCameraController.isTutorial)
                 {
                     //generate a bag of clothsPos
                     Button clothBag1 = Instantiate(clothBags[0], bagPos[0], Quaternion.identity) as Button;

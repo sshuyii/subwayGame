@@ -2,16 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-public class ChangeBackground : MonoBehaviour
+
+[System.Serializable]
+
+public class ChangeBackground :MonoBehaviour
 {
     //public List<Sprite> subwayAdList;
 
 
-    private bool isTutorial;
-    private TutorialManager TutorialManager;
     private InstagramController InstagramController;
     private FinalCameraController FinalCameraController;
 
+    private TutorialManager TutorialManager;
     public Image photoBackground;
 
     private Button myButton;
@@ -28,12 +30,9 @@ public class ChangeBackground : MonoBehaviour
 //            allSubAd.Add(subwayAdList[i].name, subwayAdList[i]);
 //        }
 
+        TutorialManager = GameObject.Find("---TutorialManager").GetComponent<TutorialManager>();
         InstagramController = GameObject.Find("---InstagramController").GetComponent<InstagramController>();
-        if (isTutorial)
-        {
-            TutorialManager = GameObject.Find("---TutorialManager").GetComponent<TutorialManager>();
-        }
-
+        
         FinalCameraController = GameObject.Find("Main Camera").GetComponent<FinalCameraController>();
 
         myButton = GetComponent<Button>();
@@ -59,6 +58,12 @@ public class ChangeBackground : MonoBehaviour
                     InstagramController.currentBackground = transform.name;
 
                     FinalCameraController.GoAdvertisement();
+
+                    //cancel dialogues and the touch tutorial
+                    TutorialManager.DoDialogues(false);
+                    TutorialManager.myText.text = "";
+                    TutorialManager.touchImage.enabled = false;
+
                 }
             }
         }
@@ -70,12 +75,5 @@ public class ChangeBackground : MonoBehaviour
 
         }
         
-        //close all dialogues
-        for (int a = 0; a < TutorialManager.DialogueImageList.Length; a++)
-        {
-            TutorialManager.DialogueImageList[a].enabled = false;
-        }
-
-        TutorialManager.myText.text = "";
     }
 }

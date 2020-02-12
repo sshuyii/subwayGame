@@ -13,6 +13,7 @@ public class ScreenshotHandler : MonoBehaviour
     public InstagramController InstagramController;
     private FinalCameraController FinalCameraController;
 
+    public TutorialManager TutorialManager;
     private int entryTime = 50;
 
     private GameObject toothpastePost;
@@ -59,14 +60,27 @@ public class ScreenshotHandler : MonoBehaviour
 
     private void Update()
     {
+        
         if (flash)
         {
-            myFlash.alpha = myFlash.alpha - Time.deltaTime;
-            if (myFlash.alpha <= 0)
+            if(FinalCameraController.isTutorial == false)
             {
-                myFlash.alpha = 0;
-                flash = false;
+                myFlash.alpha = myFlash.alpha - Time.deltaTime;
+     
+                if (myFlash.alpha <= 0)
+                {
+                    myFlash.alpha = 0;
+                    flash = false;
+                
+                }
+
             }
+            else
+            {
+                TutorialManager.pressScreenshot = true;
+            }
+           
+            
         }
     }
 
@@ -201,6 +215,8 @@ public class ScreenshotHandler : MonoBehaviour
 
         flash = true;
         myFlash.alpha = 1;
+        
+        
         //yield on a new YieldInstruction that waits for 5 seconds.
         yield return new WaitForSeconds(0.1f);
         addToKararaPage();
@@ -375,7 +391,12 @@ public class ScreenshotHandler : MonoBehaviour
             print("toothpaste generated");
 //        }
     }
-   
+    
+    
+    //wait for several seconds
+    IEnumerator WaitForSeconds(int seconds)
+    {
+        yield return new WaitForSeconds(seconds);
 
-  
+    }
 }

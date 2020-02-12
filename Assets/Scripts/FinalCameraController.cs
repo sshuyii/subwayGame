@@ -10,6 +10,8 @@ public class FinalCameraController : MonoBehaviour
     private bool fastSwipeBool;
 
     public bool isSwipping = false;
+    public bool isTutorial;
+
 
     public enum AppState
     {
@@ -140,8 +142,6 @@ public class FinalCameraController : MonoBehaviour
 
         }
     }
-
-
    
     
     public void ChangeToCloth()
