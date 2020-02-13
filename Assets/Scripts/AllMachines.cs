@@ -26,6 +26,9 @@ public class AllMachines : MonoBehaviour
     
     public List<Sprite> BellaClothes;
     public List<Sprite> bellaClothesTemp = new List<Sprite>();
+    
+    public List<Sprite> TutorialClothes;
+    public List<Sprite> TutorialClothesTemp = new List<Sprite>();
 
    
     private bool isFirstOpen = true;

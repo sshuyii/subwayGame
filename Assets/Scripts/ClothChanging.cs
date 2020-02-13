@@ -20,6 +20,8 @@ public class ClothChanging : MonoBehaviour
     private bool firstTime;
     
     private CalculateInventory CalculateInventory;
+    private FinalCameraController FinalCameraController;
+    
 
     private GameObject InventoryController;
 
@@ -63,6 +65,8 @@ public class ClothChanging : MonoBehaviour
         InventoryController = GameObject.Find("---InventoryController");
         TouchController = GameObject.Find("---TouchController").GetComponent<TouchController>();
         AllMachines = GameObject.Find("---ClothInMachineController").GetComponent<AllMachines>();
+        FinalCameraController = GameObject.Find("Main Camera").GetComponent<FinalCameraController>();
+
 
 
         CalculateInventory = InventoryController.GetComponent<CalculateInventory>();
@@ -322,6 +326,14 @@ public class ClothChanging : MonoBehaviour
     
     public void ChangeCloth()
     {
+        
+        //for tutorial
+        if (FinalCameraController.isTutorial)
+        {
+            FinalCameraController.TutorialManager.tutorialNumber = 12;
+        }
+        
+        
         if(CalculateInventory.isreturning)
         {
             CancelReturn();
@@ -532,9 +544,6 @@ public class ClothChanging : MonoBehaviour
         }
         //GetComponent<Image>().sprite = worn;
         //transform.position = startPos;
-
-        
-       
 
     }
 

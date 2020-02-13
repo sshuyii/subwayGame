@@ -75,6 +75,11 @@ public class WasherController : MonoBehaviour
     public void ClickStart()
     {
         myMachineState = AllMachines.MachineState.washing;
+        //for tutorial
+        if (FinalCameraController.isTutorial)
+        {
+            FinalCameraController.TutorialManager.tutorialNumber = 5;
+        }
         print("pressssssssed");
     }
     
@@ -96,7 +101,6 @@ public class WasherController : MonoBehaviour
                 timerNum.text = "0" + Mathf.RoundToInt(realTimer / 60).ToString() + ":" +
                                 Mathf.RoundToInt(realTimer % 60).ToString();
             }
-
         }
         else
         {
@@ -110,7 +114,6 @@ public class WasherController : MonoBehaviour
                 timerNum.text = Mathf.RoundToInt(realTimer / 60).ToString() + ":" +
                                 Mathf.RoundToInt(realTimer % 60).ToString();
             }
-
         }
         //if already five items taken
         if (CalculateInventory.occupiedI > 5 && fulltemp == false)
@@ -170,8 +173,14 @@ public class WasherController : MonoBehaviour
                 myMachineState = AllMachines.MachineState.finished;
                 myAnimator.SetBool("isWashing", false);
                 lightAnimator.SetBool("isWashing", false);
-
+            
                 timer = 0;
+                
+                //for tutorial
+                if (FinalCameraController.isTutorial)
+                {
+                    FinalCameraController.TutorialManager.tutorialNumber = 6;
+                }
             }
         }
         
@@ -220,6 +229,14 @@ public class WasherController : MonoBehaviour
 
                 
                 GenerateCloth(this.transform.gameObject.tag);
+                
+                //for tutorial
+                if (FinalCameraController.isTutorial)
+                {
+                    FinalCameraController.TutorialManager.tutorialNumber = 8;
+                }
+                
+                
             }
             //if click machine again, close UI
             else if (shut == 1)

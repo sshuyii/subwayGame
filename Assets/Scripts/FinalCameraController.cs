@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking.Match;
+using UnityEngine.UI.Extensions;
 
 public class FinalCameraController : MonoBehaviour
 {
@@ -9,9 +10,13 @@ public class FinalCameraController : MonoBehaviour
 
     private bool fastSwipeBool;
 
+    public TutorialManager TutorialManager;
+
     public bool isSwipping = false;
     public bool isTutorial;
 
+    public HorizontalScrollSnap HorizontalScrollSnap;
+    
 
     public enum AppState
     {
@@ -87,6 +92,8 @@ public class FinalCameraController : MonoBehaviour
         Hide(frontPage);
         Hide(postpage);
         HideAllPersonalPages();
+        
+
     }
 
     
@@ -104,6 +111,29 @@ public class FinalCameraController : MonoBehaviour
         }
 
             
+        //print(HorizontalScrollSnap.CurrentPage);
+        //change camera state to page number
+        if(myCameraState != CameraState.Map || myCameraState != CameraState.App || myCameraState != CameraState.Ad || myCameraState != CameraState.Closet)
+        {
+            if (HorizontalScrollSnap.CurrentPage == 0)
+            {
+                myCameraState = CameraState.One;
+            }
+//            else if (HorizontalScrollSnap.CurrentPage == 1)
+//            {
+//                myCameraState = CameraState.Two;
+//            }
+//            else if (HorizontalScrollSnap.CurrentPage == 2)
+//            {
+//                myCameraState = CameraState.Three;
+//            }
+            else if (HorizontalScrollSnap.CurrentPage == 3)
+            {
+                myCameraState = CameraState.Four;
+            }
+        }
+        
+        
         //if changing clothes, don't show some UIs
         if (myCameraState == CameraState.Map || myCameraState == CameraState.App || myCameraState == CameraState.Ad)
         {
@@ -165,8 +195,6 @@ public class FinalCameraController : MonoBehaviour
             Destroy(generatedNotice);
             Hide(currentClothUI);
             alreadyClothUI = false;
-
-
         }
     }
 
@@ -233,7 +261,7 @@ public class FinalCameraController : MonoBehaviour
             }
             else
             {
-                myCameraState = CameraState.Two;
+                //myCameraState = CameraState.Two;
             }
         }
 

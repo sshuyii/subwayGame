@@ -8,6 +8,9 @@ public class DoInventory : MonoBehaviour
 {
     private CalculateInventory CalculateInventory;
 
+    private FinalCameraController FinalCameraController;
+    public WasherController WasherController;
+    
     private GameObject InventoryController;
     //this dictionary is the player inventory
 
@@ -22,6 +25,9 @@ public class DoInventory : MonoBehaviour
     {
         InventoryController = GameObject.Find("---InventoryController");
         CalculateInventory = InventoryController.GetComponent<CalculateInventory>();
+        
+        FinalCameraController = GameObject.Find("Main Camera").GetComponent<FinalCameraController>();
+
 
 //        selfButton.onClick.AddListener(AddClothToInventory);
 
@@ -38,14 +44,16 @@ public class DoInventory : MonoBehaviour
 
     public void AddClothToInventory()
     {
+        
+        
         //print("pressed");
         selfButton = GetComponent<Button>();
         currentSprite = selfButton.image.sprite;
-//        print("currentSpriteName = " + currentSprite.name);
+        print("currentSpriteName = " + currentSprite.name);
 
 
         Sprite buttonSprite = currentSprite;
-//        print("SpriteName = " + currentSprite.name);
+        print("SpriteName = " + currentSprite.name);
 
 
         print("occupiedI = " + CalculateInventory.occupiedI);
@@ -66,7 +74,15 @@ public class DoInventory : MonoBehaviour
             
         }
         
-       
+        //for tutorial
+        if (FinalCameraController.isTutorial)
+        {
+            FinalCameraController.TutorialManager.tutorialNumber = 10;
+            //in tutorial, if click a cloth, cloth the entire ui interface
+            WasherController.clickMachine();
+
+        }
+
         
         //CalculateInventory.inventory[CalculateInventory.occupiedI].GetComponent<SpriteRenderer>().sprite = buttonSprite;
         

@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-[System.Serializable]
-
 public class ChangeBackground :MonoBehaviour
 {
     //public List<Sprite> subwayAdList;
@@ -52,8 +50,8 @@ public class ChangeBackground :MonoBehaviour
         {
             if (FinalCameraController.isSwipping == false)
             {
-                if (InstagramController.AdAlreadyTakenList[transform.name])
-                {
+//                if (InstagramController.AdAlreadyTakenList[transform.name])
+//                {
                     photoBackground.sprite = InstagramController.allBackAd[transform.name];
                     InstagramController.currentBackground = transform.name;
 
@@ -64,7 +62,7 @@ public class ChangeBackground :MonoBehaviour
                     TutorialManager.myText.text = "";
                     TutorialManager.touchImage.enabled = false;
 
-                }
+//                }
             }
         }
         else

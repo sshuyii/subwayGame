@@ -15,6 +15,7 @@ TagManager:
   - Draggable
   - PlayerBody
   - worn
+  - Tutorial
   layers:
   - Default
   - TransparentFX

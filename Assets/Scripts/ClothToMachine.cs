@@ -120,7 +120,15 @@ public class ClothToMachine : MonoBehaviour
                             myHSS.GetComponent<HorizontalScrollSnap>().GoToScreen(2);
 
                         }
+                        
+                        //disable karara image in tutorial
+                        if (FinalCameraController.isTutorial)
+                        {
+                            FinalCameraController.TutorialManager.KararaImage.enabled = false;
+                            FinalCameraController.TutorialManager.tutorialNumber = 3;
 
+                            
+                        }
 
                         hitTime++;
                         break;
@@ -134,6 +142,13 @@ public class ClothToMachine : MonoBehaviour
                 print("tag = " + tag);
                 myImage.sprite = AllMachines.openBagsDic[this.tag];
                 
+                //in tutorial
+                if (FinalCameraController.isTutorial)
+                {
+                    FinalCameraController.TutorialManager.tutorialNumber = 4;
+
+                }
+
                 for (int i = 0; i < AllMachines.WashingMachines.Count; i++)
                 {
                     //get machine start washing
@@ -142,6 +157,8 @@ public class ClothToMachine : MonoBehaviour
                         WasherControllerList[i].myMachineState = AllMachines.MachineState.full;
                         //change machine tags to character
                         WasherControllerList[i].transform.gameObject.tag = this.transform.gameObject.tag;
+
+                        
                         
                         break;
                     }

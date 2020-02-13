@@ -13,7 +13,6 @@ public class ScreenshotHandler : MonoBehaviour
     public InstagramController InstagramController;
     private FinalCameraController FinalCameraController;
 
-    public TutorialManager TutorialManager;
     private int entryTime = 50;
 
     private GameObject toothpastePost;
@@ -77,7 +76,8 @@ public class ScreenshotHandler : MonoBehaviour
             }
             else
             {
-                TutorialManager.pressScreenshot = true;
+                FinalCameraController.TutorialManager.pressScreenshot = true;
+                flash = false;
             }
            
             
