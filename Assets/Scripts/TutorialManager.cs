@@ -152,10 +152,17 @@ public class TutorialManager : MonoBehaviour
         {
             //wait for several seconds
 //            StartCoroutine(WaitBeforeDialogues(2, "Hey you! Come over here!", FishProfile));
-            StartCoroutine(FishCallout());
+            if(tutorialNumber == 0)
+            {
+                StartCoroutine(FishCallout());
 
-             // if the player learns to swipe and has gone to the first screen
-             tutorialNumber = 1;
+                // if the player learns to swipe and has gone to the first screen
+            }
+            else
+            {
+                DoDialogues(false);
+            }
+            
 
         }
         
@@ -251,7 +258,7 @@ public class TutorialManager : MonoBehaviour
         myText.text = "Hey you! Come over here!";
         ProfileImage.sprite = FishProfile;
         
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(1);
 
         //cancel flash after a few seconds
         myFlash.alpha = myFlash.alpha - Time.deltaTime;
@@ -264,6 +271,8 @@ public class TutorialManager : MonoBehaviour
         
         //change back to subway after the flashlight
         FinalCameraController.ChangeToSubway();
+        tutorialNumber = 1;
+
 
         
     }
