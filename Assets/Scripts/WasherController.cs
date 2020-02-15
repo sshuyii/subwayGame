@@ -292,64 +292,76 @@ public class WasherController : MonoBehaviour
 //            }
             
     }
-    
+
     public void GenerateCloth(string tagName)
     {
-        
         //need to get all button reset, because they are disabled when clicked last time
         
-        
+        List<Sprite> MachineClothList = new List<Sprite>();
+
         //randomly generate clothes when player opens the machine
         if(isFirstOpen)
         { 
-            for (int i = 0; i < buttons.Length; i++)
+
+            if(tagName == "Alex")
             {
-                if(tagName == "Alex")
+                for (int i = 0; i < buttons.Length; i++)
                 {
                     int randomIndex = Random.Range(0, AllMachines.alexClothesTemp.Count);
 
-//                    Button ClothInMachine =
-//                        Instantiate(alexClothesTemp[randomIndex], buttonPositions[i], Quaternion.identity) as Button;
+//                  Button ClothInMachine =
+//                  Instantiate(alexClothesTemp[randomIndex], buttonPositions[i], Quaternion.identity) as Button;
                     buttons[i].GetComponent<Button>().enabled = true;
                     buttons[i].tag = "Alex";
                     Image buttonImage = buttons[i].GetComponent<Image>();
                     buttonImage.enabled = true;
                     buttonImage.sprite = AllMachines.alexClothesTemp[randomIndex];
-                    
-                        
+
+
                     AllMachines.alexClothesTemp.Remove(AllMachines.alexClothesTemp[randomIndex]);
                     //as child of the folder
                     //doesn't work for some reason I don't understand
                     //ClothInMachine.transform.SetParent(MachineGroup.transform, false);
                     //ClothInMachine.transform.SetParent(MachineGroup.transform, false);
 
-
+                    //record into List
+                    MachineClothList.Add(buttonImage.sprite);
                 }
-                else if (tagName == "Bella")
+                    
+            }
+            else if (tagName == "Bella")
+            {
+                for (int i = 0; i < buttons.Length; i++)
                 {
-                   
                     int randomIndex = Random.Range(0, AllMachines.bellaClothesTemp.Count);
-                    print("random = " + randomIndex);
-                    print(AllMachines.bellaClothesTemp.Count);
-                    buttons[i].tag = "Bella";
+                        print("random = " + randomIndex);
+                        print(AllMachines.bellaClothesTemp.Count);
+                        buttons[i].tag = "Bella";
 
 //                  clothesInMachine[i].image.sprite = AlexClothes[randomIndex];
 
 //                    Button ClothInMachine =
 //                        Instantiate(bellaClothesTemp[randomIndex], buttonPositions[i], Quaternion.identity) as Button;
 
-                    Image buttonImage = buttons[i].GetComponent<Image>();
-                    buttonImage.enabled = true;
+                        Image buttonImage = buttons[i].GetComponent<Image>();
+                        buttonImage.enabled = true;
 
-                    buttonImage.sprite = AllMachines.bellaClothesTemp[randomIndex];
-                    
-                    AllMachines.bellaClothesTemp.Remove(AllMachines.bellaClothesTemp[randomIndex]);
-                    //as child of the folder
-                    //doesn't work for some reason I don't understand
+                        buttonImage.sprite = AllMachines.bellaClothesTemp[randomIndex];
 
-                    //ClothInMachine.transform.SetParent(MachineGroup.transform, false);
+                        AllMachines.bellaClothesTemp.Remove(AllMachines.bellaClothesTemp[randomIndex]);
 
+                        //record into List
+                    MachineClothList.Add(buttonImage.sprite);
+
+                        //as child of the folder
+                        //doesn't work for some reason I don't understand
+
+                        //ClothInMachine.transform.SetParent(MachineGroup.transform, false);
                 }
+                    
+            }
+                
+                //record every button into this dictionary
                 
                
                 //this will make scale a lot bigger than it should be
@@ -357,10 +369,15 @@ public class WasherController : MonoBehaviour
 
             
 
-            }
-
-            isFirstOpen = false;
         }
-        
+
+         isFirstOpen = false;
+         //record the list into dictionary
+         FinalCameraController.AllStationClothList.Add(tagName, MachineClothList);
+
     }
+        
+       
+
+    
 }

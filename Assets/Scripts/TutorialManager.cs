@@ -117,19 +117,29 @@ public class TutorialManager : MonoBehaviour
             tutorialNumber = 13;
 
         }
-        else if(tutorialNumber == 14 && FinalCameraController.myCameraState == FinalCameraController.CameraState.Four)
+        else if(tutorialNumber == 14 && FinalCameraController.mySubwayState == FinalCameraController.SubwayState.Four)
         {
             myText.text = "Oh here it is!";
+            tutorialNumber = 15;
+        }
+        else if(tutorialNumber == 16)
+        {
+            DoDialogues(true);
+            myText.text = "If I click the bag, all clothes will be automatically returned.";
+        }
+        else if(tutorialNumber == 17)
+        {
+            myText.text = "The end of my day, easy!";
+
         }
         
         
         
-        
         //only show Karara when she's in the subway scene
-        if (FinalCameraController.myCameraState == FinalCameraController.CameraState.One ||
-            FinalCameraController.myCameraState == FinalCameraController.CameraState.Two ||
-            FinalCameraController.myCameraState == FinalCameraController.CameraState.Three ||
-            FinalCameraController.myCameraState == FinalCameraController.CameraState.Four)
+        if (FinalCameraController.mySubwayState == FinalCameraController.SubwayState.One ||
+            FinalCameraController.mySubwayState == FinalCameraController.SubwayState.Two ||
+            FinalCameraController.mySubwayState == FinalCameraController.SubwayState.Three ||
+            FinalCameraController.mySubwayState == FinalCameraController.SubwayState.Four)
         {
         }
         else
@@ -155,18 +165,23 @@ public class TutorialManager : MonoBehaviour
             if(tutorialNumber == 0)
             {
                 StartCoroutine(FishCallout());
-
-                // if the player learns to swipe and has gone to the first screen
             }
             else
             {
                 DoDialogues(false);
+                myText.text = "";
+                myFlash.alpha = myFlash.alpha - Time.deltaTime;
+     
+                if (myFlash.alpha <= 0)
+                {
+                    myFlash.alpha = 0;
+                    pressScreenshot = false;
+                    Show(KararaSubway);
+                }
             }
-            
-
         }
         
-        if (FinalCameraController.myCameraState == FinalCameraController.CameraState.One && tutorialNumber == 1)
+        if (FinalCameraController.mySubwayState == FinalCameraController.SubwayState.One && tutorialNumber == 1)
         {
             myText.text = "Your first day of work!";
             
@@ -174,7 +189,6 @@ public class TutorialManager : MonoBehaviour
             KararaRectT.anchoredPosition = 
                 new Vector3(205, KararaRectT.anchoredPosition.y);
             tutorialNumber = 2;
-
         }
     }
 
@@ -255,7 +269,7 @@ public class TutorialManager : MonoBehaviour
     {
         yield return new WaitForSeconds(1);
         DoDialogues(true);
-        myText.text = "Hey you! Come over here!";
+        myText.text = "Hey you! Come over here! Swipe to move around!";
         ProfileImage.sprite = FishProfile;
         
         yield return new WaitForSeconds(1);
@@ -270,10 +284,9 @@ public class TutorialManager : MonoBehaviour
         }
         
         //change back to subway after the flashlight
+        //KararaImage.enabled = true;
         FinalCameraController.ChangeToSubway();
         tutorialNumber = 1;
-
-
         
     }
 
@@ -298,7 +311,6 @@ public class TutorialManager : MonoBehaviour
                 myText.text = "Now pick up those bags.";
                 bag = Instantiate(clothBag, bagPos, Quaternion.identity) as GameObject;
                 bag.transform.SetParent(clothBagGroup.transform, false);
-
 
             }
         }
@@ -337,7 +349,7 @@ public class TutorialManager : MonoBehaviour
             }
             else if (clicktime == 5)
             {
-                myText.text = "Guess I'll do this on my own. First, open the door...";
+                myText.text = "He has forgotten me, guess I'll do this on my own. First, open the door.";
                 ProfileImage.sprite = KararaProfile;
                 touch.transform.position = door.transform.position;
                 
@@ -362,6 +374,8 @@ public class TutorialManager : MonoBehaviour
             tutorialNumber = 14;
         }
 
+       
+        
     }
     
 

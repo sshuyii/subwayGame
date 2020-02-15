@@ -61,6 +61,7 @@ public class ChangeBackground :MonoBehaviour
                     TutorialManager.DoDialogues(false);
                     TutorialManager.myText.text = "";
                     TutorialManager.touchImage.enabled = false;
+                    TutorialManager.KararaImage.enabled = false;
 
 //                }
             }

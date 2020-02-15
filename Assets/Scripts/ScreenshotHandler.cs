@@ -78,6 +78,7 @@ public class ScreenshotHandler : MonoBehaviour
             {
                 FinalCameraController.TutorialManager.pressScreenshot = true;
                 flash = false;
+
             }
            
             

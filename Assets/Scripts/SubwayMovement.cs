@@ -1,5 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Net.Mime;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -17,6 +20,7 @@ public class SubwayMovement : MonoBehaviour
     public float doorMovement;
     public float doorWidth;
     
+    
     public List<GameObject> arrows;
 
 //    public List<Vector3> stationPos;
@@ -28,8 +32,9 @@ public class SubwayMovement : MonoBehaviour
     private bool bagFirst = true;
     public GameObject clothBagGroup;
 
-    public GameObject detailBackground;
-    private SpriteRenderer dSR;
+    public CanvasGroup dSR1;
+    public CanvasGroup dSR2;
+
 
     
     private Dictionary<string, int> allStation = new Dictionary<string, int>();
@@ -53,7 +58,25 @@ public class SubwayMovement : MonoBehaviour
     public float moveTime;
     public float stayTime;
 
+    //a list of buttons in detail background
+    public List<Image> detailList0 = new List<Image>();
+    public List<Image> detailList1 = new List<Image>();
 
+    
+    //time text
+    public TextMeshProUGUI CountDownText;
+    
+    private float CountDownTime;
+
+    private float timer = 0;
+
+    private bool nothingInside = false; //if nothing is in the machine
+    
+  
+    public List<Dictionary<String, List<Sprite>>> allStationList = new List<Dictionary<String, List<Sprite>>>();
+
+   
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -62,8 +85,6 @@ public class SubwayMovement : MonoBehaviour
 
         aSR = arrow.GetComponent<SpriteRenderer>();
         hSR = highlight.GetComponent<SpriteRenderer>();
-
-        dSR = detailBackground.GetComponent<SpriteRenderer>();
 
         
         currentStation = 0;
@@ -74,7 +95,11 @@ public class SubwayMovement : MonoBehaviour
         left2Pos = left2.transform.position.x;
         right2Pos = right2.transform.position.x;
 
-        
+        //record individual station dic into the general list
+//        allStationList.Add(Station0List);
+//        allStationList.Add(Station1List);
+//        allStationList.Add(Station2List);
+
 
         //get all station names into the dictionary
         for (var i = 0; i < stationNames.Count; ++i)
@@ -89,15 +114,21 @@ public class SubwayMovement : MonoBehaviour
 
     }
 
+
+    private Button clothBag1;
+    private Button clothBag2;
+    
     // Update is called once per frame
     void Update()
     {
-        
-        
-        
         //train needs 1 minute on its way
 //        print("currentStation = " + currentStation);
 //        print("isMoving =  " + isMoving);
+
+        //this timer is specifically used for station0
+        timer += Time.deltaTime;
+        
+        NumberRecalculate();
 
         //decide which station is highlighted on screen
         if (isMoving == false)
@@ -127,13 +158,15 @@ public class SubwayMovement : MonoBehaviour
                 if (currentStation == 0 && bagFirst && !FinalCameraController.isTutorial)
                 {
                     //generate a bag of clothsPos
-                    Button clothBag1 = Instantiate(clothBags[0], bagPos[0], Quaternion.identity) as Button;
-                    Button clothBag2 = Instantiate(clothBags[1], bagPos[1], Quaternion.identity) as Button;
+                    clothBag1 = Instantiate(clothBags[0], bagPos[0], Quaternion.identity) as Button;
+                    clothBag2 = Instantiate(clothBags[1], bagPos[1], Quaternion.identity) as Button;
     
                     clothBag1.transform.SetParent(clothBagGroup.transform, false);
                     clothBag2.transform.SetParent(clothBagGroup.transform, false);
 
                     bagFirst = false;
+                    
+                    
                 }
             }
             
@@ -207,16 +240,129 @@ public class SubwayMovement : MonoBehaviour
 
     }
 
-    public void StationDetails()
+    private void NumberRecalculate()
     {
-        if (dSR.enabled == false)
+        float realTimer = (moveTime + stayTime) * 3 - timer;
+        
+        if (realTimer < 0)
         {
-            dSR.enabled = true;
+            realTimer = 0;
         }
-        else if (dSR.enabled == true)
+        
+        if (Mathf.RoundToInt(timer / 60) < 10)
         {
-            dSR.enabled = false;
+            if (Mathf.RoundToInt(realTimer % 60) < 10)
+            {
+                CountDownText.text = "0" + Mathf.RoundToInt(realTimer / 60).ToString() + ":" + "0" +
+                                Mathf.RoundToInt(realTimer % 60).ToString();
+            }
+            else
+            {
+                CountDownText.text = "0" + Mathf.RoundToInt(realTimer / 60).ToString() + ":" +
+                                Mathf.RoundToInt(realTimer % 60).ToString();
+            }
         }
+        else
+        {
+            if (Mathf.RoundToInt(realTimer % 60) < 10)
+            {
+                CountDownText.text = Mathf.RoundToInt(realTimer / 60).ToString() + ":" + "0" +
+                                Mathf.RoundToInt(realTimer % 60).ToString();
+            }
+            else
+            {
+                CountDownText.text = Mathf.RoundToInt(realTimer / 60).ToString() + ":" +
+                                Mathf.RoundToInt(realTimer % 60).ToString();
+            }
+        }
+    }
+    
+    private bool isDetailed = false;
+    public void StationDetails(int stationNum)
+    {
+        //dSR used to be spriteRenderer
+//        if (dSR.enabled == false)
+//        {
+//            dSR.enabled = true;
+//        }
+//        else if (dSR.enabled == true)
+//        {
+//            dSR.enabled = false;
+//        }
+
+        //change time
+
+        //if the button pressed is the the first station
+        if (stationNum == 0)
+        {
+            //show and close the UI
+            if (FinalCameraController.AllStationClothList.ContainsKey(clothBag1.tag) || FinalCameraController.AllStationClothList.ContainsKey(clothBag2.tag))
+            {
+                if (isDetailed)
+                {
+                    isDetailed = false;
+                }
+                else if (isDetailed == false)
+                {
+                    isDetailed = true;
+                }
+            }
+            
+            //if the machine has been opened
+            //现在这里假设第一站就只会有两包固定的衣服，因此只需要检测这两包固定的衣服是否已被放入
+            if (FinalCameraController.AllStationClothList.ContainsKey(clothBag1.tag))
+            {
+                //get the clothes inside
+                for (int i = 0; i < FinalCameraController.AllStationClothList[clothBag1.tag].Count; i++)
+                {
+                    detailList0[i].enabled = true;
+                    detailList0[i].sprite = FinalCameraController.AllStationClothList[clothBag1.tag][i];
+                }
+
+                //show canvas group
+                if (isDetailed)
+                {
+                    Hide(dSR1);
+                }
+                else
+                {
+                    Show(dSR1);
+                }
+            }
+            
+            //check bag2
+            if (FinalCameraController.AllStationClothList.ContainsKey(clothBag2.tag))
+            {
+                //get the clothes inside
+                for (int i = 0; i < FinalCameraController.AllStationClothList[clothBag2.tag].Count; i++)
+                {
+                    detailList1[i].enabled = true;
+                    detailList1[i].sprite = FinalCameraController.AllStationClothList[clothBag2.tag][i];
+                }
+                //show canvas group
+                if (isDetailed)
+                {
+                    Hide(dSR2);
+                }
+                else
+                {
+                    Show(dSR2);
+                }
+            }
+        }
+        
+    }
+    
+    void Hide(CanvasGroup UIGroup) {
+        UIGroup.alpha = 0f; //this makes everything transparent
+        UIGroup.blocksRaycasts = false; //this prevents the UI element to receive input events
+        UIGroup.interactable = false;
+    }
+    
+    void Show(CanvasGroup UIGroup) {
+        UIGroup.alpha = 1f;
+        UIGroup.blocksRaycasts = true;
+        UIGroup.interactable = true;
     }
     
     

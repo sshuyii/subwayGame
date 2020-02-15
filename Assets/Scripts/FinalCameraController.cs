@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking.Match;
 using UnityEngine.UI.Extensions;
+using UnityEngine.UI;
 
 public class FinalCameraController : MonoBehaviour
 {
@@ -17,7 +18,12 @@ public class FinalCameraController : MonoBehaviour
 
     public HorizontalScrollSnap HorizontalScrollSnap;
     
+    private HorizontalScrollSnap myHSS;
 
+    //a dictionary of all the clothes that comes from station 0 and are currently in the machines 
+    public List<Sprite> ClothStation0 = new List<Sprite>();
+    public Dictionary<string, List<Sprite>> AllStationClothList = new Dictionary<string, List<Sprite>>();
+    
     public enum AppState
     {
         Mainpage,
@@ -32,15 +38,22 @@ public class FinalCameraController : MonoBehaviour
 
     public enum CameraState
     {
-        One,
-        Two,
-        Three,
-        Four,
+        Subway,
         Closet,
         Map,
         App,
         Ad
     }
+    
+    public enum SubwayState
+    {
+        One,
+        Two,
+        Three,
+        Four
+    }
+
+    public SubwayState mySubwayState;
     
     //if notice UI is on display, this is true
     public bool alreadyNotice = false;
@@ -81,7 +94,7 @@ public class FinalCameraController : MonoBehaviour
     void Start()
     {
 
-        myCameraState = CameraState.Two;
+        myCameraState = CameraState.Subway;
         myAppState = AppState.Mainpage;
         
         pageList.Add(RetroPage);
@@ -93,6 +106,8 @@ public class FinalCameraController : MonoBehaviour
         Hide(postpage);
         HideAllPersonalPages();
         
+
+        myHSS = GameObject.Find("Horizontal Scroll Snap").GetComponent<HorizontalScrollSnap>();
 
     }
 
@@ -113,24 +128,9 @@ public class FinalCameraController : MonoBehaviour
             
         //print(HorizontalScrollSnap.CurrentPage);
         //change camera state to page number
-        if(myCameraState != CameraState.Map || myCameraState != CameraState.App || myCameraState != CameraState.Ad || myCameraState != CameraState.Closet)
+        if(myCameraState == CameraState.Subway)
         {
-            if (HorizontalScrollSnap.CurrentPage == 0)
-            {
-                myCameraState = CameraState.One;
-            }
-//            else if (HorizontalScrollSnap.CurrentPage == 1)
-//            {
-//                myCameraState = CameraState.Two;
-//            }
-//            else if (HorizontalScrollSnap.CurrentPage == 2)
-//            {
-//                myCameraState = CameraState.Three;
-//            }
-            else if (HorizontalScrollSnap.CurrentPage == 3)
-            {
-                myCameraState = CameraState.Four;
-            }
+            CheckScreenNum();
         }
         
         
@@ -170,6 +170,26 @@ public class FinalCameraController : MonoBehaviour
             //Show(basicUI);
             Hide(appBackground);
 
+        }
+    }
+
+    void CheckScreenNum()
+    {
+        if (HorizontalScrollSnap.CurrentPage == 0)
+        {
+            mySubwayState = SubwayState.One;
+        }
+        else if (HorizontalScrollSnap.CurrentPage == 1)
+        {
+            mySubwayState = SubwayState.Two;
+        }
+        else if (HorizontalScrollSnap.CurrentPage == 2)
+        {
+            mySubwayState = SubwayState.Three;
+        }
+        else if (HorizontalScrollSnap.CurrentPage == 3)
+        {
+            mySubwayState = SubwayState.Four;
         }
     }
    
@@ -229,7 +249,7 @@ public class FinalCameraController : MonoBehaviour
        }
        else if (myAppState == AppState.Mainpage)
        {
-           lastCameraState = CameraState.Two;
+           lastCameraState = CameraState.Subway;
             ChangeToSubway();
        }
        else if(myAppState == AppState.RetroPage || myAppState == AppState.KararaPage || myAppState == AppState.DesignerPage || myAppState == AppState.NPCPage)
@@ -261,7 +281,7 @@ public class FinalCameraController : MonoBehaviour
             }
             else
             {
-                //myCameraState = CameraState.Two;
+                myCameraState = CameraState.Subway;
             }
         }
 
@@ -270,11 +290,22 @@ public class FinalCameraController : MonoBehaviour
 
         GoSubwayPart();
         
+        //for Tutorial
+        if (isTutorial && TutorialManager.tutorialNumber == 15)
+        {
+            mySubwayState = SubwayState.Two;
+            myHSS.GetComponent<HorizontalScrollSnap>().GoToScreen(1);
+            TutorialManager.tutorialNumber = 16;
+
+
+        }
+        
     }
     
     public void ChangeToApp()
     {
-        if(alreadyClothUI == false)        {
+        if(alreadyClothUI == false)        
+        {
             Hide(subwayBackground);
 
             if (isSwipping == false)
