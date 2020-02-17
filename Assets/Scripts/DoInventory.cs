@@ -112,7 +112,7 @@ public class DoInventory : MonoBehaviour
 */
 
         //image disappear
-        selfButton.image.sprite = CalculateInventory.transparent;
+        selfButton.image.enabled = false;
         //selfButton.enabled = false;
 
         //selfButton.enabled = false;

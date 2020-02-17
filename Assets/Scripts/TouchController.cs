@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class TouchController : MonoBehaviour
@@ -36,6 +37,8 @@ public class TouchController : MonoBehaviour
 
     private float swipeSpeed;
 
+    public bool doubleTouch = true;
+    
 // Start is called before the first frame update
     void Start()
     {
@@ -46,7 +49,8 @@ public class TouchController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-                
+
+        print("cancelCloth = " + doubleTouch);
         for (var i = 0; i < Input.touchCount; ++i)
         {
             if (Input.GetTouch(i).phase == TouchPhase.Began)
@@ -54,14 +58,23 @@ public class TouchController : MonoBehaviour
                 if (Input.GetTouch(i).tapCount == 2)
                 {
 //                    Debug.Log("Double Tap");
+                    doubleTouch = true;
                 }
+                
+                
             }
+            else if (Input.GetTouch(i).phase == TouchPhase.Ended)
+            {
+                doubleTouch = false;
+            }
+
         }
+        
+
         
         
         if (Input.touchCount == 1) // user is touching the screen with a single touch
         {
-            
             touch = Input.GetTouch(0); // get the touch
             if (touch.phase == TouchPhase.Began) //check for the first touch
             {

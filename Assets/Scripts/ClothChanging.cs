@@ -200,22 +200,29 @@ public class ClothChanging : MonoBehaviour
     public void ReturnCloth()
     {
 
-        for (int i = 0; i < AllMachines.WashingMachines.Count; i++)
+        print("return cloth is working");
+        if(FinalCameraController.TouchController.doubleTouch)
         {
-            if (this.CompareTag(AllMachines.WashingMachines[i].tag))
-            {
-                var buttonList = AllMachines.WashingMachines[i].GetComponent<WasherController>().buttons;
-                for (int a = 0; a < buttonList.Length; a++)
-                {
-                    if (buttonList[a].GetComponent<Image>().sprite == transparent)
-                    {
-                        buttonList[a].GetComponent<Image>().sprite = myImage.sprite;
-                        myImage.sprite = startSprite;
-                        crossImage.SetActive(false);
+            print("return cloth is working and double touched");
 
-                        takeOffCloth();
-                        CalculateInventory.occupiedI = CalculateInventory.occupiedI - 1;
-                        break;
+            for (int i = 0; i < AllMachines.WashingMachines.Count; i++)
+            {
+                if (this.CompareTag(AllMachines.WashingMachines[i].tag))
+                {
+                    var buttonList = AllMachines.WashingMachines[i].GetComponent<WasherController>().buttons;
+                    for (int a = 0; a < buttonList.Length; a++)
+                    {
+                        if (buttonList[a].GetComponent<Image>().enabled == false)
+                        {
+                            buttonList[a].GetComponent<Image>().enabled = true;
+                            myImage.sprite = startSprite;
+                            //crossImage.SetActive(false);
+
+                            print("isworrrrking");
+                            takeOffCloth();
+                            CalculateInventory.occupiedI = CalculateInventory.occupiedI - 1;
+                            break;
+                        }
                     }
                 }
             }
@@ -326,205 +333,206 @@ public class ClothChanging : MonoBehaviour
     
     public void ChangeCloth()
     {
-        
-        //for tutorial
-        if (FinalCameraController.isTutorial)
+        if (FinalCameraController.TouchController.doubleTouch == false)
         {
-            FinalCameraController.TutorialManager.tutorialNumber = 12;
-        }
-        
-        
-        if(CalculateInventory.isreturning)
-        {
-            CancelReturn();
-            CalculateInventory.isreturning = false;
-        }
-        
-        
-        
-        //currentSprite = GetComponenft<SpriteRenderer>().sprite;
-        currentSprite = GetComponent<Image>().sprite;
-
-
-        if(CalculateInventory.allCloth.ContainsKey(currentSprite.name))
-        {
-            
-            //checkImage.enabled = true;
-
-            if(currentSprite.name.Contains("Top"))
+            //for tutorial
+            if (FinalCameraController.isTutorial)
             {
-                
-                //buttonChangeBack();
-                CalculateInventory.wearingTop = true;
-                CalculateInventory.wearingEverything = false;
+                FinalCameraController.TutorialManager.tutorialNumber = 12;
+            }
 
 
-                //record the button
-                CalculateInventory.topButton = selfButton;
-                
-                //change inventory clothes
-                CalculateInventory.topSR.sprite = CalculateInventory.allCloth[currentSprite.name];
-                print(currentSprite.name);
+            if (CalculateInventory.isreturning)
+            {
+                CancelReturn();
+                CalculateInventory.isreturning = false;
+            }
 
-                //change subway clothes
-                CalculateInventory.topSSR.sprite = CalculateInventory.allSubwayCloth[currentSprite.name];
-                
-                
-                
-                whiteShirt.enabled = false;
-                workCloth.enabled = false;
-                                
-                
-                workClothS.enabled = false;
-                whiteShirtS.enabled = false;
 
-                
-                //change clothes in advertisement
-                print("Given key = " + currentSprite.name);
-                CalculateInventory.topASR.sprite = CalculateInventory.allAdCloth[currentSprite.name];
-                
-                //Take off workcloth
-                CalculateInventory.workClothASR.enabled = false;
-                CalculateInventory.whiteShirtASR.sprite = transparent;
-                //CalculateInventory.blackPantsASR.sprite = CalculateInventory.allAdCloth["BlackPants"];
 
-                
-                //take off one piece
-                CalculateInventory.everythingSR.sprite = transparent;
-                CalculateInventory.everythingASR.sprite = transparent;
-                CalculateInventory.everythingSSR.sprite = transparent;
-                
-                //player talks
-                if(currentSprite.name.Contains("A1"))
+            //currentSprite = GetComponenft<SpriteRenderer>().sprite;
+            currentSprite = GetComponent<Image>().sprite;
+
+
+            if (CalculateInventory.allCloth.ContainsKey(currentSprite.name))
+            {
+
+                //checkImage.enabled = true;
+
+                if (currentSprite.name.Contains("Top"))
                 {
-                    //text.text = "<b>Karara</b>: Do people wear Hawaii shirts in Hawaii?";
+
+                    //buttonChangeBack();
+                    CalculateInventory.wearingTop = true;
+                    CalculateInventory.wearingEverything = false;
+
+
+                    //record the button
+                    CalculateInventory.topButton = selfButton;
+
+                    //change inventory clothes
+                    CalculateInventory.topSR.sprite = CalculateInventory.allCloth[currentSprite.name];
+                    print(currentSprite.name);
+
+                    //change subway clothes
+                    CalculateInventory.topSSR.sprite = CalculateInventory.allSubwayCloth[currentSprite.name];
+
+
+
+                    whiteShirt.enabled = false;
+                    workCloth.enabled = false;
+
+
+                    workClothS.enabled = false;
+                    whiteShirtS.enabled = false;
+
+
+                    //change clothes in advertisement
+                    print("Given key = " + currentSprite.name);
+                    CalculateInventory.topASR.sprite = CalculateInventory.allAdCloth[currentSprite.name];
+
+                    //Take off workcloth
+                    CalculateInventory.workClothASR.enabled = false;
+                    CalculateInventory.whiteShirtASR.sprite = transparent;
+                    //CalculateInventory.blackPantsASR.sprite = CalculateInventory.allAdCloth["BlackPants"];
+
+
+                    //take off one piece
+                    CalculateInventory.everythingSR.sprite = transparent;
+                    CalculateInventory.everythingASR.sprite = transparent;
+                    CalculateInventory.everythingSSR.sprite = transparent;
+
+                    //player talks
+                    if (currentSprite.name.Contains("A1"))
+                    {
+                        //text.text = "<b>Karara</b>: Do people wear Hawaii shirts in Hawaii?";
+                    }
+
                 }
+                else if (currentSprite.name.Contains("Bottom"))
+                {
+                    //buttonChangeBack();
 
-            }
-            else if(currentSprite.name.Contains("Bottom"))
-            {
-                //buttonChangeBack();
-
-                CalculateInventory.wearingBottom = true;
-                CalculateInventory.wearingEverything = false;
-
-                
-                //record the button
-                CalculateInventory.bottomButton = selfButton;
-                
-
-                CalculateInventory.otherSR.sprite = CalculateInventory.allCloth[currentSprite.name];
-                CalculateInventory.otherSSR.sprite = CalculateInventory.allSubwayCloth[currentSprite.name];
-                //change clothes in advertisement
-                CalculateInventory.otherASR.sprite = CalculateInventory.allAdCloth[currentSprite.name];
-                //Take off workcloth
-                CalculateInventory.workClothASR.enabled = false;
-                //CalculateInventory.whiteShirtASR.sprite = CalculateInventory.allAdCloth["WhiteShirt"];
-                CalculateInventory.blackPantsASR.sprite = transparent;
+                    CalculateInventory.wearingBottom = true;
+                    CalculateInventory.wearingEverything = false;
 
 
-                //take off one piece
-                CalculateInventory.everythingSR.sprite = transparent;
-                CalculateInventory.everythingASR.sprite = transparent;
-                CalculateInventory.everythingSSR.sprite = transparent;
+                    //record the button
+                    CalculateInventory.bottomButton = selfButton;
 
 
-                
-                print("change bottom");
-                
-                workCloth.enabled = false;
-                blackPants.enabled = false;
-                
-                workClothS.enabled = false;
-                blackPantsS.enabled = false;
-                
-            }
-            else if(currentSprite.name.Contains("Shoe"))
-            {
-                //buttonChangeBack();
+                    CalculateInventory.otherSR.sprite = CalculateInventory.allCloth[currentSprite.name];
+                    CalculateInventory.otherSSR.sprite = CalculateInventory.allSubwayCloth[currentSprite.name];
+                    //change clothes in advertisement
+                    CalculateInventory.otherASR.sprite = CalculateInventory.allAdCloth[currentSprite.name];
+                    //Take off workcloth
+                    CalculateInventory.workClothASR.enabled = false;
+                    //CalculateInventory.whiteShirtASR.sprite = CalculateInventory.allAdCloth["WhiteShirt"];
+                    CalculateInventory.blackPantsASR.sprite = transparent;
 
-                CalculateInventory.wearingShoe = true;
-                    
-                //record the button
-                CalculateInventory.shoeButton = selfButton;
-                
 
-                CalculateInventory.shoeSR.sprite = CalculateInventory.allCloth[currentSprite.name];
-                CalculateInventory.shoeSSR.sprite = CalculateInventory.allSubwayCloth[currentSprite.name];
-                //change clothes in advertisement
-                CalculateInventory.shoeASR.sprite = CalculateInventory.allAdCloth[currentSprite.name];
-                
-                print("change shoe");
+                    //take off one piece
+                    CalculateInventory.everythingSR.sprite = transparent;
+                    CalculateInventory.everythingASR.sprite = transparent;
+                    CalculateInventory.everythingSSR.sprite = transparent;
 
-                CalculateInventory.workShoeSR.enabled = false;
-                CalculateInventory.workShoeSSR.enabled = false;
-                CalculateInventory.workShoeASR.sprite = transparent;
 
-            }
-            else if(currentSprite.name.Contains("Everything"))
-            {
-                //buttonChangeBack();
-            
-                CalculateInventory.wearingEverything = true;
-                CalculateInventory.wearingTop = false;
-                CalculateInventory.wearingBottom = false;
 
-                //record the button
-                CalculateInventory.everythingButton = selfButton;
-                
+                    print("change bottom");
 
-                CalculateInventory.everythingSR.sprite = CalculateInventory.allCloth[currentSprite.name];
-                CalculateInventory.everythingSSR.sprite = CalculateInventory.allSubwayCloth[currentSprite.name];
-                //change clothes in advertisement
-                CalculateInventory.everythingASR.sprite = CalculateInventory.allAdCloth[currentSprite.name];
-                //Take off workcloth
-                CalculateInventory.workClothASR.enabled = false;
-                
-                //take off other cloths
-                CalculateInventory.otherSR.sprite = transparent;
-                CalculateInventory.topSR.sprite = transparent;
-                
-                CalculateInventory.otherASR.sprite = transparent;
-                CalculateInventory.topASR.sprite = transparent;
-                
-                CalculateInventory.otherSSR.sprite = transparent;
-                CalculateInventory.topSSR.sprite = transparent;
+                    workCloth.enabled = false;
+                    blackPants.enabled = false;
 
-                
-                print("change everything");
-                
-                workCloth.enabled = false;
-                
-                workClothS.enabled = false;
+                    workClothS.enabled = false;
+                    blackPantsS.enabled = false;
 
-                CalculateInventory.topSR.sprite = transparent;
-                CalculateInventory.otherSR.sprite = transparent;
+                }
+                else if (currentSprite.name.Contains("Shoe"))
+                {
+                    //buttonChangeBack();
 
-                blackPants.enabled = true;
-                whiteShirt.enabled = true;
+                    CalculateInventory.wearingShoe = true;
 
-                whiteShirtS.enabled = true;
-                blackPantsS.enabled = true;
+                    //record the button
+                    CalculateInventory.shoeButton = selfButton;
 
-                CalculateInventory.whiteShirtASR.sprite = CalculateInventory.allAdCloth["WhiteShirt"];
-                CalculateInventory.blackPantsASR.sprite = CalculateInventory.allAdCloth["BlackPants"];
 
+                    CalculateInventory.shoeSR.sprite = CalculateInventory.allCloth[currentSprite.name];
+                    CalculateInventory.shoeSSR.sprite = CalculateInventory.allSubwayCloth[currentSprite.name];
+                    //change clothes in advertisement
+                    CalculateInventory.shoeASR.sprite = CalculateInventory.allAdCloth[currentSprite.name];
+
+                    print("change shoe");
+
+                    CalculateInventory.workShoeSR.enabled = false;
+                    CalculateInventory.workShoeSSR.enabled = false;
+                    CalculateInventory.workShoeASR.sprite = transparent;
+
+                }
+                else if (currentSprite.name.Contains("Everything"))
+                {
+                    //buttonChangeBack();
+
+                    CalculateInventory.wearingEverything = true;
+                    CalculateInventory.wearingTop = false;
+                    CalculateInventory.wearingBottom = false;
+
+                    //record the button
+                    CalculateInventory.everythingButton = selfButton;
+
+
+                    CalculateInventory.everythingSR.sprite = CalculateInventory.allCloth[currentSprite.name];
+                    CalculateInventory.everythingSSR.sprite = CalculateInventory.allSubwayCloth[currentSprite.name];
+                    //change clothes in advertisement
+                    CalculateInventory.everythingASR.sprite = CalculateInventory.allAdCloth[currentSprite.name];
+                    //Take off workcloth
+                    CalculateInventory.workClothASR.enabled = false;
+
+                    //take off other cloths
+                    CalculateInventory.otherSR.sprite = transparent;
+                    CalculateInventory.topSR.sprite = transparent;
+
+                    CalculateInventory.otherASR.sprite = transparent;
+                    CalculateInventory.topASR.sprite = transparent;
+
+                    CalculateInventory.otherSSR.sprite = transparent;
+                    CalculateInventory.topSSR.sprite = transparent;
+
+
+                    print("change everything");
+
+                    workCloth.enabled = false;
+
+                    workClothS.enabled = false;
+
+                    CalculateInventory.topSR.sprite = transparent;
+                    CalculateInventory.otherSR.sprite = transparent;
+
+                    blackPants.enabled = true;
+                    whiteShirt.enabled = true;
+
+                    whiteShirtS.enabled = true;
+                    blackPantsS.enabled = true;
+
+                    CalculateInventory.whiteShirtASR.sprite = CalculateInventory.allAdCloth["WhiteShirt"];
+                    CalculateInventory.blackPantsASR.sprite = CalculateInventory.allAdCloth["BlackPants"];
+
+                }
+                else
+                {
+                    //if click on the question marks
+                    checkImage.enabled = true;
+                    selfButton.enabled = false;
+
+                    firstTime = false;
+                }
             }
             else
             {
-                //if click on the question marks
-                checkImage.enabled = true;
-                selfButton.enabled = false;
 
-                firstTime = false;
-            }
-        }
-        else
-        {
-            
-            //now the button cannot be pressed
-          
-            
+                //now the button cannot be pressed
+
+
 //            //when the button is workCloth
 //            workCloth.enabled = !workCloth.enabled;
 //            workClothS.enabled = !workClothS.enabled;
@@ -541,9 +549,11 @@ public class ClothChanging : MonoBehaviour
 //
 //            whiteShirtS.enabled = true;
 //            blackPantsS.enabled = true;
+            }
+
+            //GetComponent<Image>().sprite = worn;
+            //transform.position = startPos;}
         }
-        //GetComponent<Image>().sprite = worn;
-        //transform.position = startPos;
 
     }
 

@@ -148,6 +148,7 @@ public class CalculateInventory : MonoBehaviour
         
     }
     
+    
 //    public void ChangeCloth()
 //    {
 //        Sprite buttonSprite = gameObject.GetComponent<Button>().image.sprite;

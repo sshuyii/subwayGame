@@ -27,7 +27,6 @@ public class WasherController : MonoBehaviour
 
     public Animator lightAnimator;
     public CanvasGroup ClothUI;
-    public CanvasGroup AllClothUI;
 
     public Text timerNum;
     private float realTimer;
@@ -225,7 +224,7 @@ public class WasherController : MonoBehaviour
 
                 StartCoroutine("WaitFor2Seconds");
 
-                Hide(AllClothUI);
+                //Hide(AllClothUI);
 
                 
                 GenerateCloth(this.transform.gameObject.tag);
@@ -293,6 +292,8 @@ public class WasherController : MonoBehaviour
             
     }
 
+   
+    
     public void GenerateCloth(string tagName)
     {
         //need to get all button reset, because they are disabled when clicked last time

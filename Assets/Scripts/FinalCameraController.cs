@@ -24,6 +24,9 @@ public class FinalCameraController : MonoBehaviour
     public List<Sprite> ClothStation0 = new List<Sprite>();
     public Dictionary<string, List<Sprite>> AllStationClothList = new Dictionary<string, List<Sprite>>();
     
+    public Sprite startSprite;
+
+    
     public enum AppState
     {
         Mainpage,

@@ -43,6 +43,7 @@ public class AllMachines : MonoBehaviour
 
     public enum MachineState {
         empty,
+        bagUnder,
         full,
         washing,
         finished

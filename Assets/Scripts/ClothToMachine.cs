@@ -18,6 +18,8 @@ public class ClothToMachine : MonoBehaviour
     private WasherController WasherController;
 
     private FinalCameraController FinalCameraController;
+    private CalculateInventory CalculateInventory;
+
 
     private int hitTime;
 
@@ -35,6 +37,8 @@ public class ClothToMachine : MonoBehaviour
         
         ClothInMachineController = GameObject.Find("---ClothInMachineController");
         FinalCameraController = GameObject.Find("Main Camera").GetComponent<FinalCameraController>();
+        CalculateInventory = GameObject.Find("---InventoryController").GetComponent<CalculateInventory>();
+
         
         AllMachines = ClothInMachineController.GetComponent<AllMachines>();
         WasherControllerList = new List<WasherController>();
@@ -63,10 +67,27 @@ public class ClothToMachine : MonoBehaviour
             {
                 print("AllMachines.currentBag.tag = " + AllMachines.currentBag.tag);
 
+                //对所有inventory中带着这个洗衣机tag的衣服，把它们放回洗衣机
+                for (int u = 0; u < CalculateInventory.inventory.Count; u++)
+                {
+                    if (CalculateInventory.inventory[u].CompareTag(AllMachines.currentBag.transform.gameObject.tag))
+                    {
+                        //change the inventory button image back to start
+                        CalculateInventory.inventory[u].GetComponent<Image>().sprite = FinalCameraController.startSprite;
+                        
+                        print("returnrnrnrnrnrnrn");
+                        //then 
+                        CalculateInventory.occupiedI = CalculateInventory.occupiedI - 1;
+
+                    }
+
+                }
+
+                
                 Destroy(AllMachines.currentBag);
 
                 //reset the machine's variables
-                WasherControllerList[i].transform.tag = null;
+                WasherControllerList[i].transform.tag ="Untagged";
                 WasherControllerList[i].myMachineState = AllMachines.MachineState.empty;
                 Destroy(FinalCameraController.generatedNotice);
                 
@@ -105,7 +126,7 @@ public class ClothToMachine : MonoBehaviour
 //                    //get machine start washing
                     if (WasherControllerList[i].myMachineState == AllMachines.MachineState.empty)
                     {
-                        //WasherControllerList[i].myMachineState = AllMachines.MachineState.full;
+                        WasherControllerList[i].myMachineState = AllMachines.MachineState.bagUnder;
                         //change machine tags to character
                         WasherControllerList[i].transform.gameObject.tag = this.transform.gameObject.tag;
 
@@ -130,7 +151,6 @@ public class ClothToMachine : MonoBehaviour
                             FinalCameraController.TutorialManager.KararaImage.enabled = false;
                             FinalCameraController.TutorialManager.tutorialNumber = 3;
 
-                            
                         }
 
                         hitTime++;
@@ -155,12 +175,11 @@ public class ClothToMachine : MonoBehaviour
                 for (int i = 0; i < AllMachines.WashingMachines.Count; i++)
                 {
                     //get machine start washing
-                    if (WasherControllerList[i].myMachineState == AllMachines.MachineState.empty)
+                    if (WasherControllerList[i].myMachineState == AllMachines.MachineState.bagUnder)
                     {
                         WasherControllerList[i].myMachineState = AllMachines.MachineState.full;
                         //change machine tags to character
                         WasherControllerList[i].transform.gameObject.tag = this.transform.gameObject.tag;
-
 
                         hitTime++;
                         break;
@@ -185,13 +204,15 @@ public class ClothToMachine : MonoBehaviour
 
                                 if (FinalCameraController.alreadyNotice == false)
                                 {
-                                    
                                     AllMachines.currentBag = this.gameObject;
 
                                     print("returnClothhhhhh");
                                     if (FinalCameraController.isTutorial)
                                     {
+                                        
+                                        //then return all clohthes in the machine
                                         returnClothYes();
+                                        
                                     }
                                     else
                                     {
