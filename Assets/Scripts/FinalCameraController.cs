@@ -19,6 +19,7 @@ public class FinalCameraController : MonoBehaviour
     public HorizontalScrollSnap HorizontalScrollSnap;
     
     private HorizontalScrollSnap myHSS;
+    public ScrollRect subwayScrollRect;
 
     //a dictionary of all the clothes that comes from station 0 and are currently in the machines 
     public List<Sprite> ClothStation0 = new List<Sprite>();
@@ -108,17 +109,32 @@ public class FinalCameraController : MonoBehaviour
         Hide(frontPage);
         Hide(postpage);
         HideAllPersonalPages();
-        
 
         myHSS = GameObject.Find("Horizontal Scroll Snap").GetComponent<HorizontalScrollSnap>();
+        subwayScrollRect = GameObject.Find("Horizontal Scroll Snap").GetComponent<ScrollRect>();
 
+        
     }
 
-    
 
     // Update is called once per frame
     void Update()
     {
+        //disable swipe before player click the poster
+        if (isTutorial)
+        {
+            if(TutorialManager.tutorialNumber == 0 && mySubwayState == SubwayState.Four)
+            {
+                myHSS.GoToScreen(3);
+                //myHSS.enabled = false;
+            }        
+            else if(TutorialManager.tutorialNumber == 2 && mySubwayState == SubwayState.One)
+            {
+                myHSS.GoToScreen(0);
+                //myHSS.enabled = false;
+            }
+        }
+        
         if (TouchController.isSwiping == true)
         {
             isSwipping = true;
@@ -219,6 +235,11 @@ public class FinalCameraController : MonoBehaviour
             Hide(currentClothUI);
             alreadyClothUI = false;
         }
+
+        if (isTutorial)
+        {
+            TutorialManager.tutorialNumber = 11;
+        }
     }
 
     public void AppBackButton()
@@ -265,9 +286,6 @@ public class FinalCameraController : MonoBehaviour
 
            myAppState = AppState.Mainpage;
        }
-       
-
-      
     }
 
     public void ChangeToSubway()
@@ -330,6 +348,12 @@ public class FinalCameraController : MonoBehaviour
             Hide(currentClothUI);
             alreadyClothUI = false;
 
+        }
+
+        //cancel all dialogues
+        if (isTutorial)
+        {
+            TutorialManager.DoDialogues(false);
         }
     }
     

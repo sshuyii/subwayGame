@@ -78,9 +78,7 @@ public class ClothToMachine : MonoBehaviour
                         print("returnrnrnrnrnrnrn");
                         //then 
                         CalculateInventory.occupiedI = CalculateInventory.occupiedI - 1;
-
                     }
-
                 }
 
                 
@@ -95,7 +93,7 @@ public class ClothToMachine : MonoBehaviour
                 hitTime = 0;
                 WasherControllerList[i].isFirstOpen = true;
 
-                if (FinalCameraController.isTutorial)
+                if (FinalCameraController.isTutorial && FinalCameraController.TutorialManager.tutorialNumber == 16)
                 {
                     FinalCameraController.TutorialManager.tutorialNumber = 17;
                 }
@@ -123,6 +121,15 @@ public class ClothToMachine : MonoBehaviour
             {
                 for (int i = 0; i < AllMachines.WashingMachines.Count; i++)
                 {
+                    //disable karara image in tutorial
+                    if (FinalCameraController.isTutorial)
+                    {
+                        FinalCameraController.TutorialManager.KararaImage.enabled = false;
+                        FinalCameraController.TutorialManager.tutorialNumber = 3;
+                        FinalCameraController.TutorialManager.scrollControl(true);
+
+                    }
+                    
 //                    //get machine start washing
                     if (WasherControllerList[i].myMachineState == AllMachines.MachineState.empty)
                     {
@@ -145,13 +152,7 @@ public class ClothToMachine : MonoBehaviour
 
                         }
                         
-                        //disable karara image in tutorial
-                        if (FinalCameraController.isTutorial)
-                        {
-                            FinalCameraController.TutorialManager.KararaImage.enabled = false;
-                            FinalCameraController.TutorialManager.tutorialNumber = 3;
-
-                        }
+                       
 
                         hitTime++;
                         break;
@@ -169,6 +170,8 @@ public class ClothToMachine : MonoBehaviour
                 if (FinalCameraController.isTutorial)
                 {
                     FinalCameraController.TutorialManager.tutorialNumber = 4;
+                    FinalCameraController.TutorialManager.bag.GetComponent<Image>().material.DisableKeyword("SHAKEUV_ON");
+
 
                 }
 
@@ -209,10 +212,16 @@ public class ClothToMachine : MonoBehaviour
                                     print("returnClothhhhhh");
                                     if (FinalCameraController.isTutorial)
                                     {
-                                        
-                                        //then return all clohthes in the machine
-                                        returnClothYes();
-                                        
+                                        if(FinalCameraController.TutorialManager.tutorialNumber == 16)
+                                        {
+                                            //then return all clothes in the machine
+                                            returnClothYes();
+                                        }
+                                        else if (FinalCameraController.TutorialManager.tutorialNumber == 9)
+                                        {
+                                            FinalCameraController.TutorialManager.chooseBag = true;
+                                            FinalCameraController.TutorialManager.clicktime = 7;
+                                        }
                                     }
                                     else
                                     {

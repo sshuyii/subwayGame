@@ -73,13 +73,17 @@ public class WasherController : MonoBehaviour
 
     public void ClickStart()
     {
-        myMachineState = AllMachines.MachineState.washing;
-        //for tutorial
-        if (FinalCameraController.isTutorial)
+        if(myMachineState == AllMachines.MachineState.full)
         {
-            FinalCameraController.TutorialManager.tutorialNumber = 5;
+            myMachineState = AllMachines.MachineState.washing;
+            //for tutorial
+            if (FinalCameraController.isTutorial)
+            {
+                FinalCameraController.TutorialManager.tutorialNumber = 5;
+            }
+
+//            print("pressssssssed");
         }
-        print("pressssssssed");
     }
     
     
@@ -233,6 +237,10 @@ public class WasherController : MonoBehaviour
                 if (FinalCameraController.isTutorial)
                 {
                     FinalCameraController.TutorialManager.tutorialNumber = 8;
+                    
+                    FinalCameraController.TutorialManager.door.GetComponent<Image>().material.DisableKeyword("SHAKEUV_ON");
+                    FinalCameraController.TutorialManager.cloth.GetComponent<Image>().material.DisableKeyword("SHAKEUV_ON");
+
                 }
                 
                 

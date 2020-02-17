@@ -310,19 +310,30 @@ public class ScreenshotHandler : MonoBehaviour
 //        takeScreenshotOnNextFrame = true;
         //ScreenCapture.CaptureScreenshot(Application.dataPath + "/Resources/Screenshots/CameraScreenshot.png");
         
+        
         TakeScreenshot(width, height);
         
-        //instantiate new post object     
-        toothpastePost = Instantiate(InstagramController.PosturePostPrefabNew, new Vector3(0, 0, 0), Quaternion.identity);
-        //set parent(probably a better way to do
-        toothpastePost.transform.parent = InstagramController.postParent.transform;
+        if (FinalCameraController.isTutorial && FinalCameraController.TutorialManager.tutorialNumber < 9)
+        {
             
-        //move to the first of the list
-        InstagramController.postList.Insert(0,toothpastePost);
+        }
+        else
+        {
+            //instantiate new post object     
+            toothpastePost = Instantiate(InstagramController.PosturePostPrefabNew, new Vector3(0, 0, 0), Quaternion.identity);
+            //set parent(probably a better way to do
+            toothpastePost.transform.parent = InstagramController.postParent.transform;
+            
+            //move to the first of the list
+            InstagramController.postList.Insert(0,toothpastePost);
         
-        toothpastePost.GetComponent<EntryTime>().time = entryTime;
+            toothpastePost.GetComponent<EntryTime>().time = entryTime;
 
-        entryTime += 10;
+            entryTime += 10;
+        }
+       
+            
+      
             
         StartCoroutine(ExampleCoroutine());
 

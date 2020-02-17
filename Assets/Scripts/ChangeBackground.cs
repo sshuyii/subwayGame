@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -50,20 +51,41 @@ public class ChangeBackground :MonoBehaviour
         {
             if (FinalCameraController.isSwipping == false)
             {
-//                if (InstagramController.AdAlreadyTakenList[transform.name])
-//                {
+//              if (InstagramController.AdAlreadyTakenList[transform.name])
+//              {
+
+               
+                if (FinalCameraController.isTutorial && FinalCameraController.TutorialManager.tutorialNumber == 0)
+                {
+                    //cancel dialogues and the touch tutorial
+                    TutorialManager.DoDialogues(false);
+                    TutorialManager.myText.text = "";
+                    //TutorialManager.touchImage.enabled = false;
+                    TutorialManager.KararaImage.enabled = false;
+
+                    
                     photoBackground.sprite = InstagramController.allBackAd[transform.name];
                     InstagramController.currentBackground = transform.name;
 
                     FinalCameraController.GoAdvertisement();
+                }
+                else if (FinalCameraController.isTutorial && FinalCameraController.TutorialManager.tutorialNumber < 3)
+                {
+                    TutorialManager.DoDialogues(true);
+                    TutorialManager.myText.text = "Don't touch it! Come over here!";
+                    TutorialManager.KararaImage.enabled = true;
+                }
+                else if(FinalCameraController.isTutorial && FinalCameraController.TutorialManager.tutorialNumber > 13 || !FinalCameraController.isTutorial)
+                {
+                    photoBackground.sprite = InstagramController.allBackAd[transform.name];
+                    InstagramController.currentBackground = transform.name;
 
-                    //cancel dialogues and the touch tutorial
-                    TutorialManager.DoDialogues(false);
-                    TutorialManager.myText.text = "";
-                    TutorialManager.touchImage.enabled = false;
-                    TutorialManager.KararaImage.enabled = false;
+                    FinalCameraController.GoAdvertisement();
+                        
+                        
+                }
 
-//                }
+//              }
             }
         }
         else
