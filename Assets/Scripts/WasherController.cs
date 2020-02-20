@@ -24,6 +24,9 @@ public class WasherController : MonoBehaviour
     private Animator myAnimator;
 
     public CanvasGroup backgroundUI;
+    public CanvasGroup backgroundUI2;
+    public CanvasGroup backgroundUI3;
+
 
     public Animator lightAnimator;
     public CanvasGroup ClothUI;
@@ -33,6 +36,7 @@ public class WasherController : MonoBehaviour
     
     public bool isFirstOpen = true;
 
+    public Image DoorImage;
 
     public AllMachines.MachineState myMachineState;
     
@@ -204,6 +208,30 @@ public class WasherController : MonoBehaviour
         
         
     }
+
+    IEnumerator MachineUnfold()
+    {
+        Show(backgroundUI);
+        yield return new WaitForSeconds(0.4f);
+        Show(backgroundUI2);
+        yield return new WaitForSeconds(0.4f);
+        Show(backgroundUI3);
+        yield return new WaitForSeconds(0.4f);
+
+
+    }
+    
+    IEnumerator MachineFold()
+    {
+        Hide(backgroundUI3);
+        yield return new WaitForSeconds(0.4f);
+        Hide(backgroundUI2);
+        yield return new WaitForSeconds(0.4f);
+        Hide(backgroundUI);
+        yield return new WaitForSeconds(0.4f);
+
+
+    }
     
     public void CancelPanel()
     {
@@ -222,9 +250,14 @@ public class WasherController : MonoBehaviour
             if (shut == 0)
             {
                 shut++;
+
+                StartCoroutine(MachineUnfold());
                 
-                Show(backgroundUI);
-                ClothUiAnimator.SetBool("isUnfold",true);
+                //change door to open
+               
+                DoorImage.sprite = AllMachines.openedDoor;
+                
+                //ClothUiAnimator.SetBool("isUnfold",true);
 
                 StartCoroutine("WaitFor2Seconds");
 
@@ -243,15 +276,18 @@ public class WasherController : MonoBehaviour
 
                 }
                 
-                
             }
             //if click machine again, close UI
             else if (shut == 1)
             {
                 shut = 0;
                 Hide(ClothUI);
-                Hide(backgroundUI);
-                ClothUiAnimator.SetBool("isUnfold",false);
+                StartCoroutine(MachineFold());
+                //ClothUiAnimator.SetBool("isUnfold",false);
+                
+                //change door to closed
+                DoorImage.sprite = AllMachines.closedDoor;
+
 
             }
         }

@@ -124,7 +124,7 @@ public class ClothToMachine : MonoBehaviour
                     //disable karara image in tutorial
                     if (FinalCameraController.isTutorial)
                     {
-                        FinalCameraController.TutorialManager.KararaImage.enabled = false;
+                        FinalCameraController.TutorialManager.KararaStandingImage.enabled = false;
                         FinalCameraController.TutorialManager.tutorialNumber = 3;
                         FinalCameraController.TutorialManager.scrollControl(true);
 

@@ -11,6 +11,10 @@ public class AllMachines : MonoBehaviour
 
     
     public GameObject returnNotice;
+
+    public Sprite openedDoor;
+    public Sprite closedDoor;
+    
     public GameObject noticeParent;
 
     public bool alreadyNotice = false;

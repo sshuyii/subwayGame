@@ -9,7 +9,6 @@ using UnityEngine.UI.Extensions;
 
 public class TutorialManager : MonoBehaviour
 {
-    public Image KararaImage;
     public GameObject DialogueBubble;
 
     public FinalCameraController FinalCameraController;
@@ -20,6 +19,7 @@ public class TutorialManager : MonoBehaviour
 
 
     public bool chooseBag = false;
+    public GameObject ScreenZero;
     
     private HorizontalScrollSnap myHSS;
     public Image[] DialogueImageList;
@@ -31,7 +31,14 @@ public class TutorialManager : MonoBehaviour
     public GameObject TakeScreenshot;
 
 
-    public GameObject KararaObject;
+    public GameObject KararaStanding;
+    public GameObject KararaSitting;
+    
+    public Image KararaStandingImage;
+    private CanvasGroup KararaSittingCanvasGroup;
+
+
+    
     public Image ProfileImage;
     public Sprite KararaProfile;
     public Sprite FishProfile;
@@ -48,7 +55,6 @@ public class TutorialManager : MonoBehaviour
     public GameObject clothBagGroup;
 
     private RectTransform KararaRectT;
-    public CanvasGroup KararaSubway;
     private Image[] KararaAllImage;
 
     public GameObject bag;
@@ -70,10 +76,13 @@ public class TutorialManager : MonoBehaviour
         
         FinalCameraController = GameObject.Find("Main Camera").GetComponent<FinalCameraController>();
 
+        KararaStandingImage = KararaStanding.GetComponent<Image>();
+        KararaSittingCanvasGroup = KararaSitting.GetComponent<CanvasGroup>();
+
 
         StartCoroutine("TrainMoveIn");
 
-        KararaRectT = KararaObject.GetComponent<RectTransform>();
+        KararaRectT = KararaStanding.GetComponent<RectTransform>();
         
         DialogueImageList = DialogueBubble.GetComponentsInChildren<Image>();
         myText = DialogueBubble.GetComponentInChildren<TextMeshProUGUI>();
@@ -83,7 +92,8 @@ public class TutorialManager : MonoBehaviour
         DoDialogues(false);
 
         //disable karara standing in the train
-        KararaImage.enabled = false;
+//        KararaStandingImage.enabled = false;
+            KararaDisappear(false);
 
         ClothUIButtons = ClothUI.GetComponentsInChildren<Button>();
         ClothUIImages = ClothUI.GetComponentsInChildren<Image>();
@@ -91,9 +101,11 @@ public class TutorialManager : MonoBehaviour
         doorImage = door.GetComponent<Image>();
         clothImage = cloth.GetComponent<Image>();
 
+        ProfileImage.enabled = false;
+
         
 
-        KararaAllImage = KararaSubway.gameObject.GetComponentsInChildren<Image>();
+        KararaAllImage = KararaSitting.gameObject.GetComponentsInChildren<Image>();
 
         //disable all shader effect
         //bag.GetComponent<Image>().material.EnableKeyword("SHAKEUV_OFF");
@@ -119,18 +131,18 @@ public class TutorialManager : MonoBehaviour
     {
         
         //make sure that karara only appears at the end and start when player is taught to swipe
-        if (tutorialNumber == 1 && FinalCameraController.myCameraState == FinalCameraController.CameraState.Subway)
-        {
-            if (FinalCameraController.mySubwayState == FinalCameraController.SubwayState.Four ||
-                FinalCameraController.mySubwayState == FinalCameraController.SubwayState.One)
-            {
-                KararaImage.enabled = true;
-            }
-            else
-            {
-                KararaImage.enabled = false;
-            }
-        }
+//        if (tutorialNumber == 1 && FinalCameraController.myCameraState == FinalCameraController.CameraState.Subway)
+//        {
+//            if (FinalCameraController.mySubwayState == FinalCameraController.SubwayState.Four ||
+//                FinalCameraController.mySubwayState == FinalCameraController.SubwayState.One)
+//            {
+//                KararaImage.enabled = true;
+//            }
+//            else
+//            {
+//                KararaImage.enabled = false;
+//            }
+//        }
         
         //disable go back button when it is not needed
         if (tutorialNumber < 12)
@@ -141,7 +153,7 @@ public class TutorialManager : MonoBehaviour
         
         if (tutorialNumber == 4)
         {
-            myText.text = "Click Start!";
+            myText.text = "Click the button to Start!";
             arrow.enabled = false;
             
             //bag.GetComponent<Image>().material.DisableKeyword("SHAKEUV_ON");
@@ -157,8 +169,10 @@ public class TutorialManager : MonoBehaviour
         else if (tutorialNumber == 5)
         {
             myText.text = "Now all you need to do is wait...";
-            KararaImage.enabled = false;
-            Show(KararaSubway);
+            //disable standing 
+            
+            //enable sitting
+            Show(KararaSittingCanvasGroup);
         }
         else if(tutorialNumber == 6)
         {
@@ -254,7 +268,9 @@ public class TutorialManager : MonoBehaviour
         }
         else
         {
-            KararaImage.enabled = false;
+            Hide(KararaSittingCanvasGroup);
+            KararaStandingImage.enabled = false;
+
         }
         
         
@@ -286,7 +302,7 @@ public class TutorialManager : MonoBehaviour
                 {
                     myFlash.alpha = 0;
                     pressScreenshot = false;
-                    Show(KararaSubway);
+                    KararaDisappear(false);
                 }
             }
         }
@@ -295,13 +311,18 @@ public class TutorialManager : MonoBehaviour
         {
             myText.text = "Your first day of work!";
             
-            KararaImage.enabled = true;
             arrow.enabled = true;
             KararaRectT.anchoredPosition = 
                 new Vector3(205, KararaRectT.anchoredPosition.y);
             tutorialNumber = 2;
             StartCoroutine(WaitFor1Seconds());
             
+            KararaStanding.transform.SetParent(ScreenZero.transform);
+            var RectTransform = KararaStanding.GetComponent<RectTransform>();
+            RectTransform.anchoredPosition = new Vector3(85, RectTransform.anchoredPosition.y);
+            KararaStandingImage.enabled = true;
+            KararaDisappear(false);
+
         }
     }
 
@@ -316,6 +337,17 @@ public class TutorialManager : MonoBehaviour
         UIGroup.alpha = 1f;
         UIGroup.blocksRaycasts = true;
         UIGroup.interactable = true;
+    }
+
+    IEnumerator ChangeText(string dialogueText, bool isclick)
+    {
+        yield return new WaitForSecondsRealtime(0.4f);
+        myText.text = dialogueText;
+        if (isclick)
+        {
+            clicktime++;
+        }
+
     }
 
     public void DoDialogues(bool trueOrFalse)
@@ -347,8 +379,7 @@ public class TutorialManager : MonoBehaviour
                 //karara appears
                 yield return new WaitForSeconds(1);
 
-                KararaImage.enabled = true;
-                
+                KararaDisappear(false);                
                 yield return new WaitForSeconds(1);
 
                 for (int a = 0; a < DialogueImageList.Length; a++)
@@ -375,8 +406,22 @@ public class TutorialManager : MonoBehaviour
         myHSS.enabled = trueOrFalse;
         FinalCameraController.subwayScrollRect.enabled = trueOrFalse;
     }
-    
 
+
+    //true means disappear, like literally
+    private void KararaDisappear(bool trueOrFalse)
+    {
+        var tempColor = KararaStandingImage.color;
+        if (trueOrFalse)
+        {
+            tempColor.a = 0f;
+        }
+        else if (!trueOrFalse)
+        {
+            tempColor.a = 1f;
+        }
+        KararaStandingImage.color = tempColor;
+    }
 
     //wait for several seconds
     IEnumerator WaitBeforeDialogues(int seconds, string dialogue, Sprite profile)
@@ -436,12 +481,25 @@ public class TutorialManager : MonoBehaviour
         //KararaImage.enabled = true;
         FinalCameraController.ChangeToSubway();
         tutorialNumber = 1;
-        KararaImage.enabled = true;
+        //KararaDisappear(true);
 
-        
     }
 
-    
+
+    IEnumerator ClickTimeOne()
+    {
+        yield return new WaitForSeconds(0.5f);
+
+        myText.text = "Now pick up those bags.";
+
+        bag = Instantiate(clothBag, bagPos, Quaternion.identity) as GameObject;
+        bag.transform.SetParent(clothBagGroup.transform, false);
+        arrow.enabled = false;
+                
+        bag.GetComponent<Image>().material.EnableKeyword("SHAKEUV_ON");
+
+    }
+
     public int clicktime = 0;
     private bool clickBool = false;
 
@@ -451,19 +509,15 @@ public class TutorialManager : MonoBehaviour
         {
             if(clicktime == 0)
             {
-                myText.text = "Good that you are already wearing the workcloth.";
-                clicktime++;
-
+                StartCoroutine(ChangeText("Good that you are already wearing the workcloth.",true));
+                 
             }
             else if (clicktime == 1)
             {
-                myText.text = "Now pick up those bags.";
+                //StartCoroutine(ChangeText("Now pick up those bags.",false));
 
-                bag = Instantiate(clothBag, bagPos, Quaternion.identity) as GameObject;
-                bag.transform.SetParent(clothBagGroup.transform, false);
-                arrow.enabled = false;
-                
-                bag.GetComponent<Image>().material.EnableKeyword("SHAKEUV_ON");
+                //myText.text = "Now pick up those bags.";
+                StartCoroutine(ClickTimeOne());
 
             }
         }
@@ -548,7 +602,7 @@ public class TutorialManager : MonoBehaviour
             }
             else if (clicktime == 7)
             {
-                myText.text = "Boss is not paying attention. He doesn't remember things anyone. Maybe I should...?";
+                myText.text = "Boss is not paying attention. He doesn't remember things anyway. Maybe I should...?";
                 arrow.enabled = false;
             }
         }

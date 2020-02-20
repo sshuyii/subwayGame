@@ -61,9 +61,8 @@ public class ChangeBackground :MonoBehaviour
                     TutorialManager.DoDialogues(false);
                     TutorialManager.myText.text = "";
                     //TutorialManager.touchImage.enabled = false;
-                    TutorialManager.KararaImage.enabled = false;
 
-                    
+                     
                     photoBackground.sprite = InstagramController.allBackAd[transform.name];
                     InstagramController.currentBackground = transform.name;
 
@@ -73,7 +72,7 @@ public class ChangeBackground :MonoBehaviour
                 {
                     TutorialManager.DoDialogues(true);
                     TutorialManager.myText.text = "Don't touch it! Come over here!";
-                    TutorialManager.KararaImage.enabled = true;
+                    TutorialManager.KararaStandingImage.enabled = true;
                 }
                 else if(FinalCameraController.isTutorial && FinalCameraController.TutorialManager.tutorialNumber > 13 || !FinalCameraController.isTutorial)
                 {
@@ -81,7 +80,6 @@ public class ChangeBackground :MonoBehaviour
                     InstagramController.currentBackground = transform.name;
 
                     FinalCameraController.GoAdvertisement();
-                        
                         
                 }
 
