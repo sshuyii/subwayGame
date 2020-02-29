@@ -9,6 +9,9 @@ public class AllMachines : MonoBehaviour
 
     public GameObject currentBag;
 
+    //a list to record all customer's names
+    public List<string> CustomerNameList = new List<string>();
+    public Dictionary<string, List<Sprite>> nameToTemp = new Dictionary<string, List<Sprite>>();
     
     public GameObject returnNotice;
 
@@ -17,6 +20,7 @@ public class AllMachines : MonoBehaviour
     
     public GameObject noticeParent;
 
+    public GameObject Overdue;
     public bool alreadyNotice = false;
 
     public List<Sprite> openBags;
@@ -30,9 +34,11 @@ public class AllMachines : MonoBehaviour
     
     public List<Sprite> BellaClothes;
     public List<Sprite> bellaClothesTemp = new List<Sprite>();
+
+    public List<Sprite> NamiClothes;
+    public List<Sprite> namiClothesTemp = new List<Sprite>();
     
-    public List<Sprite> TutorialClothes;
-    public List<Sprite> TutorialClothesTemp = new List<Sprite>();
+    public Sprite TutorialCloth;
 
    
     private bool isFirstOpen = true;
@@ -82,11 +88,22 @@ public class AllMachines : MonoBehaviour
         {
             bellaClothesTemp.Add(BellaClothes[i]);
         }
+        
+        for (int i = 0; i < NamiClothes.Count; i++)
+        {
+            namiClothesTemp.Add(NamiClothes[i]);
+        }
 
         for (int i = 0; i < openBags.Count; i++)
         {
             openBagsDic.Add(openBags[i].name, openBags[i]);
         }
+
+        //use a dictionary to record all temp list with names as the tag
+        nameToTemp.Add("Bella", bellaClothesTemp);
+        nameToTemp.Add("Alex", alexClothesTemp);
+        nameToTemp.Add("Nami", namiClothesTemp);
+
 
     }
 

@@ -27,6 +27,9 @@ public class FinalCameraController : MonoBehaviour
     
     public Sprite startSprite;
 
+
+    public CanvasGroup clothCG;
+    public CanvasGroup messageCG;
     
     public enum AppState
     {
@@ -113,7 +116,9 @@ public class FinalCameraController : MonoBehaviour
         myHSS = GameObject.Find("Horizontal Scroll Snap").GetComponent<HorizontalScrollSnap>();
         subwayScrollRect = GameObject.Find("Horizontal Scroll Snap").GetComponent<ScrollRect>();
 
-        
+        //hide the UIs when click Karara
+        Hide(clothCG);
+        Hide(messageCG);
     }
 
 
@@ -125,15 +130,31 @@ public class FinalCameraController : MonoBehaviour
         {
             if(TutorialManager.tutorialNumber == 0 && mySubwayState == SubwayState.Four)
             {
-                myHSS.GoToScreen(3);
+                myHSS.GoToScreen(4);
                 //myHSS.enabled = false;
             }        
             else if(TutorialManager.tutorialNumber == 2 && mySubwayState == SubwayState.One)
             {
-                myHSS.GoToScreen(0);
+                myHSS.GoToScreen(1);
                 //myHSS.enabled = false;
             }
         }
+        
+        //add a beginning and an end for the subway background scene
+        if (HorizontalScrollSnap.CurrentPage == 5)
+        {
+            myHSS.GoToScreen(4);
+
+        }
+        else if(HorizontalScrollSnap.CurrentPage == 0)
+        {
+            myHSS.GoToScreen(1);
+        }
+        
+        
+        
+        
+        
         
         if (TouchController.isSwiping == true)
         {
@@ -194,27 +215,56 @@ public class FinalCameraController : MonoBehaviour
 
     void CheckScreenNum()
     {
-        if (HorizontalScrollSnap.CurrentPage == 0)
+        if (HorizontalScrollSnap.CurrentPage == 1)
         {
             mySubwayState = SubwayState.One;
         }
-        else if (HorizontalScrollSnap.CurrentPage == 1)
+        else if (HorizontalScrollSnap.CurrentPage == 2)
         {
             mySubwayState = SubwayState.Two;
         }
-        else if (HorizontalScrollSnap.CurrentPage == 2)
+        else if (HorizontalScrollSnap.CurrentPage == 3)
         {
             mySubwayState = SubwayState.Three;
         }
-        else if (HorizontalScrollSnap.CurrentPage == 3)
+        else if (HorizontalScrollSnap.CurrentPage == 4)
         {
             mySubwayState = SubwayState.Four;
         }
     }
-   
+
+    private bool isShown;
+    public void clickKarara()
+    {
+        if(!isShown)
+        {
+            Show(clothCG);
+            Show(messageCG);
+            isShown = true;
+        }
+        else
+        {
+            Hide(clothCG);
+            Hide(messageCG);
+            isShown = false;
+        }
+    }
     
     public void ChangeToCloth()
     {
+        if (isTutorial)
+        {
+            if(TutorialManager.tutorialNumber < 11)
+            {
+                TutorialManager.tutorialNumber = 11;
+            }        
+            else if (TutorialManager.tutorialNumber == 14)
+            {
+                TutorialManager.myText.text = "I'm pretty satisfied with my outfit. Where can I take a picture?";
+                return;
+            }
+        }
+        
         if(alreadyClothUI == false)
         {
             Hide(subwayBackground);
@@ -238,7 +288,14 @@ public class FinalCameraController : MonoBehaviour
 
         if (isTutorial)
         {
-            TutorialManager.tutorialNumber = 11;
+            if(TutorialManager.tutorialNumber < 11)
+            {
+                TutorialManager.tutorialNumber = 11;
+            }        
+            else if (TutorialManager.tutorialNumber == 14)
+            {
+                TutorialManager.myText.text = "I'm pretty satisfied with my outfit. Where can I take a picture?";
+            }
         }
     }
 
@@ -325,6 +382,13 @@ public class FinalCameraController : MonoBehaviour
     
     public void ChangeToApp()
     {
+        //cancel all dialogues
+        
+        if (isTutorial)
+        {
+            TutorialManager.DoDialogues(false);
+        }
+        
         if(alreadyClothUI == false)        
         {
             Hide(subwayBackground);
@@ -350,11 +414,7 @@ public class FinalCameraController : MonoBehaviour
 
         }
 
-        //cancel all dialogues
-        if (isTutorial)
-        {
-            TutorialManager.DoDialogues(false);
-        }
+        
     }
     
     public void ChangeToMap()

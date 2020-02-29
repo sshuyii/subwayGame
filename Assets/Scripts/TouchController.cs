@@ -50,7 +50,7 @@ public class TouchController : MonoBehaviour
     void Update()
     {
 
-        print("cancelCloth = " + doubleTouch);
+//        print("cancelCloth = " + doubleTouch);
         for (var i = 0; i < Input.touchCount; ++i)
         {
             if (Input.GetTouch(i).phase == TouchPhase.Began)

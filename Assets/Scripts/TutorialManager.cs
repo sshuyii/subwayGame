@@ -5,6 +5,8 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.UI.Extensions;
+using UnityEngine.SceneManagement;
+
 
 
 public class TutorialManager : MonoBehaviour
@@ -25,8 +27,11 @@ public class TutorialManager : MonoBehaviour
     public Image[] DialogueImageList;
     public TextMeshProUGUI myText;
     public Image arrow;
+    public CanvasGroup arrowButton;
+    
     public GameObject poster;
 
+    public bool wearNothing;
    
     public GameObject TakeScreenshot;
 
@@ -42,6 +47,12 @@ public class TutorialManager : MonoBehaviour
     public Image ProfileImage;
     public Sprite KararaProfile;
     public Sprite FishProfile;
+
+    public TextMeshProUGUI nameTag;
+    public Sprite DialogueKarara;
+    public Sprite DialogueFish;
+
+    public Image DialogueBackground;
 
     public bool pressScreenshot;
     public CanvasGroup myFlash;
@@ -68,10 +79,16 @@ public class TutorialManager : MonoBehaviour
 
     public GameObject gobackButton;
     public Button KararaButton;
+
+    private Color fishColor;
+    private Color kararaColor;
+
     
     // Start is called before the first frame update
     void Start()
     {
+        fishColor = new Color(176f/255f, 140f/255f, 84f/255f);
+        
         myHSS = GameObject.Find("Horizontal Scroll Snap").GetComponent<HorizontalScrollSnap>();
         
         FinalCameraController = GameObject.Find("Main Camera").GetComponent<FinalCameraController>();
@@ -155,7 +172,7 @@ public class TutorialManager : MonoBehaviour
         {
             myText.text = "Click the button to Start!";
             arrow.enabled = false;
-            
+            Hide(arrowButton);
             //bag.GetComponent<Image>().material.DisableKeyword("SHAKEUV_ON");
 
 
@@ -164,6 +181,8 @@ public class TutorialManager : MonoBehaviour
         {
             myText.text = "Put clothes into the machine!";
             arrow.enabled = false;
+            Hide(arrowButton);
+
             
         }
         else if (tutorialNumber == 5)
@@ -180,6 +199,11 @@ public class TutorialManager : MonoBehaviour
             ProfileImage.sprite = KararaProfile;
             tutorialNumber = 7;
             arrow.enabled = true;
+            Show(arrowButton);
+
+            
+            //change dialogue background and name
+            ChangeDialogue("Karara");
         }
         else if(tutorialNumber == 8)
         {
@@ -192,6 +216,7 @@ public class TutorialManager : MonoBehaviour
                 myText.text = "I wish I have them in my wardrobe...Do I have to return those immediately?";
 
                 arrow.enabled = true;
+                Show(arrowButton);
                 bag.GetComponent<Image>().material.DisableKeyword("SHAKEUV_ON");
                 chooseBag = false;
             }
@@ -204,7 +229,7 @@ public class TutorialManager : MonoBehaviour
         }
         else if(tutorialNumber == 10)
         {
-            myText.text = "Well, since no one is watching... I should try it on!";
+            myText.text = "Well, I guess since no one is watching... I should try it on!";
             //tutorialNumber = 11;
 
             foreach (var image in KararaAllImage)
@@ -215,6 +240,7 @@ public class TutorialManager : MonoBehaviour
             }
             KararaButton.enabled = true;
             arrow.enabled = false;
+            Hide(arrowButton);
             
             bag.GetComponent<Image>().material.DisableKeyword("SHAKEUV_ON");
 
@@ -225,9 +251,12 @@ public class TutorialManager : MonoBehaviour
         }
         else if(tutorialNumber == 12)
         {
-            myText.text = "This looks good on me! I should take a picture!";
-            tutorialNumber = 13;
+            myText.text = "How do I look! I should take a picture!";
             arrow.enabled = true;
+            Show(arrowButton);
+
+
+            tutorialNumber = 13;
         }
         else if(tutorialNumber == 13)
         {
@@ -235,7 +264,7 @@ public class TutorialManager : MonoBehaviour
             {
                 Material mat = image.material;
                 //mat.EnableKeyword("SHAKEUV_ON");
-                mat.EnableKeyword("DOODLE_ON");
+                mat.DisableKeyword("DOODLE_ON");
             }
         }
         else if(tutorialNumber == 14 && FinalCameraController.mySubwayState == FinalCameraController.SubwayState.Four)
@@ -248,13 +277,20 @@ public class TutorialManager : MonoBehaviour
             DoDialogues(true);
             myText.text = "If I click the bag, all clothes will be automatically returned.";
             arrow.enabled = false;
-            
+            Hide(arrowButton);
+
+
+
+            nameTag.text = "Karara";
             bag.GetComponent<Image>().material.EnableKeyword("SHAKEUV_ON");
         }
         else if(tutorialNumber == 17)
         {
             myText.text = "The end of my day, easy!";
+            arrow.enabled = true;
+            Show(arrowButton);
 
+//            StartCoroutine("StoryStart");
         }
         
         
@@ -296,6 +332,7 @@ public class TutorialManager : MonoBehaviour
             {
                 DoDialogues(false);
                 myText.text = "";
+                nameTag.text = "";
                 myFlash.alpha = myFlash.alpha - Time.deltaTime;
      
                 if (myFlash.alpha <= 0)
@@ -312,6 +349,9 @@ public class TutorialManager : MonoBehaviour
             myText.text = "Your first day of work!";
             
             arrow.enabled = true;
+            Show(arrowButton);
+
+
             KararaRectT.anchoredPosition = 
                 new Vector3(205, KararaRectT.anchoredPosition.y);
             tutorialNumber = 2;
@@ -322,11 +362,24 @@ public class TutorialManager : MonoBehaviour
             RectTransform.anchoredPosition = new Vector3(85, RectTransform.anchoredPosition.y);
             KararaStandingImage.enabled = true;
             KararaDisappear(false);
+            ChangeDialogue("Goldfish");
 
         }
     }
 
-    
+    public void ChangeDialogue(string Character)
+    {
+        nameTag.text = Character;
+        if (Character == "Karara")
+        {
+            DialogueBackground.sprite = DialogueKarara;
+        }
+        else if (Character == "Goldfish" || Character == "?????")
+        {
+            DialogueBackground.sprite = DialogueFish;
+
+        }
+    }
     void Hide(CanvasGroup UIGroup) {
         UIGroup.alpha = 0f; //this makes everything transparent
         UIGroup.blocksRaycasts = false; //this prevents the UI element to receive input events
@@ -339,6 +392,14 @@ public class TutorialManager : MonoBehaviour
         UIGroup.interactable = true;
     }
 
+    IEnumerator StoryStart()
+    {
+        yield return new WaitForSeconds(0.4f);
+
+        SceneManager.LoadScene("StreetStyle", LoadSceneMode.Single);
+        print("loadScene");
+    }
+    
     IEnumerator ChangeText(string dialogueText, bool isclick)
     {
         yield return new WaitForSecondsRealtime(0.4f);
@@ -367,14 +428,14 @@ public class TutorialManager : MonoBehaviour
     }
     IEnumerator TrainMoveIn() 
     {
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(1);
         
-        for(int i = 0; i < 4; i ++)
+        for(int i = 0; i < 5; i ++)
         {
             yield return new WaitForSeconds(0);
             myHSS.GoToScreen(i);
 
-            if (i == 3)
+            if (i == 4)
             {
                 //karara appears
                 yield return new WaitForSeconds(1);
@@ -387,18 +448,23 @@ public class TutorialManager : MonoBehaviour
                     DialogueImageList[a].enabled = true;
                     myText.text = "I should take a selfie in front of that poster";
                     arrow.enabled = false;
+                    Hide(arrowButton);
+
+
+                    //myText.color = fishColor;
+
 //                    ProfileImage.sprite = FishProfile;
                 }
                 scrollControl(false);
 
-
 //                touch.transform.position = poster.transform.position;
 //                touchImage.enabled = true;
 //                touchAnimator.SetBool("isTouch", true);
+                //change dialogue background and name
+                ChangeDialogue("Karara");
 
             }
         }
-        
     }
 
     public void scrollControl(bool trueOrFalse)
@@ -408,6 +474,7 @@ public class TutorialManager : MonoBehaviour
     }
 
 
+  
     //true means disappear, like literally
     private void KararaDisappear(bool trueOrFalse)
     {
@@ -445,13 +512,14 @@ public class TutorialManager : MonoBehaviour
 
         yield return new WaitForSeconds(2);
         myText.text = "Wow, this is beautiful.";
-        //这时还不能点衣服
-        foreach (var button in ClothUIButtons)
-        {
-            button.enabled = false;
-        }
+//        //这时还不能点衣服
+//        foreach (var button in ClothUIButtons)
+//        {
+//            button.enabled = false;
+//        }
 
         arrow.enabled = true;
+        Show(arrowButton);
 
     }
     
@@ -465,6 +533,8 @@ public class TutorialManager : MonoBehaviour
 
         ProfileImage.sprite = FishProfile;
         arrow.enabled = false;
+        Hide(arrowButton);
+
         
         yield return new WaitForSeconds(1);
 
@@ -481,6 +551,10 @@ public class TutorialManager : MonoBehaviour
         //KararaImage.enabled = true;
         FinalCameraController.ChangeToSubway();
         tutorialNumber = 1;
+        
+        //change dialogue background and name
+        ChangeDialogue("?????");
+
         //KararaDisappear(true);
 
     }
@@ -495,6 +569,8 @@ public class TutorialManager : MonoBehaviour
         bag = Instantiate(clothBag, bagPos, Quaternion.identity) as GameObject;
         bag.transform.SetParent(clothBagGroup.transform, false);
         arrow.enabled = false;
+        Hide(arrowButton);
+
                 
         bag.GetComponent<Image>().material.EnableKeyword("SHAKEUV_ON");
 
@@ -507,6 +583,9 @@ public class TutorialManager : MonoBehaviour
     {
         if (tutorialNumber == 2)
         {
+            arrow.enabled = true;
+            Show(arrowButton);
+
             if(clicktime == 0)
             {
                 StartCoroutine(ChangeText("Good that you are already wearing the workcloth.",true));
@@ -545,6 +624,9 @@ public class TutorialManager : MonoBehaviour
                 myText.text = "Hey you! Come over here!";
                 
                 clicktime++;
+                
+                //change dialogue background and name
+                ChangeDialogue("Goldfish");
 
             }
             else if (clicktime == 4)
@@ -565,6 +647,11 @@ public class TutorialManager : MonoBehaviour
                 
                 cloth.GetComponent<Button>().enabled = true;
                 arrow.enabled = false;
+                Hide(arrowButton);
+
+                
+                //change dialogue background and name
+                ChangeDialogue("Karara");
             }
         }
 
@@ -587,11 +674,12 @@ public class TutorialManager : MonoBehaviour
                     
                 }
 
-                myText.text = "Now I'm supposed to put them into the bag...Just click the bag.";
+                myText.text = "I'm supposed to put them back into the bag...Just click the bag.";
 
                 bag.GetComponent<Image>().material.EnableKeyword("SHAKEUV_ON");
 
                 arrow.enabled = false;
+                Hide(arrowButton);
                 
                 clicktime++;
 
@@ -604,14 +692,35 @@ public class TutorialManager : MonoBehaviour
             {
                 myText.text = "Boss is not paying attention. He doesn't remember things anyway. Maybe I should...?";
                 arrow.enabled = false;
+                Hide(arrowButton);
             }
         }
         else if(tutorialNumber == 13)
         {
-            FinalCameraController.ChangeToSubway();
-            myText.text = "I should be quick. Where is that poster?";
-            tutorialNumber = 14;
-            arrow.enabled = false;
+            if (wearNothing)
+            {
+                myText.text = "Underwear? At least I should wear something on my picture...";
+
+            }
+            else
+            {
+                FinalCameraController.ChangeToSubway();
+                myText.text = "I should be quick. Where is that poster?";
+                tutorialNumber = 14;
+                arrow.enabled = false;
+                Hide(arrowButton);
+                
+                //disable player button, now if clicked, nothing would happen, cannot go back to closet scene
+                //maybe don't disable the button, but instead karara say something and refuse to go back, achieved in FinalCameraController
+                //KararaSittingCanvasGroup.interactable = false;
+
+            }
+           
+        }
+        else if (tutorialNumber == 17)
+        { 
+            print("startSceneeeee");
+            StartCoroutine(StoryStart());
         }
     }
 }

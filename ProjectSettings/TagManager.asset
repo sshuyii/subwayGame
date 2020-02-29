@@ -16,6 +16,7 @@ TagManager:
   - PlayerBody
   - worn
   - Tutorial
+  - Nami
   layers:
   - Default
   - TransparentFX

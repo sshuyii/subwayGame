@@ -46,7 +46,7 @@ public class CalculateInventory : MonoBehaviour
     
     public int occupiedI = 0;
 
-    public List<Image> checks;
+//    public List<Image> checks;
 
     //clothes the character is wearing
     public SpriteRenderer topSR;
@@ -80,7 +80,7 @@ public class CalculateInventory : MonoBehaviour
     public Button everythingButton;
 
     
-    public List<Image> inventoryCheckList;
+//    public List<Image> inventoryCheckList;
 
     
     //six slots on the right
@@ -93,6 +93,27 @@ public class CalculateInventory : MonoBehaviour
 //    public Button other;
     
     // Start is called before the first frame update
+    
+    //this is for tutorial
+    public Sprite discoSubway;
+    public Sprite discoCloset;
+    public Sprite discoAd;
+    
+    
+    
+    public SpriteRenderer workCloth;
+
+    public SpriteRenderer whiteShirt;
+    public SpriteRenderer blackPants;
+    
+    //subway clothes
+    public Image workClothS;
+
+    public Image whiteShirtS;
+    public Image blackPantsS;
+    
+    //all the bags that are in the game
+    public List<bool> allBagTimer;
     
     
     void Start()

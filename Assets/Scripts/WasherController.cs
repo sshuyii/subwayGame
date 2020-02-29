@@ -212,11 +212,11 @@ public class WasherController : MonoBehaviour
     IEnumerator MachineUnfold()
     {
         Show(backgroundUI);
-        yield return new WaitForSeconds(0.4f);
+        yield return new WaitForSeconds(0.3f);
         Show(backgroundUI2);
-        yield return new WaitForSeconds(0.4f);
+        yield return new WaitForSeconds(0.2f);
         Show(backgroundUI3);
-        yield return new WaitForSeconds(0.4f);
+        yield return new WaitForSeconds(0.1f);
 
 
     }
@@ -224,11 +224,11 @@ public class WasherController : MonoBehaviour
     IEnumerator MachineFold()
     {
         Hide(backgroundUI3);
-        yield return new WaitForSeconds(0.4f);
+        yield return new WaitForSeconds(0.1f);
         Hide(backgroundUI2);
-        yield return new WaitForSeconds(0.4f);
+        yield return new WaitForSeconds(0.2f);
         Hide(backgroundUI);
-        yield return new WaitForSeconds(0.4f);
+        yield return new WaitForSeconds(0.3f);
 
 
     }
@@ -263,8 +263,9 @@ public class WasherController : MonoBehaviour
 
                 //Hide(AllClothUI);
 
-                
                 GenerateCloth(this.transform.gameObject.tag);
+
+               
                 
                 //for tutorial
                 if (FinalCameraController.isTutorial)
@@ -296,7 +297,7 @@ public class WasherController : MonoBehaviour
 
     IEnumerator WaitFor2Seconds()
     {
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(0.8f);
         Show(ClothUI);
 
     }
@@ -336,7 +337,31 @@ public class WasherController : MonoBehaviour
             
     }
 
-   
+    private void GenerateClothAccordingToTag(string tagName, List<Sprite> MachineClothList)
+    {
+        for (int i = 0; i < buttons.Length; i++)
+        {
+            int randomIndex = Random.Range(0, AllMachines.nameToTemp[tagName].Count);
+
+//                  Button ClothInMachine =
+//                  Instantiate(alexClothesTemp[randomIndex], buttonPositions[i], Quaternion.identity) as Button;
+            buttons[i].GetComponent<Button>().enabled = true;
+            buttons[i].tag = tagName;
+            Image buttonImage = buttons[i].GetComponent<Image>();
+            buttonImage.enabled = true;
+            buttonImage.sprite = AllMachines.nameToTemp[tagName][randomIndex];
+
+
+            AllMachines.nameToTemp[tagName].Remove(AllMachines.nameToTemp[tagName][randomIndex]);
+            //as child of the folder
+            //doesn't work for some reason I don't understand
+            //ClothInMachine.transform.SetParent(MachineGroup.transform, false);
+            //ClothInMachine.transform.SetParent(MachineGroup.transform, false);
+
+            //record into List
+            MachineClothList.Add(buttonImage.sprite);
+        }    
+    }
     
     public void GenerateCloth(string tagName)
     {
@@ -346,74 +371,76 @@ public class WasherController : MonoBehaviour
 
         //randomly generate clothes when player opens the machine
         if(isFirstOpen)
-        { 
+        {
 
-            if(tagName == "Alex")
+            if (FinalCameraController.isTutorial)
             {
-                for (int i = 0; i < buttons.Length; i++)
-                {
-                    int randomIndex = Random.Range(0, AllMachines.alexClothesTemp.Count);
+                buttons[0].GetComponent<Button>().enabled = true;
+                buttons[0].tag = "Tutorial";
+                Image buttonImage = buttons[0].GetComponent<Image>();
+                buttonImage.enabled = true;
+                buttonImage.sprite = AllMachines.TutorialCloth;
 
-//                  Button ClothInMachine =
-//                  Instantiate(alexClothesTemp[randomIndex], buttonPositions[i], Quaternion.identity) as Button;
-                    buttons[i].GetComponent<Button>().enabled = true;
-                    buttons[i].tag = "Alex";
-                    Image buttonImage = buttons[i].GetComponent<Image>();
-                    buttonImage.enabled = true;
-                    buttonImage.sprite = AllMachines.alexClothesTemp[randomIndex];
+                MachineClothList.Add(buttonImage.sprite);
 
-
-                    AllMachines.alexClothesTemp.Remove(AllMachines.alexClothesTemp[randomIndex]);
-                    //as child of the folder
-                    //doesn't work for some reason I don't understand
-                    //ClothInMachine.transform.SetParent(MachineGroup.transform, false);
-                    //ClothInMachine.transform.SetParent(MachineGroup.transform, false);
-
-                    //record into List
-                    MachineClothList.Add(buttonImage.sprite);
-                }
-                    
             }
-            else if (tagName == "Bella")
+            else if (AllMachines.CustomerNameList.Contains(tagName))
             {
-                for (int i = 0; i < buttons.Length; i++)
-                {
-                    int randomIndex = Random.Range(0, AllMachines.bellaClothesTemp.Count);
-                        print("random = " + randomIndex);
-                        print(AllMachines.bellaClothesTemp.Count);
-                        buttons[i].tag = "Bella";
+                print("isGeneratingCloth");
+                GenerateClothAccordingToTag(tagName, MachineClothList);
 
-//                  clothesInMachine[i].image.sprite = AlexClothes[randomIndex];
-
-//                    Button ClothInMachine =
-//                        Instantiate(bellaClothesTemp[randomIndex], buttonPositions[i], Quaternion.identity) as Button;
-
-                        Image buttonImage = buttons[i].GetComponent<Image>();
-                        buttonImage.enabled = true;
-
-                        buttonImage.sprite = AllMachines.bellaClothesTemp[randomIndex];
-
-                        AllMachines.bellaClothesTemp.Remove(AllMachines.bellaClothesTemp[randomIndex]);
-
-                        //record into List
-                    MachineClothList.Add(buttonImage.sprite);
-
-                        //as child of the folder
-                        //doesn't work for some reason I don't understand
-
-                        //ClothInMachine.transform.SetParent(MachineGroup.transform, false);
-                }
-                    
             }
-                
-                //record every button into this dictionary
-                
-               
-                //this will make scale a lot bigger than it should be
-//              ClothInMachine.transform.parent = MachineGroup.transform;
-
-            
-
+//            else if(tagName == "Alex")
+//            {
+//                for (int i = 0; i < buttons.Length; i++)
+//                {
+//                    int randomIndex = Random.Range(0, AllMachines.alexClothesTemp.Count);
+//
+////                  Button ClothInMachine =
+////                  Instantiate(alexClothesTemp[randomIndex], buttonPositions[i], Quaternion.identity) as Button;
+//                    buttons[i].GetComponent<Button>().enabled = true;
+//                    buttons[i].tag = "Alex";
+//                    Image buttonImage = buttons[i].GetComponent<Image>();
+//                    buttonImage.enabled = true;
+//                    buttonImage.sprite = AllMachines.alexClothesTemp[randomIndex];
+//
+//
+//                    AllMachines.alexClothesTemp.Remove(AllMachines.alexClothesTemp[randomIndex]);
+//                    //as child of the folder
+//                    //doesn't work for some reason I don't understand
+//                    //ClothInMachine.transform.SetParent(MachineGroup.transform, false);
+//                    //ClothInMachine.transform.SetParent(MachineGroup.transform, false);
+//
+//                    //record into List
+//                    MachineClothList.Add(buttonImage.sprite);
+//                }    
+//            }
+//            else if (tagName == "Bella")
+//            {
+//                for (int i = 0; i < buttons.Length; i++)
+//                {
+//                    int randomIndex = Random.Range(0, AllMachines.bellaClothesTemp.Count);
+//                    print("random = " + randomIndex);
+//                    print(AllMachines.bellaClothesTemp.Count);
+//                    buttons[i].tag = "Bella";
+//
+////                  clothesInMachine[i].image.sprite = AlexClothes[randomIndex];
+//
+////                  Button ClothInMachine =
+////                  Instantiate(bellaClothesTemp[randomIndex], buttonPositions[i], Quaternion.identity) as Button;
+//
+//                        Image buttonImage = buttons[i].GetComponent<Image>();
+//                        buttonImage.enabled = true;
+//
+//                        buttonImage.sprite = AllMachines.bellaClothesTemp[randomIndex];
+//
+//                        AllMachines.bellaClothesTemp.Remove(AllMachines.bellaClothesTemp[randomIndex]);
+//
+//                    //record into List
+//                    MachineClothList.Add(buttonImage.sprite);
+//
+//                }                 
+//            }
         }
 
          isFirstOpen = false;

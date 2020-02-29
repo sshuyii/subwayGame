@@ -29,11 +29,13 @@ public class ChangeBackground :MonoBehaviour
 //            allSubAd.Add(subwayAdList[i].name, subwayAdList[i]);
 //        }
 
-        TutorialManager = GameObject.Find("---TutorialManager").GetComponent<TutorialManager>();
         InstagramController = GameObject.Find("---InstagramController").GetComponent<InstagramController>();
         
         FinalCameraController = GameObject.Find("Main Camera").GetComponent<FinalCameraController>();
-
+        if(FinalCameraController.isTutorial)
+        {
+            TutorialManager = GameObject.Find("---TutorialManager").GetComponent<TutorialManager>();
+        }
         myButton = GetComponent<Button>();
 
     }
@@ -41,13 +43,13 @@ public class ChangeBackground :MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        
     }
 
     public void clickBackground()
     {
 
-        if(!FinalCameraController.alreadyClothUI)
+        if(FinalCameraController.alreadyClothUI == false)
         {
             if (FinalCameraController.isSwipping == false)
             {
@@ -60,6 +62,7 @@ public class ChangeBackground :MonoBehaviour
                     //cancel dialogues and the touch tutorial
                     TutorialManager.DoDialogues(false);
                     TutorialManager.myText.text = "";
+                    TutorialManager.nameTag.text = "";
                     //TutorialManager.touchImage.enabled = false;
 
                      

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography.X509Certificates;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -30,16 +31,7 @@ public class ClothChanging : MonoBehaviour
 
     //a list that stores UI location
     private Sprite currentSprite;
-    public SpriteRenderer workCloth;
-
-    public SpriteRenderer whiteShirt;
-    public SpriteRenderer blackPants;
-    
-    //subway clothes
-    public Image workClothS;
-
-    public Image whiteShirtS;
-    public Image blackPantsS;
+  
     
     //drag
     private float dist;
@@ -249,9 +241,9 @@ public class ClothChanging : MonoBehaviour
             //change subway clothes
             CalculateInventory.topSSR.sprite = transparent;
                 
-            whiteShirt.enabled = true;
+            CalculateInventory.whiteShirt.enabled = true;
                                 
-            whiteShirtS.enabled = true;
+            CalculateInventory.whiteShirtS.enabled = true;
 
                 
             //change clothes in advertisement
@@ -270,9 +262,9 @@ public class ClothChanging : MonoBehaviour
             //change subway clothes
             CalculateInventory.otherSSR.sprite = transparent;
                 
-            blackPants.enabled = true;
+            CalculateInventory.blackPants.enabled = true;
                                 
-            blackPantsS.enabled = true;
+            CalculateInventory.blackPantsS.enabled = true;
 
                 
             //change clothes in advertisement
@@ -314,10 +306,10 @@ public class ClothChanging : MonoBehaviour
             //change subway clothes
             CalculateInventory.everythingSSR.sprite = transparent;
                 
-            blackPants.enabled = true;        
-            blackPantsS.enabled = true;
-            whiteShirt.enabled = true;    
-            whiteShirtS.enabled = true;
+            CalculateInventory.blackPants.enabled = true;        
+            CalculateInventory.blackPantsS.enabled = true;
+            CalculateInventory.whiteShirt.enabled = true;    
+            CalculateInventory.whiteShirtS.enabled = true;
 
                 
             //change clothes in advertisement
@@ -335,20 +327,38 @@ public class ClothChanging : MonoBehaviour
     {
         if (FinalCameraController.TouchController.doubleTouch == false)
         {
-            //for tutorial
-            if (FinalCameraController.isTutorial)
-            {
-                FinalCameraController.TutorialManager.tutorialNumber = 12;
-            }
-
-
+          
             if (CalculateInventory.isreturning)
             {
                 CancelReturn();
                 CalculateInventory.isreturning = false;
             }
 
+            //for tutorial
+            if (FinalCameraController.isTutorial)
+            {
+                FinalCameraController.TutorialManager.tutorialNumber = 12;
 
+                CalculateInventory.everythingSR.sprite = CalculateInventory.discoCloset;
+                CalculateInventory.everythingSSR.sprite = CalculateInventory.discoSubway;
+
+                CalculateInventory.shoeASR.sprite = CalculateInventory.discoAd;
+                CalculateInventory.workCloth.enabled = false;
+                
+                CalculateInventory.workClothASR.enabled = false;
+                CalculateInventory.workClothS.enabled = false;
+                
+                CalculateInventory.blackPants.enabled = false;
+                CalculateInventory.whiteShirt.enabled = false;
+
+                CalculateInventory.whiteShirtS.enabled = false;
+                CalculateInventory.blackPantsS.enabled = false;
+                
+                FinalCameraController.TutorialManager.wearNothing = false;
+
+                
+                return;
+            }
 
             //currentSprite = GetComponenft<SpriteRenderer>().sprite;
             currentSprite = GetComponent<Image>().sprite;
@@ -361,7 +371,7 @@ public class ClothChanging : MonoBehaviour
 
                 if (currentSprite.name.Contains("Top"))
                 {
-
+                   
                     //buttonChangeBack();
                     CalculateInventory.wearingTop = true;
                     CalculateInventory.wearingEverything = false;
@@ -379,12 +389,12 @@ public class ClothChanging : MonoBehaviour
 
 
 
-                    whiteShirt.enabled = false;
-                    workCloth.enabled = false;
+                    CalculateInventory.whiteShirt.enabled = false;
+                    CalculateInventory.workCloth.enabled = false;
 
 
-                    workClothS.enabled = false;
-                    whiteShirtS.enabled = false;
+                    CalculateInventory.workClothS.enabled = false;
+                    CalculateInventory.whiteShirtS.enabled = false;
 
 
                     //change clothes in advertisement
@@ -402,6 +412,13 @@ public class ClothChanging : MonoBehaviour
                     CalculateInventory.everythingASR.sprite = transparent;
                     CalculateInventory.everythingSSR.sprite = transparent;
 
+                    
+                    //change the tag on all clothes on karara
+                    CalculateInventory.topSR.gameObject.tag = this.tag;
+                    CalculateInventory.topASR.gameObject.tag = this.tag;
+                    CalculateInventory.topSSR.gameObject.tag = this.tag;
+
+                    
                     //player talks
                     if (currentSprite.name.Contains("A1"))
                     {
@@ -437,14 +454,17 @@ public class ClothChanging : MonoBehaviour
                     CalculateInventory.everythingSSR.sprite = transparent;
 
 
-
+                    //change the tag on all clothes on karara
+                    CalculateInventory.otherSR.gameObject.tag = this.tag;
+                    CalculateInventory.otherASR.gameObject.tag = this.tag;
+                    CalculateInventory.otherSSR.gameObject.tag = this.tag;
                     print("change bottom");
 
-                    workCloth.enabled = false;
-                    blackPants.enabled = false;
+                    CalculateInventory.workCloth.enabled = false;
+                    CalculateInventory.blackPants.enabled = false;
 
-                    workClothS.enabled = false;
-                    blackPantsS.enabled = false;
+                    CalculateInventory.workClothS.enabled = false;
+                    CalculateInventory.blackPantsS.enabled = false;
 
                 }
                 else if (currentSprite.name.Contains("Shoe"))
@@ -467,11 +487,18 @@ public class ClothChanging : MonoBehaviour
                     CalculateInventory.workShoeSR.enabled = false;
                     CalculateInventory.workShoeSSR.enabled = false;
                     CalculateInventory.workShoeASR.sprite = transparent;
+                    
+                     
+                    //change the tag on all clothes on karara
+                    CalculateInventory.shoeSR.gameObject.tag = this.tag;
+                    CalculateInventory.shoeASR.gameObject.tag = this.tag;
+                    CalculateInventory.shoeSSR.gameObject.tag = this.tag;
 
                 }
                 else if (currentSprite.name.Contains("Everything"))
                 {
                     //buttonChangeBack();
+                    
 
                     CalculateInventory.wearingEverything = true;
                     CalculateInventory.wearingTop = false;
@@ -480,7 +507,7 @@ public class ClothChanging : MonoBehaviour
                     //record the button
                     CalculateInventory.everythingButton = selfButton;
 
-
+                    
                     CalculateInventory.everythingSR.sprite = CalculateInventory.allCloth[currentSprite.name];
                     CalculateInventory.everythingSSR.sprite = CalculateInventory.allSubwayCloth[currentSprite.name];
                     //change clothes in advertisement
@@ -501,22 +528,27 @@ public class ClothChanging : MonoBehaviour
 
                     print("change everything");
 
-                    workCloth.enabled = false;
+                    CalculateInventory.workCloth.enabled = false;
 
-                    workClothS.enabled = false;
+                    CalculateInventory.workClothS.enabled = false;
 
                     CalculateInventory.topSR.sprite = transparent;
                     CalculateInventory.otherSR.sprite = transparent;
 
-                    blackPants.enabled = true;
-                    whiteShirt.enabled = true;
+                    CalculateInventory.blackPants.enabled = true;
+                    CalculateInventory.whiteShirt.enabled = true;
 
-                    whiteShirtS.enabled = true;
-                    blackPantsS.enabled = true;
+                    CalculateInventory.whiteShirtS.enabled = true;
+                    CalculateInventory.blackPantsS.enabled = true;
 
                     CalculateInventory.whiteShirtASR.sprite = CalculateInventory.allAdCloth["WhiteShirt"];
                     CalculateInventory.blackPantsASR.sprite = CalculateInventory.allAdCloth["BlackPants"];
 
+                     
+                    //change the tag on all clothes on karara
+                    CalculateInventory.everythingSR.gameObject.tag = this.tag;
+                    CalculateInventory.everythingASR.gameObject.tag = this.tag;
+                    CalculateInventory.everythingSSR.gameObject.tag = this.tag;
                 }
                 else
                 {
@@ -559,6 +591,13 @@ public class ClothChanging : MonoBehaviour
 
     public void ChangeWorkCloth()
     {
+        if (FinalCameraController.isTutorial)
+        {
+//            FinalCameraController.TutorialManager.tutorialNumber = 13;
+            FinalCameraController.TutorialManager.myText.text = "Do I look better in this?";
+
+        }
+
         CancelReturn();
 
 //        workCloth.enabled = !workCloth.enabled;
@@ -567,7 +606,7 @@ public class ClothChanging : MonoBehaviour
 
         CalculateInventory.wearingWorkCloth = !CalculateInventory.wearingWorkCloth;
 
-      
+
         CalculateInventory.topSR.sprite = transparent;
         CalculateInventory.otherSR.sprite = transparent;
         CalculateInventory.everythingSR.sprite = transparent;
@@ -576,24 +615,24 @@ public class ClothChanging : MonoBehaviour
         CalculateInventory.topSSR.sprite = transparent;
         CalculateInventory.otherSSR.sprite = transparent;
         CalculateInventory.everythingSSR.sprite = transparent;
-        CalculateInventory.shoeSSR.sprite = transparent; 
+        CalculateInventory.shoeSSR.sprite = transparent;
 
-         
+
         CalculateInventory.topASR.sprite = transparent;
         CalculateInventory.otherASR.sprite = transparent;
         CalculateInventory.everythingASR.sprite = transparent;
         CalculateInventory.shoeASR.sprite = transparent;
 
 
-        
-        blackPants.enabled = true;
-        whiteShirt.enabled = true;
 
-        whiteShirtS.enabled = true;
-        blackPantsS.enabled = true;
-        
+        CalculateInventory.blackPants.enabled = true;
+        CalculateInventory.whiteShirt.enabled = true;
 
-        if(CalculateInventory.wearingWorkCloth)
+        CalculateInventory.whiteShirtS.enabled = true;
+        CalculateInventory.blackPantsS.enabled = true;
+
+
+        if (CalculateInventory.wearingWorkCloth)
         {
             CalculateInventory.workShoeASR.enabled = true;
 
@@ -603,10 +642,14 @@ public class ClothChanging : MonoBehaviour
             CalculateInventory.workShoeSR.enabled = true;
             CalculateInventory.workShoeSSR.enabled = true;
 
-            workCloth.enabled = true;
-            workClothS.enabled = true;
+            CalculateInventory.workCloth.enabled = true;
+            CalculateInventory.workClothS.enabled = true;
             CalculateInventory.workClothASR.enabled = true;
 
+            if (FinalCameraController.isTutorial)
+            {
+                FinalCameraController.TutorialManager.wearNothing = false;
+            }
         }
         else
         {
@@ -614,13 +657,18 @@ public class ClothChanging : MonoBehaviour
             CalculateInventory.workShoeSR.enabled = false;
             CalculateInventory.workShoeSSR.enabled = false;
 
-            workCloth.enabled = false;
-            workClothS.enabled = false;
+            CalculateInventory.workCloth.enabled = false;
+            CalculateInventory.workClothS.enabled = false;
             CalculateInventory.workClothASR.enabled = false;
 
-        }
-        
-        
+            if (FinalCameraController.isTutorial)
+            {
+                FinalCameraController.TutorialManager.wearNothing = true;
+
+
+            }
+
+
 //        //enable all buttons
 //        for (var i = 0; i < inventoryButtonList.Count; i++)
 //        {
@@ -632,7 +680,8 @@ public class ClothChanging : MonoBehaviour
 //        {
 //            CalculateInventory.inventoryCheckList[i].enabled = false;
 //        }
-        
+
+        }
     }
 
     public void CancelReturn()
