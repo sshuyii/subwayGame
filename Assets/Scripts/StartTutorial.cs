@@ -17,11 +17,16 @@ public class StartTutorial : MonoBehaviour
     public CanvasGroup MachineGroup;
     public bool isComic0;
     public bool isComic1;
+    public bool isComic2;
+    public bool isComic3;
+
     private bool isTutorial;
 
 
     public GameObject comic1;
     public GameObject comic2;
+    public GameObject comic3;
+    
    
     
 
@@ -65,8 +70,13 @@ public class StartTutorial : MonoBehaviour
             else
             {
                 isComic1 = false;
-                isTutorial = true;
+                isComic2 = true;
             }
+        }
+        else if(isComic3)
+        {
+            comic3.GetComponent<Image>().enabled = true;
+            isTutorial = true;
         }
     }
     
@@ -129,6 +139,7 @@ public class StartTutorial : MonoBehaviour
             SceneManager.LoadScene("TutorialScene", LoadSceneMode.Single);
 
         }
+      
         if(isComic0 == false)
         {
             isComic1 = true;
@@ -152,6 +163,10 @@ public class StartTutorial : MonoBehaviour
 //            {
 //                SceneManager.LoadScene("TutorialScene", LoadSceneMode.Single);
 //            }
+        }
+        if(isComic2)
+        {
+            isComic3 = true;
         }
 
     }

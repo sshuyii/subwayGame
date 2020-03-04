@@ -164,9 +164,10 @@ public class SubwayMovement : MonoBehaviour
         //this timer is specifically used for station0
         timer += Time.deltaTime;
         
-
-        NumberRecalculate(realTimer, ClothCountDownText);
-
+        if(!FinalCameraController.isTutorial)
+        {
+            NumberRecalculate(realTimer, ClothCountDownText);
+      
         //start the timer once the train's in station
         if (!isMoving)
         {
@@ -178,7 +179,7 @@ public class SubwayMovement : MonoBehaviour
             CountDownTimer.text = "";
             stationTimer = stayTime;
         }
-        
+        }
         //decide which station is highlighted on screen
         if (isMoving == false)
         {
@@ -327,29 +328,36 @@ public class SubwayMovement : MonoBehaviour
             }
                 
             print("bagNum = " + bagNum);
+            
             //如果拿了第一包衣服，那么再产生的包要出现在第一包衣服而不是第三包
-
+            int emptyNum = 0;
             int firstEmptyPos = 0;
-
             for (int i = 0; i < 3; i++)
             {
-                if (bagPosAvailable[i] == false)
+                if (bagPosAvailable[i] == false)//get the first empty bag position
                 {
                     firstEmptyPos = i;
                     break;
                 }
-                
-                
+                else
+                {
+                    emptyNum++;
+                }   
             }
-            bag = Instantiate(NameToStationBags[stationNum.ToString()][randomIndex], bagPos[firstEmptyPos],
-                    Quaternion.identity) as Button;
-            //this position is occupied by a bag
-            bagPosAvailable[firstEmptyPos] = true;
             
-            bagNum++;
-            bag.transform.SetParent(clothBagGroup.transform, false);
-            previousIndex = randomIndex;
+            //only generate a new bag if there is an empty position
+            if(emptyNum < 3)
+            {
+                bag = Instantiate(NameToStationBags[stationNum.ToString()][randomIndex], bagPos[firstEmptyPos],
+                    Quaternion.identity) as Button;
+                //this position is occupied by a bag
+                bagPosAvailable[firstEmptyPos] = true;
 
+                bag.GetComponent<ClothToMachine>().myBagPosition = firstEmptyPos;
+                bagNum++;
+                bag.transform.SetParent(clothBagGroup.transform, false);
+            }
+            previousIndex = randomIndex;
         }
     }
     

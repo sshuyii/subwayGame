@@ -28,6 +28,9 @@ public class ClothToMachine : MonoBehaviour
     private int hitTime;
 
     private Image myImage;
+
+    public int myBagPosition;
+
     
     //a timer to record how much time has passed since the bag is on the car
     private float bagTimer = 0f;
@@ -63,32 +66,35 @@ public class ClothToMachine : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //如果还没转够整整一圈，enable timer
         if(bagTimer < 3 * SubwayMovement.moveTime + 4 * SubwayMovement.stayTime)
         {
             bagTimer += Time.deltaTime;
         }
-        else
+        else//if the train arrives the station for the second time
         {
             //应该再检测一下是不是在离开站台的瞬间
-            //没有洗好的衣服不要还
             //检测是否有一个finish的洗衣机，里面装着这个tag的衣服
-            if(alreadyWashed)
+            if(alreadyWashed)//if this bag is already washed
             {
                 AllMachines.currentBag = this.gameObject;
                 returnClothYes();
+                
+                //enable fish comic image
+                FinalCameraController.lateReturnComic = true;
             }
-            else if(!isOverdue)
+            else if(!isOverdue)//没有洗好的衣服不要还
             {
-                //overdue
+                //instantiate an overdue label
                 GameObject overdue = Instantiate(AllMachines.Overdue, this.gameObject.transform.position, Quaternion.identity);
                 overdue.transform.SetParent(this.gameObject.transform);
                 isOverdue = true;
-
             }
         }
-        
     }
 
+   
+    
     private void ChangeToUnderwear()
     {
          
@@ -206,10 +212,9 @@ public class ClothToMachine : MonoBehaviour
                         FinalCameraController.TutorialManager.KararaStandingImage.enabled = false;
                         FinalCameraController.TutorialManager.tutorialNumber = 3;
                         FinalCameraController.TutorialManager.scrollControl(true);
-
                     }
                     
-//                    //get machine start washing
+                    //get machine start washing
                     if (WasherControllerList[i].myMachineState == AllMachines.MachineState.empty)
                     {
                         WasherControllerList[i].myMachineState = AllMachines.MachineState.bagUnder;
@@ -223,15 +228,14 @@ public class ClothToMachine : MonoBehaviour
                         if (i == 0)
                         {
                             myHSS.GetComponent<HorizontalScrollSnap>().GoToScreen(2);
-
                         }
                         else
                         {
                             myHSS.GetComponent<HorizontalScrollSnap>().GoToScreen(3);
-
                         }
                         
-                       
+                        //change the bag position to be empty again
+                        SubwayMovement.bagPosAvailable[myBagPosition] = false;
 
                         hitTime++;
                         break;

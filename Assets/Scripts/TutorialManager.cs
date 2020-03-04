@@ -182,7 +182,6 @@ public class TutorialManager : MonoBehaviour
             myText.text = "Put clothes into the machine!";
             arrow.enabled = false;
             Hide(arrowButton);
-
             
         }
         else if (tutorialNumber == 5)

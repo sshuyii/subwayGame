@@ -7918,6 +7918,7 @@ MonoBehaviour:
   openedDoor: {fileID: 21300000, guid: a9eb8caa1c7b044118146f8ad9269ebd, type: 3}
   closedDoor: {fileID: 21300000, guid: c2a74a361617c45f0a5821798d9897e4, type: 3}
   noticeParent: {fileID: 1012601518}
+  Overdue: {fileID: 0}
   alreadyNotice: 0
   openBags:
   - {fileID: 21300000, guid: 09de337618c524862bf5aeed7bae35b2, type: 3}
@@ -19661,12 +19662,12 @@ MonoBehaviour:
   discoSubway: {fileID: 21300000, guid: 9b75634256ed64a9a9973127f5d6fe57, type: 3}
   discoCloset: {fileID: 21300000, guid: c8412f01bb11c4ec89f5709df21e3f28, type: 3}
   discoAd: {fileID: 21300000, guid: 938afc126aa9b4284914d71cb4767107, type: 3}
-  workCloth: {fileID: 0}
-  whiteShirt: {fileID: 0}
-  blackPants: {fileID: 0}
-  workClothS: {fileID: 0}
-  whiteShirtS: {fileID: 0}
-  blackPantsS: {fileID: 0}
+  workCloth: {fileID: 224059492}
+  whiteShirt: {fileID: 1593957496}
+  blackPants: {fileID: 1818841775}
+  workClothS: {fileID: 1944355956}
+  whiteShirtS: {fileID: 1196509141}
+  blackPantsS: {fileID: 626910529}
   allBagTimer: 
 --- !u!4 &1039549652
 Transform:
@@ -30621,10 +30622,7 @@ MonoBehaviour:
   arrow: {fileID: 217866954}
   doorMovement: 0.02
   doorWidth: 1.9
-  arrows:
-  - {fileID: 1733801328}
-  - {fileID: 974669588}
-  - {fileID: 1055725218}
+  bagPosAvailable: 
   highlights:
   - {fileID: 28557407}
   - {fileID: 1076505695}
@@ -30638,6 +30636,7 @@ MonoBehaviour:
   clothBagGroup: {fileID: 1406092518}
   dSR1: {fileID: 1000878047}
   dSR2: {fileID: 1515656813}
+  bagNum: 0
   stationNames: []
   isMoving: 0
   left1: {fileID: 437684155}
@@ -31465,6 +31464,8 @@ MonoBehaviour:
   startSprite: {fileID: 21300000, guid: bedd7e922dc8c4e0c88213015a4f9254, type: 3}
   clothCG: {fileID: 195743339}
   messageCG: {fileID: 1565178006}
+  lateReturnComic: 0
+  lateReturnImage: {fileID: 0}
   lastAppState: 0
   mySubwayState: 0
   alreadyNotice: 0

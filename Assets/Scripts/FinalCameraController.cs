@@ -30,6 +30,10 @@ public class FinalCameraController : MonoBehaviour
 
     public CanvasGroup clothCG;
     public CanvasGroup messageCG;
+
+    public bool lateReturnComic;
+    public Image lateReturnImage;
+
     
     public enum AppState
     {
@@ -100,7 +104,6 @@ public class FinalCameraController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
         myCameraState = CameraState.Subway;
         myAppState = AppState.Mainpage;
         
@@ -150,11 +153,12 @@ public class FinalCameraController : MonoBehaviour
         {
             myHSS.GoToScreen(1);
         }
-        
-        
-        
-        
-        
+
+        if (lateReturnComic)
+        {
+            GoSubwayPart();
+            lateReturnImage.enabled = true;
+        }
         
         if (TouchController.isSwiping == true)
         {
@@ -299,6 +303,12 @@ public class FinalCameraController : MonoBehaviour
         }
     }
 
+    public void clickLateComic()
+    {
+        lateReturnComic = false;
+        lateReturnImage.enabled = false;
+    }
+    
     public void AppBackButton()
     {
        if (myAppState == AppState.Post)
