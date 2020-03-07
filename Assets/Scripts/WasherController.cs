@@ -43,6 +43,7 @@ public class WasherController : MonoBehaviour
     private FinalCameraController FinalCameraController;
     private CalculateInventory CalculateInventory;
 
+    public int clothNum;
 
 //    private Button[] btns;
     private int shut = 0;
@@ -58,7 +59,7 @@ public class WasherController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        clothNum = buttons.Length;
         myMachineState = AllMachines.MachineState.empty;
 
         myAnimator = GetComponentInChildren<Animator>();
@@ -94,7 +95,18 @@ public class WasherController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+       
+        //close door if there is no cloth in machine
+        if (clothNum == 0 && shut == 1)
+        {
+            shut = 0;
+            Hide(ClothUI);
+            StartCoroutine(MachineFold());
+            //ClothUiAnimator.SetBool("isUnfold",false);
+            DoorImage.sprite = AllMachines.closedDoor;
+        }
 
+        
         realTimer = AllMachines.washTime - timer;
         if (Mathf.RoundToInt(timer / 60) < 10)
         {
@@ -274,9 +286,7 @@ public class WasherController : MonoBehaviour
                     
                     FinalCameraController.TutorialManager.door.GetComponent<Image>().material.DisableKeyword("SHAKEUV_ON");
                     FinalCameraController.TutorialManager.cloth.GetComponent<Image>().material.DisableKeyword("SHAKEUV_ON");
-
                 }
-                
             }
             //if click machine again, close UI
             else if (shut == 1)
@@ -288,8 +298,6 @@ public class WasherController : MonoBehaviour
                 
                 //change door to closed
                 DoorImage.sprite = AllMachines.closedDoor;
-
-
             }
         }
 
@@ -382,13 +390,11 @@ public class WasherController : MonoBehaviour
                 buttonImage.sprite = AllMachines.TutorialCloth;
 
                 MachineClothList.Add(buttonImage.sprite);
-
             }
             else if (AllMachines.CustomerNameList.Contains(tagName))
             {
                 print("isGeneratingCloth");
                 GenerateClothAccordingToTag(tagName, MachineClothList);
-
             }
 //            else if(tagName == "Alex")
 //            {

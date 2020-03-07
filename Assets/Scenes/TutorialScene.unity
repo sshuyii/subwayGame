@@ -308,6 +308,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 983fcfa504c9f497ca53462b46b56cbd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myBagPosition: 0
   isReady: 0
 --- !u!114 &16146071
 MonoBehaviour:
@@ -470,7 +471,7 @@ RectTransform:
   m_LocalScale: {x: 1.9995608, y: 2.0002756, z: 0.9999091}
   m_Children: []
   m_Father: {fileID: 1431000928}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 16.99}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -780,7 +781,7 @@ RectTransform:
   m_LocalScale: {x: 0.7, y: 0.7, z: 1.0000718}
   m_Children: []
   m_Father: {fileID: 1431000928}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1273,6 +1274,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 983fcfa504c9f497ca53462b46b56cbd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myBagPosition: 0
   isReady: 0
 --- !u!114 &55767209
 MonoBehaviour:
@@ -2293,7 +2295,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1138886479}
   m_Direction: 0
   m_Value: 0.49999967
-  m_Size: 0.4615384
+  m_Size: 0.46153843
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -5553,6 +5555,7 @@ MonoBehaviour:
   isFirstOpen: 1
   DoorImage: {fileID: 0}
   myMachineState: 0
+  clothNum: 0
   buttons:
   - {fileID: 1307459554}
   - {fileID: 1893605454}
@@ -7079,6 +7082,7 @@ MonoBehaviour:
   isFirstOpen: 1
   DoorImage: {fileID: 0}
   myMachineState: 1
+  clothNum: 0
   buttons:
   - {fileID: 1220018250}
   - {fileID: 125443779}
@@ -9838,6 +9842,7 @@ MonoBehaviour:
   isFirstOpen: 1
   DoorImage: {fileID: 1770701621}
   myMachineState: 0
+  clothNum: 0
   buttons:
   - {fileID: 938345495}
 --- !u!224 &500576549
@@ -12088,7 +12093,7 @@ RectTransform:
   m_LocalScale: {x: 1.5, y: 1.8, z: 1}
   m_Children: []
   m_Father: {fileID: 1431000928}
-  m_RootOrder: 2
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -0.23}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -16461,8 +16466,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 465707649}
   m_HandleRect: {fileID: 465707647}
   m_Direction: 2
-  m_Value: 1
-  m_Size: 0.8035713
+  m_Value: 1.0000002
+  m_Size: 0.8035714
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -18464,6 +18469,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 983fcfa504c9f497ca53462b46b56cbd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myBagPosition: 0
   isReady: 0
 --- !u!114 &992414587
 MonoBehaviour:
@@ -18863,6 +18869,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 983fcfa504c9f497ca53462b46b56cbd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myBagPosition: 0
   isReady: 0
 --- !u!114 &1010318770
 MonoBehaviour:
@@ -24388,7 +24395,7 @@ RectTransform:
   m_LocalScale: {x: 1.0004233, y: 1.0001378, z: 0.9999091}
   m_Children: []
   m_Father: {fileID: 1431000928}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -26617,6 +26624,7 @@ MonoBehaviour:
   isFirstOpen: 1
   DoorImage: {fileID: 0}
   myMachineState: 1
+  clothNum: 0
   buttons:
   - {fileID: 638831562}
   - {fileID: 478168948}
@@ -27159,6 +27167,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 983fcfa504c9f497ca53462b46b56cbd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myBagPosition: 0
   isReady: 0
 --- !u!114 &1397944438
 MonoBehaviour:
@@ -28073,10 +28082,10 @@ RectTransform:
   m_Children:
   - {fileID: 597204046}
   - {fileID: 1518452663}
-  - {fileID: 624908224}
   - {fileID: 37270310}
   - {fileID: 1269546105}
   - {fileID: 21585881}
+  - {fileID: 624908224}
   - {fileID: 518576193}
   m_Father: {fileID: 128282055}
   m_RootOrder: 13
@@ -30545,7 +30554,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 180549296}
   m_HandleRect: {fileID: 180549295}
   m_Direction: 0
-  m_Value: 0.49999815
+  m_Value: 0.49999854
   m_Size: 0.89599985
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -37818,6 +37827,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 983fcfa504c9f497ca53462b46b56cbd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myBagPosition: 0
   isReady: 0
 --- !u!114 &1960112339
 MonoBehaviour:

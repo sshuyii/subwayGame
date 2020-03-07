@@ -104,7 +104,6 @@ public class AllMachines : MonoBehaviour
         nameToTemp.Add("Alex", alexClothesTemp);
         nameToTemp.Add("Nami", namiClothesTemp);
 
-
     }
 
     // Update is called once per frame

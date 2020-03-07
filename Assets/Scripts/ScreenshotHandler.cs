@@ -41,6 +41,10 @@ public class ScreenshotHandler : MonoBehaviour
     public CanvasGroup myFlash;
     private bool flash = false;
     
+    //two ads that need to be generated
+    public GameObject thirdAd;
+    public GameObject fourthAd;
+    
     void Awake()
     {
     }
@@ -70,18 +74,13 @@ public class ScreenshotHandler : MonoBehaviour
                 {
                     myFlash.alpha = 0;
                     flash = false;
-                
                 }
-
             }
             else
             {
                 FinalCameraController.TutorialManager.pressScreenshot = true;
                 flash = false;
-
             }
-           
-            
         }
     }
 
@@ -310,6 +309,17 @@ public class ScreenshotHandler : MonoBehaviour
 //        takeScreenshotOnNextFrame = true;
         //ScreenCapture.CaptureScreenshot(Application.dataPath + "/Resources/Screenshots/CameraScreenshot.png");
         
+        InstagramController.usedAdsList.Add(photoBackground.GetComponent<Image>().sprite.name);
+        
+        //enable new posters for chapter one
+        if (photoBackground.GetComponent<Image>().sprite.name == "FruitStand")
+        {
+            thirdAd.SetActive(true);
+        }
+        else if(photoBackground.GetComponent<Image>().sprite.name == "RV")
+        {
+            fourthAd.SetActive(true);
+        }
         
         TakeScreenshot(width, height);
         

@@ -20,6 +20,7 @@ public class SubwayMovement : MonoBehaviour
     public float doorMovement;
     public float doorWidth;
 
+    public bool outsideStation = true;
 
     public List<bool> bagPosAvailable = new List<bool>();
     //public List<GameObject> arrows;
@@ -168,17 +169,17 @@ public class SubwayMovement : MonoBehaviour
         {
             NumberRecalculate(realTimer, ClothCountDownText);
       
-        //start the timer once the train's in station
-        if (!isMoving)
-        {
-            stationTimer -= Time.deltaTime;
-            NumberRecalculate(stationTimer, CountDownTimer);
-        }
-        else
-        {
-            CountDownTimer.text = "";
-            stationTimer = stayTime;
-        }
+            //start the timer once the train's in station
+            if (!isMoving)
+            {
+                stationTimer -= Time.deltaTime;
+                NumberRecalculate(stationTimer, CountDownTimer);
+            }
+            else
+            {
+                CountDownTimer.text = "";
+                stationTimer = stayTime;
+            }
         }
         //decide which station is highlighted on screen
         if (isMoving == false)

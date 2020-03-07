@@ -55,16 +55,13 @@ public class ChangeBackground :MonoBehaviour
             {
 //              if (InstagramController.AdAlreadyTakenList[transform.name])
 //              {
-
-               
                 if (FinalCameraController.isTutorial && FinalCameraController.TutorialManager.tutorialNumber == 0)
-                {
+                {                                                                                                                                                                     
                     //cancel dialogues and the touch tutorial
                     TutorialManager.DoDialogues(false);
                     TutorialManager.myText.text = "";
                     TutorialManager.nameTag.text = "";
                     //TutorialManager.touchImage.enabled = false;
-
                      
                     photoBackground.sprite = InstagramController.allBackAd[transform.name];
                     InstagramController.currentBackground = transform.name;
@@ -83,7 +80,6 @@ public class ChangeBackground :MonoBehaviour
                     InstagramController.currentBackground = transform.name;
 
                     FinalCameraController.GoAdvertisement();
-                        
                 }
 
 //              }

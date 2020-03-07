@@ -219,7 +219,6 @@ public class ClothChanging : MonoBehaviour
                 }
             }
         }
-
     }
 
     public void ReturnClothNo()

@@ -36,25 +36,24 @@ public class DoInventory : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //print("items in inventory = " + CalculateInventory.inventory.Count);
-
-
 
     }
 
     public void AddClothToInventory()
     {
         
-        
         //print("pressed");
+        //get the machine this cloth belongs to
+        //if all clothes in the machine are taken, close door
+        GetComponentInParent<WasherController>().clothNum--;    
+        
+        
         selfButton = GetComponent<Button>();
         currentSprite = selfButton.image.sprite;
         print("currentSpriteName = " + currentSprite.name);
 
-
         Sprite buttonSprite = currentSprite;
         print("SpriteName = " + currentSprite.name);
-
 
         print("occupiedI = " + CalculateInventory.occupiedI);
         
@@ -65,13 +64,11 @@ public class DoInventory : MonoBehaviour
         if(CalculateInventory.occupiedI < 6)
         {
             CalculateInventory.occupiedI++;
-
         }
         else
         {
             return;
             CalculateInventory.occupiedI = 1;
-            
         }
         
         //for tutorial
@@ -80,7 +77,6 @@ public class DoInventory : MonoBehaviour
             FinalCameraController.TutorialManager.tutorialNumber = 10;
             //in tutorial, if click a cloth, cloth the entire ui interface
             WasherController.clickMachine();
-
         }
 
         

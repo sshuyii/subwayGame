@@ -66,29 +66,33 @@ public class ClothToMachine : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //如果还没转够整整一圈，enable timer
-        if(bagTimer < 3 * SubwayMovement.moveTime + 4 * SubwayMovement.stayTime)
+        if(!FinalCameraController.isTutorial)
         {
-            bagTimer += Time.deltaTime;
-        }
-        else//if the train arrives the station for the second time
-        {
-            //应该再检测一下是不是在离开站台的瞬间
-            //检测是否有一个finish的洗衣机，里面装着这个tag的衣服
-            if(alreadyWashed)//if this bag is already washed
+            //如果还没转够整整一圈，enable timer
+            if (bagTimer < 3 * SubwayMovement.moveTime + 4 * SubwayMovement.stayTime)
             {
-                AllMachines.currentBag = this.gameObject;
-                returnClothYes();
-                
-                //enable fish comic image
-                FinalCameraController.lateReturnComic = true;
+                bagTimer += Time.deltaTime;
             }
-            else if(!isOverdue)//没有洗好的衣服不要还
+            else //if the train arrives the station for the second time
             {
-                //instantiate an overdue label
-                GameObject overdue = Instantiate(AllMachines.Overdue, this.gameObject.transform.position, Quaternion.identity);
-                overdue.transform.SetParent(this.gameObject.transform);
-                isOverdue = true;
+                //应该再检测一下是不是在离开站台的瞬间
+                //检测是否有一个finish的洗衣机，里面装着这个tag的衣服
+                if (alreadyWashed) //if this bag is already washed
+                {
+                    AllMachines.currentBag = this.gameObject;
+                    returnClothYes();
+
+                    //enable fish comic image
+                    FinalCameraController.lateReturnComic = true;
+                }
+                else if (!isOverdue) //没有洗好的衣服不要还
+                {
+                    //instantiate an overdue label
+                    GameObject overdue = Instantiate(AllMachines.Overdue, this.gameObject.transform.position,
+                        Quaternion.identity);
+                    overdue.transform.SetParent(this.gameObject.transform);
+                    isOverdue = true;
+                }
             }
         }
     }
@@ -255,8 +259,6 @@ public class ClothToMachine : MonoBehaviour
                 {
                     FinalCameraController.TutorialManager.tutorialNumber = 4;
                     FinalCameraController.TutorialManager.bag.GetComponent<Image>().material.DisableKeyword("SHAKEUV_ON");
-
-
                 }
 
                 for (int i = 0; i < AllMachines.WashingMachines.Count; i++)
@@ -264,12 +266,15 @@ public class ClothToMachine : MonoBehaviour
                     //get machine start washing
                     if (WasherControllerList[i].myMachineState == AllMachines.MachineState.bagUnder)
                     {
-                        WasherControllerList[i].myMachineState = AllMachines.MachineState.full;
-                        //change machine tags to character
-                        WasherControllerList[i].transform.gameObject.tag = this.transform.gameObject.tag;
+                        if(WasherControllerList[i].transform.CompareTag(this.transform.gameObject.tag))
+                        {
+                            WasherControllerList[i].myMachineState = AllMachines.MachineState.full;
+//                        //change machine tags to character
+//                        WasherControllerList[i].transform.gameObject.tag = this.transform.gameObject.tag;
 
-                        hitTime++;
-                        break;
+                            hitTime++;
+                            break;
+                        }
                     }
                 }
                 
@@ -277,7 +282,6 @@ public class ClothToMachine : MonoBehaviour
             //return clothes
             else if (hitTime > 1)
             {
-               
 //                else
 //                {
                     //get the machine with clothes from this bag

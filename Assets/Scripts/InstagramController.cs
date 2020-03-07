@@ -101,7 +101,7 @@ public class InstagramController : MonoBehaviour
     public bool followNico;
     public bool followDesigner;
 
-    
+    public List<string> usedAdsList = new List<string>();
     // Start is called before the first frame update
     void Start()
     {

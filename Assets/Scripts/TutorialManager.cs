@@ -140,7 +140,6 @@ public class TutorialManager : MonoBehaviour
             mat.DisableKeyword("SHAKEUV_ON");
             mat.DisableKeyword("DOODLE_ON");
         }
-
     }
 
     // Update is called once per frame
@@ -252,8 +251,7 @@ public class TutorialManager : MonoBehaviour
         {
             myText.text = "How do I look! I should take a picture!";
             arrow.enabled = true;
-            Show(arrowButton);
-
+            Hide(arrowButton);
 
             tutorialNumber = 13;
         }
@@ -580,6 +578,7 @@ public class TutorialManager : MonoBehaviour
 
     public void DialogueArrowButton()
     {
+        print("clickedddddddddddddd");
         if (tutorialNumber == 2)
         {
             arrow.enabled = true;
@@ -587,7 +586,7 @@ public class TutorialManager : MonoBehaviour
 
             if(clicktime == 0)
             {
-                StartCoroutine(ChangeText("Good that you are already wearing the workcloth.",true));
+                StartCoroutine(ChangeText("Good that you are already wearing the workwear.",true));
                  
             }
             else if (clicktime == 1)
@@ -630,7 +629,7 @@ public class TutorialManager : MonoBehaviour
             }
             else if (clicktime == 4)
             {
-                myText.text = "Good that you are already wearing the workcloth.";
+                myText.text = "Good that you are already wearing the workwear.";
                 
                 clicktime++;
 
@@ -658,7 +657,6 @@ public class TutorialManager : MonoBehaviour
         {
             if (clicktime == 5)
             {
-                
                 //这时能点衣服
                 foreach (var button in ClothUIButtons)
                 {
