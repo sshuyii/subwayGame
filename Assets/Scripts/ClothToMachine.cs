@@ -317,8 +317,15 @@ public class ClothToMachine : MonoBehaviour
                                         FinalCameraController.generatedNotice = Instantiate(AllMachines.returnNotice,
                                             new Vector3(0, 0, 0),
                                             Quaternion.identity, WasherControllerList[i].gameObject.transform);
+                                        if (i == 1)
+                                        {
+                                            FinalCameraController.generatedNotice.transform.SetParent(WasherControllerList[2].gameObject.transform);
+                                        }
+                                        else
+                                        {
+                                            FinalCameraController.generatedNotice.transform.SetParent(WasherControllerList[i].gameObject.transform);
 
-                                    
+                                        }
                                         FinalCameraController.alreadyNotice = true;
 
                                     }

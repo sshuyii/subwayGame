@@ -27,7 +27,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1630564389944166422}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -7.95}
+  m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_Children:
   - {fileID: 8750866145400299667}
@@ -88,6 +88,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 983fcfa504c9f497ca53462b46b56cbd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myBagPosition: 0
+  isReady: 0
 --- !u!1 &4648509231977690181
 GameObject:
   m_ObjectHideFlags: 0

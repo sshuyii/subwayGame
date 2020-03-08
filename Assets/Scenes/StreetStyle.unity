@@ -2005,6 +2005,7 @@ MonoBehaviour:
   stationSprite: {fileID: 0}
   isStation: 1
   stationSpeed: 0
+  transitionSpeed: 0
 --- !u!212 &78318110
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -9107,6 +9108,7 @@ MonoBehaviour:
   stationSprite: {fileID: 0}
   isStation: 0
   stationSpeed: 0
+  transitionSpeed: 0
 --- !u!212 &454510399
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -12195,6 +12197,7 @@ MonoBehaviour:
   stationSprite: {fileID: 21300000, guid: 0c7670ef22f1f4b0ea077349530f28c0, type: 3}
   isStation: 1
   stationSpeed: 0.1
+  transitionSpeed: 0
 --- !u!1 &629559647
 GameObject:
   m_ObjectHideFlags: 0
@@ -12798,6 +12801,7 @@ MonoBehaviour:
   stationSprite: {fileID: 0}
   isStation: 1
   stationSpeed: 0
+  transitionSpeed: 0
 --- !u!212 &647971483
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -21237,6 +21241,7 @@ MonoBehaviour:
   stationSprite: {fileID: 0}
   isStation: 1
   stationSpeed: 0
+  transitionSpeed: 0
 --- !u!212 &1050464606
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -23391,6 +23396,7 @@ MonoBehaviour:
   stationSprite: {fileID: 21300000, guid: 4edff32631dfd41baafb586f455e139f, type: 3}
   isStation: 1
   stationSpeed: 0.4
+  transitionSpeed: 0
 --- !u!212 &1184108613
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -28781,6 +28787,7 @@ MonoBehaviour:
   stationSprite: {fileID: 0}
   isStation: 0
   stationSpeed: 0
+  transitionSpeed: 0
 --- !u!1 &1453549898
 GameObject:
   m_ObjectHideFlags: 0
