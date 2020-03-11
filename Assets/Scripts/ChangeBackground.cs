@@ -48,7 +48,7 @@ public class ChangeBackground :MonoBehaviour
 
     public void clickBackground()
     {
-
+        FinalCameraController.CancelAllUI();
         if(FinalCameraController.alreadyClothUI == false)
         {
             if (FinalCameraController.isSwipping == false)

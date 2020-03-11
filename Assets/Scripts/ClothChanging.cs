@@ -191,7 +191,6 @@ public class ClothChanging : MonoBehaviour
 
     public void ReturnCloth()
     {
-
         print("return cloth is working");
         if(FinalCameraController.TouchController.doubleTouch)
         {
@@ -227,7 +226,7 @@ public class ClothChanging : MonoBehaviour
     }
 
 
-    private void takeOffCloth()
+    private void takeOffCloth() 
     {
         if (currentSprite.name.Contains("Top"))
         {
@@ -248,7 +247,7 @@ public class ClothChanging : MonoBehaviour
             //change clothes in advertisement
             CalculateInventory.topASR.sprite = transparent;
                 
-            CalculateInventory.whiteShirtASR.sprite = CalculateInventory.allCloth["WhiteShirt"];
+            CalculateInventory.whiteShirtASR.sprite = CalculateInventory.allAdCloth["WhiteShirt"];
         }
         else if (currentSprite.name.Contains("Bottom"))
         {
@@ -659,11 +658,13 @@ public class ClothChanging : MonoBehaviour
             CalculateInventory.workCloth.enabled = false;
             CalculateInventory.workClothS.enabled = false;
             CalculateInventory.workClothASR.enabled = false;
+            
+            CalculateInventory.whiteShirtASR.sprite = CalculateInventory.allAdCloth["WhiteShirt"];
+            CalculateInventory.blackPantsASR.sprite = CalculateInventory.allAdCloth["BlackPants"];
 
             if (FinalCameraController.isTutorial)
             {
                 FinalCameraController.TutorialManager.wearNothing = true;
-
 
             }
 

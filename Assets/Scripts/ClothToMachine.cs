@@ -84,6 +84,7 @@ public class ClothToMachine : MonoBehaviour
 
                     //enable fish comic image
                     FinalCameraController.lateReturnComic = true;
+                    //现在是，鱼老板直接帮忙把洗好又到站的衣服换了，没有其他惩罚，转到鱼老板界面，老板告诉karara没来得及还
                 }
                 else if (!isOverdue) //没有洗好的衣服不要还
                 {
@@ -203,6 +204,8 @@ public class ClothToMachine : MonoBehaviour
  
     public void putClothIn()
     {
+        FinalCameraController.CancelAllUI();
+
         if(FinalCameraController.isSwipping == false)
         {
             if (hitTime == 0)

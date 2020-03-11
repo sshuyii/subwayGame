@@ -1,13 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Net.Mime;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Networking.Match;
+using UnityEngine.EventSystems;
 using UnityEngine.UI.Extensions;
 using UnityEngine.UI;
+
 
 public class FinalCameraController : MonoBehaviour
 {
     public TouchController TouchController;
+    public AllMachines AllMachines;
 
     private bool fastSwipeBool;
 
@@ -16,6 +21,9 @@ public class FinalCameraController : MonoBehaviour
     public bool isSwipping = false;
     public bool isTutorial;
 
+    public CanvasGroup fishTalk;
+    public TextMeshProUGUI fishTalkText;
+    private bool isfishTalking = false;
     public HorizontalScrollSnap HorizontalScrollSnap;
     
     private HorizontalScrollSnap myHSS;
@@ -32,7 +40,6 @@ public class FinalCameraController : MonoBehaviour
     public CanvasGroup messageCG;
 
     public bool lateReturnComic;
-    public Image lateReturnImage;
 
     
     public enum AppState
@@ -112,6 +119,7 @@ public class FinalCameraController : MonoBehaviour
         pageList.Add(DesignerPage);
 
 
+        Hide(fishTalk);
         Hide(frontPage);
         Hide(postpage);
         HideAllPersonalPages();
@@ -119,15 +127,54 @@ public class FinalCameraController : MonoBehaviour
         myHSS = GameObject.Find("Horizontal Scroll Snap").GetComponent<HorizontalScrollSnap>();
         subwayScrollRect = GameObject.Find("Horizontal Scroll Snap").GetComponent<ScrollRect>();
 
+        fishTalkText = fishTalk.gameObject.GetComponentInChildren<TextMeshProUGUI>();
         //hide the UIs when click Karara
         Hide(clothCG);
         Hide(messageCG);
+
     }
 
 
+    public void CancelAllUI()
+    {
+        //touch anywhere on screen, close Karara UI
+        Hide(clothCG);
+        Hide(messageCG);
+        isShown = false;
+        //close fish talking
+        Hide(fishTalk);
+        if(alreadyNotice)
+        {
+            Hide(generatedNotice.GetComponent<CanvasGroup>());
+        }        for (int i = 0; i < AllMachines.WashingMachines.Count; i++)
+        {
+            Hide(AllMachines.WashingMachines[i].GetComponent<WasherController>().backgroundUI);
+            Hide(AllMachines.WashingMachines[i].GetComponent<WasherController>().ClothUI);
+        }
+    }
     // Update is called once per frame
     void Update()
     {
+        //code below doesn't work because it doesn't tell if is touch a button but UI element
+        // Check if there is a touch
+        if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
+        {
+            // Check if finger is over a UI element
+            if (EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))
+            {
+                Debug.Log("Touched the UI");
+            }
+            else
+            {
+//                //touch anywhere on screen, close Karara UI
+//                Hide(clothCG);
+//                Hide(messageCG);
+//                isShown = false;
+//                //close fish talking
+//                Hide(fishTalk);
+            }
+        }
+        
         //disable swipe before player click the poster
         if (isTutorial)
         {
@@ -156,8 +203,14 @@ public class FinalCameraController : MonoBehaviour
 
         if (lateReturnComic)
         {
+//            GoSubwayPart();
+//            lateReturnImage.enabled = true;
             GoSubwayPart();
-            lateReturnImage.enabled = true;
+            myHSS.GoToScreen(1);
+            Show(fishTalk);
+            fishTalkText.text = "Return your customers' clothes in time! How can you have such bad memory!";
+            lateReturnComic = false;
+
         }
         
         if (TouchController.isSwiping == true)
@@ -213,10 +266,25 @@ public class FinalCameraController : MonoBehaviour
             Hide(GoBack);
             //Show(basicUI);
             Hide(appBackground);
-
         }
     }
 
+    public void BossTalk()
+    {
+        CancelAllUI();
+        if(isfishTalking == false)
+        {
+            Show(fishTalk);
+            isfishTalking = true;
+            fishTalkText.text = "Concentrate on your work! Do the laundry!";
+        }
+        else
+        {
+            Hide(fishTalk);
+            isfishTalking = false;
+        }
+    }
+    
     void CheckScreenNum()
     {
         if (HorizontalScrollSnap.CurrentPage == 1)
@@ -242,6 +310,7 @@ public class FinalCameraController : MonoBehaviour
     {
         if(!isShown)
         {
+            CancelAllUI();
             Show(clothCG);
             Show(messageCG);
             isShown = true;
@@ -305,8 +374,13 @@ public class FinalCameraController : MonoBehaviour
 
     public void clickLateComic()
     {
-        lateReturnComic = false;
-        lateReturnImage.enabled = false;
+//        lateReturnComic = false;
+//        lateReturnImage.enabled = false;
+        Hide(fishTalk);
+
+
+         
+        print("clickLateComic");
     }
     
     public void AppBackButton()
@@ -382,10 +456,8 @@ public class FinalCameraController : MonoBehaviour
         if (isTutorial && TutorialManager.tutorialNumber == 15)
         {
             mySubwayState = SubwayState.Two;
-            myHSS.GetComponent<HorizontalScrollSnap>().GoToScreen(1);
+            myHSS.GetComponent<HorizontalScrollSnap>().GoToScreen(2);
             TutorialManager.tutorialNumber = 16;
-
-
         }
         
     }

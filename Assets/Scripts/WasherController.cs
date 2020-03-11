@@ -253,8 +253,26 @@ public class WasherController : MonoBehaviour
         shut = 0;
     }
 
+
+    public void clickMachineNewMethod()
+    {
+        if (myMachineState == AllMachines.MachineState.bagUnder)
+        {
+            
+        }
+        else if (myMachineState == AllMachines.MachineState.full)
+        {
+            ClickStart();
+        }
+        else if (myMachineState == AllMachines.MachineState.finished)
+        {
+            clickMachine();
+        }
+    }
+    
     public void clickMachine()
     {
+        FinalCameraController.CancelAllUI();
         print("presssssssed");
         if (myMachineState == AllMachines.MachineState.finished)
         {
@@ -265,19 +283,15 @@ public class WasherController : MonoBehaviour
 
                 StartCoroutine(MachineUnfold());
                 
-                //change door to open
-               
+                //change door sprite to open
                 DoorImage.sprite = AllMachines.openedDoor;
                 
                 //ClothUiAnimator.SetBool("isUnfold",true);
 
                 StartCoroutine("WaitFor2Seconds");
 
-                //Hide(AllClothUI);
-
                 GenerateCloth(this.transform.gameObject.tag);
 
-               
                 
                 //for tutorial
                 if (FinalCameraController.isTutorial)
@@ -296,7 +310,7 @@ public class WasherController : MonoBehaviour
                 StartCoroutine(MachineFold());
                 //ClothUiAnimator.SetBool("isUnfold",false);
                 
-                //change door to closed
+                //change door to closed sprite
                 DoorImage.sprite = AllMachines.closedDoor;
             }
         }

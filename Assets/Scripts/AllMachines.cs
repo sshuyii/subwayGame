@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class AllMachines : MonoBehaviour
 {
-    private WasherController WasherController;
+    //private WasherController WasherController;
 
     public GameObject currentBag;
 

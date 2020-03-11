@@ -145,8 +145,11 @@ public class SubwayMovement : MonoBehaviour
         
         //train stays at the first station for 30seconds
         //isMoving = false for 30 seconds, then isMoving = true for 60 seconds
-        InvokeRepeating("trainMove", stayTime, stayTime + moveTime);
-        InvokeRepeating("trainStop", stayTime + moveTime, stayTime + moveTime);
+//        InvokeRepeating("trainMove", stayTime, stayTime + moveTime);
+//        InvokeRepeating("trainStop", stayTime + moveTime, stayTime + moveTime);
+
+        Invoke("trainMove", stayTime);
+
 
     }
 
@@ -154,10 +157,32 @@ public class SubwayMovement : MonoBehaviour
     private Button clothBag1;
     private Button clothBag2;
     private Button clothBag3;
+
+    public float newTimer1;
+    public float newTimer2;
+
     
     // Update is called once per frame
     void Update()
     {
+        //instead of InvokeRepeating
+        if(!isMoving)
+        {
+            newTimer1 += Time.deltaTime;
+        }      
+        if(newTimer1 > stayTime)
+        {
+            trainMove();
+            newTimer1 = 0;
+        }
+          
+        newTimer2 += Time.deltaTime;
+        if (newTimer2 > stayTime + moveTime)
+        {
+            trainStop();
+            newTimer2 = 0;
+        }
+        
         //train needs 1 minute on its way
 //        print("currentStation = " + currentStation);
 //        print("isMoving =  " + isMoving);
@@ -362,7 +387,7 @@ public class SubwayMovement : MonoBehaviour
         }
     }
     
-    void trainMove()
+    public void trainMove()
     {
         if(currentStation < 2)
         {
@@ -375,7 +400,7 @@ public class SubwayMovement : MonoBehaviour
         isMoving = true;
     }
 
-    void trainStop()
+    public void trainStop()
     {
         isMoving = false;
         bagFirst = true;
@@ -533,13 +558,13 @@ public class SubwayMovement : MonoBehaviour
         
     }
     
-    void Hide(CanvasGroup UIGroup) {
+    public void Hide(CanvasGroup UIGroup) {
         UIGroup.alpha = 0f; //this makes everything transparent
         UIGroup.blocksRaycasts = false; //this prevents the UI element to receive input events
         UIGroup.interactable = false;
     }
     
-    void Show(CanvasGroup UIGroup) {
+    public void Show(CanvasGroup UIGroup) {
         UIGroup.alpha = 1f;
         UIGroup.blocksRaycasts = true;
         UIGroup.interactable = true;
