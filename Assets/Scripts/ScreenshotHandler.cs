@@ -12,11 +12,23 @@ public class ScreenshotHandler : MonoBehaviour
     
     public InstagramController InstagramController;
     private FinalCameraController FinalCameraController;
+    
+    //record what Karara is wearing
+    private string KararaTop;
+    private string KararaBottom;
+    private string KararaShoe;
+    private bool KararaWork;
 
+    public Image KararaTopImage;
+    public Image KararaBottomImage;
+    public Image KararaShoeImage;
+    public Image KararaWorkImage;
+
+    
     private int entryTime = 50;
 
     private GameObject toothpastePost;
-    private int postNum;
+    public int followerNum;
     private static ScreenshotHandler instance;
 
     public Camera myCamera;
@@ -54,15 +66,35 @@ public class ScreenshotHandler : MonoBehaviour
         instance = this;
         //myCamera = gameObject.GetComponent<Camera>();
         
+        
+        
         ScreenCapDirectory = Application.persistentDataPath;
         FinalCameraController = GetComponent<FinalCameraController>();
 
 //        postImage = GetComponent<Image>();
 //        print(postImage.name);
+
+        KararaTop = KararaTopImage.sprite.name;
+        KararaBottom = KararaBottomImage.sprite.name;
+        KararaShoe = KararaShoeImage.sprite.name;
+
+        
+        
     }
 
     private void Update()
     {
+
+        InstagramController.followerNum.text = followerNum.ToString();
+        if (KararaWorkImage.sprite.name == "workCloth")
+        {
+            KararaWork = true;
+        }
+        else
+        {
+            KararaWork = false;
+        }
+        
         
         if (flash)
         {
@@ -139,7 +171,30 @@ public class ScreenshotHandler : MonoBehaviour
             //change the post text
             textList[0].text = "<b>Karara</b> Best way to travel.";
             textList[1].text = "Today";
+            
+            //Add followers to Karara
+            if (KararaTop == "TopA1")
+            {
+                followerNum += 8;
+                print("asdfasdf;lkj;lkjasdf");
+            }
+            else
+            {
+                followerNum += 3;}
+            
 
+            if (KararaBottom == "BottomA1")
+            {
+                followerNum += 6;
+            }else
+            {
+                followerNum += 3;}
+
+            if (KararaWork)
+            {
+                followerNum += 2;
+            }
+                
         }
 //        else if (InstagramController.currentBackground == "Toothpaste")
 //        {

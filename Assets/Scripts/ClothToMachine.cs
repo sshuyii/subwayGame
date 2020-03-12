@@ -66,6 +66,19 @@ public class ClothToMachine : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(!isOverdue)
+        {
+            //find the machine that has the same tag with this bag
+            for (int i = 0; i < AllMachines.WashingMachines.Count; i++)
+            {
+                if (WasherControllerList[i].transform.CompareTag(this.transform.gameObject.tag) &&
+                    WasherControllerList[i].myMachineState == AllMachines.MachineState.finished)
+                {
+                    alreadyWashed = true;
+                    break;
+                }
+            }
+        }
         if(!FinalCameraController.isTutorial)
         {
             //如果还没转够整整一圈，enable timer
@@ -255,7 +268,6 @@ public class ClothToMachine : MonoBehaviour
                 //点第二次换成打开的包
                 print("tag = " + tag);
                 myImage.sprite = AllMachines.openBagsDic[this.tag];
-                alreadyWashed = true;
                 
                 //in tutorial
                 if (FinalCameraController.isTutorial)

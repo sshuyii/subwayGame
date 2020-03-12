@@ -349,8 +349,6 @@ public class FinalCameraController : MonoBehaviour
                 myCameraState = CameraState.Closet;
                 transform.position = new Vector3(-25, 0, -10);
             }
-            
-            print("Doesn't Hideeee");
         }
         else
         {
@@ -359,17 +357,7 @@ public class FinalCameraController : MonoBehaviour
             alreadyClothUI = false;
         }
 
-        if (isTutorial)
-        {
-            if(TutorialManager.tutorialNumber < 11)
-            {
-                TutorialManager.tutorialNumber = 11;
-            }        
-            else if (TutorialManager.tutorialNumber == 14)
-            {
-                TutorialManager.myText.text = "I'm pretty satisfied with my outfit. Where can I take a picture?";
-            }
-        }
+      
     }
 
     public void clickLateComic()
@@ -478,8 +466,6 @@ public class FinalCameraController : MonoBehaviour
             if (isSwipping == false)
             {
                 //transform.position = new Vector3(0, 0, -10);
-
-
                 lastCameraState = myCameraState;
                 myCameraState = CameraState.App;
                 myAppState = AppState.Mainpage;
@@ -493,7 +479,6 @@ public class FinalCameraController : MonoBehaviour
             Destroy(generatedNotice);
             Hide(currentClothUI);
             alreadyClothUI = false;
-
         }
 
         

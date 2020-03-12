@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Net.Mime;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEngine.UI;
@@ -102,6 +103,9 @@ public class InstagramController : MonoBehaviour
     public bool followDesigner;
 
     public List<string> usedAdsList = new List<string>();
+
+    public TextMeshProUGUI followerNum;
+    
     // Start is called before the first frame update
     void Start()
     {
