@@ -256,6 +256,8 @@ public class WasherController : MonoBehaviour
 
     public void clickMachineNewMethod()
     {
+        FinalCameraController.CancelAllUI();
+        
         if (myMachineState == AllMachines.MachineState.bagUnder)
         {
             

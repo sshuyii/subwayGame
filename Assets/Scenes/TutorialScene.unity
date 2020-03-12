@@ -1872,8 +1872,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 0.05
   endPoint: 7.4
-  stopSprite: {fileID: 0}
+  stationSprite: {fileID: 0}
   isStation: 0
+  stationSpeed: 0
+  transitionSpeed: 0
 --- !u!212 &84810806
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2140,6 +2142,79 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 100609601}
   m_CullTransparentMesh: 0
+--- !u!1 &102916273
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 102916274}
+  - component: {fileID: 102916276}
+  - component: {fileID: 102916275}
+  m_Layer: 5
+  m_Name: TutorialArrow
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &102916274
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 102916273}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 128282055}
+  m_RootOrder: 14
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 3068, y: 360}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &102916275
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 102916273}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: b7ab92cdc604d4d57a6c2664dccff0fe, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &102916276
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 102916273}
+  m_CullTransparentMesh: 0
 --- !u!1 &116776839
 GameObject:
   m_ObjectHideFlags: 0
@@ -2295,7 +2370,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1138886479}
   m_Direction: 0
   m_Value: 0.49999967
-  m_Size: 0.46153843
+  m_Size: 0.4615384
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -2778,6 +2853,7 @@ RectTransform:
   - {fileID: 964778980}
   - {fileID: 1012601519}
   - {fileID: 1431000928}
+  - {fileID: 102916274}
   m_Father: {fileID: 0}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -16466,8 +16542,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 465707649}
   m_HandleRect: {fileID: 465707647}
   m_Direction: 2
-  m_Value: 1.0000002
-  m_Size: 0.8035714
+  m_Value: 1
+  m_Size: 0.8035713
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -22608,6 +22684,8 @@ MonoBehaviour:
   unfollow: {fileID: 21300000, guid: 60dbf8537c3354252867b7dca31b671f, type: 3}
   followNico: 0
   followDesigner: 0
+  usedAdsList: []
+  followerNum: {fileID: 0}
 --- !u!4 &1197818958
 Transform:
   m_ObjectHideFlags: 0
@@ -30554,7 +30632,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 180549296}
   m_HandleRect: {fileID: 180549295}
   m_Direction: 0
-  m_Value: 0.49999854
+  m_Value: 0.49999815
   m_Size: 0.89599985
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -30631,6 +30709,7 @@ MonoBehaviour:
   arrow: {fileID: 217866954}
   doorMovement: 0.02
   doorWidth: 1.9
+  outsideStation: 1
   bagPosAvailable: 
   highlights:
   - {fileID: 28557407}
@@ -30661,6 +30740,8 @@ MonoBehaviour:
   bagStation1: []
   bagStation2: []
   CountDownTimer: {fileID: 0}
+  newTimer1: 0
+  newTimer2: 0
 --- !u!4 &1553826878
 Transform:
   m_ObjectHideFlags: 0
@@ -31428,9 +31509,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   InstagramController: {fileID: 1197818957}
+  KararaTopImage: {fileID: 0}
+  KararaBottomImage: {fileID: 0}
+  KararaShoeImage: {fileID: 0}
+  KararaWorkImage: {fileID: 0}
+  followerNum: 0
   myCamera: {fileID: 1205198114}
   photoBackground: {fileID: 540014177}
   myFlash: {fileID: 964778981}
+  thirdAd: {fileID: 0}
+  fourthAd: {fileID: 0}
 --- !u!224 &1595186207
 RectTransform:
   m_ObjectHideFlags: 0
@@ -31464,17 +31552,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TouchController: {fileID: 1013849935}
+  AllMachines: {fileID: 0}
   TutorialManager: {fileID: 1522229831}
   isSwipping: 0
   isTutorial: 1
+  fishTalk: {fileID: 0}
+  fishTalkText: {fileID: 0}
   HorizontalScrollSnap: {fileID: 1771495173}
-  subwayScrollRect: {fileID: 0}
+  subwayScrollRect: {fileID: 1771495174}
   ClothStation0: []
   startSprite: {fileID: 21300000, guid: bedd7e922dc8c4e0c88213015a4f9254, type: 3}
   clothCG: {fileID: 195743339}
   messageCG: {fileID: 1565178006}
   lateReturnComic: 0
-  lateReturnImage: {fileID: 0}
   lastAppState: 0
   mySubwayState: 0
   alreadyNotice: 0
@@ -34055,8 +34145,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 0.02
   endPoint: -23.24
-  stopSprite: {fileID: 0}
+  stationSprite: {fileID: 0}
   isStation: 0
+  stationSpeed: 0
+  transitionSpeed: 0
 --- !u!212 &1766605554
 SpriteRenderer:
   m_ObjectHideFlags: 0

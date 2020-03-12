@@ -123,7 +123,7 @@ public class SubwayMovement : MonoBehaviour
         currentStation = 0;
 
         stationTimer = stayTime;
-        CountDownTimer.text = "";
+//        CountDownTimer.text = "";
         
         //get all the doors position when game starts
         left1Pos = left1.transform.position.x;

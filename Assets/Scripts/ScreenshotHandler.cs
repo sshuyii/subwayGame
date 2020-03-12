@@ -74,9 +74,12 @@ public class ScreenshotHandler : MonoBehaviour
 //        postImage = GetComponent<Image>();
 //        print(postImage.name);
 
-        KararaTop = KararaTopImage.sprite.name;
-        KararaBottom = KararaBottomImage.sprite.name;
-        KararaShoe = KararaShoeImage.sprite.name;
+        if(!FinalCameraController.isTutorial)
+        {
+            KararaTop = KararaTopImage.sprite.name;
+            KararaBottom = KararaBottomImage.sprite.name;
+            KararaShoe = KararaShoeImage.sprite.name;
+        }
 
         
         
@@ -84,17 +87,18 @@ public class ScreenshotHandler : MonoBehaviour
 
     private void Update()
     {
-
-        InstagramController.followerNum.text = followerNum.ToString();
-        if (KararaWorkImage.sprite.name == "workCloth")
+        if(!FinalCameraController.isTutorial)
         {
-            KararaWork = true;
+            InstagramController.followerNum.text = followerNum.ToString();
+            if (KararaWorkImage.sprite.name == "workCloth")
+            {
+                KararaWork = true;
+            }
+            else
+            {
+                KararaWork = false;
+            }
         }
-        else
-        {
-            KararaWork = false;
-        }
-        
         
         if (flash)
         {

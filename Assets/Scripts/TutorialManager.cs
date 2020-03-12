@@ -444,6 +444,7 @@ public class TutorialManager : MonoBehaviour
                 {
                     DialogueImageList[a].enabled = true;
                     myText.text = "I should take a selfie in front of that poster";
+                    nameTag.text = "Karara";
                     arrow.enabled = false;
                     Hide(arrowButton);
 

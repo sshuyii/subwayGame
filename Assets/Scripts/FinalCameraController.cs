@@ -114,6 +114,8 @@ public class FinalCameraController : MonoBehaviour
         myCameraState = CameraState.Subway;
         myAppState = AppState.Mainpage;
         
+        myHSS = GameObject.Find("Horizontal Scroll Snap").GetComponent<HorizontalScrollSnap>();
+        subwayScrollRect = GameObject.Find("Horizontal Scroll Snap").GetComponent<ScrollRect>();
         pageList.Add(RetroPage);
         pageList.Add(KararaPage);
         pageList.Add(DesignerPage);
@@ -124,8 +126,7 @@ public class FinalCameraController : MonoBehaviour
         Hide(postpage);
         HideAllPersonalPages();
 
-        myHSS = GameObject.Find("Horizontal Scroll Snap").GetComponent<HorizontalScrollSnap>();
-        subwayScrollRect = GameObject.Find("Horizontal Scroll Snap").GetComponent<ScrollRect>();
+       
 
         fishTalkText = fishTalk.gameObject.GetComponentInChildren<TextMeshProUGUI>();
         //hide the UIs when click Karara
@@ -137,20 +138,27 @@ public class FinalCameraController : MonoBehaviour
 
     public void CancelAllUI()
     {
-        //touch anywhere on screen, close Karara UI
-        Hide(clothCG);
-        Hide(messageCG);
-        isShown = false;
-        //close fish talking
-        Hide(fishTalk);
-        if(alreadyNotice)
+        if (!isTutorial)
         {
-            Hide(generatedNotice.GetComponent<CanvasGroup>());
-        }        for (int i = 0; i < AllMachines.WashingMachines.Count; i++)
-        {
-            Hide(AllMachines.WashingMachines[i].GetComponent<WasherController>().backgroundUI);
-            Hide(AllMachines.WashingMachines[i].GetComponent<WasherController>().ClothUI);
+            //touch anywhere on screen, close Karara UI
+            Hide(clothCG);
+            Hide(messageCG);
+            isShown = false;
+            //close fish talking
+            Hide(fishTalk);
+            if (alreadyNotice)
+            {
+                Hide(generatedNotice.GetComponent<CanvasGroup>());
+            }
+        
+
+        for (int i = 0; i < AllMachines.WashingMachines.Count; i++)
+            {
+                Hide(AllMachines.WashingMachines[i].GetComponent<WasherController>().backgroundUI);
+                Hide(AllMachines.WashingMachines[i].GetComponent<WasherController>().ClothUI);
+            }
         }
+     
     }
     // Update is called once per frame
     void Update()
@@ -162,7 +170,7 @@ public class FinalCameraController : MonoBehaviour
             // Check if finger is over a UI element
             if (EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))
             {
-                Debug.Log("Touched the UI");
+                //Debug.Log("Touched the UI");
             }
             else
             {
@@ -308,6 +316,7 @@ public class FinalCameraController : MonoBehaviour
     private bool isShown;
     public void clickKarara()
     {
+        print("clickKarara");
         if(!isShown)
         {
             CancelAllUI();
@@ -453,7 +462,7 @@ public class FinalCameraController : MonoBehaviour
     public void ChangeToApp()
     {
         //cancel all dialogues
-        
+        print("click ChangeToAPP");
         if (isTutorial)
         {
             TutorialManager.DoDialogues(false);
@@ -461,6 +470,7 @@ public class FinalCameraController : MonoBehaviour
         
         if(alreadyClothUI == false)        
         {
+            print("alreadyClothUi = false");
             Hide(subwayBackground);
 
             if (isSwipping == false)
@@ -476,6 +486,8 @@ public class FinalCameraController : MonoBehaviour
         }
         else
         {
+            print("alreadyClothUi = true");
+
             Destroy(generatedNotice);
             Hide(currentClothUI);
             alreadyClothUI = false;

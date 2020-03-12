@@ -15,6 +15,8 @@ public class StartTutorial : MonoBehaviour
     public float endPoint;
 
     public CanvasGroup MachineGroup;
+    
+    public bool isComic;
     public bool isComic0;
     public bool isComic1;
     public bool isComic2;
@@ -22,24 +24,57 @@ public class StartTutorial : MonoBehaviour
 
     private bool isTutorial;
 
-
+    public GameObject comicBackground;
     public GameObject comic1;
     public GameObject comic2;
     public GameObject comic3;
-    
-   
+    public GameObject comic4;
+    public GameObject comic5;
+
+
+    private bool flash;
+    public CanvasGroup myFlash;
     
 
     public float speed = 1f;
+
+    private bool startTutorial;
     // Start is called before the first frame update
     void Start()
     {
-        
+        comicBackground.SetActive(false);
+        comic1.SetActive(false);
+        comic2.SetActive(false);
+        comic3.SetActive(false);
+        comic4.SetActive(false);
+        comic5.SetActive(false);
+
     }
 
     // Update is called once per frame
     void Update()
     {
+        //for flash
+        if (flash)
+        {
+                myFlash.alpha = myFlash.alpha - Time.deltaTime;
+
+                if (myFlash.alpha <= 0)
+                {
+                    myFlash.alpha = 0;
+                    flash = false;
+
+                    if (startTutorial)
+                    {
+                        SceneManager.LoadScene("TutorialScene", LoadSceneMode.Single);
+                        startTutorial = false;
+                    }
+                    else isComic = true;
+                }
+                
+        }
+
+        //for background moving
         if(transform.position.x < endPoint)
         {
             GetComponent<RectTransform>().anchoredPosition += new Vector2(speedA, 0);
@@ -49,6 +84,7 @@ public class StartTutorial : MonoBehaviour
             GetComponent<RectTransform>().anchoredPosition = new Vector2(startingPoint, -4);
         }
 
+        
         if (isComic0)
         {
             //(comic1, 0, speed, isComic1, true);
@@ -84,8 +120,12 @@ public class StartTutorial : MonoBehaviour
     {
         Hide(MachineGroup);
         //Comic starts
-        isComic0 = true;
+        flash = true;
+        myFlash.alpha = 1;
+        comicBackground.SetActive(true);
+
         //SceneManager.LoadScene("TutorialScene", LoadSceneMode.Single);
+        //comic starts to fly in
 
     }
 
@@ -136,13 +176,13 @@ public class StartTutorial : MonoBehaviour
     {
         if(isTutorial)
         {
-            SceneManager.LoadScene("TutorialScene", LoadSceneMode.Single);
-
+            flash = true;
+            
         }
       
-        if(isComic0 == false)
-        {
-            isComic1 = true;
+//        if(isComic0 == false)
+//        {
+//            flash = true;
 //            if (clickTime == 1)
 //            {
 //                comic1.enabled = true;
@@ -163,10 +203,42 @@ public class StartTutorial : MonoBehaviour
 //            {
 //                SceneManager.LoadScene("TutorialScene", LoadSceneMode.Single);
 //            }
-        }
-        if(isComic2)
+//        }
+        else if(isComic)
         {
-            isComic3 = true;
+            clickTime++;
+            if (clickTime == 1)
+            {
+                comic1.SetActive(true);
+            }
+            else if (clickTime == 2)
+            {
+                comic2.SetActive(true);
+            }
+            else if (clickTime == 3)
+            {
+                comic3.SetActive(true);
+            }
+            else if (clickTime == 4)
+            {
+                comic4.SetActive(true);
+            }
+            else if (clickTime == 5)
+            {
+                comic1.SetActive(false);
+                comic2.SetActive(false);
+                comic3.SetActive(false);
+                comic4.SetActive(false);
+
+                comic5.SetActive(true);
+            }
+            else if(clickTime == 6)
+            {
+                SceneManager.LoadScene("TutorialScene", LoadSceneMode.Single);
+                myFlash.alpha = 1;
+                startTutorial = true;
+
+            }
         }
 
     }
