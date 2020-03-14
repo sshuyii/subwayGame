@@ -82,6 +82,7 @@ public class SubwayMovement : MonoBehaviour
     private float timer = 0;
 
     private bool nothingInside = false; //if nothing is in the machine
+    public Sprite transparent;
     
   
     public List<Dictionary<String, List<Sprite>>> allStationList = new List<Dictionary<String, List<Sprite>>>();
@@ -499,40 +500,37 @@ public class SubwayMovement : MonoBehaviour
         //change time
 
         
-        //if the button pressed is the the first station
-        for(int p = 0; p < stationNames.Count; p++)
-        {
-            for (int i = 0; i < NameToStationBags[p.ToString()].Count; i++)
+            for (int i = 0; i < NameToStationBags[stationNum.ToString()].Count; i++)
             {
                 //show and close the UI
-                if (FinalCameraController.AllStationClothList.ContainsKey(NameToStationBags[p.ToString()][i].gameObject.tag))
+                if (FinalCameraController.AllStationClothList.ContainsKey(NameToStationBags[stationNum.ToString()][i].gameObject.tag))
                 {
                     isDetailed = !isDetailed;
                     
                     break;//only change the variable once
                 }
             }
-            
+            //todo:要specify这件衣服到底是哪个站上车的，问题在于显示完了之后没有清空！
             //对某一站的每一个包而言
-            for (int u = 0; u < NameToStationBags[p.ToString()].Count; u++)
+            for (int u = 0; u < NameToStationBags[stationNum.ToString()].Count; u++)
             {
                 //get the clothes inside
                 //对每一个包的每一件衣服而言
-                print("asdfasdf = " + FinalCameraController.AllStationClothList.ContainsKey(NameToStationBags[p.ToString()][u].gameObject.tag));
-                if(FinalCameraController.AllStationClothList.ContainsKey(NameToStationBags[p.ToString()][u].gameObject.tag))
+                //print("asdfasdf = " + FinalCameraController.AllStationClothList.ContainsKey(NameToStationBags[stationNum.ToString()][u].gameObject.tag));
+                //如果某件衣服的tag等于这个包的tag
+                if(FinalCameraController.AllStationClothList.ContainsKey(NameToStationBags[stationNum.ToString()][u].gameObject.tag))
                 {
                     for (int q = 0;
-                        q < FinalCameraController.AllStationClothList[NameToStationBags[p.ToString()][u].gameObject.tag].Count;
+                        q < FinalCameraController.AllStationClothList[NameToStationBags[stationNum.ToString()][u].gameObject.tag].Count;
                         q++)
                     {
                         AllDetailList[u][q].enabled = true;
                         AllDetailList[u][q].sprite =
-                            FinalCameraController.AllStationClothList[NameToStationBags[p.ToString()][u].gameObject.tag][q];
-                        
+                        FinalCameraController.AllStationClothList[NameToStationBags[stationNum.ToString()][u].gameObject.tag][q];
                     }
                 }
             }
-            
+      
             if (isDetailed)
             {
                 Show(dSR1);
@@ -542,6 +540,14 @@ public class SubwayMovement : MonoBehaviour
             {
                 Hide(dSR1);
                 Hide(dSR2);
+                for (int i = 0; i < AllDetailList.Count; i++)
+                {
+                    for (int q = 0; q < AllDetailList[i].Count; q++)
+                    {
+                        AllDetailList[i][q].sprite = transparent;
+
+                    }
+                }
             }
            
 //            
@@ -586,7 +592,7 @@ public class SubwayMovement : MonoBehaviour
 //                    Show(dSR2);
 //                }
 //            }
-        }
+        
         
     }
     
