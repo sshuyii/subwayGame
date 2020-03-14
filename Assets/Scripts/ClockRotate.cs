@@ -12,7 +12,8 @@ public class ClockRotate : MonoBehaviour
     public int bagEmptyNum = 0;
     public int machineEmptyNum = 0;
 
-
+    public Image YellowClock;
+    
     private AllMachines AllMachines;
 
     public bool fastForward;
@@ -25,19 +26,26 @@ public class ClockRotate : MonoBehaviour
         SubwayMovement = GameObject.Find("---StationController").GetComponent<SubwayMovement>();
         AllMachines = GameObject.Find("---ClothInMachineController").GetComponent<AllMachines>();
 
-        zRotation = 360 / (SubwayMovement.stayTime + SubwayMovement.moveTime);
+        //used when the timer is always on screen
+        //zRotation = 360 / (SubwayMovement.stayTime + SubwayMovement.moveTime);
+        
+        //now the timer is placed on the bag
+        zRotation = 360 / (2 *(SubwayMovement.stayTime + SubwayMovement.moveTime));
+
         myRectT = GetComponent<RectTransform>();
 
-        SubwayMovement.Hide(bubble);
+        //SubwayMovement.Hide(bubble);
         myButton = GetComponent<Button>();
 
+        YellowClock.fillAmount = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
         myRectT.Rotate( new Vector3( 0, 0, -zRotation * Time.deltaTime) );
-        
+        YellowClock.fillAmount += 1/(2 *(SubwayMovement.stayTime + SubwayMovement.moveTime)) * Time.deltaTime;
+            
         bagEmptyNum = 0;
         machineEmptyNum = 0;
         //Calculate how many bagPos are available
@@ -70,15 +78,15 @@ public class ClockRotate : MonoBehaviour
         if (bagEmptyNum == 3 && machineEmptyNum == 3 && SubwayMovement.isMoving)
         {
             fastForward = true;
-            SubwayMovement.Show(bubble);
-            myButton.enabled = true;
+            //SubwayMovement.Show(bubble);
+            //myButton.enabled = true;
 
         }
         else
         {
             fastForward = false;
-            SubwayMovement.Hide(bubble);
-            myButton.enabled = false;
+            //SubwayMovement.Hide(bubble);
+            //myButton.enabled = false;
         }
         
     }

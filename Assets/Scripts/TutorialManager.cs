@@ -272,7 +272,7 @@ public class TutorialManager : MonoBehaviour
         else if(tutorialNumber == 16)
         {
             DoDialogues(true);
-            myText.text = "If I click the bag, all clothes will be automatically returned.";
+            myText.text = "The clothes should be returned before ";
             arrow.enabled = false;
             Hide(arrowButton);
 
@@ -399,7 +399,7 @@ public class TutorialManager : MonoBehaviour
     
     IEnumerator ChangeText(string dialogueText, bool isclick)
     {
-        yield return new WaitForSecondsRealtime(0.4f);
+        yield return new WaitForSecondsRealtime(0.1f);
         myText.text = dialogueText;
         if (isclick)
         {

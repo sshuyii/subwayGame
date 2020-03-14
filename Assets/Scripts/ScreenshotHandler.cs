@@ -29,6 +29,8 @@ public class ScreenshotHandler : MonoBehaviour
 
     private GameObject toothpastePost;
     public int followerNum;
+    public TextMeshProUGUI subwayFollower;
+    
     private static ScreenshotHandler instance;
 
     public Camera myCamera;
@@ -80,16 +82,15 @@ public class ScreenshotHandler : MonoBehaviour
             KararaBottom = KararaBottomImage.sprite.name;
             KararaShoe = KararaShoeImage.sprite.name;
         }
-
-        
-        
     }
 
     private void Update()
     {
+        
         if(!FinalCameraController.isTutorial)
         {
             InstagramController.followerNum.text = followerNum.ToString();
+            InstagramController.subFollowerNum.text = followerNum.ToString();
             if (KararaWorkImage.sprite.name == "workCloth")
             {
                 KararaWork = true;
@@ -177,26 +178,30 @@ public class ScreenshotHandler : MonoBehaviour
             textList[1].text = "Today";
             
             //Add followers to Karara
-            if (KararaTop == "TopA1")
+//            if (KararaTop == "TopA1")
+//            {
+//                followerNum += 8;
+//                print("asdfasdf;lkj;lkjasdf");
+//            }
+//            else
+//            {
+//                followerNum += 3;}
+//            
+//
+//            if (KararaBottom == "BottomA1")
+//            {
+//                followerNum += 6;
+//            }else
+//            {
+//                followerNum += 3;}
+//
+            if (KararaWork)
             {
-                followerNum += 8;
-                print("asdfasdf;lkj;lkjasdf");
+                followerNum += 3;
             }
             else
             {
-                followerNum += 3;}
-            
-
-            if (KararaBottom == "BottomA1")
-            {
-                followerNum += 6;
-            }else
-            {
-                followerNum += 3;}
-
-            if (KararaWork)
-            {
-                followerNum += 2;
+                followerNum += 8;
             }
                 
         }
@@ -217,6 +222,15 @@ public class ScreenshotHandler : MonoBehaviour
             //change the post text
             textList[0].text = "<b>Karara</b> Fresh and tasty.";
             textList[1].text = "Today";
+            
+            if (KararaWork)
+            {
+                followerNum += 3;
+            }
+            else
+            {
+                followerNum += 8;
+            }
         }
         else if (InstagramController.currentBackground == "Park")
         {
@@ -229,6 +243,15 @@ public class ScreenshotHandler : MonoBehaviour
             //change the post text
             textList[0].text = "<b>Karara</b> Had a lot of fun here.";
             textList[1].text = "Today";
+            
+            if (KararaWork)
+            {
+                followerNum += 3;
+            }
+            else
+            {
+                followerNum += 8;
+            }
         }
 
         FinalCameraController.ChangeToApp();
@@ -375,10 +398,10 @@ public class ScreenshotHandler : MonoBehaviour
         {
             thirdAd.SetActive(true);
         }
-        else if(photoBackground.GetComponent<Image>().sprite.name == "RV")
-        {
-            fourthAd.SetActive(true);
-        }
+//        else if(photoBackground.GetComponent<Image>().sprite.name == "RV")
+//        {
+//            fourthAd.SetActive(true);
+//        }
         
         TakeScreenshot(width, height);
         

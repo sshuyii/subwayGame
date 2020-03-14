@@ -29,6 +29,10 @@ public class SubwayMovement : MonoBehaviour
 
     public List<GameObject> highlights;
 
+    //all the bags in the car
+    public List<GameObject> bagsInCar;
+    public bool noSameBag;
+    
     public List<Vector3> bagPos;
     public List<Button> clothBags;
     private bool bagFirst = true;
@@ -104,6 +108,7 @@ public class SubwayMovement : MonoBehaviour
         bagPosAvailable.Add(false);
         bagPosAvailable.Add(false);
 
+        noSameBag = true;
             
         aSR = arrow.GetComponent<SpriteRenderer>();
         hSR = highlight.GetComponent<SpriteRenderer>();
@@ -148,7 +153,7 @@ public class SubwayMovement : MonoBehaviour
 //        InvokeRepeating("trainMove", stayTime, stayTime + moveTime);
 //        InvokeRepeating("trainStop", stayTime + moveTime, stayTime + moveTime);
 
-        Invoke("trainMove", stayTime);
+        //Invoke("trainMove", stayTime);
 
 
     }
@@ -244,7 +249,6 @@ public class SubwayMovement : MonoBehaviour
                         {
                             bagFirst = false;
                         }
-
                     }
 
                     /*code used before
@@ -355,7 +359,7 @@ public class SubwayMovement : MonoBehaviour
                 
             print("bagNum = " + bagNum);
             
-            //如果拿了第一包衣服，那么再产生的包要出现在第一包衣服而不是第三包
+            //如果拿了第一包衣服，那么再产生的包要出现在第一包衣服而不是第 三包
             int emptyNum = 0;
             int firstEmptyPos = 0;
             for (int i = 0; i < 3; i++)
@@ -370,18 +374,46 @@ public class SubwayMovement : MonoBehaviour
                     emptyNum++;
                 }   
             }
+
             
-            //only generate a new bag if there is an empty position
-            if(emptyNum < 3)
+            print("tag = " + NameToStationBags[stationNum.ToString()][randomIndex].tag);
+            
+            for (int r = 0; r < bagsInCar.Count; r++)
             {
+                
+                if (bagsInCar[r].CompareTag(NameToStationBags[stationNum.ToString()][randomIndex].tag))
+                {
+                    print("NoSameBag = false;");
+                    noSameBag = false;
+                    break;
+                }
+                else
+                {
+                    print("NoSameBag = true");
+
+                    noSameBag = true;
+                }
+            }
+
+           
+
+            //only generate a new bag if there is an empty position
+            if (emptyNum < 3 && noSameBag) 
+            {
+                //如果同一个tag的包已经在车厢里了，那么就不要放进来这个人的包
                 bag = Instantiate(NameToStationBags[stationNum.ToString()][randomIndex], bagPos[firstEmptyPos],
                     Quaternion.identity) as Button;
-                //this position is occupied by a bag
-                bagPosAvailable[firstEmptyPos] = true;
-
-                bag.GetComponent<ClothToMachine>().myBagPosition = firstEmptyPos;
-                bagNum++;
-                bag.transform.SetParent(clothBagGroup.transform, false);
+                
+                        
+                        //this position is occupied by a bag
+                        bagPosAvailable[firstEmptyPos] = true;
+                
+                        bagsInCar.Add(bag.gameObject);
+                
+                        bag.GetComponent<ClothToMachine>().myBagPosition = firstEmptyPos;
+                        bagNum++;
+                        bag.transform.SetParent(clothBagGroup.transform, false);
+               
             }
             previousIndex = randomIndex;
         }
@@ -468,12 +500,12 @@ public class SubwayMovement : MonoBehaviour
 
         
         //if the button pressed is the the first station
-        if (stationNum == 0)
+        for(int p = 0; p < stationNames.Count; p++)
         {
-            for (int i = 0; i < NameToStationBags["0"].Count; i++)
+            for (int i = 0; i < NameToStationBags[p.ToString()].Count; i++)
             {
                 //show and close the UI
-                if (FinalCameraController.AllStationClothList.ContainsKey(NameToStationBags["0"][i].gameObject.tag))
+                if (FinalCameraController.AllStationClothList.ContainsKey(NameToStationBags[p.ToString()][i].gameObject.tag))
                 {
                     isDetailed = !isDetailed;
                     
@@ -482,20 +514,20 @@ public class SubwayMovement : MonoBehaviour
             }
             
             //对某一站的每一个包而言
-            for (int u = 0; u < NameToStationBags["0"].Count; u++)
+            for (int u = 0; u < NameToStationBags[p.ToString()].Count; u++)
             {
                 //get the clothes inside
                 //对每一个包的每一件衣服而言
-                print("asdfasdf = " + FinalCameraController.AllStationClothList.ContainsKey(NameToStationBags["0"][u].gameObject.tag));
-                if(FinalCameraController.AllStationClothList.ContainsKey(NameToStationBags["0"][u].gameObject.tag))
+                print("asdfasdf = " + FinalCameraController.AllStationClothList.ContainsKey(NameToStationBags[p.ToString()][u].gameObject.tag));
+                if(FinalCameraController.AllStationClothList.ContainsKey(NameToStationBags[p.ToString()][u].gameObject.tag))
                 {
                     for (int q = 0;
-                        q < FinalCameraController.AllStationClothList[NameToStationBags["0"][u].gameObject.tag].Count;
+                        q < FinalCameraController.AllStationClothList[NameToStationBags[p.ToString()][u].gameObject.tag].Count;
                         q++)
                     {
                         AllDetailList[u][q].enabled = true;
                         AllDetailList[u][q].sprite =
-                            FinalCameraController.AllStationClothList[NameToStationBags["0"][u].gameObject.tag][q];
+                            FinalCameraController.AllStationClothList[NameToStationBags[p.ToString()][u].gameObject.tag][q];
                         
                     }
                 }

@@ -105,6 +105,7 @@ public class InstagramController : MonoBehaviour
     public List<string> usedAdsList = new List<string>();
 
     public TextMeshProUGUI followerNum;
+    public TextMeshProUGUI subFollowerNum;
     
     // Start is called before the first frame update
     void Start()

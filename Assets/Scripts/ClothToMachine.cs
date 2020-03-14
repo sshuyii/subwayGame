@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -63,9 +64,16 @@ public class ClothToMachine : MonoBehaviour
         
     }
 
+    private float timer;
+    private float remainTime;
+
     // Update is called once per frame
     void Update()
     {
+        timer += Time.deltaTime;
+        remainTime = (SubwayMovement.moveTime + SubwayMovement.stayTime) * 3 - timer;
+
+        
         if(!isOverdue)
         {
             //find the machine that has the same tag with this bag
@@ -185,6 +193,7 @@ public class ClothToMachine : MonoBehaviour
                 
                 
                 Destroy(AllMachines.currentBag);
+                SubwayMovement.bagsInCar.Remove(AllMachines.currentBag);
 
                 //reset the machine's variables
                 WasherControllerList[i].transform.tag ="Untagged";
@@ -318,7 +327,7 @@ public class ClothToMachine : MonoBehaviour
                                         if(FinalCameraController.TutorialManager.tutorialNumber == 16)
                                         {
                                             //then return all clothes in the machine
-                                            returnClothYes();
+                                            returnClothYes(); 
                                         }
                                         else if (FinalCameraController.TutorialManager.tutorialNumber == 9)
                                         {

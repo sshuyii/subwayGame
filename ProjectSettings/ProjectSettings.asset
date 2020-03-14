@@ -719,6 +719,8 @@ PlayerSettings:
       daydreamIconForeground: {fileID: 0}
       daydreamIconBackground: {fileID: 0}
   cloudServicesEnabled:
+    Build: 0
+    Collab: 0
     UNet: 1
   luminIcon:
     m_Name: 
@@ -732,10 +734,10 @@ PlayerSettings:
     m_VersionCode: 1
     m_VersionName: 
   apiCompatibilityLevel: 6
-  cloudProjectId: 
+  cloudProjectId: ff20c560-6532-42f0-9bc4-39efc0eb7656
   framebufferDepthMemorylessMode: 0
-  projectName: 
-  organizationId: 
+  projectName: DirtyLaundry
+  organizationId: sc7286
   cloudEnabled: 0
   enableNativePlatformBackendsForNewInputSystem: 0
   disableOldInputManagerSupport: 0
