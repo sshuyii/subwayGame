@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.PlayerLoop;
 using UnityEngine.UI;
 using TMPro;
+using UnityEditor;
 
 public class ScreenshotHandler : MonoBehaviour
 {
@@ -12,13 +13,17 @@ public class ScreenshotHandler : MonoBehaviour
     
     public InstagramController InstagramController;
     private FinalCameraController FinalCameraController;
+    private CalculateInventory CalculateInventory;
     
+    //record which posture has been used
+    private Dictionary<string, bool> usedPostures = new Dictionary<string, bool>();
     //record what Karara is wearing
     private string KararaTop;
     private string KararaBottom;
     private string KararaShoe;
     private bool KararaWork;
 
+    private bool startFlash;
     public Image KararaTopImage;
     public Image KararaBottomImage;
     public Image KararaShoeImage;
@@ -50,8 +55,9 @@ public class ScreenshotHandler : MonoBehaviour
     
     private int width = Screen.width;
     private int height = Screen.height;
-    
- 
+
+
+    public CanvasGroup Notice;
     public CanvasGroup myFlash;
     private bool flash = false;
     
@@ -72,6 +78,7 @@ public class ScreenshotHandler : MonoBehaviour
         
         ScreenCapDirectory = Application.persistentDataPath;
         FinalCameraController = GetComponent<FinalCameraController>();
+        CalculateInventory = GameObject.Find("---InventoryController").GetComponent<CalculateInventory>();
 
 //        postImage = GetComponent<Image>();
 //        print(postImage.name);
@@ -124,6 +131,17 @@ public class ScreenshotHandler : MonoBehaviour
    
     private void addToKararaPage()
     {
+        //RECORD THE POSTURE
+        if (usedPostures.ContainsKey(CalculateInventory.posNum.ToString()))
+        {
+            FinalCameraController.Show(Notice);
+            return;
+        }
+        else
+        {
+            usedPostures.Add(CalculateInventory.posNum.ToString(), true);
+        }
+        
         //instantiate new post object     
         var newPost = Instantiate(InstagramController.photoPostPrefab, new Vector3(0, 0, 0), Quaternion.identity);
 
@@ -254,7 +272,9 @@ public class ScreenshotHandler : MonoBehaviour
             }
         }
 
+        
         FinalCameraController.ChangeToApp();
+       
     }
     
 
@@ -295,18 +315,26 @@ public class ScreenshotHandler : MonoBehaviour
         
         yield return new WaitForSeconds(0.5f);
 
-        flash = true;
-        myFlash.alpha = 1;
-        
-        
-        //yield on a new YieldInstruction that waits for 5 seconds.
-        yield return new WaitForSeconds(0.1f);
-        addToKararaPage();
-        
-       
-        
-        //After we have waited 5 seconds print the time again.
-        Debug.Log("Finished Coroutine at timestamp : " + Time.time);
+        if (!usedPostures.ContainsKey(CalculateInventory.posNum.ToString()))
+        {
+            flash = true;
+            
+            myFlash.alpha = 1;
+
+            //yield on a new YieldInstruction that waits for 5 seconds.
+            yield return new WaitForSeconds(0.1f);
+            addToKararaPage();
+
+
+
+            //After we have waited 5 seconds print the time again.
+            Debug.Log("Finished Coroutine at timestamp : " + Time.time);
+        }
+        else
+        {
+            myFlash.alpha = 1;
+            FinalCameraController.Show(Notice);
+        }
         
     }
     
@@ -456,6 +484,15 @@ public class ScreenshotHandler : MonoBehaviour
     }
 
 
+    public void ClickNotice()
+    {
+        FinalCameraController.Hide(Notice);
+        myFlash.alpha = 0;
+        FinalCameraController.ChangeToSubway();
+        FinalCameraController.myHSS.GoToScreen(4);
+
+    }
+    
     Texture2D CropImage()
     {
         Texture2D tex = new Texture2D(width, width, TextureFormat.RGB24, false);

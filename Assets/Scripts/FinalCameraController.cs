@@ -26,7 +26,7 @@ public class FinalCameraController : MonoBehaviour
     private bool isfishTalking = false;
     public HorizontalScrollSnap HorizontalScrollSnap;
     
-    private HorizontalScrollSnap myHSS;
+    public HorizontalScrollSnap myHSS;
     public ScrollRect subwayScrollRect;
 
     //a dictionary of all the clothes that comes from station 0 and are currently in the machines 
@@ -521,13 +521,13 @@ public class FinalCameraController : MonoBehaviour
         
     }
 
-    void Hide(CanvasGroup UIGroup) {
+    public void Hide(CanvasGroup UIGroup) {
         UIGroup.alpha = 0f; //this makes everything transparent
         UIGroup.blocksRaycasts = false; //this prevents the UI element to receive input events
         UIGroup.interactable = false;
     }
     
-    void Show(CanvasGroup UIGroup) {
+    public void Show(CanvasGroup UIGroup) {
         UIGroup.alpha = 1f;
         UIGroup.blocksRaycasts = true;
         UIGroup.interactable = true;
