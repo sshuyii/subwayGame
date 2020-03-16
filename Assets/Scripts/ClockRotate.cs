@@ -44,7 +44,7 @@ public class ClockRotate : MonoBehaviour
     void Update()
     {
         myRectT.Rotate( new Vector3( 0, 0, -zRotation * Time.deltaTime) );
-        YellowClock.fillAmount += 1/(2 *(SubwayMovement.stayTime + SubwayMovement.moveTime)) * Time.deltaTime;
+        YellowClock.fillAmount += 1/(2 *(SubwayMovement.stayTime + SubwayMovement.moveTime) + SubwayMovement.stayTime) * Time.deltaTime;
             
         bagEmptyNum = 0;
         machineEmptyNum = 0;

@@ -35,6 +35,7 @@ public class FinalCameraController : MonoBehaviour
     
     public Sprite startSprite;
 
+    public CanvasGroup Inventory;
 
     public CanvasGroup clothCG;
     public CanvasGroup messageCG;
@@ -132,6 +133,8 @@ public class FinalCameraController : MonoBehaviour
         //hide the UIs when click Karara
         Hide(clothCG);
         Hide(messageCG);
+        Hide(Inventory);
+
 
     }
 
@@ -334,6 +337,7 @@ public class FinalCameraController : MonoBehaviour
     
     public void ChangeToCloth()
     {
+        Show(Inventory);
         if (isTutorial)
         {
             if(TutorialManager.tutorialNumber < 11)
@@ -428,6 +432,7 @@ public class FinalCameraController : MonoBehaviour
 
     public void ChangeToSubway()
     {
+        Hide(Inventory);
         Show(subwayBackground);
         transform.position = new Vector3(0, 0, -10);
         if (myCameraState == CameraState.Closet || myCameraState == CameraState.Map ||

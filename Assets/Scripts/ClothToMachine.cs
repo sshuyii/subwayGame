@@ -137,6 +137,8 @@ public class ClothToMachine : MonoBehaviour
 
     public void returnClothYes()
     {
+        FinalCameraController.AllStationClothList.Remove(AllMachines.currentBag.transform.gameObject.tag);
+        
         for (int i = 0; i < AllMachines.WashingMachines.Count; i++)
         {
             if (WasherControllerList[i].CompareTag(AllMachines.currentBag.tag))

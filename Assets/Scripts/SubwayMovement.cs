@@ -126,7 +126,7 @@ public class SubwayMovement : MonoBehaviour
         DetailCG.Add(dSR1);
         DetailCG.Add(dSR2);
 
-        currentStation = 0;
+        currentStation = 0; 
 
         stationTimer = stayTime;
 //        CountDownTimer.text = "";
@@ -540,6 +540,7 @@ public class SubwayMovement : MonoBehaviour
             {
                 Hide(dSR1);
                 Hide(dSR2);
+                //显示完了清空  
                 for (int i = 0; i < AllDetailList.Count; i++)
                 {
                     for (int q = 0; q < AllDetailList[i].Count; q++)
