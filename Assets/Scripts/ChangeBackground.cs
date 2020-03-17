@@ -51,6 +51,7 @@ public class ChangeBackground :MonoBehaviour
     {
         InstagramController.currentBackground = gameObject.name;
         //reset everything to the first posture being able to use in this background
+        
         InstagramController.CalculateInventory.resetPosture();
         
         

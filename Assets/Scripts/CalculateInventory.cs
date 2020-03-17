@@ -224,8 +224,9 @@ public class CalculateInventory : MonoBehaviour
 
     public void resetPosture()
     {
+        
         posNum =
-            InstagramController.backgroundPoseDict[InstagramController.currentBackground][InstagramController.currentPostNum];
+            InstagramController.backgroundPoseDict[InstagramController.currentBackground][0];
         
         allAdCloth = postureDictionaryList[posNum];
         
@@ -244,6 +245,34 @@ public class CalculateInventory : MonoBehaviour
         if(wearingShoe == false)
         {
             workShoeASR.sprite = allAdCloth["WorkShoe"];
+        }
+        //change clothes after posture changes
+        for(int i = 0; i < InstagramController.adClothes.Count; i ++)
+        {
+            if (InstagramController.adClothes[i].sprite.name.Contains("Top"))
+            {
+                topASR.sprite = allAdCloth[InstagramController.adClothes[i].sprite.name];
+                print("change top ad");
+            }
+            else if (InstagramController.adClothes[i].sprite.name.Contains("Bottom"))
+            {
+                otherASR.sprite = allAdCloth[InstagramController.adClothes[i].sprite.name];
+
+            }
+            else if (InstagramController.adClothes[i].sprite.name.Contains("Shoe"))
+            {
+               shoeASR.sprite = allAdCloth[InstagramController.adClothes[i].sprite.name];
+
+            }
+            else if (InstagramController.adClothes[i].sprite.name.Contains("Everything"))
+            {
+                everythingASR.sprite = allAdCloth[InstagramController.adClothes[i].sprite.name];
+
+            }
+            else
+            {
+                print("nothing ad");
+            }
         }
     }
 }
