@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -216,17 +217,24 @@ public class InstagramButtons : MonoBehaviour
     public void ChangePosture()
     {
 
-        if(CalculateInventory.posNum < 2)
+        //找到这个姿势需要用的list：InstagramController.backgroundPoseDict[InstagramController.currentBackground]
+        //先比对posNum +在不在这个list里面，如果在的话就加一
+       
+        if(InstagramController.currentPostNum < InstagramController.backgroundPoseDict[InstagramController.currentBackground].Count - 1)
         {
-            CalculateInventory.posNum++;
+            InstagramController.currentPostNum ++;
+
         }
         else
         {
-            CalculateInventory.posNum = 0;
+            InstagramController.currentPostNum = 0;
         }
         
+        //设定到底要用哪个姿势,把工作服和underwearduan都换好
+        CalculateInventory.posNum =
+            InstagramController.backgroundPoseDict[InstagramController.currentBackground][InstagramController.currentPostNum];
+        
         CalculateInventory.allAdCloth = CalculateInventory.postureDictionaryList[CalculateInventory.posNum];
-
         
         InstagramController.adBodyImage.sprite = InstagramController.postureList[CalculateInventory.posNum];
         InstagramController.workClothImage.sprite = InstagramController.workclothList[CalculateInventory.posNum];
@@ -271,7 +279,6 @@ public class InstagramButtons : MonoBehaviour
             else
             {
                 print("nothing ad");
-
             }
         }
 

@@ -16,6 +16,7 @@ public class ChangeBackground :MonoBehaviour
     public Image photoBackground;
 
     private Button myButton;
+
     
     //public Dictionary<string, Sprite> allSubAd = new Dictionary<string, Sprite>();
 
@@ -48,6 +49,12 @@ public class ChangeBackground :MonoBehaviour
 
     public void clickBackground()
     {
+        InstagramController.currentBackground = gameObject.name;
+        //reset everything to the first posture being able to use in this background
+        InstagramController.CalculateInventory.resetPosture();
+        
+        
+        
         FinalCameraController.CancelAllUI();
         if(FinalCameraController.alreadyClothUI == false)
         {

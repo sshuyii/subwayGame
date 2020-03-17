@@ -13,7 +13,8 @@ public class InstagramController : MonoBehaviour
 
     public CalculateInventory CalculateInventory;
 
-    
+    public int currentPostNum;
+
     public SortedDictionary<GameObject, int> allPostsDict = new SortedDictionary<GameObject, int>();
 
     public Sprite transparent;
@@ -81,6 +82,7 @@ public class InstagramController : MonoBehaviour
 
 
     public string currentBackground;
+    public Dictionary<string, List<int>> backgroundPoseDict = new Dictionary<string, List<int>>();
     
     
     //this definitely needs to change
@@ -107,6 +109,17 @@ public class InstagramController : MonoBehaviour
     public TextMeshProUGUI followerNum;
     public TextMeshProUGUI subFollowerNum;
     
+    //如果每个海报的背景是不一样的话
+
+    public List<int> backgroundPose1;
+    public List<int> backgroundPose2;
+    public List<int> backgroundPose3;
+    public List<int> backgroundPose4;
+    public List<int> backgroundPose5;
+
+
+
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -119,6 +132,7 @@ public class InstagramController : MonoBehaviour
         for (int i = 0; i < backAdList.Count; i++)
         {
             allBackAd.Add(backAdList[i].name, backAdList[i]);
+
         }
 
         for (int i = 0; i < backAdList.Count; i++)
@@ -127,6 +141,17 @@ public class InstagramController : MonoBehaviour
         }
 
         PosturePostImageList = originalPosture.GetComponentsInChildren<Image>();
+
+        for (int i = 0; i < backAdList.Count; i++)
+        {
+        }
+        backgroundPoseDict.Add(backAdList[0].name, backgroundPose1);
+        backgroundPoseDict.Add(backAdList[1].name, backgroundPose2);
+        backgroundPoseDict.Add(backAdList[2].name, backgroundPose3);
+        backgroundPoseDict.Add(backAdList[3].name, backgroundPose4);
+        backgroundPoseDict.Add(backAdList[4].name, backgroundPose5);
+
+
 
     }
 

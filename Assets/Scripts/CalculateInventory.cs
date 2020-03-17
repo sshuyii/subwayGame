@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class CalculateInventory : MonoBehaviour
 {
+    private InstagramController InstagramController;
     public int posNum = 0;
     public bool isreturning;
 
@@ -32,10 +33,14 @@ public class CalculateInventory : MonoBehaviour
     public List<Sprite> ClothPos0;
     public List<Sprite> ClothPos1;
     public List<Sprite> ClothPos2;
+    public List<Sprite> ClothPos3;
+
 
     public Dictionary<string, Sprite> AllClothPos0 = new Dictionary<string, Sprite>();
     public Dictionary<string, Sprite> AllClothPos1 = new Dictionary<string, Sprite>();
     public Dictionary<string, Sprite> AllClothPos2 = new Dictionary<string, Sprite>();
+    public Dictionary<string, Sprite> AllClothPos3 = new Dictionary<string, Sprite>();
+
 
     
     //all the clothes
@@ -119,6 +124,8 @@ public class CalculateInventory : MonoBehaviour
     void Start()
     {
        
+        InstagramController = GameObject.Find("---InstagramController").GetComponent<InstagramController>();
+
         for (int i = 0; i < allClothList.Count; i++)
         {
             allCloth.Add(allClothList[i].name, allClothList[i]);
@@ -150,6 +157,8 @@ public class CalculateInventory : MonoBehaviour
             AllClothPos0.Add(ClothPos0[i].name, ClothPos0[i]);
             AllClothPos1.Add(ClothPos1[i].name, ClothPos1[i]);
             AllClothPos2.Add(ClothPos2[i].name, ClothPos2[i]);
+            AllClothPos3.Add(ClothPos3[i].name, ClothPos3[i]);
+
             allAdCloth.Add(ClothPos0[i].name, ClothPos0[i]);
 
         }
@@ -157,6 +166,8 @@ public class CalculateInventory : MonoBehaviour
         postureDictionaryList.Add(AllClothPos0);
         postureDictionaryList.Add(AllClothPos1);
         postureDictionaryList.Add(AllClothPos2);
+        postureDictionaryList.Add(AllClothPos3);
+
         
         
         allAdCloth = postureDictionaryList[posNum];
@@ -210,4 +221,29 @@ public class CalculateInventory : MonoBehaviour
 //
 //        }
 //    }
+
+    public void resetPosture()
+    {
+        posNum =
+            InstagramController.backgroundPoseDict[InstagramController.currentBackground][InstagramController.currentPostNum];
+        
+        allAdCloth = postureDictionaryList[posNum];
+        
+        InstagramController.adBodyImage.sprite = InstagramController.postureList[posNum];
+        InstagramController.workClothImage.sprite = InstagramController.workclothList[posNum];
+        
+        
+        if(wearingTop == false)
+        {
+            whiteShirtASR.sprite = allAdCloth["WhiteShirt"];
+        }  
+        if(wearingBottom == false)
+        {
+            blackPantsASR.sprite = allAdCloth["BlackPants"];
+        }
+        if(wearingShoe == false)
+        {
+            workShoeASR.sprite = allAdCloth["WorkShoe"];
+        }
+    }
 }

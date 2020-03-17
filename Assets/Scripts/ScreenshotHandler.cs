@@ -17,6 +17,7 @@ public class ScreenshotHandler : MonoBehaviour
     
     //record which posture has been used
     private Dictionary<string, bool> usedPostures = new Dictionary<string, bool>();
+
     //record what Karara is wearing
     private string KararaTop;
     private string KararaBottom;
@@ -59,7 +60,7 @@ public class ScreenshotHandler : MonoBehaviour
 
     public CanvasGroup Notice;
     public CanvasGroup myFlash;
-    private bool flash = false;
+    private bool flash;
     
     //two ads that need to be generated
     public GameObject thirdAd;
@@ -93,7 +94,10 @@ public class ScreenshotHandler : MonoBehaviour
 
     private void Update()
     {
-        
+
+
+            print(InstagramController.AdAlreadyTakenList[InstagramController.currentBackground]);
+
         if(!FinalCameraController.isTutorial)
         {
             InstagramController.followerNum.text = followerNum.ToString();
@@ -132,15 +136,30 @@ public class ScreenshotHandler : MonoBehaviour
     private void addToKararaPage()
     {
         //RECORD THE POSTURE
-        if (usedPostures.ContainsKey(CalculateInventory.posNum.ToString()))
-        {
-            FinalCameraController.Show(Notice);
-            return;
-        }
-        else
-        {
-            usedPostures.Add(CalculateInventory.posNum.ToString(), true);
-        }
+//        if (usedPostures.ContainsKey(CalculateInventory.posNum.ToString()))
+//        {
+//            FinalCameraController.Show(Notice);
+//            return;
+//        }
+//        else
+//        {
+//            usedPostures.Add(CalculateInventory.posNum.ToString(), true);
+//            
+//        }
+//        
+//        if (usedBackground.ContainsKey(InstagramController.currentBackground))
+//        {
+//            FinalCameraController.Show(Notice);
+//            return;
+//        }
+//        else
+//        {
+//            usedBackground.Add(InstagramController.currentBackground, true);
+//            
+//        }
+
+        usedPostures.Add(CalculateInventory.posNum.ToString(), true);
+        //usedBackground.Add(InstagramController.currentBackground, true);
         
         //instantiate new post object     
         var newPost = Instantiate(InstagramController.photoPostPrefab, new Vector3(0, 0, 0), Quaternion.identity);
@@ -330,10 +349,15 @@ public class ScreenshotHandler : MonoBehaviour
             //After we have waited 5 seconds print the time again.
             Debug.Log("Finished Coroutine at timestamp : " + Time.time);
         }
-        else
+        else 
         {
             myFlash.alpha = 1;
             FinalCameraController.Show(Notice);
+            if (usedPostures.ContainsKey(CalculateInventory.posNum.ToString()))
+            {
+                Notice.gameObject.GetComponent<TextMeshProUGUI>().text = "I should change my posture!";
+            }
+            
         }
         
     }
@@ -409,7 +433,6 @@ public class ScreenshotHandler : MonoBehaviour
     {
         myCamera.targetTexture = RenderTexture.GetTemporary(width, height, 16);
         takeScreenshotOnNextFrame = true;
-
     }
     
     
@@ -418,7 +441,13 @@ public class ScreenshotHandler : MonoBehaviour
 //        myCamera.targetTexture = RenderTexture.GetTemporary(Screen.width, Screen.height, 16);
 //        takeScreenshotOnNextFrame = true;
         //ScreenCapture.CaptureScreenshot(Application.dataPath + "/Resources/Screenshots/CameraScreenshot.png");
-        
+        if (!InstagramController.AdAlreadyTakenList[InstagramController.currentBackground])
+        {
+            FinalCameraController.Show(Notice);
+            Notice.gameObject.GetComponent<TextMeshProUGUI>().text = "I should change my background!";
+
+            return;
+        }
         InstagramController.usedAdsList.Add(photoBackground.GetComponent<Image>().sprite.name);
         
         //enable new posters for chapter one
