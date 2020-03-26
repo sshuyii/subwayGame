@@ -17,6 +17,7 @@ TagManager:
   - worn
   - Tutorial
   - Nami
+  - NPC
   layers:
   - Default
   - TransparentFX

@@ -43,6 +43,10 @@ public class SubwayMovement : MonoBehaviour
     public CanvasGroup dSR2;
 
 
+    //check how many bags are in the car
+    public int emptyNum = 0;
+    public int firstEmptyPos = 0;
+    
     //a list recording all the bags on the train that haven't been taken into the washing machine
     private Dictionary<string, bool> AllBagsTaken = new Dictionary<string, bool>();
     public int bagNum = 0;
@@ -98,7 +102,7 @@ public class SubwayMovement : MonoBehaviour
     private float stationTimer;
     private float realTimer;
 
-    
+    public Button NPCBag;
     // Start is called before the first frame update
     void Start() 
     {
@@ -167,10 +171,29 @@ public class SubwayMovement : MonoBehaviour
     public float newTimer1;
     public float newTimer2;
 
-    
+
+    void emptyBagPos()
+    {
+        //记录第一个画面没有放包的地方
+        for (int i = 0; i < 3; i++)
+        {
+            if (bagPosAvailable[i] == false)//get the first empty bag position
+            {
+                firstEmptyPos = i;
+                break;
+            }
+            else
+            {
+                emptyNum++;
+            }   
+        }   
+    }
     // Update is called once per frame
     void Update()
     {
+        
+        
+        
         //instead of InvokeRepeating
         if(!isMoving)
         {
@@ -246,6 +269,8 @@ public class SubwayMovement : MonoBehaviour
                     {
                         print("NameToStationBags[currentStation.ToString()].Count" + NameToStationBags[currentStation.ToString()].Count);
                         GenerateBag(currentStation);
+                       
+                        
                         if (i == NameToStationBags[currentStation.ToString()].Count - 1)
                         {
                             bagFirst = false;
@@ -340,72 +365,67 @@ public class SubwayMovement : MonoBehaviour
     Button bag;
     private int previousIndex = 2;
 
+   
+
+   
     //this is used to create new bags in the car
     void GenerateBag(int stationNum)
     {
+        //如果现在车里不够三个包
         if (bagNum < 3)
         {
             //注意：这里不能完全随机产生，不能两次产生一样的包
             //且每个包都要在不同的位置上
-            int randomIndex = UnityEngine.Random.Range(0, NameToStationBags[stationNum.ToString()].Count);
+            //现在每站只有一个包了，就不需要randomIndex
+            //int randomIndex = UnityEngine.Random.Range(0, NameToStationBags[stationNum.ToString()].Count);
 
             //如果有的站就只有一包衣服，while loop可能会成为死循环
-            if(NameToStationBags[stationNum.ToString()].Count != 1)
-            {
-                while (previousIndex == randomIndex)
-                {
-                    randomIndex = UnityEngine.Random.Range(0, NameToStationBags[stationNum.ToString()].Count);
-                }
-            }
+//            if(NameToStationBags[stationNum.ToString()].Count != 1)
+//            {
+//                while (previousIndex == randomIndex)
+//                {
+//                    randomIndex = UnityEngine.Random.Range(0, NameToStationBags[stationNum.ToString()].Count);
+//                }
+//            }
                 
-            print("bagNum = " + bagNum);
-            
-            //如果拿了第一包衣服，那么再产生的包要出现在第一包衣服而不是第 三包
-            int emptyNum = 0;
-            int firstEmptyPos = 0;
-            for (int i = 0; i < 3; i++)
-            {
-                if (bagPosAvailable[i] == false)//get the first empty bag position
-                {
-                    firstEmptyPos = i;
-                    break;
-                }
-                else
-                {
-                    emptyNum++;
-                }   
-            }
+            //print("bagNum = " + bagNum);
+            emptyBagPos();
 
+          
             
-            print("tag = " + NameToStationBags[stationNum.ToString()][randomIndex].tag);
+            //print("tag = " + NameToStationBags[stationNum.ToString()][randomIndex].tag);
             
+            //检查车上是不是已经有这个人的包了
             for (int r = 0; r < bagsInCar.Count; r++)
             {
-                
-                if (bagsInCar[r].CompareTag(NameToStationBags[stationNum.ToString()][randomIndex].tag))
+                //当有的站有两个特殊角色的包
+//                if (bagsInCar[r].CompareTag(NameToStationBags[stationNum.ToString()][randomIndex].tag))
+                //现在每站只有一个特殊角色的包了，所以只需要是0就可以了
+                if (bagsInCar[r].CompareTag(NameToStationBags[stationNum.ToString()][0].tag))
                 {
                     print("NoSameBag = false;");
                     noSameBag = false;
+                    //如果不放进来特殊角色的包，放npc的包
+                    Button npcBag = Instantiate(NPCBag, bagPos[firstEmptyPos],
+                        Quaternion.identity) as Button;
                     break;
                 }
                 else
                 {
                     print("NoSameBag = true");
-
                     noSameBag = true;
                 }
             }
 
            
-
             //only generate a new bag if there is an empty position
+            //如果同一个tag的包已经在车厢里了，那么就不要放进来这个人的包:noSameBag
             if (emptyNum < 3 && noSameBag) 
             {
-                //如果同一个tag的包已经在车厢里了，那么就不要放进来这个人的包
-                bag = Instantiate(NameToStationBags[stationNum.ToString()][randomIndex], bagPos[firstEmptyPos],
+                //首先一定产生特殊npc的包
+                bag = Instantiate(NameToStationBags[stationNum.ToString()][0], bagPos[firstEmptyPos],
                     Quaternion.identity) as Button;
                 
-                        
                         //this position is occupied by a bag
                         bagPosAvailable[firstEmptyPos] = true;
                 
@@ -414,12 +434,38 @@ public class SubwayMovement : MonoBehaviour
                         bag.GetComponent<ClothToMachine>().myBagPosition = firstEmptyPos;
                         bagNum++;
                         bag.transform.SetParent(clothBagGroup.transform, false);
-               
+                        
+                //然后可能产生npc
+                GenerateNpcBag();
+
             }
-            previousIndex = randomIndex;
+            //previousIndex = randomIndex;
         }
     }
-    
+    void GenerateNpcBag()
+    {
+        //如果现在车里不够三个包
+        if (bagNum < 3)
+        {
+            emptyBagPos();
+            //only generate a new bag if there is an empty position
+            //如果同一个tag的包已经在车厢里了，那么就不要放进来这个人的包:noSameBag
+            if (emptyNum < 3 && UnityEngine.Random.Range(0f, 10f) < 5f) 
+            {
+                bag = Instantiate(NPCBag, bagPos[firstEmptyPos],
+                    Quaternion.identity) as Button;
+                
+                        //this position is occupied by a bag
+                        bagPosAvailable[firstEmptyPos] = true;
+                
+                        bagsInCar.Add(bag.gameObject);
+                
+                        bag.GetComponent<ClothToMachine>().myBagPosition = firstEmptyPos;
+                        bagNum++;
+                        bag.transform.SetParent(clothBagGroup.transform, false);
+            }
+        }
+    }
     public void trainMove()
     {
         if(currentStation < 2)
@@ -546,7 +592,6 @@ public class SubwayMovement : MonoBehaviour
                     for (int q = 0; q < AllDetailList[i].Count; q++)
                     {
                         AllDetailList[i][q].sprite = transparent;
-
                     }
                 }
             }

@@ -6862,7 +6862,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 367, y: -2.9999871}
+  m_AnchoredPosition: {x: 21, y: -36}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &297421308
@@ -10682,7 +10682,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1134183574}
   m_Direction: 2
   m_Value: 1.0000002
-  m_Size: 0.80357146
+  m_Size: 0.8035714
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -11182,7 +11182,7 @@ RectTransform:
   m_GameObject: {fileID: 481983280}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 569.1974}
-  m_LocalScale: {x: 1.2273283, y: 0.8591298, z: 2.455372}
+  m_LocalScale: {x: 0.86, y: 0.8591298, z: 2.455372}
   m_Children: []
   m_Father: {fileID: 1187006583}
   m_RootOrder: 6
@@ -11277,7 +11277,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 274645bb0441540c1a20cc1b9f1f08a0, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 81e9e71e0109d4f60885833b9971fcf5, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -13211,7 +13211,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 461095368}
   m_HandleRect: {fileID: 461095367}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -14437,7 +14437,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1787355705}
   m_Direction: 0
   m_Value: 0.49999854
-  m_Size: 0.89599997
+  m_Size: 0.8959999
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -14512,6 +14512,7 @@ MonoBehaviour:
   - Alex
   - Bella
   - Nami
+  - NPC
   returnNotice: {fileID: 1630564389944166422, guid: fc50aa520c0fb414abc730cf079447e5,
     type: 3}
   openedDoor: {fileID: 21300000, guid: a9eb8caa1c7b044118146f8ad9269ebd, type: 3}
@@ -14523,6 +14524,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 09de337618c524862bf5aeed7bae35b2, type: 3}
   - {fileID: 21300000, guid: 6b8e3217f2cf14a1983d354015205c12, type: 3}
   - {fileID: 21300000, guid: 8c8ba5b4124454f4292830c68450a045, type: 3}
+  - {fileID: 21300000, guid: 4439d3b089c704a15a7e1553ca057b78, type: 3}
   AlexClothes:
   - {fileID: 21300000, guid: 3fe2dcd35015f4cdba7733bd23ce6238, type: 3}
   - {fileID: 21300000, guid: c5a2ad9c328074dc584c66c768da7ccf, type: 3}
@@ -14545,6 +14547,14 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 09d10f74d86ae4531905ecf559772d1c, type: 3}
   - {fileID: 21300000, guid: a35a3947f9d1a424a89f34bdf4d06b10, type: 3}
   namiClothesTemp: []
+  NpcClothes:
+  - {fileID: 21300000, guid: 93c4136bdf3be4189b4017816a79a5ca, type: 3}
+  - {fileID: 21300000, guid: ed184730d08f6476b9daf5664045ced9, type: 3}
+  - {fileID: 21300000, guid: c2526a6683837466390d066fda16f605, type: 3}
+  - {fileID: 21300000, guid: ec203ad31562640a9a9da43a0593f73e, type: 3}
+  - {fileID: 21300000, guid: bfcc05c5397584786a78ffe418462179, type: 3}
+  - {fileID: 21300000, guid: 476dba01bf7964a81b529877cce57ef3, type: 3}
+  npcClothesTemp: []
   TutorialCloth: {fileID: 0}
   WashingMachines:
   - {fileID: 1727758887}
@@ -18573,7 +18583,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1365762696}
   m_Direction: 0
   m_Value: 0.4999998
-  m_Size: 0.46153846
+  m_Size: 0.4615384
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -19955,6 +19965,8 @@ MonoBehaviour:
   clothBagGroup: {fileID: 28604523}
   dSR1: {fileID: 1233439490}
   dSR2: {fileID: 569876268}
+  emptyNum: 0
+  firstEmptyPos: 0
   bagNum: 0
   stationNames:
   - 0
@@ -19983,11 +19995,12 @@ MonoBehaviour:
   transparent: {fileID: 21300000, guid: d7f409a287fc14824a84a822ef378d81, type: 3}
   bagStation0:
   - {fileID: 1911849397198779274, guid: 7c179cee8c4d849ddbaf1ade9fbac8dc, type: 3}
-  - {fileID: 307228934063611808, guid: 5b95f2af963a046f88a4c5c675b2ed2b, type: 3}
   bagStation1:
   - {fileID: 307228934063611808, guid: 791c0abbde32a4c5fb2d43e91548ec61, type: 3}
-  bagStation2: []
+  bagStation2:
+  - {fileID: 307228934063611808, guid: 5b95f2af963a046f88a4c5c675b2ed2b, type: 3}
   CountDownTimer: {fileID: 1215362901}
+  NPCBag: {fileID: 1911849397198779274, guid: 99f8a6ef0945b42c598d40dbe88b824e, type: 3}
   newTimer1: 0
   newTimer2: 0
 --- !u!4 &870043120
@@ -26355,6 +26368,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   postList: []
   CalculateInventory: {fileID: 1637310587}
+  currentPostNum: 0
   transparent: {fileID: 21300000, guid: d7f409a287fc14824a84a822ef378d81, type: 3}
   gotoImage: {fileID: 8623713738375048612}
   gotoProfile: {fileID: 3836618896129236317}
@@ -26412,6 +26426,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 251262d65021341718eeb8aae65001d6, type: 3}
   - {fileID: 21300000, guid: e82616ed201e645b896805d25d16cfa9, type: 3}
   - {fileID: 21300000, guid: 86698b6f9fd3247719c57d74b6d55d35, type: 3}
+  - {fileID: 21300000, guid: 59f09a2752fdb4d55aea69e9f795b44e, type: 3}
   workClothImage: {fileID: 467719573}
   workShoeImage: {fileID: 1063360127}
   currentBackground: 
@@ -26841,7 +26856,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 195, y: -3}
+  m_AnchoredPosition: {x: 336, y: -32}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1204002100
@@ -35168,6 +35183,12 @@ MonoBehaviour:
   - {fileID: 21300000, guid: a9a5caaef7c274fd697d111f2078b2ef, type: 3}
   - {fileID: 21300000, guid: 22608fb7551a345288eb2a142a42328a, type: 3}
   - {fileID: 21300000, guid: 9eca6934251ec4608aecb160555f85a4, type: 3}
+  - {fileID: 21300000, guid: 6a7febd288a43463bb294843ec9a7e10, type: 3}
+  - {fileID: 21300000, guid: 3c1b041ea2cf44d73bb18e081da89f65, type: 3}
+  - {fileID: 21300000, guid: 0655188ecb7bd44d9831cbd4018d1361, type: 3}
+  - {fileID: 21300000, guid: 03a6e58df23744bbe93c4e962bcb3944, type: 3}
+  - {fileID: 21300000, guid: ddd8898ae29154e62af7b466f330c188, type: 3}
+  - {fileID: 21300000, guid: 52cd470ba46664ac09922027abd59b04, type: 3}
   ClothPos1:
   - {fileID: 21300000, guid: f0d5c9b0d3cd04e0c901deef4863d8be, type: 3}
   - {fileID: 21300000, guid: fe9bc6f6c1da64c88819457f971097e3, type: 3}
@@ -35188,6 +35209,12 @@ MonoBehaviour:
   - {fileID: 21300000, guid: db5c1781559aa495eb6d845a611e75c0, type: 3}
   - {fileID: 21300000, guid: 549257d573ad14e2e9d2bd3b36b1ba57, type: 3}
   - {fileID: 21300000, guid: 2ba1c4db7c62f4d25af96d3b913988ff, type: 3}
+  - {fileID: 21300000, guid: 352dfdc4d0da24a3c9096be0364efe87, type: 3}
+  - {fileID: 21300000, guid: 452a8f6e57dbc42ac86f0a8851ba829e, type: 3}
+  - {fileID: 21300000, guid: ee27306c98f4e4d469b3e02a46cf8f0a, type: 3}
+  - {fileID: 21300000, guid: b7b0ff1798cdd4fa5bc0378d905f8610, type: 3}
+  - {fileID: 21300000, guid: e8feff47c384644cb950d0e0a9dfcb77, type: 3}
+  - {fileID: 21300000, guid: 34c5572938bf24dc296cf3b88adf082b, type: 3}
   ClothPos2:
   - {fileID: 21300000, guid: 44317fac2fae94dd7845a1ee759009a4, type: 3}
   - {fileID: 21300000, guid: 97dbc19d23a89426d9ceda612349ea50, type: 3}
@@ -35208,6 +35235,12 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 4372bd93b332c4286b557c49345413a7, type: 3}
   - {fileID: 21300000, guid: e6930e66165d948bb82d6c92a51410be, type: 3}
   - {fileID: 21300000, guid: 944731af67c5f46058ed24fc9a648677, type: 3}
+  - {fileID: 21300000, guid: a242e9925e4234a5ea74dd4715ad4175, type: 3}
+  - {fileID: 21300000, guid: e3e2bd12b5b914ca98df1506a9b17dd1, type: 3}
+  - {fileID: 21300000, guid: 3b97d1e5009de41b987193ef42075611, type: 3}
+  - {fileID: 21300000, guid: 475240ae2ac094709bbb902bd01566e0, type: 3}
+  - {fileID: 21300000, guid: fbc1a53b636534487902ab790ef832f1, type: 3}
+  - {fileID: 21300000, guid: 199fb292b282846449f6399f22c2fcf6, type: 3}
   ClothPos3:
   - {fileID: 21300000, guid: 5f06b4d5a40f949c397913cd481bb59c, type: 3}
   - {fileID: 21300000, guid: 7f141c0b484064200bf949db7de39345, type: 3}
@@ -35228,6 +35261,12 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 830880b19d48849b18065addd1426b26, type: 3}
   - {fileID: 21300000, guid: 52727f6b0bfee4bffb3aee247766f5c9, type: 3}
   - {fileID: 21300000, guid: 9e25affd39d4a4ecda1af9df625e8f48, type: 3}
+  - {fileID: 21300000, guid: 75b2cbb72e5da4691a241262e0a81074, type: 3}
+  - {fileID: 21300000, guid: fba22fadbd484492c9fd6e869086409e, type: 3}
+  - {fileID: 21300000, guid: f1474a557312a4acf9c7f6a84f5e9403, type: 3}
+  - {fileID: 21300000, guid: 54e78d7b196d047ad9032e93dca7a576, type: 3}
+  - {fileID: 21300000, guid: 4117731ca031f44ea87beaa04cca5687, type: 3}
+  - {fileID: 21300000, guid: f29bd6f4178304a4b81f10ac6d81dc5c, type: 3}
   allClothUIList:
   - {fileID: 21300000, guid: 3fe2dcd35015f4cdba7733bd23ce6238, type: 3}
   - {fileID: 21300000, guid: 8c166fade0ac64b29aacfe4736180324, type: 3}
@@ -35245,6 +35284,12 @@ MonoBehaviour:
   - {fileID: 21300000, guid: a35a3947f9d1a424a89f34bdf4d06b10, type: 3}
   - {fileID: 21300000, guid: 23ed8c52ea09e451fbcfeb3e1000eb95, type: 3}
   - {fileID: 21300000, guid: c3464218ea342480bbb4d893e0fe6031, type: 3}
+  - {fileID: 21300000, guid: ec203ad31562640a9a9da43a0593f73e, type: 3}
+  - {fileID: 21300000, guid: bfcc05c5397584786a78ffe418462179, type: 3}
+  - {fileID: 21300000, guid: 476dba01bf7964a81b529877cce57ef3, type: 3}
+  - {fileID: 21300000, guid: 93c4136bdf3be4189b4017816a79a5ca, type: 3}
+  - {fileID: 21300000, guid: ed184730d08f6476b9daf5664045ced9, type: 3}
+  - {fileID: 21300000, guid: c2526a6683837466390d066fda16f605, type: 3}
   allClothList:
   - {fileID: 21300000, guid: 59abb37969d0848bd80385758b30aef1, type: 3}
   - {fileID: 21300000, guid: c6651c8d45f0640dd94bb13074b82f63, type: 3}
@@ -35262,6 +35307,12 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 62e8496f6ebbd4e338a6241e2fb91947, type: 3}
   - {fileID: 21300000, guid: 8d1ebba51764241c4a481c5262bef3e1, type: 3}
   - {fileID: 21300000, guid: ec4f2b2ffd5e0458186d2e7c944b30a3, type: 3}
+  - {fileID: 21300000, guid: f0644668982154289a4f8b23a955b8d6, type: 3}
+  - {fileID: 21300000, guid: 53f02d2a2f3b34f388f7fbf971896651, type: 3}
+  - {fileID: 21300000, guid: 763f5696d8de944b29163f9717ce0d8d, type: 3}
+  - {fileID: 21300000, guid: 9a67e23fc570a4da78350d511ac4f9c5, type: 3}
+  - {fileID: 21300000, guid: ebb1ac2f3f19b43df8132514b31cb5e5, type: 3}
+  - {fileID: 21300000, guid: 7af7fa5f75495417f8c721728e14d2a2, type: 3}
   allSubwayClothList:
   - {fileID: 21300000, guid: f83dd9af1eca94d0dac15100166e1283, type: 3}
   - {fileID: 21300000, guid: 36ddab044c6064f1988fa521c6dfec62, type: 3}
@@ -35279,6 +35330,12 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 95e23ee06bd114aeca9fa8be9f7e0e2a, type: 3}
   - {fileID: 21300000, guid: 2a19e706579fe4edeace955491add5ce, type: 3}
   - {fileID: 21300000, guid: 417c6f3603b1d485e8e45369891f0756, type: 3}
+  - {fileID: 21300000, guid: 1dcaac9d2f4d247249df0874861f2001, type: 3}
+  - {fileID: 21300000, guid: 00176a806232442cf85808f50779794e, type: 3}
+  - {fileID: 21300000, guid: 5808f9391962d4bc1ad47a3ee9e603dd, type: 3}
+  - {fileID: 21300000, guid: a4a7c2d99c7ae43e3ba9b90d2f41c085, type: 3}
+  - {fileID: 21300000, guid: b88e4fcda474a45319c170f0fb48becf, type: 3}
+  - {fileID: 21300000, guid: 8d4189157b2344b318e770122e0931a2, type: 3}
   occupiedI: 0
   topSR: {fileID: 1316972153}
   shoeSR: {fileID: 1317669798}

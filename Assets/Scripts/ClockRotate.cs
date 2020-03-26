@@ -96,23 +96,23 @@ public class ClockRotate : MonoBehaviour
         SubwayMovement.trainStop();
         SubwayMovement.newTimer2 = 0;
         SubwayMovement.newTimer1 = SubwayMovement.moveTime;
-        SubwayMovement.Hide(bubble);
+        //SubwayMovement.Hide(bubble);
 
     }
 
     public void toggleUI()
     {
-        if(fastForward)
-        {
-            if (bubble.alpha == 0f)
-            {
-                SubwayMovement.Show(bubble);
-            }
-            else
-            {
-                SubwayMovement.Hide(bubble);
-
-            }
-        }    
+//        if(fastForward)
+//        {
+//            if (bubble.alpha == 0f)
+//            {
+//                SubwayMovement.Show(bubble);
+//            }
+//            else
+//            {
+//                SubwayMovement.Hide(bubble);
+//
+//            }
+//        }    
     }
 }

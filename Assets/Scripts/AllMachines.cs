@@ -38,6 +38,9 @@ public class AllMachines : MonoBehaviour
     public List<Sprite> NamiClothes;
     public List<Sprite> namiClothesTemp = new List<Sprite>();
     
+    public List<Sprite> NpcClothes;
+    public List<Sprite> npcClothesTemp = new List<Sprite>();
+    
     public Sprite TutorialCloth;
 
    
@@ -93,6 +96,10 @@ public class AllMachines : MonoBehaviour
         {
             namiClothesTemp.Add(NamiClothes[i]);
         }
+        for (int i = 0; i < NpcClothes.Count; i++)
+        {
+            npcClothesTemp.Add(NpcClothes[i]);
+        }
 
         for (int i = 0; i < openBags.Count; i++)
         {
@@ -103,6 +110,7 @@ public class AllMachines : MonoBehaviour
         nameToTemp.Add("Bella", bellaClothesTemp);
         nameToTemp.Add("Alex", alexClothesTemp);
         nameToTemp.Add("Nami", namiClothesTemp);
+        nameToTemp.Add("NPC", npcClothesTemp);
 
     }
 

@@ -96,7 +96,7 @@ public class ScreenshotHandler : MonoBehaviour
     {
 
 
-            print(InstagramController.AdAlreadyTakenList[InstagramController.currentBackground]);
+//            print(InstagramController.AdAlreadyTakenList[InstagramController.currentBackground]);
 
         if(!FinalCameraController.isTutorial)
         {

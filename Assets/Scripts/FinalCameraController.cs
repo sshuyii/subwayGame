@@ -216,7 +216,7 @@ public class FinalCameraController : MonoBehaviour
         {
 //            GoSubwayPart();
 //            lateReturnImage.enabled = true;
-            GoSubwayPart();
+            ChangeToSubway();
             myHSS.GoToScreen(1);
             Show(fishTalk);
             fishTalkText.text = "Return your customers' clothes in time! How can you have such bad memory!";
@@ -452,7 +452,6 @@ public class FinalCameraController : MonoBehaviour
         Hide(frontPage);
         Hide(appBackground);
 
-        GoSubwayPart();
         
         //for Tutorial
         if (isTutorial && TutorialManager.tutorialNumber == 15)
@@ -535,30 +534,7 @@ public class FinalCameraController : MonoBehaviour
     
  
  
-    private void GoSubwayPart()
-    {
-        //temporary way of putting camera back to subway, need to be replaced
-//        if (myCameraState == CameraState.One)
-//        {
-//            transform.position = new Vector3(-2 * distance, 0, -10);
-//
-//        }
-//        else if (myCameraState == CameraState.Two)
-//        {
-//            transform.position = new Vector3(0, 0, -10);
-//
-//        }
-//        else if (myCameraState == CameraState.Three)
-//        {
-//            transform.position = new Vector3(2 * distance, 0, -10);
-//
-//        }
-//        else if (myCameraState == CameraState.Four)
-//        {
-//            transform.position = new Vector3(4 * distance, 0, -10);
-//
-//        }
-    }
+    
 
     public void GoAdvertisement()
     {

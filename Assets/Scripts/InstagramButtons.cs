@@ -223,7 +223,6 @@ public class InstagramButtons : MonoBehaviour
         if(InstagramController.currentPostNum < InstagramController.backgroundPoseDict[InstagramController.currentBackground].Count - 1)
         {
             InstagramController.currentPostNum ++;
-
         }
         else
         {
@@ -264,24 +263,20 @@ public class InstagramButtons : MonoBehaviour
             else if (InstagramController.adClothes[i].sprite.name.Contains("Bottom"))
             {
                 CalculateInventory.otherASR.sprite = CalculateInventory.allAdCloth[InstagramController.adClothes[i].sprite.name];
-
             }
             else if (InstagramController.adClothes[i].sprite.name.Contains("Shoe"))
             {
                 CalculateInventory.shoeASR.sprite = CalculateInventory.allAdCloth[InstagramController.adClothes[i].sprite.name];
-
             }
             else if (InstagramController.adClothes[i].sprite.name.Contains("Everything"))
             {
                 CalculateInventory.everythingASR.sprite = CalculateInventory.allAdCloth[InstagramController.adClothes[i].sprite.name];
-
             }
             else
             {
                 print("nothing ad");
             }
         }
-
     }
 
   

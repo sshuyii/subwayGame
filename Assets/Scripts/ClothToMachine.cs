@@ -123,7 +123,6 @@ public class ClothToMachine : MonoBehaviour
     
     private void ChangeToUnderwear()
     {
-         
         CalculateInventory.blackPants.enabled = true;
         CalculateInventory.whiteShirt.enabled = true;
 
