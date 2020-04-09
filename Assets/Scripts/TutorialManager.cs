@@ -1,18 +1,33 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.AccessControl;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.UI.Extensions;
 using UnityEngine.SceneManagement;
-
+using UnityEngine.UIElements;
+using Button = UnityEngine.UI.Button;
+using Image = UnityEngine.UI.Image;
 
 
 public class TutorialManager : MonoBehaviour
 {
     public GameObject DialogueBubble;
 
+    public CanvasGroup finalComic;
+    public CanvasGroup anotherApp;
+ 
+    public Image hint;
+    public Image screamImage;
+    public GameObject KararaDialogueBubble;
+
+    private Animator DialogueBubbleAC;
+
+    private RectTransform kararaDialogueRT;
+    public RectTransform kararaTextRT;
+    
+    public CanvasGroup GestureCG;
     public FinalCameraController FinalCameraController;
 
     public GameObject ClothUI;
@@ -22,12 +37,17 @@ public class TutorialManager : MonoBehaviour
 
     public bool chooseBag = false;
     public GameObject ScreenZero;
+    public GameObject ScreenFour;
     
     private HorizontalScrollSnap myHSS;
     public Image[] DialogueImageList;
-    public TextMeshProUGUI myText;
+    public TextMeshProUGUI fishText;
     public Image arrow;
     public CanvasGroup arrowButton;
+    
+    public Image[] KararaDialogueImageList;
+    public TextMeshProUGUI kararaText;
+
     
     public GameObject poster;
 
@@ -40,6 +60,7 @@ public class TutorialManager : MonoBehaviour
     public GameObject KararaSitting;
     
     public Image KararaStandingImage;
+    private Sprite KararaWorkCloth;
     private CanvasGroup KararaSittingCanvasGroup;
 
 
@@ -71,6 +92,7 @@ public class TutorialManager : MonoBehaviour
     public GameObject bag;
     public GameObject door;
     public GameObject cloth;
+    public Button SubwayMap;
 
     private Image bagImage;
     private Image doorImage;
@@ -82,11 +104,39 @@ public class TutorialManager : MonoBehaviour
 
     private Color fishColor;
     private Color kararaColor;
+    public Sprite KararaDisco;
+    
+    //use this to decide whether dialogues should disappear when swipe
+    public bool stopDisappear = false;
 
+    private Vector2 lowerPosition;
+    private Vector2 higherPosition;
+    private RectTransform DialogueRT;
+
+    private Vector2 startPosition;
+    private Vector2 leftPosition;
+    private Vector2 rightPosition = new Vector2(175, 289);
+
+    public Image NameTagImage;
+
+    //which dialogue should be shown on screen
+    public enum DialogueState
+    {
+        fish,
+        karara,
+        fishElse,
+        none,
+        all
+    }
+    
+    public DialogueState tutorialDialogueState;
+    
     
     // Start is called before the first frame update
     void Start()
     {
+        Hide(GestureCG);
+        
         fishColor = new Color(176f/255f, 140f/255f, 84f/255f);
         
         myHSS = GameObject.Find("Horizontal Scroll Snap").GetComponent<HorizontalScrollSnap>();
@@ -94,23 +144,34 @@ public class TutorialManager : MonoBehaviour
         FinalCameraController = GameObject.Find("Main Camera").GetComponent<FinalCameraController>();
 
         KararaStandingImage = KararaStanding.GetComponent<Image>();
+
         KararaSittingCanvasGroup = KararaSitting.GetComponent<CanvasGroup>();
-
-
+        kararaDialogueRT = KararaDialogueBubble.GetComponent<RectTransform>();
+        KararaWorkCloth = KararaStandingImage.sprite;
+        startPosition = kararaDialogueRT.anchoredPosition;
+        
         StartCoroutine("TrainMoveIn");
 
         KararaRectT = KararaStanding.GetComponent<RectTransform>();
         
         DialogueImageList = DialogueBubble.GetComponentsInChildren<Image>();
-        myText = DialogueBubble.GetComponentInChildren<TextMeshProUGUI>();
-
+        fishText = DialogueBubble.GetComponentInChildren<TextMeshProUGUI>();
         
+        KararaDialogueImageList = KararaDialogueBubble.GetComponentsInChildren<Image>();
+        kararaText = KararaDialogueBubble.GetComponentInChildren<TextMeshProUGUI>();
+
+
+
+        DialogueRT = DialogueBubble.GetComponent<RectTransform>();
+        lowerPosition = DialogueRT.anchoredPosition - new Vector2(0, 200);
+        higherPosition = DialogueRT.anchoredPosition;
         //disable the dialogues
-        DoDialogues(false);
+        DoFishDialogue(false);
+        
 
         //disable karara standing in the train
 //        KararaStandingImage.enabled = false;
-            KararaDisappear(false);
+        KararaDisappear(false);
 
         ClothUIButtons = ClothUI.GetComponentsInChildren<Button>();
         ClothUIImages = ClothUI.GetComponentsInChildren<Image>();
@@ -120,7 +181,9 @@ public class TutorialManager : MonoBehaviour
 
         ProfileImage.enabled = false;
 
-        
+        //disable scream
+        screamImage.enabled = false;
+
 
         KararaAllImage = KararaSitting.gameObject.GetComponentsInChildren<Image>();
 
@@ -137,15 +200,128 @@ public class TutorialManager : MonoBehaviour
         foreach (var image in KararaAllImage)
         {
             Material mat = image.material;
-            mat.DisableKeyword("SHAKEUV_ON");
-            mat.DisableKeyword("DOODLE_ON");
+//            mat.DisableKeyword("SHAKEUV_ON");
+//            mat.DisableKeyword("DOODLE_ON");
         }
+        //disable map before it's in the tutorial
+        SubwayMap.enabled = false;
+
+        leftPosition = kararaDialogueRT.anchoredPosition;
+
+        //set dialogue state
+        tutorialDialogueState = DialogueState.none;
+
+        DialogueBubbleAC = DialogueBubble.GetComponentInChildren<Animator>();
+
+
     }
 
+    private bool temp1;
+
+    private int time;
+    private bool pause;
     // Update is called once per frame
     void Update()
     {
+        //decide which dialogue should be shown on screen using the state machine
+        if (tutorialDialogueState == DialogueState.fish)
+        {
+            DialogueBubbleAC.SetBool("isOut", false);
+            DoFishDialogue(true);
+            DoKararaDialogue(false);
+        }
+        else if (tutorialDialogueState == DialogueState.karara)
+        {
+            DoFishDialogue(false);
+            DoKararaDialogue(true);
+        }
+        else if (tutorialDialogueState == DialogueState.fishElse)
+        {
+            DialogueBubbleAC.SetBool("isOut", true);
+            NameTagImage.enabled = false;
+            
+            DoFishDialogue(true);
+            DoKararaDialogue(false);
+        }
+        else if (tutorialDialogueState == DialogueState.none)
+        {
+            DoFishDialogue(false);
+            DoKararaDialogue(false);
+        }
+        else if (tutorialDialogueState == DialogueState.all)
+        {
+            DoFishDialogue(true);
+            DoKararaDialogue(true);
+        }
         
+        
+        //don't show fish dialogue if not in fish page
+        if (FinalCameraController.myCameraState == FinalCameraController.CameraState.Subway)
+        {
+            if (FinalCameraController.mySubwayState == FinalCameraController.SubwayState.Two ||
+                FinalCameraController.mySubwayState == FinalCameraController.SubwayState.Three)
+            {
+                kararaDialogueRT.anchoredPosition = new Vector3(0, -570);
+                kararaTextRT.localScale = new Vector3(2f, -2f, 2f);
+                kararaDialogueRT.localScale = new Vector3(0.5f, -0.5f, 0.5f);
+                
+            }
+            else if(FinalCameraController.mySubwayState == FinalCameraController.SubwayState.Four)
+            {
+                kararaDialogueRT.anchoredPosition = leftPosition;
+                kararaTextRT.localScale = new Vector3(2f, 2f, 2f);
+
+                kararaDialogueRT.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+
+            }
+            else//在第一个画面里永远出现鱼的对话框
+            {
+                //tutorialDialogueState = DialogueState.fish;//always show fish dialogue in scene1
+                screamImage.enabled = false;//no noise image
+                //karara dialogue position needs to be adjusted
+                kararaDialogueRT.anchoredPosition = rightPosition;
+                kararaTextRT.localScale = new Vector3(2f, 2f, 2f);
+                kararaDialogueRT.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+
+            }
+        }
+        else if(FinalCameraController.myCameraState == FinalCameraController.CameraState.Ad)
+        {
+            //exception is when taking photo in the beginning of the tutorial
+            if(!pause )
+            {
+                tutorialDialogueState = DialogueState.none;
+
+            }
+            
+        }
+        else if(FinalCameraController.myCameraState == FinalCameraController.CameraState.Closet)
+        {
+            screamImage.enabled = false;
+            //在换装界面set好位置
+            kararaDialogueRT.anchoredPosition = new Vector2(-80, 600);
+            kararaTextRT.localScale = new Vector3(2f, 2f, 2f);
+            kararaDialogueRT.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+        }
+
+        if (nameTag.text == "Goldfish" || nameTag.text == "?????")
+        {
+            //print("goldfish");
+            if(FinalCameraController.mySubwayState != FinalCameraController.SubwayState.One)
+            {
+                //DialogueRT.anchoredPosition = lowerPosition;
+            }
+            else
+            {
+                //DialogueRT.anchoredPosition = higherPosition;
+            }
+        }
+        else
+        {
+            //DialogueRT.anchoredPosition = higherPosition;
+        }
+        
+
         //make sure that karara only appears at the end and start when player is taught to swipe
 //        if (tutorialNumber == 1 && FinalCameraController.myCameraState == FinalCameraController.CameraState.Subway)
 //        {
@@ -165,125 +341,252 @@ public class TutorialManager : MonoBehaviour
         {
             gobackButton.SetActive(false);
         }
-        
-        
-        if (tutorialNumber == 4)
+
+        if (tutorialNumber == 2)
         {
-            myText.text = "Click the button to Start!";
-            arrow.enabled = false;
-            Hide(arrowButton);
-            //bag.GetComponent<Image>().material.DisableKeyword("SHAKEUV_ON");
-
-
+//            if (clicktime == 3)
+//            {
+//                clicktime++;
+//                StartCoroutine(KararaAskBag());
+//                print("kararaAskBag");
+//                
+//            }
         }
         else if (tutorialNumber == 3)
         {
-            myText.text = "Put clothes into the machine!";
-            arrow.enabled = false;
-            Hide(arrowButton);
-            
+            if(clicktime == 3)
+            {
+                //包已经在洗衣机下面
+                tutorialDialogueState = DialogueState.fishElse;
+                fishText.text = "Click the bag! Put the cloth into the machine!";
+                clicktime = 4;
+            }
+
+        }
+        else if (tutorialNumber == 4)
+        {
+            //衣服已经进了洗衣机，还没开始洗
+            tutorialDialogueState = DialogueState.fishElse;
+            fishText.text = "Click the button to start!";
         }
         else if (tutorialNumber == 5)
         {
-            myText.text = "Now all you need to do is wait...";
-            //disable standing 
             
             //enable sitting
             Show(KararaSittingCanvasGroup);
         }
         else if(tutorialNumber == 6)
         {
-            myText.text = "It is finished, should I take the clothes out?";
-            ProfileImage.sprite = KararaProfile;
-            tutorialNumber = 7;
-            arrow.enabled = true;
-            Show(arrowButton);
-
-            
-            //change dialogue background and name
-            ChangeDialogue("Karara");
+            //洗衣机洗好了之后自然出现了这个
+            if(clicktime == 4)
+            {
+                tutorialDialogueState = DialogueState.karara;
+                kararaText.text = "Done";
+                //ProfileImage.sprite = KararaProfile;
+                //arrow.enabled = true;
+                clicktime++;
+                Show(arrowButton);
+            }
+//            else if (clicktime == 7 && FinalCameraController.mySubwayState == FinalCameraController.SubwayState.One)
+//            {
+//                Hide(arrowButton);
+//                
+//               
+//            }
+//            else if(clicktime == 8)
+//            {
+//                if(FinalCameraController.mySubwayState == FinalCameraController.SubwayState.Two)
+//                {
+//                    tutorialDialogueState = DialogueState.karara;
+//                    kararaText.text = "......";
+//                    Show(arrowButton);
+//                    clicktime = 9;
+//                }
+//                else
+//                {
+//                    Hide(arrowButton);
+//                }
+//            }
+        }
+        //如果打开了门
+        else if(tutorialNumber == 7)
+        {
+            if(clicktime == 6)
+            {
+//                if(!temp)
+//                {
+//                    temp = true;
+//                    StartCoroutine(FishCloseDoor());
+//                }
+//
+//                else 
+//                {
+                    if (FinalCameraController.mySubwayState == FinalCameraController.SubwayState.One)
+                    {
+                        tutorialDialogueState = DialogueState.fishElse;
+                        fishText.text = "What are you doing? Close the door!";
+                        screamImage.enabled = false;
+                        Hide(arrowButton);
+                    }
+                    else if (FinalCameraController.mySubwayState == FinalCameraController.SubwayState.Two)
+                    {
+                        //出现鱼对话制止karara开门，karara对话框消失
+                        tutorialDialogueState = DialogueState.karara;
+//                        fishText.text = "What are you doing? Close the door!";
+                        kararaText.text = "Get cloth";
+                        screamImage.enabled = true;
+                        Hide(arrowButton);
+//                        time++;
+//                        if (time > 90)
+//                        {
+//                            kararaText.text = "Get Cloth";
+//                        }
+//                        else if(time > 30)
+//                        {
+//                            kararaText.text = "Nah";
+//                            if(temp)
+//                            {
+//                                kararaText.text = "Nah";
+//                            }
+//                        }
+//                    }
+                }
+            }
         }
         else if(tutorialNumber == 8)
         {
-            StartCoroutine(WaitUntilUI());
+            tutorialDialogueState = DialogueState.karara;
+            kararaText.text = "Open door";
+            
+            if (FinalCameraController.mySubwayState == FinalCameraController.SubwayState.One)
+            {
+                tutorialDialogueState = DialogueState.fishElse;
+                fishText.text = "What are you doing? Close the door!";
+                screamImage.enabled = false;
+                Hide(arrowButton);
+            }
+            else if (FinalCameraController.mySubwayState == FinalCameraController.SubwayState.Two)
+            {
+                //出现鱼对话制止karara开门，karara对话框消失
+                tutorialDialogueState = DialogueState.karara;
+                screamImage.enabled = true;
+                Hide(arrowButton);
+            }
         }
         else if(tutorialNumber == 9)
         {
-            if (chooseBag)
+            kararaText.text = "Get cloth";
+            
+            if (FinalCameraController.mySubwayState == FinalCameraController.SubwayState.One)
             {
-                myText.text = "I wish I have them in my wardrobe...Do I have to return those immediately?";
-
-                arrow.enabled = true;
-                Show(arrowButton);
-                bag.GetComponent<Image>().material.DisableKeyword("SHAKEUV_ON");
-                chooseBag = false;
+                tutorialDialogueState = DialogueState.fishElse;
+                fishText.text = "Don't you dare!";
+                screamImage.enabled = false;
+                Hide(arrowButton);
             }
-            else if (clicktime == 7)
+            else if (FinalCameraController.mySubwayState == FinalCameraController.SubwayState.Two)
             {
-//                myText.text = "Now I'm supposed to put them into the bag...Just click the bag.";
-//                arrow.enabled = false;
-
+                //出现鱼对话制止karara开门，karara对话框消失
+                tutorialDialogueState = DialogueState.karara;
+                screamImage.enabled = true;
+                Hide(arrowButton);
             }
         }
         else if(tutorialNumber == 10)
         {
-            myText.text = "Well, I guess since no one is watching... I should try it on!";
-            //tutorialNumber = 11;
-
-            foreach (var image in KararaAllImage)
+            if (FinalCameraController.mySubwayState == FinalCameraController.SubwayState.One)
             {
-                Material mat = image.material;
-                //mat.EnableKeyword("SHAKEUV_ON");
-                mat.EnableKeyword("DOODLE_ON");
+                tutorialDialogueState = DialogueState.fishElse;
+                fishText.text = "Karara!";
+                screamImage.enabled = false;
+                Hide(arrowButton);
             }
-            KararaButton.enabled = true;
-            arrow.enabled = false;
-            Hide(arrowButton);
-            
-            bag.GetComponent<Image>().material.DisableKeyword("SHAKEUV_ON");
-
+            else if (FinalCameraController.mySubwayState == FinalCameraController.SubwayState.Two)
+            {
+                //出现鱼对话制止karara开门，karara对话框消失
+                tutorialDialogueState = DialogueState.karara;
+                screamImage.enabled = true;
+                Hide(arrowButton);
+            }
         }
         else if(tutorialNumber == 11)
         {
-            myText.text = "Now click the cloth to put it on.";
+            kararaText.text = "Disco";
         }
         else if(tutorialNumber == 12)
         {
-            myText.text = "How do I look! I should take a picture!";
+            kararaText.text = "Cool";
             arrow.enabled = true;
             Hide(arrowButton);
-
-            tutorialNumber = 13;
         }
         else if(tutorialNumber == 13)
         {
-            foreach (var image in KararaAllImage)
-            {
-                Material mat = image.material;
-                //mat.EnableKeyword("SHAKEUV_ON");
-                mat.DisableKeyword("DOODLE_ON");
-            }
+            kararaText.text = "Poster";
+            Hide(arrowButton);
+            Hide(KararaSittingCanvasGroup);
+            KararaStandingImage.enabled = true;
+            KararaStandingImage.sprite = KararaDisco;
+            //show karara
+            KararaRectT.anchoredPosition = 
+                new Vector3(-72, KararaRectT.anchoredPosition.y);
+            KararaStanding.transform.SetParent(ScreenFour.transform);
+//            var RectTransform = KararaStanding.GetComponent<RectTransform>();
+//            RectTransform.anchoredPosition = new Vector3(85, RectTransform.anchoredPosition.y);
+            KararaStandingImage.enabled = true;
+            KararaDisappear(false);
+
+            
         }
-        else if(tutorialNumber == 14 && FinalCameraController.mySubwayState == FinalCameraController.SubwayState.Four)
+        else if(tutorialNumber == 15)
         {
-            myText.text = "Oh here it is!";
-            tutorialNumber = 15;
+            if(clicktime == 6)
+            {
+                //show karara
+                KararaRectT.anchoredPosition =
+                    new Vector3(85, KararaRectT.anchoredPosition.y);
+                KararaStanding.transform.SetParent(ScreenZero.transform);
+            var RectTransform = KararaStanding.GetComponent<RectTransform>();
+            RectTransform.anchoredPosition = new Vector3(85, RectTransform.anchoredPosition.y);
+                KararaStandingImage.enabled = true;
+                KararaDisappear(false);
+
+                //fish talking
+                tutorialDialogueState = DialogueState.fish;
+                fishText.text = "What are you doing with your customer's clothes?";
+                nameTag.text = "GoldFish";
+
+                Show(arrowButton);
+                clicktime++;
+            }
         }
         else if(tutorialNumber == 16)
         {
-            DoDialogues(true);
-            myText.text = "The clothes should be returned before ";
-            arrow.enabled = false;
-            Hide(arrowButton);
-
-
-
-            nameTag.text = "Karara";
-            bag.GetComponent<Image>().material.EnableKeyword("SHAKEUV_ON");
+            
+            //还好包了
+            KararaStandingImage.sprite = KararaWorkCloth;
+            
+            if(clicktime == 8)
+            {
+                //如果转到第一个页面，那么鱼老板讲话
+                if (FinalCameraController.mySubwayState == FinalCameraController.SubwayState.One)
+                {
+                    tutorialDialogueState = DialogueState.fish;
+                    fishText.text = "Lucky you! All clothes are automatically returned!";
+                    screamImage.enabled = false;
+                    Show(arrowButton);
+                    clicktime = 9;
+                }
+                else
+                {
+                    screamImage.enabled = true;
+                    tutorialDialogueState = DialogueState.none;
+                }
+            }
+          
         }
-        else if(tutorialNumber == 17)
+        else if(tutorialNumber == 18)
         {
-            myText.text = "The end of my day, easy!";
+            fishText.text = "The end of my day, easy!";
             arrow.enabled = true;
             Show(arrowButton);
 
@@ -317,18 +620,48 @@ public class TutorialManager : MonoBehaviour
         }
         
         //if the player has already pressed screenshot button
+        //only need to do this once?
         if (pressScreenshot)
         {
-            //wait for several seconds
-//            StartCoroutine(WaitBeforeDialogues(2, "Hey you! Come over here!", FishProfile));
+            pause = true;
             if(tutorialNumber == 0)
             {
-                StartCoroutine(FishCallout());
+//                StartCoroutine(FishCallout());
+                //pressScreenshot = false;
+                if (temp)
+                {
+                    DialogueRT.anchoredPosition -= new Vector2(0, 300);
+                    temp = false;
+                    
+                    //wait for a second then show the fish dialogue
+                    for (int i = 0; i < 60; i++)
+                    {
+                        if (i > 58)
+                        {
+                            tutorialDialogueState = DialogueState.fish;
+
+                            break;
+                        }
+                    }
+                }
+                print("pressscreenshot is true, should go a lot of times");
+
+                //this is specifically for the taking picture process, some images should be cancelled
+                screamImage.enabled = true;
+                NameTagImage.enabled = false;
+
+                fishText.text = "Hey you! Over here!";
+                //scrollControl(true);//enable player to swipe
+
+                arrow.enabled = false;
+
+                backToSubway = true;
+                Show(arrowButton);
             }
             else if(tutorialNumber > 12)
             {
-                DoDialogues(false);
-                myText.text = "";
+                DoFishDialogue(false);
+                fishText.text = "";
                 nameTag.text = "";
                 myFlash.alpha = myFlash.alpha - Time.deltaTime;
      
@@ -343,24 +676,31 @@ public class TutorialManager : MonoBehaviour
         
         if (FinalCameraController.mySubwayState == FinalCameraController.SubwayState.One && tutorialNumber == 1)
         {
-            myText.text = "Your first day of work!";
-            
+            //don't let the dialogue disappear if swipe
+            stopDisappear = true;
+
+            //show fish dialogue
+            tutorialDialogueState = DialogueState.fish;
+            fishText.text = "Karara! You're finally here!";
             arrow.enabled = true;
+            
+            //enable click the screen
             Show(arrowButton);
 
-
+            Hide(GestureCG);
+            
+            //show karara
             KararaRectT.anchoredPosition = 
                 new Vector3(205, KararaRectT.anchoredPosition.y);
-            tutorialNumber = 2;
-            StartCoroutine(WaitFor1Seconds());
-            
             KararaStanding.transform.SetParent(ScreenZero.transform);
             var RectTransform = KararaStanding.GetComponent<RectTransform>();
             RectTransform.anchoredPosition = new Vector3(85, RectTransform.anchoredPosition.y);
             KararaStandingImage.enabled = true;
             KararaDisappear(false);
-            ChangeDialogue("Goldfish");
+            
+            tutorialNumber = 2;            
 
+            ChangeDialogue("Goldfish");
         }
     }
 
@@ -389,6 +729,15 @@ public class TutorialManager : MonoBehaviour
         UIGroup.interactable = true;
     }
 
+
+    IEnumerator FishCloseDoor()
+    {
+        yield return new WaitForSeconds(0.4f);
+        myHSS.GoToScreen(1);
+        yield return new WaitForSeconds(0.4f);
+        
+    }
+
     IEnumerator StoryStart()
     {
         yield return new WaitForSeconds(0.4f);
@@ -400,32 +749,59 @@ public class TutorialManager : MonoBehaviour
     IEnumerator ChangeText(string dialogueText, bool isclick)
     {
         yield return new WaitForSecondsRealtime(0.1f);
-        myText.text = dialogueText;
+        fishText.text = dialogueText;
         if (isclick)
         {
             clicktime++;
         }
-
     }
 
-    public void DoDialogues(bool trueOrFalse)
+   
+    public void DoFishDialogue(bool trueOrFalse)
     {
         //disable the dialogues
         for (int a = 0; a < DialogueImageList.Length; a++)
         {
             if(trueOrFalse)
             {
+                //if true, enable fish dialogue
                 DialogueImageList[a].enabled = true;
+                fishText.enabled = true;
+                nameTag.enabled = true;
             }
             else
             {
+                //if false, disable fish dialogue
                 DialogueImageList[a].enabled = false;
+                fishText.enabled = false;
+                nameTag.enabled = false;
+            }
+           
+        }
+    }
+    
+    public void DoKararaDialogue(bool trueOrFalse)
+    {
+        //disable the dialogues
+        for (int a = 0; a < KararaDialogueImageList.Length; a++)
+        {
+            if(trueOrFalse)
+            {
+                //if true, enable karara dialogue
+                KararaDialogueImageList[a].enabled = true;
+                kararaText.enabled = true;
+            }
+            else
+            {
+                //if false, disable karara dialogue
+                KararaDialogueImageList[a].enabled = false;
+                kararaText.enabled = false;
             }
         }
     }
     IEnumerator TrainMoveIn() 
     {
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(0.5f);
         
         for(int i = 0; i < 5; i ++)
         {
@@ -440,35 +816,21 @@ public class TutorialManager : MonoBehaviour
                 KararaDisappear(false);                
                 yield return new WaitForSeconds(1);
 
-                for (int a = 0; a < DialogueImageList.Length; a++)
-                {
-                    DialogueImageList[a].enabled = true;
-                    myText.text = "I should take a selfie in front of that poster";
-                    nameTag.text = "Karara";
-                    arrow.enabled = false;
-                    Hide(arrowButton);
-
-
-                    //myText.color = fishColor;
-
-//                    ProfileImage.sprite = FishProfile;
-                }
-                scrollControl(false);
-
-//                touch.transform.position = poster.transform.position;
-//                touchImage.enabled = true;
-//                touchAnimator.SetBool("isTouch", true);
-                //change dialogue background and name
-                ChangeDialogue("Karara");
-
+                //show karara dialogue
+                tutorialDialogueState = DialogueState.karara;
+                kararaText.text = "poster";
+                arrow.enabled = false;
+                Hide(arrowButton);//player should click poster
             }
         }
     }
 
     public void scrollControl(bool trueOrFalse)
     {
-        myHSS.enabled = trueOrFalse;
-        FinalCameraController.subwayScrollRect.enabled = trueOrFalse;
+        //if true, then swipe is enabled
+        stopDisappear = !trueOrFalse;
+//        myHSS.enabled = trueOrFalse;
+//        FinalCameraController.subwayScrollRect.enabled = trueOrFalse;
     }
 
 
@@ -488,234 +850,266 @@ public class TutorialManager : MonoBehaviour
         KararaStandingImage.color = tempColor;
     }
 
-    //wait for several seconds
-    IEnumerator WaitBeforeDialogues(int seconds, string dialogue, Sprite profile)
+  
+
+   
+
+ 
+
+    bool temp = true;
+
+    private bool backToSubway;
+    private bool startFadeOut;
+
+    IEnumerator WaitAndChange()
     {
-        yield return new WaitForSeconds(seconds);
-        DoDialogues(true);
-        myText.text = dialogue;
-        ProfileImage.sprite = profile;
+        yield return new WaitForSeconds(0.8f);
+        clicktime = 8;
 
     }
-
-    IEnumerator WaitFor1Seconds()
+    IEnumerator KararaAskBag()
     {
-        yield return new WaitForSeconds(1);
-        scrollControl(false);
-    }
+        yield return new WaitForSeconds(4);
 
-    IEnumerator WaitUntilUI()
-    {
-        tutorialNumber = 9;
-
-        yield return new WaitForSeconds(2);
-        myText.text = "Wow, this is beautiful.";
-//        //这时还不能点衣服
-//        foreach (var button in ClothUIButtons)
-//        {
-//            button.enabled = false;
-//        }
-
-        arrow.enabled = true;
-        Show(arrowButton);
+        if(tutorialNumber == 2)
+        {
+            tutorialDialogueState = DialogueState.karara;
+            kararaText.text = "Bag?";
+        }
 
     }
-    
     IEnumerator FishCallout()
     {
         yield return new WaitForSeconds(1);
-        DoDialogues(true);
-        
-        myText.text = "Hey you! Come over here! Swipe to move around!";
-        scrollControl(true);
+        tutorialDialogueState = DialogueState.fishElse;
 
-        ProfileImage.sprite = FishProfile;
+        //this is specifically for the taking picture process
+        screamImage.enabled = true;
+        fishText.text = "Hey you! Over here!";
+        //scrollControl(true);
+
+        //swipe is enabled
+        myHSS.enabled = true;
+        FinalCameraController.subwayScrollRect.enabled = true;
+
         arrow.enabled = false;
-        Hide(arrowButton);
 
-        
+        if (temp)
+        {
+            DialogueRT.anchoredPosition -= new Vector2(0, 300);
+            temp = false;
+        }
+
         yield return new WaitForSeconds(1);
 
-        //cancel flash after a few seconds
-        myFlash.alpha = myFlash.alpha - Time.deltaTime;
-     
-        if (myFlash.alpha <= 0)
-        {
-            myFlash.alpha = 0;
-            pressScreenshot = false;
-        }
+        backToSubway = true;
+        Show(arrowButton);
+    }
+
+
+    IEnumerator MessageAppear()
+    {
+        tutorialDialogueState = DialogueState.fish;
+        fishText.text = "Stop talking! listen, never dare you...";
+        yield return new WaitForSeconds(0.5f);
+        Hide(arrowButton);
+        Show(anotherApp);
+
+    }
+
+    
+
+
+//        //cancel flash after a few seconds
+//        myFlash.alpha = myFlash.alpha - Time.deltaTime;
+//     
+//        if (myFlash.alpha <= 0)
+//        {
+////            myFlash.alpha = 0;
+////            pressScreenshot = false;
+////            Show(GestureCG);
+//            backToSubway = true;
+//            Show(arrowButton);
+//
+//
+//        }
         
         //change back to subway after the flashlight
         //KararaImage.enabled = true;
-        FinalCameraController.ChangeToSubway();
-        tutorialNumber = 1;
+//        FinalCameraController.ChangeToSubway();
+//        tutorialNumber = 1;
         
         //change dialogue background and name
-        ChangeDialogue("?????");
+//        ChangeDialogue("?????");
 
         //KararaDisappear(true);
 
-    }
-
-
-    IEnumerator ClickTimeOne()
-    {
-        yield return new WaitForSeconds(0.5f);
-
-        myText.text = "Now pick up those bags.";
-
-        bag = Instantiate(clothBag, bagPos, Quaternion.identity) as GameObject;
-        bag.transform.SetParent(clothBagGroup.transform, false);
-        arrow.enabled = false;
-        Hide(arrowButton);
-
-                
-        bag.GetComponent<Image>().material.EnableKeyword("SHAKEUV_ON");
-
-    }
-
+   
     public int clicktime = 0;
     private bool clickBool = false;
+
+    private bool tempClick = true;
 
     public void DialogueArrowButton()
     {
         print("clickedddddddddddddd");
-        if (tutorialNumber == 2)
+        if (tutorialNumber == 0 && backToSubway)
         {
-            arrow.enabled = true;
-            Show(arrowButton);
-
             if(clicktime == 0)
             {
-                StartCoroutine(ChangeText("Good that you are already wearing the workwear.",true));
-                 
-            }
-            else if (clicktime == 1)
-            {
-                //StartCoroutine(ChangeText("Now pick up those bags.",false));
+                backToSubway = false;
 
-                //myText.text = "Now pick up those bags.";
-                StartCoroutine(ClickTimeOne());
+                myFlash.alpha = 0;
+                pressScreenshot = false;
 
-            }
-        }
-        else if (tutorialNumber == 7)
-        {
-         
-            if (clicktime == 1)
-            {
-                myText.text = "Boss?";
-                ProfileImage.sprite = KararaProfile;
+
+                Show(GestureCG);
+                //screamImage.enabled = true;
+
+                    print("temptemp");
+                    DialogueRT.anchoredPosition += new Vector2(0, 250);
+                    NameTagImage.enabled = true;
+
+                    //disable fish dialogue
+                    tutorialDialogueState = DialogueState.none;
+                    print("pressscreenshot is true, should go only one time");
                 
-                clicktime++;
 
-            }
-            else if (clicktime == 2)
-            {
-                myText.text = "......";
-                ProfileImage.sprite = FishProfile;
-                
-                clicktime++;
-
-            }
-            else if (clicktime == 3)
-            {
-                myText.text = "Hey you! Come over here!";
-                
-                clicktime++;
-                
-                //change dialogue background and name
-                ChangeDialogue("Goldfish");
-
-            }
-            else if (clicktime == 4)
-            {
-                myText.text = "Good that you are already wearing the workwear.";
-                
-                clicktime++;
-
-            }
-            else if (clicktime == 5)
-            {
-                myText.text = "He has forgotten me, guess I'll do this on my own. First, open the door.";
-                ProfileImage.sprite = KararaProfile;
-                //touch.transform.position = door.transform.position;
-
-                door.GetComponent<Image>().material.EnableKeyword("SHAKEUV_ON");
-                cloth.GetComponent<Image>().material.EnableKeyword("SHAKEUV_ON");
-                
-                cloth.GetComponent<Button>().enabled = true;
-                arrow.enabled = false;
+                //change back to subway after the flashlight
+                FinalCameraController.ChangeToSubway();
                 Hide(arrowButton);
-
-                
-                //change dialogue background and name
-                ChangeDialogue("Karara");
+                tutorialNumber = 1;
+                pause = false;
             }
         }
+        else if (tutorialNumber == 2)
+        {
+            stopDisappear = true;
+          if (clicktime == 0)
+          {
+              tutorialDialogueState = DialogueState.karara;
+              kararaText.text = "Karara?";
+              
+              Show(arrowButton);
+              clicktime++;
+          }
+      
+          else if (clicktime == 1)
+          {
+              tutorialDialogueState = DialogueState.fish;
+              fishText.text = "You are already late! Stop talking and do the laundry!";
+              clicktime++;
+          }
+          else if (clicktime == 2)
+          {
+              tutorialDialogueState = DialogueState.karara;
+              kararaText.text = "laundry?";
+              clicktime++;
+          }
+          else if(clicktime == 3)
+          {
+              tutorialDialogueState = DialogueState.fish;
+              fishText.text = "How come you have such a bad memory! Do I need to teach you every time! Now pick up the bag!";
+              
+              //instantiate the bag
+              bag = Instantiate(clothBag, bagPos, Quaternion.identity) as GameObject;
+              bag.transform.SetParent(clothBagGroup.transform, false);
+              arrow.enabled = false;
+              Hide(arrowButton);//so the bag can be picked
+          }
 
-        else if(tutorialNumber == 9)
+          
+        }
+        else if(tutorialNumber == 6)
         {
             if (clicktime == 5)
             {
-                //这时能点衣服
-                foreach (var button in ClothUIButtons)
-                {
-                    button.enabled = true;
-                }
-               
-                foreach (var image in ClothUIImages)
-                {
-                    Material mat = image.material;
-                    mat.EnableKeyword("SHAKEUV_ON");
-                    mat.EnableKeyword("DOODLE_ON");
-                    
-                }
-
-                myText.text = "I'm supposed to put them back into the bag...Just click the bag.";
-
-                bag.GetComponent<Image>().material.EnableKeyword("SHAKEUV_ON");
-
-                arrow.enabled = false;
+                kararaText.text = "Open door";
                 Hide(arrowButton);
-                
                 clicktime++;
-
-
-//                touch.transform.position = cloth.transform.position;
-//                touchImage2.enabled = true;
-//                touch2.transform.position = bag.transform.position;
             }
-            else if (clicktime == 7)
+            else if (clicktime == 6)
             {
-                myText.text = "Boss is not paying attention. He doesn't remember things anyway. Maybe I should...?";
-                arrow.enabled = false;
-                Hide(arrowButton);
-            }
-        }
-        else if(tutorialNumber == 13)
-        {
-            if (wearNothing)
-            {
-                myText.text = "Underwear? At least I should wear something on my picture...";
-
-            }
-            else
-            {
-                FinalCameraController.ChangeToSubway();
-                myText.text = "I should be quick. Where is that poster?";
-                tutorialNumber = 14;
-                arrow.enabled = false;
-                Hide(arrowButton);
+               
                 
-                //disable player button, now if clicked, nothing would happen, cannot go back to closet scene
-                //maybe don't disable the button, but instead karara say something and refuse to go back, achieved in FinalCameraController
-                //KararaSittingCanvasGroup.interactable = false;
+//                if(tempClick)
+//                {
+//                    myHSS.GoToScreen(1);
+//                    Hide(arrowButton);
+//
+//                    tempClick = false;
+//                }                
+//                tutorialDialogueState = DialogueState.fish;
+//                fishText.text = "What are you waiting for! Do the laundry!";
+//                StartCoroutine(WaitAndChange());
 
+            }
+            
+        }
+        else if (tutorialNumber == 7)
+        {
+            //这里主要需要通过点击内容推进对话，不通过clicktime
+            
+        }
+        else if(tutorialNumber == 15)
+        {
+            if (clicktime == 7)
+            {
+                fishText.text = "Now return the clothes! Immediately!";
+                arrow.enabled = false;
+                Show(arrowButton);
+                clicktime++;
+            }
+            else if (clicktime == 8)
+            {
+                myHSS.GoToScreen(2);
+                Hide(arrowButton);
+                //clicktime++;
+            }
+//            else if (clicktime == 10)
+//            {
+//                fishText.text = "What are you murmuring? Quiet! Always remember time! Check the map if you need to!";
+//                nameTag.text = "Goldfish";
+//                
+//                //enable map button
+//                SubwayMap.enabled = true;
+//                Hide(arrowButton);
+//
+//                clicktime++;
+//            }
+//            else if (clicktime == 11)
+//            {
+//                //镜头转到map
+//                
+//                FinalCameraController.mySubwayState = FinalCameraController.SubwayState.Three;
+//                myHSS.GetComponent<HorizontalScrollSnap>().GoToScreen(3);
+//                //stopDisappear = true;
+//                
+//                clicktime++;
+//            }
+        }
+        else if(tutorialNumber == 16)
+        {
+            if(clicktime == 8)
+            {
+                tutorialDialogueState = DialogueState.fish;
+                fishText.text = "Lucky you! All clothes are automatically returned!";
+                clicktime++;
+            }
+            else if (clicktime == 9)
+            {
+                tutorialDialogueState = DialogueState.karara;
+                kararaText.text = "Pity";
+                clicktime++;
+            }
+            else if (clicktime == 10)
+            {
+                StartCoroutine(MessageAppear());
             }
            
+           
         }
-        else if (tutorialNumber == 17)
+        else if (tutorialNumber == 18)
         { 
             print("startSceneeeee");
             StartCoroutine(StoryStart());

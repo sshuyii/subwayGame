@@ -205,9 +205,10 @@ public class ClothToMachine : MonoBehaviour
                 hitTime = 0;
                 WasherControllerList[i].isFirstOpen = true;
 
-                if (FinalCameraController.isTutorial && FinalCameraController.TutorialManager.tutorialNumber == 16)
+                if (FinalCameraController.isTutorial && FinalCameraController.TutorialManager.tutorialNumber == 15)
                 {
-                    FinalCameraController.TutorialManager.tutorialNumber = 17;
+                    FinalCameraController.TutorialManager.tutorialNumber = 16;
+                    FinalCameraController.TutorialManager.screamImage.enabled = true;
                 }
                 break;
             }
@@ -233,42 +234,60 @@ public class ClothToMachine : MonoBehaviour
         {
             if (hitTime == 0)
             {
-                SubwayMovement.bagNum -= 1;
-                for (int i = 0; i < AllMachines.WashingMachines.Count; i++)
+                if (FinalCameraController.isTutorial)
                 {
-                    //disable karara image in tutorial
-                    if (FinalCameraController.isTutorial)
-                    {
-                        FinalCameraController.TutorialManager.KararaStandingImage.enabled = false;
-                        FinalCameraController.TutorialManager.tutorialNumber = 3;
-                        FinalCameraController.TutorialManager.scrollControl(true);
-                    }
-                    
-                    //get machine start washing
-                    if (WasherControllerList[i].myMachineState == AllMachines.MachineState.empty)
-                    {
-                        WasherControllerList[i].myMachineState = AllMachines.MachineState.bagUnder;
-                        //change machine tags to character
-                        WasherControllerList[i].transform.gameObject.tag = this.transform.gameObject.tag;
+                    WasherControllerList[0].myMachineState = AllMachines.MachineState.bagUnder;
+                    //change machine tags to character
+                    WasherControllerList[0].transform.gameObject.tag = this.transform.gameObject.tag;
 
-                        this.gameObject.transform.SetParent(WasherControllerList[i].gameObject.transform);
+                    this.gameObject.transform.SetParent(WasherControllerList[0].gameObject.transform);
 
-                        transform.position =
-                            AllMachines.WashingMachines[i].transform.position + new Vector3(0, -2.9f, 0);
-                        if (i == 0)
-                        {
-                            myHSS.GetComponent<HorizontalScrollSnap>().GoToScreen(2);
-                        }
-                        else
-                        {
-                            myHSS.GetComponent<HorizontalScrollSnap>().GoToScreen(3);
-                        }
+                    transform.position =
+                        AllMachines.WashingMachines[0].transform.position + new Vector3(0, -2.9f, 0);
+
+                        myHSS.GetComponent<HorizontalScrollSnap>().GoToScreen(2);
+                                      
                         
-                        //change the bag position to be empty again
-                        SubwayMovement.bagPosAvailable[myBagPosition] = false;
+                    FinalCameraController.TutorialManager.KararaStandingImage.enabled = false;
+                    FinalCameraController.TutorialManager.tutorialNumber = 3;
+                    FinalCameraController.TutorialManager.tutorialDialogueState = TutorialManager.DialogueState.none;
+                    FinalCameraController.TutorialManager.scrollControl(true);
 
-                        hitTime++;
-                        break;
+                    FinalCameraController.TutorialManager.stopDisappear = false;
+                    
+                    hitTime++;
+                }
+                else
+                {
+                    SubwayMovement.bagNum -= 1;
+                    for (int i = 0; i < AllMachines.WashingMachines.Count; i++)
+                    {
+                        //get machine start washing
+                        if (WasherControllerList[i].myMachineState == AllMachines.MachineState.empty)
+                        {
+                            WasherControllerList[i].myMachineState = AllMachines.MachineState.bagUnder;
+                            //change machine tags to character
+                            WasherControllerList[i].transform.gameObject.tag = this.transform.gameObject.tag;
+
+                            this.gameObject.transform.SetParent(WasherControllerList[i].gameObject.transform);
+
+                            transform.position =
+                                AllMachines.WashingMachines[i].transform.position + new Vector3(0, -2.9f, 0);
+                            if (i == 0)
+                            {
+                                myHSS.GetComponent<HorizontalScrollSnap>().GoToScreen(2);
+                            }
+                            else
+                            {
+                                myHSS.GetComponent<HorizontalScrollSnap>().GoToScreen(3);
+                            }
+
+                            //change the bag position to be empty again
+                            SubwayMovement.bagPosAvailable[myBagPosition] = false;
+
+                            hitTime++;
+                            break;
+                        }
                     }
                 }
             }
@@ -283,7 +302,7 @@ public class ClothToMachine : MonoBehaviour
                 if (FinalCameraController.isTutorial)
                 {
                     FinalCameraController.TutorialManager.tutorialNumber = 4;
-                    FinalCameraController.TutorialManager.bag.GetComponent<Image>().material.DisableKeyword("SHAKEUV_ON");
+//                    FinalCameraController.TutorialManager.bag.GetComponent<Image>().material.DisableKeyword("SHAKEUV_ON");
                 }
 
                 for (int i = 0; i < AllMachines.WashingMachines.Count; i++)
@@ -325,10 +344,15 @@ public class ClothToMachine : MonoBehaviour
                                     print("returnClothhhhhh");
                                     if (FinalCameraController.isTutorial)
                                     {
-                                        if(FinalCameraController.TutorialManager.tutorialNumber == 16)
+                                        if(FinalCameraController.TutorialManager.tutorialNumber == 15)
                                         {
                                             //then return all clothes in the machine
-                                            returnClothYes(); 
+                                            FinalCameraController.generatedNotice = Instantiate(AllMachines.returnNotice,
+                                                new Vector3(0, 0, 0),
+                                                Quaternion.identity, WasherControllerList[i].gameObject.transform);
+
+                                            FinalCameraController.generatedNotice.transform.SetParent(WasherControllerList[2].gameObject.transform);
+                                            //change karara back into work cloth
                                         }
                                         else if (FinalCameraController.TutorialManager.tutorialNumber == 9)
                                         {

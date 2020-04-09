@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
 using UnityEngine.UI;
@@ -158,8 +159,10 @@ public class ScreenshotHandler : MonoBehaviour
 //            
 //        }
 
-        usedPostures.Add(CalculateInventory.posNum.ToString(), true);
-        //usedBackground.Add(InstagramController.currentBackground, true);
+        if(!FinalCameraController.isTutorial)
+        {
+            usedPostures.Add(CalculateInventory.posNum.ToString(), true);
+        }        //usedBackground.Add(InstagramController.currentBackground, true);
         
         //instantiate new post object     
         var newPost = Instantiate(InstagramController.photoPostPrefab, new Vector3(0, 0, 0), Quaternion.identity);
@@ -290,10 +293,8 @@ public class ScreenshotHandler : MonoBehaviour
                 followerNum += 8;
             }
         }
-
         
         FinalCameraController.ChangeToApp();
-       
     }
     
 
@@ -334,7 +335,18 @@ public class ScreenshotHandler : MonoBehaviour
         
         yield return new WaitForSeconds(0.5f);
 
-        if (!usedPostures.ContainsKey(CalculateInventory.posNum.ToString()))
+        //in tutorial
+        if (FinalCameraController.isTutorial)
+        {
+            flash = true;
+            
+            myFlash.alpha = 1;
+
+            //yield on a new YieldInstruction that waits for 5 seconds.
+            yield return new WaitForSeconds(0.1f);
+            addToKararaPage();
+        }
+        else if (!usedPostures.ContainsKey(CalculateInventory.posNum.ToString()))//if the posture is never used
         {
             flash = true;
             
@@ -349,10 +361,12 @@ public class ScreenshotHandler : MonoBehaviour
             //After we have waited 5 seconds print the time again.
             Debug.Log("Finished Coroutine at timestamp : " + Time.time);
         }
-        else 
+        else //if the posture has already been used
         {
             myFlash.alpha = 1;
+
             FinalCameraController.Show(Notice);
+                   
             if (usedPostures.ContainsKey(CalculateInventory.posNum.ToString()))
             {
                 Notice.gameObject.GetComponent<TextMeshProUGUI>().text = "I should change my posture!";
@@ -438,9 +452,7 @@ public class ScreenshotHandler : MonoBehaviour
     
     public void TakeScreenshot()
     {
-//        myCamera.targetTexture = RenderTexture.GetTemporary(Screen.width, Screen.height, 16);
-//        takeScreenshotOnNextFrame = true;
-        //ScreenCapture.CaptureScreenshot(Application.dataPath + "/Resources/Screenshots/CameraScreenshot.png");
+        //if the background is already used
         if (!InstagramController.AdAlreadyTakenList[InstagramController.currentBackground])
         {
             FinalCameraController.Show(Notice);
@@ -462,6 +474,7 @@ public class ScreenshotHandler : MonoBehaviour
         
         TakeScreenshot(width, height);
         
+        //don't take the picture in the first half of the tutorial
         if (FinalCameraController.isTutorial && FinalCameraController.TutorialManager.tutorialNumber < 9)
         {
             
@@ -479,6 +492,13 @@ public class ScreenshotHandler : MonoBehaviour
             toothpastePost.GetComponent<EntryTime>().time = entryTime;
 
             entryTime += 10;
+            
+            //if in the tutorial and taking the photo for the second time
+            if(FinalCameraController.TutorialManager.tutorialNumber == 13)
+            {
+                FinalCameraController.TutorialManager.tutorialNumber = 14;
+                
+            }
         }
        
             

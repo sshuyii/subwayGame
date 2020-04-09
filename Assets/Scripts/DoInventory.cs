@@ -68,15 +68,18 @@ public class DoInventory : MonoBehaviour
         else
         {
             return;
-            CalculateInventory.occupiedI = 1;
         }
         
         //for tutorial
-        if (FinalCameraController.isTutorial)
+        if (FinalCameraController.isTutorial && FinalCameraController.isSwipping == false)
         {
             FinalCameraController.TutorialManager.tutorialNumber = 10;
             //in tutorial, if click a cloth, cloth the entire ui interface
             WasherController.clickMachine();
+            FinalCameraController.TutorialManager.kararaText.text = "put on";
+            FinalCameraController.TutorialManager.tutorialDialogueState = TutorialManager.DialogueState.karara;
+            FinalCameraController.clickKarara();
+            FinalCameraController.Hide(FinalCameraController.TutorialManager.arrowButton);
         }
 
         

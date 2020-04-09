@@ -51,38 +51,39 @@ public class ChangeBackground :MonoBehaviour
     {
         InstagramController.currentBackground = gameObject.name;
         //reset everything to the first posture being able to use in this background
-        
-        InstagramController.CalculateInventory.resetPosture();
-        
-        
-        
-        FinalCameraController.CancelAllUI();
         if(FinalCameraController.alreadyClothUI == false)
         {
-            if (FinalCameraController.isSwipping == false)
+            if(FinalCameraController.isSwipping == false && !FinalCameraController.isTutorial)
+            {
+                InstagramController.CalculateInventory.resetPosture();
+    
+                FinalCameraController.CancelAllUI();
+                photoBackground.sprite = InstagramController.allBackAd[transform.name];
+                InstagramController.currentBackground = transform.name;
+    
+                FinalCameraController.GoAdvertisement();
+            }
+            else if (FinalCameraController.isSwipping == false && FinalCameraController.isTutorial)
             {
 //              if (InstagramController.AdAlreadyTakenList[transform.name])
 //              {
-                if (FinalCameraController.isTutorial && FinalCameraController.TutorialManager.tutorialNumber == 0)
+                if (FinalCameraController.TutorialManager.tutorialNumber == 0)
                 {                                                                                                                                                                     
                     //cancel dialogues and the touch tutorial
-                    TutorialManager.DoDialogues(false);
-                    TutorialManager.myText.text = "";
-                    TutorialManager.nameTag.text = "";
-                    //TutorialManager.touchImage.enabled = false;
+                    //TutorialManager.tutorialDialogueState = TutorialManager.DialogueState.none;
+                    
                      
                     photoBackground.sprite = InstagramController.allBackAd[transform.name];
                     InstagramController.currentBackground = transform.name;
 
                     FinalCameraController.GoAdvertisement();
                 }
-                else if (FinalCameraController.isTutorial && FinalCameraController.TutorialManager.tutorialNumber < 3)
+                else if (FinalCameraController.TutorialManager.tutorialNumber == 2 || FinalCameraController.TutorialManager.tutorialNumber == 3)
                 {
-                    TutorialManager.DoDialogues(true);
-                    TutorialManager.myText.text = "Don't touch it! Come over here!";
+                    TutorialManager.fishText.text = "Don't touch it! Come over here!";
                     TutorialManager.KararaStandingImage.enabled = true;
                 }
-                else if(FinalCameraController.isTutorial && FinalCameraController.TutorialManager.tutorialNumber > 13 || !FinalCameraController.isTutorial)
+                else if (FinalCameraController.TutorialManager.tutorialNumber == 13)
                 {
                     photoBackground.sprite = InstagramController.allBackAd[transform.name];
                     InstagramController.currentBackground = transform.name;

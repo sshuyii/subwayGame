@@ -592,7 +592,7 @@ public class ClothChanging : MonoBehaviour
         if (FinalCameraController.isTutorial)
         {
 //            FinalCameraController.TutorialManager.tutorialNumber = 13;
-            FinalCameraController.TutorialManager.myText.text = "Do I look better in this?";
+            FinalCameraController.TutorialManager.kararaText.text = "Workwear No";
 
         }
 

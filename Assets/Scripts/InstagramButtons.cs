@@ -59,40 +59,47 @@ public class InstagramButtons : MonoBehaviour
 
     public void ChangeToPersonalPage()
     {
-        FinalCameraController.lastAppState = FinalCameraController.myAppState;
-
-        Hide(FinalCameraController.frontPage);
-        FinalCameraController.HideAllPersonalPages();
-
-        
-        if (username.text == "Karara")
+        if (FinalCameraController.isTutorial)
         {
-            Camera.main.transform.position =
-                new Vector3(45, Camera.main.transform.position.y, Camera.main.transform.position.z);
+            FinalCameraController.Show(FinalCameraController.TutorialManager.finalComic);
+        }
             
-            FinalCameraController.myAppState = FinalCameraController.AppState.KararaPage;
-            Show(FinalCameraController.KararaPage);
+        else
+        {
+            FinalCameraController.lastAppState = FinalCameraController.myAppState;
+
+            Hide(FinalCameraController.frontPage);
+            FinalCameraController.HideAllPersonalPages();
             
+            if (username.text == "Karara")
+            {
+                Camera.main.transform.position =
+                    new Vector3(45, Camera.main.transform.position.y, Camera.main.transform.position.z);
 
-        }    
-        else if (username.text == "Nico")
-        {
-            Camera.main.transform.position =
-                new Vector3(55, Camera.main.transform.position.y, Camera.main.transform.position.z);
-            FinalCameraController.myAppState = FinalCameraController.AppState.RetroPage;
-            Show(FinalCameraController.RetroPage);
-
-
-        }       
-        else if (username.text == "Alex")
-        {
-            Camera.main.transform.position =
-                new Vector3(55, Camera.main.transform.position.y, Camera.main.transform.position.z);
-            FinalCameraController.myAppState = FinalCameraController.AppState.DesignerPage;
-            Show(FinalCameraController.DesignerPage);
+                FinalCameraController.myAppState = FinalCameraController.AppState.KararaPage;
+                Show(FinalCameraController.KararaPage);
 
 
-        }       
+            }
+            else if (username.text == "Nico")
+            {
+                Camera.main.transform.position =
+                    new Vector3(55, Camera.main.transform.position.y, Camera.main.transform.position.z);
+                FinalCameraController.myAppState = FinalCameraController.AppState.RetroPage;
+                Show(FinalCameraController.RetroPage);
+
+
+            }
+            else if (username.text == "Alex")
+            {
+                Camera.main.transform.position =
+                    new Vector3(55, Camera.main.transform.position.y, Camera.main.transform.position.z);
+                FinalCameraController.myAppState = FinalCameraController.AppState.DesignerPage;
+                Show(FinalCameraController.DesignerPage);
+
+
+            }
+        }
     }
     
     public void ClickInsPost()

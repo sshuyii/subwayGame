@@ -109,14 +109,17 @@ public class SubwayMovement : MonoBehaviour
 
         FinalCameraController = GameObject.Find("Main Camera").GetComponent<FinalCameraController>();
 
-        bagPosAvailable.Add(false);
-        bagPosAvailable.Add(false);
-        bagPosAvailable.Add(false);
+        if(!FinalCameraController.isTutorial)
+        {
+            bagPosAvailable.Add(false);
+            bagPosAvailable.Add(false);
+            bagPosAvailable.Add(false);
 
-        noSameBag = true;
-            
-        aSR = arrow.GetComponent<SpriteRenderer>();
-        hSR = highlight.GetComponent<SpriteRenderer>();
+            noSameBag = true;
+
+            aSR = arrow.GetComponent<SpriteRenderer>();
+            hSR = highlight.GetComponent<SpriteRenderer>();
+        }
 
         realTimer = (moveTime + stayTime) * 3 - timer;
         
@@ -193,7 +196,6 @@ public class SubwayMovement : MonoBehaviour
     {
         
         
-        
         //instead of InvokeRepeating
         if(!isMoving)
         {
@@ -240,14 +242,14 @@ public class SubwayMovement : MonoBehaviour
         {
             //highlight.transform.localPosition = stationPos[currentStation];
 
-            highlight.transform.position = highlights[currentStation].transform.position;
-            highlight.transform.rotation = Quaternion.Euler(new Vector3(
-                highlights[currentStation].transform.rotation.eulerAngles.x,
-                highlights[currentStation].transform.rotation.eulerAngles.y,
-                highlights[currentStation].transform.rotation.eulerAngles.z));
+//            highlight.transform.position = highlights[currentStation].transform.position;
+//            highlight.transform.rotation = Quaternion.Euler(new Vector3(
+//                highlights[currentStation].transform.rotation.eulerAngles.x,
+//                highlights[currentStation].transform.rotation.eulerAngles.y,
+//                highlights[currentStation].transform.rotation.eulerAngles.z));
 
-            aSR.enabled = false;
-            hSR.enabled = true;
+//            aSR.enabled = false;
+//            hSR.enabled = true;
 
             //open doors
             if (left1.transform.position.x > left1Pos - doorWidth)
@@ -546,16 +548,29 @@ public class SubwayMovement : MonoBehaviour
         //change time
 
         
+        //if in the tutorial, only show disco cloth
+        if (FinalCameraController.isTutorial)
+        {
+            isDetailed = !isDetailed;
+            if (isDetailed)
+            {
+                Show(dSR1);
+            }
+            else{Hide(dSR1);}
+        }
+        else
+        {
             for (int i = 0; i < NameToStationBags[stationNum.ToString()].Count; i++)
             {
                 //show and close the UI
-                if (FinalCameraController.AllStationClothList.ContainsKey(NameToStationBags[stationNum.ToString()][i].gameObject.tag))
+                if (FinalCameraController.AllStationClothList.ContainsKey(NameToStationBags[stationNum.ToString()][i]
+                    .gameObject.tag))
                 {
                     isDetailed = !isDetailed;
-                    
-                    break;//only change the variable once
+                    break; //only change the variable once
                 }
             }
+
             //todo:要specify这件衣服到底是哪个站上车的，问题在于显示完了之后没有清空！
             //对某一站的每一个包而言
             for (int u = 0; u < NameToStationBags[stationNum.ToString()].Count; u++)
@@ -564,19 +579,22 @@ public class SubwayMovement : MonoBehaviour
                 //对每一个包的每一件衣服而言
                 //print("asdfasdf = " + FinalCameraController.AllStationClothList.ContainsKey(NameToStationBags[stationNum.ToString()][u].gameObject.tag));
                 //如果某件衣服的tag等于这个包的tag
-                if(FinalCameraController.AllStationClothList.ContainsKey(NameToStationBags[stationNum.ToString()][u].gameObject.tag))
+                if (FinalCameraController.AllStationClothList.ContainsKey(NameToStationBags[stationNum.ToString()][u]
+                    .gameObject.tag))
                 {
                     for (int q = 0;
-                        q < FinalCameraController.AllStationClothList[NameToStationBags[stationNum.ToString()][u].gameObject.tag].Count;
+                        q < FinalCameraController
+                            .AllStationClothList[NameToStationBags[stationNum.ToString()][u].gameObject.tag].Count;
                         q++)
                     {
                         AllDetailList[u][q].enabled = true;
                         AllDetailList[u][q].sprite =
-                        FinalCameraController.AllStationClothList[NameToStationBags[stationNum.ToString()][u].gameObject.tag][q];
+                            FinalCameraController.AllStationClothList[
+                                NameToStationBags[stationNum.ToString()][u].gameObject.tag][q];
                     }
                 }
             }
-      
+
             if (isDetailed)
             {
                 Show(dSR1);
@@ -595,6 +613,7 @@ public class SubwayMovement : MonoBehaviour
                     }
                 }
             }
+        }
            
 //            
 //            //if the machine has been opened

@@ -9,6 +9,7 @@ public class TouchController : MonoBehaviour
     public Vector3 lp;   //Last touch position
     private float dragDistance;  //minimum distance for a swipe to be registered
 
+    private FinalCameraController FinalCameraController;
 
     public bool isSwiping = false;
     public bool isSwipable = false;
@@ -44,6 +45,7 @@ public class TouchController : MonoBehaviour
     {
         myInputState = InputState.None;
         dragDistance = Screen.height * 8 / 100;
+        FinalCameraController = GameObject.Find("Main Camera").GetComponent<FinalCameraController>();
     }
 
     // Update is called once per frame
@@ -67,10 +69,7 @@ public class TouchController : MonoBehaviour
             {
                 doubleTouch = false;
             }
-
         }
-        
-
         
         
         if (Input.touchCount == 1) // user is touching the screen with a single touch
@@ -96,18 +95,27 @@ public class TouchController : MonoBehaviour
             }
             else if (touch.phase == TouchPhase.Moved) // update the last position based on where they moved
             {
+                
+                
                 lp = touch.position;
 //                print("lp = " + lp);
 
                 if (Mathf.Abs(lp.y - fp.y) > dragDistance/4 || Mathf.Abs(lp.x - fp.x) > dragDistance/4)
                 {
                     isSwiping = true;
+                    
+                    //disable dialogue bubble if swiped
+                    if(FinalCameraController.isTutorial && !FinalCameraController.TutorialManager.stopDisappear)
+                    {
+                        FinalCameraController.Hide(FinalCameraController.TutorialManager.GestureCG);
+                        FinalCameraController.TutorialManager.screamImage.enabled = false;
+                        FinalCameraController.TutorialManager.DoFishDialogue(false);
+                    }               
                 }
                 else
                 { 
                     
                     isSwiping = false;
-
                 }
 
                 if (Mathf.Abs(lp.x - fp.x) > dragDistance || Mathf.Abs(lp.y - fp.y) > dragDistance)
@@ -131,6 +139,25 @@ public class TouchController : MonoBehaviour
             }
             else if (touch.phase == TouchPhase.Ended) //check if the finger is removed from the screen
             {
+                
+//                if(FinalCameraController.isTutorial && FinalCameraController.myCameraState == FinalCameraController.CameraState.Subway)
+//                {
+//                    if(FinalCameraController.TutorialManager.tutorialNumber != 6 && FinalCameraController.TutorialManager.tutorialNumber != 7)
+//                    {
+//                        FinalCameraController.TutorialManager.tutorialDialogueState =
+//                            TutorialManager.DialogueState.fish;
+//                    }                
+//                }
+
+                if (FinalCameraController.mySubwayState != FinalCameraController.SubwayState.One &&
+                    FinalCameraController.TutorialManager.tutorialNumber == 1)
+                {
+                    FinalCameraController.Show(FinalCameraController.TutorialManager.GestureCG);
+                    FinalCameraController.TutorialManager.screamImage.enabled = true;
+                    FinalCameraController.TutorialManager.DoFishDialogue(true);
+                }
+
+
                 lp = touch.position;  //last touch position. Ommitted if you use list
         
                 offsetX = 0;

@@ -146,11 +146,9 @@ public class WasherController : MonoBehaviour
         {
             fulltemp = false;
         }
-        
-        
-        
+                
         //close all ui if swipping the screen
-        if (FinalCameraController.isSwipping)
+        if (FinalCameraController.isSwipping && !FinalCameraController.isTutorial)
         {
             Destroy(FinalCameraController.generatedNotice);
             FinalCameraController.alreadyNotice = false;
@@ -228,8 +226,28 @@ public class WasherController : MonoBehaviour
         Show(backgroundUI2);
         yield return new WaitForSeconds(0.2f);
         Show(backgroundUI3);
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.5f);
 
+        if(FinalCameraController.isTutorial && FinalCameraController.TutorialManager.tutorialNumber == 6)
+        {
+              //之前是立刻关上门，鱼开始说话 
+//            shut = 0;
+//            Hide(ClothUI);
+//            Hide(backgroundUI3);
+////            yield return new WaitForSeconds(0.1f);
+//            Hide(backgroundUI2);
+////            yield return new WaitForSeconds(0.2f);
+//            Hide(backgroundUI);
+//            yield return new WaitForSeconds(0.1f);
+//        
+//            DoorImage.sprite = AllMachines.closedDoor;
+
+            FinalCameraController.TutorialManager.tutorialNumber = 7;
+        }
+        else if (FinalCameraController.isTutorial && FinalCameraController.TutorialManager.tutorialNumber == 8)
+        {
+            FinalCameraController.TutorialManager.tutorialNumber = 9;
+        }
 
     }
     
@@ -241,8 +259,11 @@ public class WasherController : MonoBehaviour
         yield return new WaitForSeconds(0.2f);
         Hide(backgroundUI);
         yield return new WaitForSeconds(0.3f);
-
-
+        if (FinalCameraController.isTutorial && FinalCameraController.TutorialManager.tutorialNumber == 7 || FinalCameraController.isTutorial && FinalCameraController.TutorialManager.tutorialNumber == 9)
+        {
+            FinalCameraController.TutorialManager.tutorialNumber = 8;
+            
+        }
     }
     
     public void CancelPanel()
@@ -293,16 +314,8 @@ public class WasherController : MonoBehaviour
                 StartCoroutine("WaitFor2Seconds");
 
                 GenerateCloth(this.transform.gameObject.tag);
-
                 
-                //for tutorial
-                if (FinalCameraController.isTutorial)
-                {
-                    FinalCameraController.TutorialManager.tutorialNumber = 8;
-                    
-                    FinalCameraController.TutorialManager.door.GetComponent<Image>().material.DisableKeyword("SHAKEUV_ON");
-                    FinalCameraController.TutorialManager.cloth.GetComponent<Image>().material.DisableKeyword("SHAKEUV_ON");
-                }
+                
             }
             //if click machine again, close UI
             else if (shut == 1)
@@ -352,13 +365,6 @@ public class WasherController : MonoBehaviour
             FinalCameraController.alreadyClothUI = true;
             FinalCameraController.currentClothUI = ClothUI;
         }
-
-            
-//            foreach (Button btn in btns)
-//            {
-//                btn.enabled = true;
-//            }
-            
     }
 
     private void GenerateClothAccordingToTag(string tagName, List<Sprite> MachineClothList)

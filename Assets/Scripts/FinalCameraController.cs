@@ -134,8 +134,6 @@ public class FinalCameraController : MonoBehaviour
         Hide(clothCG);
         Hide(messageCG);
         Hide(Inventory);
-
-
     }
 
 
@@ -191,12 +189,12 @@ public class FinalCameraController : MonoBehaviour
         {
             if(TutorialManager.tutorialNumber == 0 && mySubwayState == SubwayState.Four)
             {
-                myHSS.GoToScreen(4);
+                //myHSS.GoToScreen(4);
                 //myHSS.enabled = false;
             }        
             else if(TutorialManager.tutorialNumber == 2 && mySubwayState == SubwayState.One)
             {
-                myHSS.GoToScreen(1);
+                //myHSS.GoToScreen(1);
                 //myHSS.enabled = false;
             }
         }
@@ -205,7 +203,6 @@ public class FinalCameraController : MonoBehaviour
         if (HorizontalScrollSnap.CurrentPage == 5)
         {
             myHSS.GoToScreen(4);
-
         }
         else if(HorizontalScrollSnap.CurrentPage == 0)
         {
@@ -346,7 +343,7 @@ public class FinalCameraController : MonoBehaviour
             }        
             else if (TutorialManager.tutorialNumber == 14)
             {
-                TutorialManager.myText.text = "I'm pretty satisfied with my outfit. Where can I take a picture?";
+                TutorialManager.fishText.text = "Cool";
                 return;
             }
         }
@@ -388,7 +385,6 @@ public class FinalCameraController : MonoBehaviour
     {
        if (myAppState == AppState.Post)
        {
-           
             //Hide(mainpage);
             Hide(postpage);
             HideAllPersonalPages();
@@ -409,9 +405,6 @@ public class FinalCameraController : MonoBehaviour
                 Show(DesignerPage);
                 myAppState = AppState.DesignerPage;
             }
-            
-
-
        }
        else if (myAppState == AppState.Mainpage)
        {
@@ -454,11 +447,26 @@ public class FinalCameraController : MonoBehaviour
 
         
         //for Tutorial
-        if (isTutorial && TutorialManager.tutorialNumber == 15)
+        if (isTutorial)
         {
-            mySubwayState = SubwayState.Two;
-            myHSS.GetComponent<HorizontalScrollSnap>().GoToScreen(2);
-            TutorialManager.tutorialNumber = 16;
+            if (TutorialManager.tutorialNumber == 12)
+            {
+                mySubwayState = SubwayState.Four;
+                myHSS.GetComponent<HorizontalScrollSnap>().GoToScreen(4);
+                TutorialManager.tutorialNumber = 13;
+             }
+            else if(TutorialManager.tutorialNumber == 14)
+            {
+                mySubwayState = SubwayState.One;
+                myHSS.GetComponent<HorizontalScrollSnap>().GoToScreen(1);
+                TutorialManager.tutorialNumber = 15;
+            }
+            else if(TutorialManager.tutorialNumber == 16)
+            {
+                mySubwayState = SubwayState.One;
+                myHSS.GetComponent<HorizontalScrollSnap>().GoToScreen(1);
+                TutorialManager.tutorialNumber = 15;
+            }
         }
         
     }
@@ -467,12 +475,8 @@ public class FinalCameraController : MonoBehaviour
     {
         //cancel all dialogues
         print("click ChangeToAPP");
-        if (isTutorial)
-        {
-            TutorialManager.DoDialogues(false);
-        }
-        
-        if(alreadyClothUI == false)        
+
+       if(alreadyClothUI == false)        
         {
             print("alreadyClothUi = false");
             Hide(subwayBackground);
@@ -502,6 +506,7 @@ public class FinalCameraController : MonoBehaviour
     
     public void ChangeToMap()
     {  
+        print("mappppppp");
         if(alreadyClothUI == false)        {
             Hide(subwayBackground);
             if (isSwipping == false)
@@ -532,14 +537,11 @@ public class FinalCameraController : MonoBehaviour
         UIGroup.interactable = true;
     }
     
- 
- 
-    
-
     public void GoAdvertisement()
     {
         Hide(subwayBackground);
 
+      
         lastCameraState = myCameraState;
         transform.position = new Vector3(24, 0, -10);
         myCameraState = CameraState.Ad;

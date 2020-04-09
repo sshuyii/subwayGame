@@ -7,6 +7,8 @@ using UnityEngine.UI;
 public class CalculateInventory : MonoBehaviour
 {
     private InstagramController InstagramController;
+    private FinalCameraController FinalCameraController;
+    
     public int posNum = 0;
     public bool isreturning;
 
@@ -125,52 +127,57 @@ public class CalculateInventory : MonoBehaviour
     {
        
         InstagramController = GameObject.Find("---InstagramController").GetComponent<InstagramController>();
+        FinalCameraController = GameObject.Find("Main Camera").GetComponent<FinalCameraController>();
 
-        for (int i = 0; i < allClothList.Count; i++)
+
+        if(!FinalCameraController.isTutorial)
         {
-            allCloth.Add(allClothList[i].name, allClothList[i]);
+            for (int i = 0; i < allClothList.Count; i++)
+            {
+                allCloth.Add(allClothList[i].name, allClothList[i]);
+            }
+
+            for (int i = 0; i < allClothUIList.Count; i++)
+            {
+                allClothUI.Add(allClothUIList[i].name, allClothUIList[i]);
+            }
+
+            for (int i = 0; i < allSubwayClothList.Count; i++)
+            {
+                allSubwayCloth.Add(allSubwayClothList[i].name, allSubwayClothList[i]);
+                print(allSubwayClothList[i].name);
+            }
+
+
+            for (int i = 0; i < inventory.Count; i++)
+            {
+                //inventory used to be buttons
+                inventorySprite.Add(inventory[i].GetComponent<Button>().image.sprite);
+
+                //inventorySprite.Add(inventory[i].GetComponent<SpriteRenderer>().sprite);
+
+            }
+
+            for (int i = 0; i < ClothPos1.Count; i++)
+            {
+                AllClothPos0.Add(ClothPos0[i].name, ClothPos0[i]);
+                AllClothPos1.Add(ClothPos1[i].name, ClothPos1[i]);
+                AllClothPos2.Add(ClothPos2[i].name, ClothPos2[i]);
+                AllClothPos3.Add(ClothPos3[i].name, ClothPos3[i]);
+
+                allAdCloth.Add(ClothPos0[i].name, ClothPos0[i]);
+
+            }
+
+            postureDictionaryList.Add(AllClothPos0);
+            postureDictionaryList.Add(AllClothPos1);
+            postureDictionaryList.Add(AllClothPos2);
+            postureDictionaryList.Add(AllClothPos3);
+
+
+
+            allAdCloth = postureDictionaryList[posNum];
         }
-
-        for (int i = 0; i < allClothUIList.Count; i++)
-        {
-            allClothUI.Add(allClothUIList[i].name, allClothUIList[i]);
-        }
-        
-        for (int i = 0; i < allSubwayClothList.Count; i++)
-        {
-            allSubwayCloth.Add(allSubwayClothList[i].name, allSubwayClothList[i]);
-            print(allSubwayClothList[i].name);
-        }
-        
-        
-        for (int i = 0; i < inventory.Count; i++)
-        {
-            //inventory used to be buttons
-            inventorySprite.Add(inventory[i].GetComponent<Button>().image.sprite);
-            
-            //inventorySprite.Add(inventory[i].GetComponent<SpriteRenderer>().sprite);
-
-        }
-
-        for (int i = 0; i < ClothPos1.Count; i++)
-        {
-            AllClothPos0.Add(ClothPos0[i].name, ClothPos0[i]);
-            AllClothPos1.Add(ClothPos1[i].name, ClothPos1[i]);
-            AllClothPos2.Add(ClothPos2[i].name, ClothPos2[i]);
-            AllClothPos3.Add(ClothPos3[i].name, ClothPos3[i]);
-
-            allAdCloth.Add(ClothPos0[i].name, ClothPos0[i]);
-
-        }
-
-        postureDictionaryList.Add(AllClothPos0);
-        postureDictionaryList.Add(AllClothPos1);
-        postureDictionaryList.Add(AllClothPos2);
-        postureDictionaryList.Add(AllClothPos3);
-
-        
-        
-        allAdCloth = postureDictionaryList[posNum];
     }
 
     // Update is called once per frame
