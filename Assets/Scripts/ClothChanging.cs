@@ -335,7 +335,7 @@ public class ClothChanging : MonoBehaviour
             //for tutorial
             if (FinalCameraController.isTutorial)
             {
-                FinalCameraController.TutorialManager.tutorialNumber = 12;
+                FinalCameraController.TutorialManager.tutorialNumber = 14;
 
                 CalculateInventory.everythingSR.sprite = CalculateInventory.discoCloset;
                 CalculateInventory.everythingSSR.sprite = CalculateInventory.discoSubway;
@@ -353,8 +353,6 @@ public class ClothChanging : MonoBehaviour
                 CalculateInventory.blackPantsS.enabled = false;
                 
                 FinalCameraController.TutorialManager.wearNothing = false;
-
-                
                 return;
             }
 

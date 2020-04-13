@@ -7,10 +7,9 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Bag
+  m_Name: Poster
   m_Shader: {fileID: 4800000, guid: a36b7719ff0465b42ab1407d67672c5f, type: 3}
-  m_ShaderKeywords: DOODLE_ON ETC1_EXTERNAL_ALPHA OUTBASEPIXELPERF_ON OUTBASE_ON
-    _OUTLINEISPIXEL_ON
+  m_ShaderKeywords: DOODLE_ON ETC1_EXTERNAL_ALPHA OUTBASEPIXELPERF_ON _OUTLINEISPIXEL_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -97,7 +96,7 @@ Material:
     - _GrassWind: 20
     - _GreyscaleLuminosity: 0
     - _GreyscaleOutline: 0
-    - _HandDrawnAmount: 5
+    - _HandDrawnAmount: 6
     - _HandDrawnSpeed: 2
     - _HitEffectBlend: 1
     - _HitEffectGlow: 5

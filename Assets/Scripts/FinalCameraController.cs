@@ -69,7 +69,8 @@ public class FinalCameraController : MonoBehaviour
         One,
         Two,
         Three,
-        Four
+        Four,
+        None
     }
 
     public SubwayState mySubwayState;
@@ -295,21 +296,25 @@ public class FinalCameraController : MonoBehaviour
     
     void CheckScreenNum()
     {
-        if (HorizontalScrollSnap.CurrentPage == 1)
+        if (HorizontalScrollSnap.CurrentPage == 1 && HorizontalScrollSnap._settled)
         {
             mySubwayState = SubwayState.One;
         }
-        else if (HorizontalScrollSnap.CurrentPage == 2)
+        else if (HorizontalScrollSnap.CurrentPage == 2 && HorizontalScrollSnap._settled)
         {
             mySubwayState = SubwayState.Two;
         }
-        else if (HorizontalScrollSnap.CurrentPage == 3)
+        else if (HorizontalScrollSnap.CurrentPage == 3 && HorizontalScrollSnap._settled)
         {
             mySubwayState = SubwayState.Three;
         }
-        else if (HorizontalScrollSnap.CurrentPage == 4)
+        else if (HorizontalScrollSnap.CurrentPage == 4 && HorizontalScrollSnap._settled)
         {
             mySubwayState = SubwayState.Four;
+        }
+        else
+        {
+            mySubwayState = SubwayState.None;
         }
     }
 
@@ -335,16 +340,14 @@ public class FinalCameraController : MonoBehaviour
     public void ChangeToCloth()
     {
         Show(Inventory);
+             
         if (isTutorial)
         {
-            if(TutorialManager.tutorialNumber < 11)
+            TutorialManager.scrollControl(false);
+
+            if(TutorialManager.tutorialNumber < 13)
             {
-                TutorialManager.tutorialNumber = 11;
-            }        
-            else if (TutorialManager.tutorialNumber == 14)
-            {
-                TutorialManager.fishText.text = "Cool";
-                return;
+                TutorialManager.tutorialNumber = 13;
             }
         }
         
@@ -425,6 +428,10 @@ public class FinalCameraController : MonoBehaviour
 
     public void ChangeToSubway()
     {
+        if(isTutorial)
+        {
+            TutorialManager.scrollControl(true);
+        }
         Hide(Inventory);
         Show(subwayBackground);
         transform.position = new Vector3(0, 0, -10);
@@ -444,22 +451,23 @@ public class FinalCameraController : MonoBehaviour
 
         Hide(frontPage);
         Hide(appBackground);
-
+ 
         
         //for Tutorial
         if (isTutorial)
         {
-            if (TutorialManager.tutorialNumber == 12)
+            if (TutorialManager.tutorialNumber == 14)//从换装界面出来
             {
+                TutorialManager.scrollControl(true);
                 mySubwayState = SubwayState.Four;
                 myHSS.GetComponent<HorizontalScrollSnap>().GoToScreen(4);
-                TutorialManager.tutorialNumber = 13;
+                TutorialManager.tutorialNumber = 15;
              }
-            else if(TutorialManager.tutorialNumber == 14)
+            else if(TutorialManager.tutorialNumber == 15)//从地铁界面出来
             {
                 mySubwayState = SubwayState.One;
                 myHSS.GetComponent<HorizontalScrollSnap>().GoToScreen(1);
-                TutorialManager.tutorialNumber = 15;
+                TutorialManager.tutorialNumber = 16;
             }
             else if(TutorialManager.tutorialNumber == 16)
             {

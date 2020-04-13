@@ -205,10 +205,11 @@ public class ClothToMachine : MonoBehaviour
                 hitTime = 0;
                 WasherControllerList[i].isFirstOpen = true;
 
-                if (FinalCameraController.isTutorial && FinalCameraController.TutorialManager.tutorialNumber == 15)
+                if (FinalCameraController.isTutorial && FinalCameraController.TutorialManager.tutorialNumber == 16)
                 {
-                    FinalCameraController.TutorialManager.tutorialNumber = 16;
+                    FinalCameraController.TutorialManager.tutorialNumber = 17;
                     FinalCameraController.TutorialManager.screamImage.enabled = true;
+                    FinalCameraController.TutorialManager.scrollControl(true);
                 }
                 break;
             }
@@ -243,15 +244,15 @@ public class ClothToMachine : MonoBehaviour
                     this.gameObject.transform.SetParent(WasherControllerList[0].gameObject.transform);
 
                     transform.position =
-                        AllMachines.WashingMachines[0].transform.position + new Vector3(0, -2.9f, 0);
+                        AllMachines.WashingMachines[0].transform.position + new Vector3(0, -2.5f, 0);
+
+                    FinalCameraController.TutorialManager.scrollControl(true);
 
                         myHSS.GetComponent<HorizontalScrollSnap>().GoToScreen(2);
                                       
                         
                     FinalCameraController.TutorialManager.KararaStandingImage.enabled = false;
                     FinalCameraController.TutorialManager.tutorialNumber = 3;
-                    FinalCameraController.TutorialManager.tutorialDialogueState = TutorialManager.DialogueState.none;
-                    FinalCameraController.TutorialManager.scrollControl(true);
 
                     FinalCameraController.TutorialManager.stopDisappear = false;
                     
@@ -272,7 +273,7 @@ public class ClothToMachine : MonoBehaviour
                             this.gameObject.transform.SetParent(WasherControllerList[i].gameObject.transform);
 
                             transform.position =
-                                AllMachines.WashingMachines[i].transform.position + new Vector3(0, -2.9f, 0);
+                                AllMachines.WashingMachines[i].transform.position + new Vector3(0, -3f, 0);
                             if (i == 0)
                             {
                                 myHSS.GetComponent<HorizontalScrollSnap>().GoToScreen(2);
@@ -344,8 +345,9 @@ public class ClothToMachine : MonoBehaviour
                                     print("returnClothhhhhh");
                                     if (FinalCameraController.isTutorial)
                                     {
-                                        if(FinalCameraController.TutorialManager.tutorialNumber == 15)
+                                        if(FinalCameraController.TutorialManager.tutorialNumber == 16)
                                         {
+                                            FinalCameraController.TutorialManager.scrollControl(false);
                                             //then return all clothes in the machine
                                             FinalCameraController.generatedNotice = Instantiate(AllMachines.returnNotice,
                                                 new Vector3(0, 0, 0),

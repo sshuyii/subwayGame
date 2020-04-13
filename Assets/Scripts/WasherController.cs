@@ -84,10 +84,8 @@ public class WasherController : MonoBehaviour
             //for tutorial
             if (FinalCameraController.isTutorial)
             {
-                FinalCameraController.TutorialManager.tutorialNumber = 5;
+                FinalCameraController.TutorialManager.tutorialNumber = 6;
             }
-
-//            print("pressssssssed");
         }
     }
     
@@ -193,10 +191,10 @@ public class WasherController : MonoBehaviour
             
                 timer = 0;
                 
-                //for tutorial
+                //for tutorial,衣服洗完了
                 if (FinalCameraController.isTutorial)
                 {
-                    FinalCameraController.TutorialManager.tutorialNumber = 6;
+                    FinalCameraController.TutorialManager.tutorialNumber = 8;
                 }
             }
         }
@@ -221,6 +219,7 @@ public class WasherController : MonoBehaviour
 
     IEnumerator MachineUnfold()
     {
+        pressOK = false;
         Show(backgroundUI);
         yield return new WaitForSeconds(0.3f);
         Show(backgroundUI2);
@@ -228,7 +227,8 @@ public class WasherController : MonoBehaviour
         Show(backgroundUI3);
         yield return new WaitForSeconds(0.5f);
 
-        if(FinalCameraController.isTutorial && FinalCameraController.TutorialManager.tutorialNumber == 6)
+        pressOK = true;
+        if(FinalCameraController.isTutorial && FinalCameraController.TutorialManager.tutorialNumber == 8)
         {
               //之前是立刻关上门，鱼开始说话 
 //            shut = 0;
@@ -242,27 +242,28 @@ public class WasherController : MonoBehaviour
 //        
 //            DoorImage.sprite = AllMachines.closedDoor;
 
-            FinalCameraController.TutorialManager.tutorialNumber = 7;
-        }
-        else if (FinalCameraController.isTutorial && FinalCameraController.TutorialManager.tutorialNumber == 8)
-        {
             FinalCameraController.TutorialManager.tutorialNumber = 9;
+        }
+        else if (FinalCameraController.isTutorial && FinalCameraController.TutorialManager.tutorialNumber == 10)
+        {
+            FinalCameraController.TutorialManager.tutorialNumber = 11;//如果karara还是把门打开了
         }
 
     }
     
     IEnumerator MachineFold()
     {
+        pressOK = false;
         Hide(backgroundUI3);
         yield return new WaitForSeconds(0.1f);
         Hide(backgroundUI2);
         yield return new WaitForSeconds(0.2f);
         Hide(backgroundUI);
         yield return new WaitForSeconds(0.3f);
-        if (FinalCameraController.isTutorial && FinalCameraController.TutorialManager.tutorialNumber == 7 || FinalCameraController.isTutorial && FinalCameraController.TutorialManager.tutorialNumber == 9)
+        pressOK = true;
+        if (FinalCameraController.isTutorial && FinalCameraController.TutorialManager.tutorialNumber == 9 || FinalCameraController.isTutorial && FinalCameraController.TutorialManager.tutorialNumber == 11)
         {
-            FinalCameraController.TutorialManager.tutorialNumber = 8;
-            
+            FinalCameraController.TutorialManager.tutorialNumber = 10;
         }
     }
     
@@ -292,41 +293,46 @@ public class WasherController : MonoBehaviour
             clickMachine();
         }
     }
+
+    private bool pressOK = true;
     
     public void clickMachine()
     {
-        FinalCameraController.CancelAllUI();
-        print("presssssssed");
-        if (myMachineState == AllMachines.MachineState.finished)
+        if(pressOK)
         {
-           
-            if (shut == 0)
+            FinalCameraController.CancelAllUI();
+            print("presssssssed");
+            if (myMachineState == AllMachines.MachineState.finished)
             {
-                shut++;
 
-                StartCoroutine(MachineUnfold());
-                
-                //change door sprite to open
-                DoorImage.sprite = AllMachines.openedDoor;
-                
-                //ClothUiAnimator.SetBool("isUnfold",true);
+                if (shut == 0)
+                {
+                    shut++;
 
-                StartCoroutine("WaitFor2Seconds");
+                    StartCoroutine(MachineUnfold());
 
-                GenerateCloth(this.transform.gameObject.tag);
-                
-                
-            }
-            //if click machine again, close UI
-            else if (shut == 1)
-            {
-                shut = 0;
-                Hide(ClothUI);
-                StartCoroutine(MachineFold());
-                //ClothUiAnimator.SetBool("isUnfold",false);
-                
-                //change door to closed sprite
-                DoorImage.sprite = AllMachines.closedDoor;
+                    //change door sprite to open
+                    DoorImage.sprite = AllMachines.openedDoor;
+
+                    //ClothUiAnimator.SetBool("isUnfold",true);
+
+                    StartCoroutine("WaitFor2Seconds");
+
+                    GenerateCloth(this.transform.gameObject.tag);
+
+
+                }
+                //if click machine again, close UI
+                else if (shut == 1)
+                {
+                    shut = 0;
+                    Hide(ClothUI);
+                    StartCoroutine(MachineFold());
+                    //ClothUiAnimator.SetBool("isUnfold",false);
+
+                    //change door to closed sprite
+                    DoorImage.sprite = AllMachines.closedDoor;
+                }
             }
         }
 
@@ -405,13 +411,23 @@ public class WasherController : MonoBehaviour
 
             if (FinalCameraController.isTutorial)
             {
+                //cloth 1
                 buttons[0].GetComponent<Button>().enabled = true;
                 buttons[0].tag = "Tutorial";
                 Image buttonImage = buttons[0].GetComponent<Image>();
                 buttonImage.enabled = true;
-                buttonImage.sprite = AllMachines.TutorialCloth;
-
+                buttonImage.sprite = AllMachines.TutorialCloth1;
+                
                 MachineClothList.Add(buttonImage.sprite);
+                
+                //cloth 2
+                buttons[1].GetComponent<Button>().enabled = true;
+                buttons[1].tag = "Tutorial";
+                Image buttonImage1 = buttons[1].GetComponent<Image>();
+                buttonImage1.enabled = true;
+                buttonImage1.sprite = AllMachines.TutorialCloth2;
+                
+                MachineClothList.Add(buttonImage1.sprite);
             }
             else if (AllMachines.CustomerNameList.Contains(tagName))
             {

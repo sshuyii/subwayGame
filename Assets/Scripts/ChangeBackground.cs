@@ -83,7 +83,7 @@ public class ChangeBackground :MonoBehaviour
                     TutorialManager.fishText.text = "Don't touch it! Come over here!";
                     TutorialManager.KararaStandingImage.enabled = true;
                 }
-                else if (FinalCameraController.TutorialManager.tutorialNumber == 13)
+                else if (FinalCameraController.TutorialManager.tutorialNumber == 15)
                 {
                     photoBackground.sprite = InstagramController.allBackAd[transform.name];
                     InstagramController.currentBackground = transform.name;

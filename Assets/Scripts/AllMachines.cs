@@ -41,7 +41,9 @@ public class AllMachines : MonoBehaviour
     public List<Sprite> NpcClothes;
     public List<Sprite> npcClothesTemp = new List<Sprite>();
     
-    public Sprite TutorialCloth;
+    public Sprite TutorialCloth1;
+    public Sprite TutorialCloth2;
+
 
    
     private bool isFirstOpen = true;

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TouchController : MonoBehaviour
 {
@@ -39,6 +40,11 @@ public class TouchController : MonoBehaviour
     private float swipeSpeed;
 
     public bool doubleTouch = true;
+
+    //for typewriter use
+    private string[] typeText;
+    int currentlyDisplayingText = 0;
+
     
 // Start is called before the first frame update
     void Start()
@@ -48,6 +54,8 @@ public class TouchController : MonoBehaviour
         FinalCameraController = GameObject.Find("Main Camera").GetComponent<FinalCameraController>();
     }
 
+    
+    
     // Update is called once per frame
     void Update()
     {
@@ -61,9 +69,7 @@ public class TouchController : MonoBehaviour
                 {
 //                    Debug.Log("Double Tap");
                     doubleTouch = true;
-                }
-                
-                
+                }  
             }
             else if (Input.GetTouch(i).phase == TouchPhase.Ended)
             {
@@ -83,11 +89,7 @@ public class TouchController : MonoBehaviour
                 startTime = Time.time;
                 
                 offsetX = camTransform.position.x - lp.x;
-                
-//                print("offsetX = " + offsetX);
-//                print("lp = " + lp);
-                
-                
+
                 myInputState = InputState.None;
                 
                 //for swipe screen
@@ -95,8 +97,6 @@ public class TouchController : MonoBehaviour
             }
             else if (touch.phase == TouchPhase.Moved) // update the last position based on where they moved
             {
-                
-                
                 lp = touch.position;
 //                print("lp = " + lp);
 
@@ -109,12 +109,13 @@ public class TouchController : MonoBehaviour
                     {
                         FinalCameraController.Hide(FinalCameraController.TutorialManager.GestureCG);
                         FinalCameraController.TutorialManager.screamImage.enabled = false;
-                        FinalCameraController.TutorialManager.DoFishDialogue(false);
+                        FinalCameraController.TutorialManager.tutorialDialogueState =
+                            TutorialManager.DialogueState.none;
+                        print("disappear in the middle");
                     }               
                 }
                 else
                 { 
-                    
                     isSwiping = false;
                 }
 

@@ -71,16 +71,27 @@ public class DoInventory : MonoBehaviour
         }
         
         //for tutorial
-        if (FinalCameraController.isTutorial && FinalCameraController.isSwipping == false)
+        if (FinalCameraController.isTutorial && FinalCameraController.isSwipping == false)//打开了洗衣机的门，真的拿了衣服
         {
-            FinalCameraController.TutorialManager.tutorialNumber = 10;
-            //in tutorial, if click a cloth, cloth the entire ui interface
-            WasherController.clickMachine();
-            FinalCameraController.TutorialManager.kararaText.text = "put on";
-            FinalCameraController.TutorialManager.tutorialDialogueState = TutorialManager.DialogueState.karara;
-            FinalCameraController.clickKarara();
-            FinalCameraController.Hide(FinalCameraController.TutorialManager.arrowButton);
+
+//            if (FinalCameraController.TutorialManager.tutorialNumber == 9)//拿了第一件衣服
+//            {
+//                FinalCameraController.TutorialManager.tutorialNumber = 12;
+//            }
+            if(FinalCameraController.TutorialManager.tutorialNumber == 9)//拿了第二件衣服
+            {
+                FinalCameraController.TutorialManager.tutorialNumber = 12;
+                //in tutorial, if click a cloth, cloth the entire ui interface
+                WasherController.clickMachine();
+                StartCoroutine(FinalCameraController.TutorialManager.AnimateText(
+                    FinalCameraController.TutorialManager.kararaText, "put on",
+                    true, FinalCameraController.TutorialManager.closet, new Vector2(-81, 37)));
+                FinalCameraController.TutorialManager.tutorialDialogueState = TutorialManager.DialogueState.karara;
+                FinalCameraController.clickKarara();
+                FinalCameraController.Hide(FinalCameraController.TutorialManager.arrowButton);
+            }
         }
+
 
         
         //CalculateInventory.inventory[CalculateInventory.occupiedI].GetComponent<SpriteRenderer>().sprite = buttonSprite;
