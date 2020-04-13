@@ -1139,6 +1139,12 @@ public class TutorialManager : MonoBehaviour
 
     private bool tempClick = true;
 
+    public void startChapter1()
+    {
+        StartCoroutine(StoryStart());
+
+    }
+    
     public void DialogueArrowButton()
     {
         if (!FinalCameraController.isSwipping)

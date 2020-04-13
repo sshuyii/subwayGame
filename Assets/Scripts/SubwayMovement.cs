@@ -10,6 +10,7 @@ public class SubwayMovement : MonoBehaviour
 {
     private FinalCameraController FinalCameraController;
 
+    private LevelManager LevelManager;
     public int currentStation;
     public GameObject highlight;
     private SpriteRenderer hSR;
@@ -21,6 +22,7 @@ public class SubwayMovement : MonoBehaviour
     public float doorWidth;
 
     public bool outsideStation = true;
+    public CanvasGroup clear;
 
     public List<bool> bagPosAvailable = new List<bool>();
     //public List<GameObject> arrows;
@@ -109,6 +111,7 @@ public class SubwayMovement : MonoBehaviour
 
         FinalCameraController = GameObject.Find("Main Camera").GetComponent<FinalCameraController>();
 
+        LevelManager = FinalCameraController.LevelManager;
         if(!FinalCameraController.isTutorial)
         {
             bagPosAvailable.Add(false);
@@ -194,53 +197,57 @@ public class SubwayMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
-        
-        //instead of InvokeRepeating
-        if(!isMoving)
+
+        print("FinalCameraController.AllStationClothList.Count  =" + FinalCameraController.AllStationClothList.Count);
+        if (LevelManager.clicktime > 4)
         {
-            newTimer1 += Time.deltaTime;
-        }      
-        if(newTimer1 > stayTime)
-        {
-            trainMove();
-            newTimer1 = 0;
-        }
-          
-        newTimer2 += Time.deltaTime;
-        if (newTimer2 > stayTime + moveTime)
-        {
-            trainStop();
-            newTimer2 = 0;
-        }
-        
-        //train needs 1 minute on its way
+            //instead of InvokeRepeating
+            if (!isMoving)
+            {
+                newTimer1 += Time.deltaTime;
+            }
+
+            if (newTimer1 > stayTime)
+            {
+                trainMove();
+                newTimer1 = 0;
+            }
+
+            newTimer2 += Time.deltaTime;
+            if (newTimer2 > stayTime + moveTime)
+            {
+                trainStop();
+                newTimer2 = 0;
+            }
+
+            //train needs 1 minute on its way
 //        print("currentStation = " + currentStation);
 //        print("isMoving =  " + isMoving);
 
-        //this timer is specifically used for station0
-        timer += Time.deltaTime;
-        
-        if(!FinalCameraController.isTutorial)
-        {
-            NumberRecalculate(realTimer, ClothCountDownText);
-      
-            //start the timer once the train's in station
-            if (!isMoving)
+            //this timer is specifically used for station0
+            timer += Time.deltaTime;
+
+            if (!FinalCameraController.isTutorial)
             {
-                stationTimer -= Time.deltaTime;
-                NumberRecalculate(stationTimer, CountDownTimer);
+                NumberRecalculate(realTimer, ClothCountDownText);
+
+                //start the timer once the train's in station
+                if (!isMoving)
+                {
+                    stationTimer -= Time.deltaTime;
+                    NumberRecalculate(stationTimer, CountDownTimer);
+                }
+                else
+                {
+                    CountDownTimer.text = "";
+                    stationTimer = stayTime;
+                }
             }
-            else
+
+            //decide which station is highlighted on screen
+            if (isMoving == false)
             {
-                CountDownTimer.text = "";
-                stationTimer = stayTime;
-            }
-        }
-        //decide which station is highlighted on screen
-        if (isMoving == false)
-        {
-            //highlight.transform.localPosition = stationPos[currentStation];
+                //highlight.transform.localPosition = stationPos[currentStation];
 
 //            highlight.transform.position = highlights[currentStation].transform.position;
 //            highlight.transform.rotation = Quaternion.Euler(new Vector3(
@@ -251,69 +258,70 @@ public class SubwayMovement : MonoBehaviour
 //            aSR.enabled = false;
 //            hSR.enabled = true;
 
-            //open doors
-            if (left1.transform.position.x > left1Pos - doorWidth)
-            {
-                left1.transform.position -= new Vector3(doorMovement, 0, 0);
-            }
-
-            if (right1.transform.position.x < right1Pos + doorWidth)
-            {
-                right1.transform.position += new Vector3(doorMovement, 0, 0);
-            }
-            
-            else
-            {
-                //don't generate new bags if there are already three bags in the car
-                if (!FinalCameraController.isTutorial && bagFirst)
+                //open doors
+                if (left1.transform.position.x > left1Pos - doorWidth)
                 {
-                    for (int i = 0; i < NameToStationBags[currentStation.ToString()].Count; i++)
+                    left1.transform.position -= new Vector3(doorMovement, 0, 0);
+                }
+
+                if (right1.transform.position.x < right1Pos + doorWidth)
+                {
+                    right1.transform.position += new Vector3(doorMovement, 0, 0);
+                }
+
+                else
+                {
+                    //don't generate new bags if there are already three bags in the car
+                    if (!FinalCameraController.isTutorial && bagFirst)
                     {
-                        print("NameToStationBags[currentStation.ToString()].Count" + NameToStationBags[currentStation.ToString()].Count);
-                        GenerateBag(currentStation);
-                       
-                        
-                        if (i == NameToStationBags[currentStation.ToString()].Count - 1)
+                        for (int i = 0; i < NameToStationBags[currentStation.ToString()].Count; i++)
                         {
-                            bagFirst = false;
+                            print("NameToStationBags[currentStation.ToString()].Count" +
+                                  NameToStationBags[currentStation.ToString()].Count);
+                            GenerateBag(currentStation);
+
+
+                            if (i == NameToStationBags[currentStation.ToString()].Count - 1)
+                            {
+                                bagFirst = false;
+                            }
                         }
+
+                        /*code used before
+                        //if arrives at a station and door already opened
+                        //这里的衣服应该随机产生，现在先写成了固定两包衣服：Alex + Bella
+                        //generate a bag of clothsPos
+                        if(bagNum < 3)
+                        clothBag1 = Instantiate(clothBags[0], bagPos[0], Quaternion.identity) as Button;
+                        clothBag2 = Instantiate(clothBags[1], bagPos[1], Quaternion.identity) as Button;
+                        
+                        clothBag1.transform.SetParent(clothBagGroup.transform, false);
+                        clothBag2.transform.SetParent(clothBagGroup.transform, false);
+    
+                        //record the bags into list
+                        AllBagsTaken.Add("Bella", true);
+                        AllBagsTaken.Add("Alex", true);
+    
+    
+                        bagFirst = false;
+                        
                     }
+                    else if (currentStation == 1)
+                    {
+                        //generate a bag of clothsPos
+                        clothBag3 = Instantiate(clothBags[0], bagPos[0], Quaternion.identity) as Button;
+    
+                        clothBag3.transform.SetParent(clothBagGroup.transform, false);
+    
+                        bagFirst = false;
+                    }
+                    else if (currentStation == 2)
+                    {
+                        
+                    }
+                */
 
-                    /*code used before
-                    //if arrives at a station and door already opened
-                    //这里的衣服应该随机产生，现在先写成了固定两包衣服：Alex + Bella
-                    //generate a bag of clothsPos
-                    if(bagNum < 3)
-                    clothBag1 = Instantiate(clothBags[0], bagPos[0], Quaternion.identity) as Button;
-                    clothBag2 = Instantiate(clothBags[1], bagPos[1], Quaternion.identity) as Button;
-                    
-                    clothBag1.transform.SetParent(clothBagGroup.transform, false);
-                    clothBag2.transform.SetParent(clothBagGroup.transform, false);
-
-                    //record the bags into list
-                    AllBagsTaken.Add("Bella", true);
-                    AllBagsTaken.Add("Alex", true);
-
-
-                    bagFirst = false;
-                    
-                }
-                else if (currentStation == 1)
-                {
-                    //generate a bag of clothsPos
-                    clothBag3 = Instantiate(clothBags[0], bagPos[0], Quaternion.identity) as Button;
-
-                    clothBag3.transform.SetParent(clothBagGroup.transform, false);
-
-                    bagFirst = false;
-                }
-                else if (currentStation == 2)
-                {
-                    
-                }
-            */
-
-                }
+                    }
 
 //                //open back doors
 //                if (left2.transform.position.x > left2Pos - doorWidth)
@@ -325,7 +333,7 @@ public class SubwayMovement : MonoBehaviour
 //                {
 //                    right2.transform.position += new Vector3(doorMovement, 0, 0);
 //                }
-            }
+                }
 
 //            else
 //            {
@@ -360,6 +368,7 @@ public class SubwayMovement : MonoBehaviour
 //                    right2.transform.position -= new Vector3(doorMovement, 0, 0);
 //                }
 //            }
+            }
         }
 
     }
@@ -532,7 +541,7 @@ public class SubwayMovement : MonoBehaviour
         }
     }
     
-    private bool isDetailed = false;
+    public bool isDetailed = false;
     public void StationDetails(int stationNum)
     {
         //dSR used to be spriteRenderer
@@ -547,11 +556,12 @@ public class SubwayMovement : MonoBehaviour
 
         //change time
 
-        
+        isDetailed = !isDetailed;
+
+       
         //if in the tutorial, only show disco cloth
         if (FinalCameraController.isTutorial)
         {
-            isDetailed = !isDetailed;
             if (isDetailed)
             {
                 Show(dSR1);
@@ -572,44 +582,66 @@ public class SubwayMovement : MonoBehaviour
             }
 
             //todo:要specify这件衣服到底是哪个站上车的，问题在于显示完了之后没有清空！
-            //对某一站的每一个包而言
-            for (int u = 0; u < NameToStationBags[stationNum.ToString()].Count; u++)
+            if (FinalCameraController.AllStationClothList.Count == 0)//if all clothes are returned
             {
-                //get the clothes inside
-                //对每一个包的每一件衣服而言
-                //print("asdfasdf = " + FinalCameraController.AllStationClothList.ContainsKey(NameToStationBags[stationNum.ToString()][u].gameObject.tag));
-                //如果某件衣服的tag等于这个包的tag
-                if (FinalCameraController.AllStationClothList.ContainsKey(NameToStationBags[stationNum.ToString()][u]
-                    .gameObject.tag))
+                //if level one has just started
+                if (FinalCameraController.LevelManager.clicktime == 3)
                 {
-                    for (int q = 0;
-                        q < FinalCameraController
-                            .AllStationClothList[NameToStationBags[stationNum.ToString()][u].gameObject.tag].Count;
-                        q++)
-                    {
-                        AllDetailList[u][q].enabled = true;
-                        AllDetailList[u][q].sprite =
-                            FinalCameraController.AllStationClothList[
-                                NameToStationBags[stationNum.ToString()][u].gameObject.tag][q];
-                    }
+                    FinalCameraController.LevelManager.clicktime = 4;
                 }
-            }
-
-            if (isDetailed)
-            {
-                Show(dSR1);
-                Show(dSR2);
+                if (isDetailed)
+                {
+                    Show(clear);
+                    
+                }
+                else
+                {
+                    Hide(clear);
+                    
+                }
             }
             else
             {
-                Hide(dSR1);
-                Hide(dSR2);
-                //显示完了清空  
-                for (int i = 0; i < AllDetailList.Count; i++)
+                //对某一站的每一个包而言
+                for (int u = 0; u < NameToStationBags[stationNum.ToString()].Count; u++)
                 {
-                    for (int q = 0; q < AllDetailList[i].Count; q++)
+                    //get the clothes inside
+                    //对每一个包的每一件衣服而言
+                    //print("asdfasdf = " + FinalCameraController.AllStationClothList.ContainsKey(NameToStationBags[stationNum.ToString()][u].gameObject.tag));
+                    //如果某件衣服的tag等于这个包的tag
+                    if (FinalCameraController.AllStationClothList.ContainsKey(
+                        NameToStationBags[stationNum.ToString()][u]
+                            .gameObject.tag))
                     {
-                        AllDetailList[i][q].sprite = transparent;
+                        for (int q = 0;
+                            q < FinalCameraController
+                                .AllStationClothList[NameToStationBags[stationNum.ToString()][u].gameObject.tag].Count;
+                            q++)
+                        {
+                            AllDetailList[u][q].enabled = true;
+                            AllDetailList[u][q].sprite =
+                                FinalCameraController.AllStationClothList[
+                                    NameToStationBags[stationNum.ToString()][u].gameObject.tag][q];
+                        }
+                    }
+                }
+
+                if (isDetailed)
+                {
+                    Show(dSR1);
+                    Show(dSR2);
+                }
+                else
+                {
+                    Hide(dSR1);
+                    Hide(dSR2);
+                    //显示完了清空  
+                    for (int i = 0; i < AllDetailList.Count; i++)
+                    {
+                        for (int q = 0; q < AllDetailList[i].Count; q++)
+                        {
+                            AllDetailList[i][q].sprite = transparent;
+                        }
                     }
                 }
             }

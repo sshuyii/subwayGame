@@ -13,6 +13,8 @@ public class FinalCameraController : MonoBehaviour
 {
     public TouchController TouchController;
     public AllMachines AllMachines;
+    public LevelManager LevelManager;
+    
 
     private bool fastSwipeBool;
 
@@ -431,6 +433,12 @@ public class FinalCameraController : MonoBehaviour
         if(isTutorial)
         {
             TutorialManager.scrollControl(true);
+        }
+
+        if (LevelManager.isInstruction)//换到鱼界面
+        {
+            myHSS.GoToScreen(1);
+            LevelManager.clicktime = 5;
         }
         Hide(Inventory);
         Show(subwayBackground);
