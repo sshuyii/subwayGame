@@ -150,7 +150,7 @@ public class TouchController : MonoBehaviour
 //                    }                
 //                }
 
-                if (FinalCameraController.mySubwayState != FinalCameraController.SubwayState.One &&
+                if (FinalCameraController.isTutorial && FinalCameraController.mySubwayState != FinalCameraController.SubwayState.One &&
                     FinalCameraController.TutorialManager.tutorialNumber == 1)
                 {
                     FinalCameraController.Show(FinalCameraController.TutorialManager.GestureCG);

@@ -52,6 +52,7 @@ public class LevelManager : MonoBehaviour
         {
             Hide(instructionCG);
             Show(GoBackSubway); 
+            Hide(hintArrowCG);
         }
         else if (clicktime == 5)//鱼开始说话
         {
@@ -117,7 +118,7 @@ public class LevelManager : MonoBehaviour
 
        
         Show(instructionCG);
-        StartCoroutine(AnimateText(instructionText, "Clothes are delivered in at each station.", false, null, Vector2.zero));//clicktime = 1;
+        StartCoroutine(AnimateText(instructionText, "Clothes are dropped in by customers at each station.", false, null, Vector2.zero));//clicktime = 1;
         Show(arrowButton);
 
 //        instructionText.text = "Clothes are delivered in at each station.";

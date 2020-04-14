@@ -494,7 +494,7 @@ public class ScreenshotHandler : MonoBehaviour
             entryTime += 10;
             
             //if in the tutorial and taking the photo for the second time
-            if(FinalCameraController.TutorialManager.tutorialNumber == 13)
+            if(FinalCameraController.isTutorial && FinalCameraController.TutorialManager.tutorialNumber == 13)
             {
                 FinalCameraController.TutorialManager.tutorialNumber = 14;
                 

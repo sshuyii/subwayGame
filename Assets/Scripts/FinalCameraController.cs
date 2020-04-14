@@ -435,7 +435,7 @@ public class FinalCameraController : MonoBehaviour
             TutorialManager.scrollControl(true);
         }
 
-        if (LevelManager.isInstruction)//换到鱼界面
+        else if (LevelManager.isInstruction)//换到鱼界面
         {
             myHSS.GoToScreen(1);
             LevelManager.clicktime = 5;

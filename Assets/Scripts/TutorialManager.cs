@@ -766,6 +766,7 @@ public class TutorialManager : MonoBehaviour
                 if (FinalCameraController.mySubwayState == FinalCameraController.SubwayState.One)
                 {
                     tutorialDialogueState = DialogueState.fish;
+                    scrollControl(false);
 //                    fishText.text = "Lucky you! All clothes are automatically returned!";
                     StartCoroutine(AnimateText(fishText,  "Lucky you! All clothes are automatically returned!", false, null, Vector2.zero));
                     //clicktime = 20

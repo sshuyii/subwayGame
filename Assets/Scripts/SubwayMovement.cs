@@ -111,9 +111,10 @@ public class SubwayMovement : MonoBehaviour
 
         FinalCameraController = GameObject.Find("Main Camera").GetComponent<FinalCameraController>();
 
-        LevelManager = FinalCameraController.LevelManager;
         if(!FinalCameraController.isTutorial)
         {
+            LevelManager = FinalCameraController.LevelManager;
+
             bagPosAvailable.Add(false);
             bagPosAvailable.Add(false);
             bagPosAvailable.Add(false);
@@ -198,8 +199,8 @@ public class SubwayMovement : MonoBehaviour
     void Update()
     {
 
-        print("FinalCameraController.AllStationClothList.Count  =" + FinalCameraController.AllStationClothList.Count);
-        if (LevelManager.clicktime > 4)
+//        print("FinalCameraController.AllStationClothList.Count  =" + FinalCameraController.AllStationClothList.Count);
+        if (!FinalCameraController.isTutorial && LevelManager.clicktime > 4)
         {
             //instead of InvokeRepeating
             if (!isMoving)
@@ -585,7 +586,7 @@ public class SubwayMovement : MonoBehaviour
             if (FinalCameraController.AllStationClothList.Count == 0)//if all clothes are returned
             {
                 //if level one has just started
-                if (FinalCameraController.LevelManager.clicktime == 3)
+                if (!FinalCameraController.isTutorial && FinalCameraController.LevelManager.clicktime == 3)
                 {
                     FinalCameraController.LevelManager.clicktime = 4;
                 }
