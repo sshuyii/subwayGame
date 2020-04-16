@@ -72,7 +72,10 @@ public class ChangeBackground :MonoBehaviour
                     //cancel dialogues and the touch tutorial
                     //TutorialManager.tutorialDialogueState = TutorialManager.DialogueState.none;
                     
-                     
+                    FinalCameraController.Show(TutorialManager.hintArrowCG);
+                    TutorialManager.hintArrow.transform.SetParent(TutorialManager.screenshot.transform);
+                    TutorialManager.hintArrow.GetComponent<RectTransform>().anchoredPosition = new Vector2(-0.5f, 0f);                    
+                    
                     photoBackground.sprite = InstagramController.allBackAd[transform.name];
                     InstagramController.currentBackground = transform.name;
 

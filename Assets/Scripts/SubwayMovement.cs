@@ -577,7 +577,7 @@ public class SubwayMovement : MonoBehaviour
                 if (FinalCameraController.AllStationClothList.ContainsKey(NameToStationBags[stationNum.ToString()][i]
                     .gameObject.tag))
                 {
-                    isDetailed = !isDetailed;
+//                    isDetailed = !isDetailed;
                     break; //only change the variable once
                 }
             }
@@ -593,7 +593,7 @@ public class SubwayMovement : MonoBehaviour
                 if (isDetailed)
                 {
                     Show(clear);
-                    
+                     
                 }
                 else
                 {

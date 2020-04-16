@@ -30,7 +30,7 @@ public class ClockRotate : MonoBehaviour
         //zRotation = 360 / (SubwayMovement.stayTime + SubwayMovement.moveTime);
         
         //now the timer is placed on the bag
-        zRotation = 360 / (2 *(SubwayMovement.stayTime + SubwayMovement.moveTime));
+        zRotation = 360 / (3 *(SubwayMovement.stayTime + SubwayMovement.moveTime));
 
         myRectT = GetComponent<RectTransform>();
 
@@ -44,7 +44,7 @@ public class ClockRotate : MonoBehaviour
     void Update()
     {
         myRectT.Rotate( new Vector3( 0, 0, -zRotation * Time.deltaTime) );
-        YellowClock.fillAmount += 1/(2 *(SubwayMovement.stayTime + SubwayMovement.moveTime) + SubwayMovement.stayTime) * Time.deltaTime;
+        YellowClock.fillAmount += 1/(3 *(SubwayMovement.stayTime + SubwayMovement.moveTime) + SubwayMovement.stayTime) * Time.deltaTime;
             
         bagEmptyNum = 0;
         machineEmptyNum = 0;
@@ -97,22 +97,5 @@ public class ClockRotate : MonoBehaviour
         SubwayMovement.newTimer2 = 0;
         SubwayMovement.newTimer1 = SubwayMovement.moveTime;
         //SubwayMovement.Hide(bubble);
-
-    }
-
-    public void toggleUI()
-    {
-//        if(fastForward)
-//        {
-//            if (bubble.alpha == 0f)
-//            {
-//                SubwayMovement.Show(bubble);
-//            }
-//            else
-//            {
-//                SubwayMovement.Hide(bubble);
-//
-//            }
-//        }    
     }
 }

@@ -69,7 +69,11 @@ public class StartTutorial : MonoBehaviour
                         SceneManager.LoadScene("TutorialScene", LoadSceneMode.Single);
                         startTutorial = false;
                     }
-                    else isComic = true;
+                    else
+                    {
+                        isComic = true;
+                        comic1.SetActive(true);
+                    }
                 }
                 
         }
@@ -125,6 +129,12 @@ public class StartTutorial : MonoBehaviour
         comicBackground.SetActive(true);
 
         //SceneManager.LoadScene("TutorialScene", LoadSceneMode.Single);
+        //comic starts to fly in
+
+    }
+    public void GoToChapterOne()
+    {
+        SceneManager.LoadScene("StreetStyle", LoadSceneMode.Single);
         //comic starts to fly in
 
     }
@@ -209,21 +219,17 @@ public class StartTutorial : MonoBehaviour
             clickTime++;
             if (clickTime == 1)
             {
-                comic1.SetActive(true);
+                comic2.SetActive(true);
             }
             else if (clickTime == 2)
             {
-                comic2.SetActive(true);
+                comic3.SetActive(true);
             }
             else if (clickTime == 3)
             {
-                comic3.SetActive(true);
-            }
-            else if (clickTime == 4)
-            {
                 comic4.SetActive(true);
             }
-            else if (clickTime == 5)
+            else if (clickTime == 4)
             {
                 comic1.SetActive(false);
                 comic2.SetActive(false);
@@ -232,7 +238,7 @@ public class StartTutorial : MonoBehaviour
 
                 comic5.SetActive(true);
             }
-            else if(clickTime == 6)
+            else if(clickTime == 5)
             {
                 SceneManager.LoadScene("TutorialScene", LoadSceneMode.Single);
                 myFlash.alpha = 1;

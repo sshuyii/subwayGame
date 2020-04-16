@@ -439,6 +439,7 @@ public class FinalCameraController : MonoBehaviour
         {
             myHSS.GoToScreen(1);
             LevelManager.clicktime = 5;
+
         }
         Hide(Inventory);
         Show(subwayBackground);

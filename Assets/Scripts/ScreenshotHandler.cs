@@ -10,11 +10,12 @@ using UnityEditor;
 public class ScreenshotHandler : MonoBehaviour
 {
     //a list of all the posts
-
     
     public InstagramController InstagramController;
     private FinalCameraController FinalCameraController;
     private CalculateInventory CalculateInventory;
+
+    private AudioSource shutterSound;
     
     //record which posture has been used
     private Dictionary<string, bool> usedPostures = new Dictionary<string, bool>();
@@ -75,7 +76,7 @@ public class ScreenshotHandler : MonoBehaviour
         //height = width;
         instance = this;
         //myCamera = gameObject.GetComponent<Camera>();
-        
+        shutterSound = GetComponent<AudioSource>();
         
         
         ScreenCapDirectory = Application.persistentDataPath;
@@ -452,6 +453,7 @@ public class ScreenshotHandler : MonoBehaviour
     
     public void TakeScreenshot()
     {
+        shutterSound.Play();
         //if the background is already used
         if (!InstagramController.AdAlreadyTakenList[InstagramController.currentBackground])
         {
@@ -497,7 +499,6 @@ public class ScreenshotHandler : MonoBehaviour
             if(FinalCameraController.isTutorial && FinalCameraController.TutorialManager.tutorialNumber == 13)
             {
                 FinalCameraController.TutorialManager.tutorialNumber = 14;
-                
             }
         }
        

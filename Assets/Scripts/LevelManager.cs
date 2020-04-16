@@ -13,6 +13,7 @@ public class LevelManager : MonoBehaviour
     public GameObject hintArrow;
     public CanvasGroup GoBackSubway;
     private CanvasGroup hintArrowCG;
+    public CanvasGroup clear;
 
     public GameObject station;
     private FinalCameraController FinalCameraController;
@@ -26,46 +27,48 @@ public class LevelManager : MonoBehaviour
     public bool isInstruction;
     private Vector2 stationV = new Vector2(-50, 80);
 
+    public bool skip;
     public CanvasGroup fishBubble;
     public TextMeshProUGUI fishText;
     // Start is called before the first frame update
     void Start()
     {
-        isInstruction = true;
         FinalCameraController = GameObject.Find("Main Camera").GetComponent<FinalCameraController>();
 
 //        instructionText = InstructionBubble.GetComponentInChildren<TextMeshProUGUI>();
         hintArrowCG = hintArrow.GetComponent<CanvasGroup>();
         
-        Hide(GoBackSubway);
         
-        Show(startScreen);
-        Show(chapterOne);
+        if (skip)
+        {
+            clicktime = 5;
+        }
+        else
+        {
+            isInstruction = true;
+            Hide(GoBackSubway);
         
-        
+            Show(startScreen);
+            Show(chapterOne);
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
+        
         if (clicktime == 4)//已经点开了station detail
         {
             Hide(instructionCG);
             Show(GoBackSubway); 
             Hide(hintArrowCG);
         }
-        else if (clicktime == 5)//鱼开始说话
+        else if (clicktime == 5 && FinalCameraController.mySubwayState == FinalCameraController.SubwayState.One)//鱼开始说话
         {
             Show(fishBubble);
             StartCoroutine(AnimateText(fishText, "Stop walking around!", false, null, Vector2.zero));//clicktime = 6;
-
+            Show(arrowButton);
         }
-        else if (clicktime == 6)//鱼开始说话
-        {
-            StartCoroutine(AnimateText(fishText, "See the bags? Time for work!", false, null, Vector2.zero));//clicktime = 7;
-
-        }
-        
     }
 
     private bool lastTextFinish;
@@ -102,6 +105,10 @@ public class LevelManager : MonoBehaviour
                 if (clicktime == 7)
                 {
                     isInstruction = false;
+                }
+                else if (clicktime == 3)
+                {
+                    Hide(arrowButton);
                 }
             }
         }
@@ -148,8 +155,15 @@ public class LevelManager : MonoBehaviour
         }
         else if(clicktime == 3 && lastTextFinish)
         {
-            Hide(arrowButton);
             
+        }
+        else if (clicktime == 6 && lastTextFinish)//鱼开始说话
+        {
+            StartCoroutine(AnimateText(fishText, "See the bags? Time for work!", false, null, Vector2.zero));//clicktime = 7;
+            Hide(arrowButton);
+            Hide(clear);
+
+
         }
         //点击回地铁按钮就回到地铁
     }

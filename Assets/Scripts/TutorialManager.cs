@@ -16,6 +16,9 @@ public class TutorialManager : MonoBehaviour
 {
     public GameObject DialogueBubble;
 
+    public CanvasGroup ChapterOne;
+    public CanvasGroup closetSubway;
+    public GameObject screenshot;
     public GameObject hintArrow;
     public CanvasGroup finalComic;
     public CanvasGroup anotherApp;
@@ -255,7 +258,7 @@ public class TutorialManager : MonoBehaviour
 
     private bool showHintArrow;
 
-    private CanvasGroup hintArrowCG;
+    public CanvasGroup hintArrowCG;
     //typewriter
     public IEnumerator AnimateText(TextMeshProUGUI text, string textContent, bool showArrow, GameObject hintObject, Vector2 arrowPosition)
     {
@@ -549,14 +552,13 @@ public class TutorialManager : MonoBehaviour
             stopDisappear = false;
             if(clicktime == 11 && lastTextFinish)
             {
-//                if(!temp)
-//                {
-//                    temp = true;
-//                    StartCoroutine(FishCloseDoor());
-//                }
-//
-//                else 
-//                {
+                if(!temp)
+                {
+                    temp = true;
+                    StartCoroutine(FishCloseDoor());
+                }
+                else 
+                {
                     if (FinalCameraController.mySubwayState == FinalCameraController.SubwayState.One)
                     {
                         print("one");
@@ -600,8 +602,8 @@ public class TutorialManager : MonoBehaviour
 //                                kararaText.text = "Nah";
 //                            }
 //                        }
-//                    }
                     }
+                }
                     
                     
             }
@@ -636,7 +638,7 @@ public class TutorialManager : MonoBehaviour
             if (FinalCameraController.mySubwayState == FinalCameraController.SubwayState.One)
             {
                 tutorialDialogueState = DialogueState.fishElse;
-                fishText.text = "Don't you dare!";
+                fishText.text = "Don't you dare touch your customer's cloth!";
                 screamImage.enabled = false;
                 Hide(arrowButton);
             }
@@ -670,7 +672,7 @@ public class TutorialManager : MonoBehaviour
             if (FinalCameraController.mySubwayState == FinalCameraController.SubwayState.One)
             {
                 tutorialDialogueState = DialogueState.fishElse;
-                fishText.text = "Karara!";
+                fishText.text = "Karara! Put that cloth back into the machine Now!";
                 screamImage.enabled = false;
                 Hide(arrowButton);
             }
@@ -939,6 +941,7 @@ public class TutorialManager : MonoBehaviour
     {
         yield return new WaitForSeconds(0.4f);
 
+        Show(ChapterOne);
         SceneManager.LoadScene("StreetStyle", LoadSceneMode.Single);
         print("loadScene");
     }

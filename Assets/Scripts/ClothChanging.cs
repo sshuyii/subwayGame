@@ -325,7 +325,6 @@ public class ClothChanging : MonoBehaviour
     {
         if (FinalCameraController.TouchController.doubleTouch == false)
         {
-          
             if (CalculateInventory.isreturning)
             {
                 CancelReturn();
@@ -335,6 +334,9 @@ public class ClothChanging : MonoBehaviour
             //for tutorial
             if (FinalCameraController.isTutorial)
             {
+                //show the button to return to subway
+                FinalCameraController.Show(FinalCameraController.TutorialManager.closetSubway);
+
                 FinalCameraController.TutorialManager.tutorialNumber = 14;
 
                 CalculateInventory.everythingSR.sprite = CalculateInventory.discoCloset;
@@ -555,34 +557,7 @@ public class ClothChanging : MonoBehaviour
                     firstTime = false;
                 }
             }
-            else
-            {
-
-                //now the button cannot be pressed
-
-
-//            //when the button is workCloth
-//            workCloth.enabled = !workCloth.enabled;
-//            workClothS.enabled = !workClothS.enabled;
-//
-//
-//
-//            CalculateInventory.topSR.sprite = null;
-//            CalculateInventory.otherSR.sprite = null;
-//            CalculateInventory.everythingSR.sprite = null;
-//        
-//            blackPants.enabled = true;
-//            whiteShirt.enabled = true;
-//
-//
-//            whiteShirtS.enabled = true;
-//            blackPantsS.enabled = true;
-            }
-
-            //GetComponent<Image>().sprite = worn;
-            //transform.position = startPos;}
         }
-
     }
 
     public void ChangeWorkCloth()

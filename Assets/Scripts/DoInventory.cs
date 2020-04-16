@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -41,13 +42,15 @@ public class DoInventory : MonoBehaviour
 
     public void AddClothToInventory()
     {
-        
-        //print("pressed");
-        //get the machine this cloth belongs to
-        //if all clothes in the machine are taken, close door
-        GetComponentInParent<WasherController>().clothNum--;    
-        
-        
+
+        if (FinalCameraController.isSwipping == false)
+        {
+            //print("pressed");
+            //get the machine this cloth belongs to
+            //if all clothes in the machine are taken, close door
+            GetComponentInParent<WasherController>().clothNum--;//洗衣机里的衣服少一
+
+
         selfButton = GetComponent<Button>();
         currentSprite = selfButton.image.sprite;
         print("currentSpriteName = " + currentSprite.name);
@@ -56,13 +59,13 @@ public class DoInventory : MonoBehaviour
         print("SpriteName = " + currentSprite.name);
 
         print("occupiedI = " + CalculateInventory.occupiedI);
-        
-        //inventory used to be buttons
-        CalculateInventory.inventory[CalculateInventory.occupiedI].GetComponent<Image>().sprite = buttonSprite;
-        CalculateInventory.inventory[CalculateInventory.occupiedI].tag = this.tag;
-        
-        if(CalculateInventory.occupiedI < 6)
+
+       
+        if (CalculateInventory.occupiedI < 6)
         {
+            //inventory used to be buttons
+            CalculateInventory.inventory[CalculateInventory.occupiedI].GetComponent<Image>().sprite = buttonSprite;
+            CalculateInventory.inventory[CalculateInventory.occupiedI].tag = this.tag;
             CalculateInventory.occupiedI++;
         }
         else
@@ -70,15 +73,16 @@ public class DoInventory : MonoBehaviour
             return;
         }
         
+      
         //for tutorial
-        if (FinalCameraController.isTutorial && FinalCameraController.isSwipping == false)//打开了洗衣机的门，真的拿了衣服
+        if (FinalCameraController.isTutorial) //打开了洗衣机的门，真的拿了衣服
         {
 
 //            if (FinalCameraController.TutorialManager.tutorialNumber == 9)//拿了第一件衣服
 //            {
 //                FinalCameraController.TutorialManager.tutorialNumber = 12;
 //            }
-            if(FinalCameraController.TutorialManager.tutorialNumber == 9)//拿了第二件衣服
+            if (FinalCameraController.TutorialManager.tutorialNumber == 9) //拿了第二件衣服
             {
                 FinalCameraController.TutorialManager.tutorialNumber = 12;
                 //in tutorial, if click a cloth, cloth the entire ui interface
@@ -93,12 +97,12 @@ public class DoInventory : MonoBehaviour
         }
 
 
-        
-        //CalculateInventory.inventory[CalculateInventory.occupiedI].GetComponent<SpriteRenderer>().sprite = buttonSprite;
-        
 
-        
-        
+        //CalculateInventory.inventory[CalculateInventory.occupiedI].GetComponent<SpriteRenderer>().sprite = buttonSprite;
+
+
+
+
 /*three fixed inventory: top shoe bottom
 //        //if the current button is labeled as top
 //        if (buttonSprite.name.Contains("Top")
@@ -124,8 +128,8 @@ public class DoInventory : MonoBehaviour
         //image disappear
         selfButton.image.enabled = false;
         //selfButton.enabled = false;
+        }
 
-        //selfButton.enabled = false;
 
     }
 }

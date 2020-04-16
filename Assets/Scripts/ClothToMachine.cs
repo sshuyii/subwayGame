@@ -121,16 +121,30 @@ public class ClothToMachine : MonoBehaviour
 
    
     
-    private void ChangeToUnderwear()
+    private void ChangeToUnderwear(string cloth)
     {
-        CalculateInventory.blackPants.enabled = true;
-        CalculateInventory.whiteShirt.enabled = true;
-
-        CalculateInventory.whiteShirtS.enabled = true;
-        CalculateInventory.blackPantsS.enabled = true;
-
-        CalculateInventory.whiteShirtASR.sprite = CalculateInventory.allAdCloth["WhiteShirt"];
-        CalculateInventory.blackPantsASR.sprite = CalculateInventory.allAdCloth["BlackPants"];
+        if (cloth == "top")
+        {
+            CalculateInventory.whiteShirt.enabled = true;
+            CalculateInventory.whiteShirtS.enabled = true;
+            CalculateInventory.whiteShirtASR.sprite = CalculateInventory.allAdCloth["WhiteShirt"];
+        }
+        else if (cloth == "bottom")
+        {
+            CalculateInventory.blackPants.enabled = true;
+            CalculateInventory.blackPantsS.enabled = true;
+            CalculateInventory.blackPantsASR.sprite = CalculateInventory.allAdCloth["BlackPants"];
+        }
+        else if(cloth == "everything")
+        {
+            CalculateInventory.whiteShirt.enabled = true;
+            CalculateInventory.whiteShirtS.enabled = true;
+            CalculateInventory.whiteShirtASR.sprite = CalculateInventory.allAdCloth["WhiteShirt"];
+            
+            CalculateInventory.blackPants.enabled = true;
+            CalculateInventory.blackPantsS.enabled = true;
+            CalculateInventory.blackPantsASR.sprite = CalculateInventory.allAdCloth["BlackPants"];
+        }
     }
     
 
@@ -165,7 +179,10 @@ public class ClothToMachine : MonoBehaviour
                     CalculateInventory.everythingASR.sprite = CalculateInventory.transparent;
                     CalculateInventory.everythingSSR.sprite = CalculateInventory.transparent;
                     
-                    ChangeToUnderwear();
+                    CalculateInventory.wearingEverything = false;
+                    //如果穿的是这件衣服的话
+                    
+                    ChangeToUnderwear("everything");
                 }
                 if (CalculateInventory.topSR.CompareTag(AllMachines.currentBag.transform.gameObject.tag))
                 {
@@ -173,7 +190,9 @@ public class ClothToMachine : MonoBehaviour
                     CalculateInventory.topASR.sprite = CalculateInventory.transparent;
                     CalculateInventory.topSSR.sprite = CalculateInventory.transparent;
                     
-                    ChangeToUnderwear();
+                    ChangeToUnderwear("top");
+                    CalculateInventory.wearingTop = false;
+
                 }
                 if (CalculateInventory.otherSR.CompareTag(AllMachines.currentBag.transform.gameObject.tag))
                 {
@@ -181,7 +200,9 @@ public class ClothToMachine : MonoBehaviour
                     CalculateInventory.otherASR.sprite = CalculateInventory.transparent;
                     CalculateInventory.otherSSR.sprite = CalculateInventory.transparent;
                     
-                    ChangeToUnderwear();
+                    ChangeToUnderwear("bottom");
+                    CalculateInventory.wearingBottom = false;
+
                 }
                 if (CalculateInventory.shoeSR.CompareTag(AllMachines.currentBag.transform.gameObject.tag))
                 {
@@ -189,7 +210,8 @@ public class ClothToMachine : MonoBehaviour
                     CalculateInventory.shoeASR.sprite = CalculateInventory.transparent;
                     CalculateInventory.shoeSSR.sprite = CalculateInventory.transparent;
                     
-                    ChangeToUnderwear();
+                    CalculateInventory.wearingShoe = false;
+
                 }
                 
                 
@@ -244,7 +266,7 @@ public class ClothToMachine : MonoBehaviour
                     this.gameObject.transform.SetParent(WasherControllerList[0].gameObject.transform);
 
                     transform.position =
-                        AllMachines.WashingMachines[0].transform.position + new Vector3(0, -2.5f, 0);
+                        AllMachines.WashingMachines[0].transform.position + new Vector3(0, -2.9f, 0);
 
                     FinalCameraController.TutorialManager.scrollControl(true);
 
