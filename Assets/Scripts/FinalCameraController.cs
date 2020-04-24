@@ -7,6 +7,7 @@ using UnityEngine.Networking.Match;
 using UnityEngine.EventSystems;
 using UnityEngine.UI.Extensions;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 
 public class FinalCameraController : MonoBehaviour
@@ -14,6 +15,7 @@ public class FinalCameraController : MonoBehaviour
     public TouchController TouchController;
     public AllMachines AllMachines;
     public LevelManager LevelManager;
+    private InstagramController InstagramController;
     
 
     private bool fastSwipeBool;
@@ -43,6 +45,7 @@ public class FinalCameraController : MonoBehaviour
     public CanvasGroup messageCG;
 
     public bool lateReturnComic;
+    public CanvasGroup setting;
 
     
     public enum AppState
@@ -115,11 +118,15 @@ public class FinalCameraController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        
+        Hide(setting);
         myCameraState = CameraState.Subway;
         myAppState = AppState.Mainpage;
         
         myHSS = GameObject.Find("Horizontal Scroll Snap").GetComponent<HorizontalScrollSnap>();
         subwayScrollRect = GameObject.Find("Horizontal Scroll Snap").GetComponent<ScrollRect>();
+        InstagramController = GameObject.Find("---InstagramController").GetComponent<InstagramController>();
+
         pageList.Add(RetroPage);
         pageList.Add(KararaPage);
         pageList.Add(DesignerPage);
@@ -158,6 +165,8 @@ public class FinalCameraController : MonoBehaviour
 
         for (int i = 0; i < AllMachines.WashingMachines.Count; i++)
             {
+                Hide(fishTalk);
+                Hide(setting);
                 Hide(AllMachines.WashingMachines[i].GetComponent<WasherController>().backgroundUI);
                 Hide(AllMachines.WashingMachines[i].GetComponent<WasherController>().ClothUI);
             }
@@ -320,7 +329,7 @@ public class FinalCameraController : MonoBehaviour
         }
     }
 
-    private bool isShown;
+    public bool isShown = true;
     public void clickKarara()
     {
         print("clickKarara");
@@ -425,9 +434,60 @@ public class FinalCameraController : MonoBehaviour
 
 
            myAppState = AppState.Mainpage;
+           resetPostOrder();
+
        }
     }
 
+
+    public void resetPostOrder()
+    {
+
+        print("resetttttttposterOrder");
+
+        List<int> temp = new List<int>();
+        List<GameObject> temp1 = new List<GameObject>();
+
+        Dictionary<int, GameObject> tempDic = new Dictionary<int, GameObject>();
+        Dictionary<GameObject, int> tempDic1 = new Dictionary<GameObject, int>();
+
+        
+        //reset the order of all posts
+        for (int i = 0; i < InstagramController.postList.Count; i++)
+        {
+            temp.Add(InstagramController.postList[i].GetComponent<EntryTime>().time);
+            tempDic.Add(InstagramController.postList[i].GetComponent<EntryTime>().time, InstagramController.postList[i]);
+
+        }   
+        //时间是不会重复的，每个npc的个位数都不一样
+        
+        temp.Sort();
+        temp.Reverse();
+        
+        for (int i = 0; i < InstagramController.postList.Count; i++)
+        {
+            tempDic1.Add(tempDic[temp[i]], i);
+
+        }  
+        //需要一个list，按顺序放着所有的gameobject
+        
+        
+        
+        for (int i = 0; i < InstagramController.postList.Count; i++)
+        {
+            //order是gameobject在list中排的位置
+            InstagramController.postList[i].GetComponent<EntryTime>().order = tempDic1[InstagramController.postList[i]];
+
+            InstagramController.postList[i].transform.SetSiblingIndex(InstagramController.postList[i].GetComponent<EntryTime>().order);
+        }           
+        
+//        for (int i = 0; i < InstagramController.postList.Count; i++)
+//        {
+//            InstagramController.postList[i].transform.SetSiblingIndex(-InstagramController.postList[i].GetComponent<EntryTime>().time);
+//        }           
+        
+    }
+    
     public void ChangeToSubway()
     {
         if(isTutorial)
@@ -439,7 +499,6 @@ public class FinalCameraController : MonoBehaviour
         {
             myHSS.GoToScreen(1);
             LevelManager.clicktime = 5;
-
         }
         Hide(Inventory);
         Show(subwayBackground);
@@ -490,8 +549,14 @@ public class FinalCameraController : MonoBehaviour
     
     public void ChangeToApp()
     {
+        //reset the order of all posts
+        resetPostOrder();
+        
         //cancel all dialogues
         print("click ChangeToAPP");
+        
+        //cancel red dot
+        InstagramController.redDot.SetActive(false);
 
        if(alreadyClothUI == false)        
         {
@@ -504,9 +569,9 @@ public class FinalCameraController : MonoBehaviour
                 lastCameraState = myCameraState;
                 myCameraState = CameraState.App;
                 myAppState = AppState.Mainpage;
-
-                transform.position = new Vector3(35, 0, -10);
                 Show(frontPage);
+
+                
             }
         }
         else
@@ -517,8 +582,6 @@ public class FinalCameraController : MonoBehaviour
             Hide(currentClothUI);
             alreadyClothUI = false;
         }
-
-        
     }
     
     public void ChangeToMap()
@@ -582,6 +645,22 @@ public class FinalCameraController : MonoBehaviour
         for (var i = 0; i < pageList.Count; i++)
         {
             Hide(pageList[i]);
+        }
+    }
+
+    private bool isSetting;
+    public void clickSetting()
+    { 
+        CancelAllUI();
+        if (isSetting)
+        {
+            Hide(setting);
+            isSetting = false;
+        }
+        else
+        {
+            Show(setting);
+            isSetting = true;
         }
     }
 }

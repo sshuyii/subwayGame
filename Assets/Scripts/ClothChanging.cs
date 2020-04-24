@@ -14,6 +14,7 @@ public class ClothChanging : MonoBehaviour
     public Image checkImage;
     public GameObject crossImage;
 
+    public CanvasGroup Occupied;
 
     //used for lont tap
     private bool tapStart = false;
@@ -209,9 +210,9 @@ public class ClothChanging : MonoBehaviour
                             myImage.sprite = startSprite;
                             //crossImage.SetActive(false);
 
-                            print("isworrrrking");
                             takeOffCloth();
                             CalculateInventory.occupiedI = CalculateInventory.occupiedI - 1;
+                            AllMachines.WashingMachines[i].GetComponent<WasherController>().clothNum++;
                             break;
                         }
                     }

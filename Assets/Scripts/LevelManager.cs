@@ -66,8 +66,11 @@ public class LevelManager : MonoBehaviour
         else if (clicktime == 5 && FinalCameraController.mySubwayState == FinalCameraController.SubwayState.One)//鱼开始说话
         {
             Show(fishBubble);
-            StartCoroutine(AnimateText(fishText, "Stop walking around!", false, null, Vector2.zero));//clicktime = 6;
-            Show(arrowButton);
+            StartCoroutine(AnimateText(fishText, "Karara! See the bags? Time for work!", false, null, Vector2.zero));//clicktime = 6;
+            //Show(arrowButton);
+            
+            Hide(arrowButton);
+            Hide(clear);
         }
     }
 
@@ -102,7 +105,7 @@ public class LevelManager : MonoBehaviour
                 }
                 
                 //train starts to move
-                if (clicktime == 7)
+                if (clicktime == 6)
                 {
                     isInstruction = false;
                 }

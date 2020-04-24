@@ -5,6 +5,8 @@ using UnityEngine;
 public class EntryTime : MonoBehaviour
 {
     public int time;
+
+    public int order;
     // Start is called before the first frame update
     void Start()
     {

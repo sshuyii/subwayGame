@@ -1510,6 +1510,7 @@ MonoBehaviour:
   transparent: {fileID: 21300000, guid: d7f409a287fc14824a84a822ef378d81, type: 3}
   checkImage: {fileID: 690505064}
   crossImage: {fileID: 1960112337}
+  Occupied: {fileID: 0}
 --- !u!114 &80240328
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4554,6 +4555,7 @@ MonoBehaviour:
   transparent: {fileID: 21300000, guid: d7f409a287fc14824a84a822ef378d81, type: 3}
   checkImage: {fileID: 1138863268}
   crossImage: {fileID: 55767207}
+  Occupied: {fileID: 0}
 --- !u!114 &206946338
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5342,6 +5344,7 @@ MonoBehaviour:
   emptyImage: {fileID: 371481901}
   fullImage: {fileID: 1984459478}
   AllMachines: {fileID: 388099769}
+  Occupied: {fileID: 0}
   ClothUiAnimator: {fileID: 0}
   alreadyNotice: 0
   myCollider: {fileID: 0}
@@ -7266,6 +7269,7 @@ MonoBehaviour:
   emptyImage: {fileID: 1782733566}
   fullImage: {fileID: 1967755671}
   AllMachines: {fileID: 388099769}
+  Occupied: {fileID: 0}
   ClothUiAnimator: {fileID: 0}
   alreadyNotice: 0
   myCollider: {fileID: 0}
@@ -8096,7 +8100,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 6302667f31285421e8074ecdbcb6f181, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -8560,6 +8564,7 @@ MonoBehaviour:
   transparent: {fileID: 21300000, guid: d7f409a287fc14824a84a822ef378d81, type: 3}
   checkImage: {fileID: 524454108}
   crossImage: {fileID: 1010318768}
+  Occupied: {fileID: 0}
 --- !u!114 &421359697
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10418,6 +10423,7 @@ MonoBehaviour:
   emptyImage: {fileID: 1798889942}
   fullImage: {fileID: 892040605}
   AllMachines: {fileID: 388099769}
+  Occupied: {fileID: 0}
   ClothUiAnimator: {fileID: 0}
   alreadyNotice: 0
   myCollider: {fileID: 0}
@@ -11091,6 +11097,7 @@ MonoBehaviour:
   transparent: {fileID: 0}
   checkImage: {fileID: 0}
   crossImage: {fileID: 0}
+  Occupied: {fileID: 0}
 --- !u!212 &529734259
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -15972,6 +15979,7 @@ MonoBehaviour:
   transparent: {fileID: 21300000, guid: d7f409a287fc14824a84a822ef378d81, type: 3}
   checkImage: {fileID: 70884082}
   crossImage: {fileID: 16146069}
+  Occupied: {fileID: 0}
 --- !u!114 &784950651
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18620,6 +18628,7 @@ MonoBehaviour:
   transparent: {fileID: 21300000, guid: d7f409a287fc14824a84a822ef378d81, type: 3}
   checkImage: {fileID: 0}
   crossImage: {fileID: 0}
+  Occupied: {fileID: 0}
 --- !u!114 &958854347
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23977,6 +23986,7 @@ MonoBehaviour:
   transparent: {fileID: 0}
   checkImage: {fileID: 0}
   crossImage: {fileID: 0}
+  Occupied: {fileID: 0}
 --- !u!65 &1223641585
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -26303,6 +26313,7 @@ MonoBehaviour:
   transparent: {fileID: 0}
   checkImage: {fileID: 0}
   crossImage: {fileID: 0}
+  Occupied: {fileID: 0}
 --- !u!212 &1325728585
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -27448,6 +27459,7 @@ MonoBehaviour:
   emptyImage: {fileID: 30152350}
   fullImage: {fileID: 386274773}
   AllMachines: {fileID: 388099769}
+  Occupied: {fileID: 0}
   ClothUiAnimator: {fileID: 0}
   alreadyNotice: 0
   myCollider: {fileID: 0}
@@ -27675,6 +27687,7 @@ MonoBehaviour:
   transparent: {fileID: 0}
   checkImage: {fileID: 0}
   crossImage: {fileID: 0}
+  Occupied: {fileID: 0}
 --- !u!65 &1388091709
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -28837,6 +28850,7 @@ MonoBehaviour:
   transparent: {fileID: 0}
   checkImage: {fileID: 0}
   crossImage: {fileID: 0}
+  Occupied: {fileID: 0}
 --- !u!212 &1427118351
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -33350,6 +33364,7 @@ MonoBehaviour:
   transparent: {fileID: 0}
   checkImage: {fileID: 0}
   crossImage: {fileID: 0}
+  Occupied: {fileID: 0}
 --- !u!212 &1625517736
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -36762,6 +36777,7 @@ MonoBehaviour:
   transparent: {fileID: 21300000, guid: d7f409a287fc14824a84a822ef378d81, type: 3}
   checkImage: {fileID: 2011479266}
   crossImage: {fileID: 1397944436}
+  Occupied: {fileID: 0}
 --- !u!114 &1815843518
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -39010,6 +39026,7 @@ MonoBehaviour:
   transparent: {fileID: 21300000, guid: d7f409a287fc14824a84a822ef378d81, type: 3}
   checkImage: {fileID: 1169492846}
   crossImage: {fileID: 0}
+  Occupied: {fileID: 0}
 --- !u!114 &1926477318
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -40492,6 +40509,7 @@ MonoBehaviour:
   transparent: {fileID: 0}
   checkImage: {fileID: 0}
   crossImage: {fileID: 0}
+  Occupied: {fileID: 0}
 --- !u!212 &1980685974
 SpriteRenderer:
   m_ObjectHideFlags: 0

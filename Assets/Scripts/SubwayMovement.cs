@@ -10,6 +10,7 @@ public class SubwayMovement : MonoBehaviour
 {
     private FinalCameraController FinalCameraController;
 
+    private int NpcCount = 0;
     private LevelManager LevelManager;
     public int currentStation;
     public GameObject highlight;
@@ -105,6 +106,11 @@ public class SubwayMovement : MonoBehaviour
     private float realTimer;
 
     public Button NPCBag;
+
+    public bool alreadyStation1;
+    public bool alreadyStation2;
+    public bool alreadyStation0;
+    
     // Start is called before the first frame update
     void Start() 
     {
@@ -199,6 +205,21 @@ public class SubwayMovement : MonoBehaviour
     void Update()
     {
 
+        //test if have already arrived at stations
+        //for poster generation
+        //current station means the station the train is heading to
+        if (currentStation == 2 && !alreadyStation1)
+        {
+            alreadyStation1 = true;
+        }
+        else if (currentStation == 0 && !alreadyStation2 && alreadyStation1)
+        {
+            alreadyStation2 = true;
+        }
+        else if (currentStation == 1 && alreadyStation2 && alreadyStation1)
+        {
+            alreadyStation0 = true;
+        }
 //        print("FinalCameraController.AllStationClothList.Count  =" + FinalCameraController.AllStationClothList.Count);
         if (!FinalCameraController.isTutorial && LevelManager.clicktime > 4)
         {
@@ -420,6 +441,17 @@ public class SubwayMovement : MonoBehaviour
                     //如果不放进来特殊角色的包，放npc的包
                     Button npcBag = Instantiate(NPCBag, bagPos[firstEmptyPos],
                         Quaternion.identity) as Button;
+                    string temp = "Npc" + currentStation.ToString();
+                    npcBag.gameObject.transform.tag = temp;
+                    
+                    //this position is occupied by a bag
+                    bagPosAvailable[firstEmptyPos] = true;
+
+                    bagsInCar.Add(npcBag.gameObject);
+
+                    npcBag.GetComponent<ClothToMachine>().myBagPosition = firstEmptyPos;
+                    bagNum++;
+                    npcBag.transform.SetParent(clothBagGroup.transform, false);
                     break;
                 }
                 else
@@ -432,23 +464,28 @@ public class SubwayMovement : MonoBehaviour
            
             //only generate a new bag if there is an empty position
             //如果同一个tag的包已经在车厢里了，那么就不要放进来这个人的包:noSameBag
-            if (emptyNum < 3 && noSameBag) 
+            if (emptyNum < 3) 
             {
-                //首先一定产生特殊npc的包
-                bag = Instantiate(NameToStationBags[stationNum.ToString()][0], bagPos[firstEmptyPos],
-                    Quaternion.identity) as Button;
+                if(noSameBag)
+                {
+                    //首先一定产生特殊npc的包
+                    bag = Instantiate(NameToStationBags[stationNum.ToString()][0], bagPos[firstEmptyPos],
+                        Quaternion.identity) as Button;
+
+                    //this position is occupied by a bag
+                    bagPosAvailable[firstEmptyPos] = true;
+
+                    bagsInCar.Add(bag.gameObject);
+
+                    bag.GetComponent<ClothToMachine>().myBagPosition = firstEmptyPos;
+                    bagNum++;
+                    bag.transform.SetParent(clothBagGroup.transform, false);
+                }
                 
-                        //this position is occupied by a bag
-                        bagPosAvailable[firstEmptyPos] = true;
+                    //然后可能产生npc bag
+                    //it is decided in the function whether there's an empty position for bag, so no worries for that 
+                    GenerateNpcBag();
                 
-                        bagsInCar.Add(bag.gameObject);
-                
-                        bag.GetComponent<ClothToMachine>().myBagPosition = firstEmptyPos;
-                        bagNum++;
-                        bag.transform.SetParent(clothBagGroup.transform, false);
-                        
-                //然后可能产生npc
-                GenerateNpcBag();
 
             }
             //previousIndex = randomIndex;
@@ -462,12 +499,15 @@ public class SubwayMovement : MonoBehaviour
             emptyBagPos();
             //only generate a new bag if there is an empty position
             //如果同一个tag的包已经在车厢里了，那么就不要放进来这个人的包:noSameBag
-            if (emptyNum < 3 && UnityEngine.Random.Range(0f, 10f) < 5f) 
+            if (emptyNum < 3 && UnityEngine.Random.Range(0f, 10f) < 8f) //给npc bag 调高一点概率
             {
                 bag = Instantiate(NPCBag, bagPos[firstEmptyPos],
                     Quaternion.identity) as Button;
                 
-                        //this position is occupied by a bag
+                string temp = "Npc" + currentStation.ToString();
+                bag.gameObject.transform.tag = temp;
+                
+                //this position is occupied by a bag
                         bagPosAvailable[firstEmptyPos] = true;
                 
                         bagsInCar.Add(bag.gameObject);

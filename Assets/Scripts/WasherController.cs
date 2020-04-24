@@ -15,6 +15,7 @@ public class WasherController : MonoBehaviour
     public Image fullImage;
     public AllMachines AllMachines;
 
+    public CanvasGroup Occupied;
     public Animator ClothUiAnimator;
     
     public bool alreadyNotice;
@@ -69,6 +70,8 @@ public class WasherController : MonoBehaviour
         CalculateInventory = GameObject.Find("---InventoryController").GetComponent<CalculateInventory>();
 
         washingSound = AllMachines.gameObject.GetComponent<AudioSource>();
+        
+        Hide(Occupied);
     }
 
     public void CloseFullNotice()
@@ -93,19 +96,6 @@ public class WasherController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       
-        //close door if there is no cloth in machine
-        if (clothNum == 0 && shut == 1)
-        {
-            shut = 0;
-            Hide(ClothUI);
-            StartCoroutine(MachineFold());
-            //ClothUiAnimator.SetBool("isUnfold",false);
-            DoorImage.sprite = AllMachines.closedDoor;
-        }
-      
-
-        
         realTimer = AllMachines.washTime - timer;
         if (Mathf.RoundToInt(timer / 60) < 10)
         {
@@ -141,7 +131,7 @@ public class WasherController : MonoBehaviour
             fulltemp = true;
         }
 
-        if (CalculateInventory.occupiedI < 5)
+        if (CalculateInventory.occupiedI < 6)
         {
             fulltemp = false;
         }
@@ -160,17 +150,44 @@ public class WasherController : MonoBehaviour
         {
             fullImage.enabled = false;
             emptyImage.enabled = true;
+            Hide(Occupied);
 
         }
         else if (myMachineState == AllMachines.MachineState.full)
         {
-            emptyImage.enabled = false;
-            fullImage.enabled = true;
-
+            if(clothNum > 0)
+            {
+                emptyImage.enabled = false;
+                fullImage.enabled = true;
+            }
+            else
+            {
+                
+            }
         }
-        else
+        else if(myMachineState == AllMachines.MachineState.finished)
         {
-            fullImage.enabled = true;
+           
+            if(clothNum > 0)
+            {
+                emptyImage.enabled = false;
+                fullImage.enabled = true;
+            }
+            else if (clothNum == 0)
+            {
+                //close door if there is no cloth in machine
+//                if (shut == 1)
+//                {
+//                    shut = 0;
+//                    Hide(ClothUI);
+//                    StartCoroutine(MachineFold());
+//                    //ClothUiAnimator.SetBool("isUnfold",false);
+//                    DoorImage.sprite = AllMachines.closedDoor;
+//                }
+                
+                emptyImage.enabled = true;
+                fullImage.enabled = false;
+            }
         }
         
         //if click a bag of cloth, put them into the machine and start washing
@@ -191,6 +208,8 @@ public class WasherController : MonoBehaviour
                 lightAnimator.SetBool("isWashing", false);
                 washingSound.Stop();
             
+                Show(Occupied);
+
                 timer = 0;
                 
                 //for tutorial,衣服洗完了
@@ -231,8 +250,11 @@ public class WasherController : MonoBehaviour
         Show(backgroundUI2);
         yield return new WaitForSeconds(0.2f);
         Show(backgroundUI3);
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.1f);
 
+        GenerateCloth(this.transform.gameObject.tag);
+        Show(ClothUI);
+        
         pressOK = true;
         if(FinalCameraController.isTutorial && FinalCameraController.TutorialManager.tutorialNumber == 8)
         {
@@ -265,7 +287,7 @@ public class WasherController : MonoBehaviour
         Hide(backgroundUI2);
         yield return new WaitForSeconds(0.2f);
         Hide(backgroundUI);
-        yield return new WaitForSeconds(0.3f);
+
         pressOK = true;
         if (FinalCameraController.isTutorial && FinalCameraController.TutorialManager.tutorialNumber == 9 || FinalCameraController.isTutorial && FinalCameraController.TutorialManager.tutorialNumber == 11)
         {
@@ -283,8 +305,6 @@ public class WasherController : MonoBehaviour
 
     public void clickMachineNewMethod()
     {
-        FinalCameraController.CancelAllUI();
-
 //        if (clothNum == 0 && shut == 0) //if there's no cloth in the door, don't let it open
 //        {
             if (myMachineState == AllMachines.MachineState.bagUnder)
@@ -293,6 +313,7 @@ public class WasherController : MonoBehaviour
             }
             else if (myMachineState == AllMachines.MachineState.full)
             {
+                
                 washingSound.Play();
                 ClickStart();
             }
@@ -302,7 +323,10 @@ public class WasherController : MonoBehaviour
                 {
                     return;
                 }
-                clickMachine();
+                if(pressOK)
+                {
+                    clickMachine();
+                }            
             }
 
 //        }
@@ -313,30 +337,33 @@ public class WasherController : MonoBehaviour
 //        }
     }
 
-    private bool pressOK = true;
+    IEnumerator CannotClickFor1s()
+    {
+        yield return new WaitForSeconds(0.8f);
+
+    }
+
+    
+    public bool pressOK = true;
     
     public void clickMachine()
     {
-        if(pressOK)
-        {
+       
             FinalCameraController.CancelAllUI();
             print("presssssssed");
-            if (myMachineState == AllMachines.MachineState.finished)
-            {
+
                 if (shut == 0)
                 {
-                    shut++;
-
+                    shut = 1;
                     StartCoroutine(MachineUnfold());
 
                     //change door sprite to open
                     DoorImage.sprite = AllMachines.openedDoor;
+                    Hide(Occupied);
 
                     //ClothUiAnimator.SetBool("isUnfold",true);
 
-                    StartCoroutine("WaitFor2Seconds");
-
-                    GenerateCloth(this.transform.gameObject.tag);
+//                    StartCoroutine("WaitFor2Seconds");
 
                 }
                 //if click machine again, close UI
@@ -349,18 +376,25 @@ public class WasherController : MonoBehaviour
 
                     //change door to closed sprite
                     DoorImage.sprite = AllMachines.closedDoor;
+                    Show(Occupied);
+                    
+                    //show message and closet UI
+                    Show(FinalCameraController.clothCG);
+                    Show(FinalCameraController.messageCG);
+                    FinalCameraController.isShown = true;      
+
                 }
-            }
-        }
+            
+        
 
     }
 
-    IEnumerator WaitFor2Seconds()
-    {
-        yield return new WaitForSeconds(0.8f);
-        Show(ClothUI);
-
-    }
+//    IEnumerator WaitFor2Seconds()
+//    {
+//        yield return new WaitForSeconds(0.8f);
+//        Show(ClothUI);
+//
+//    }
     
     void Hide(CanvasGroup UIGroup) {
         UIGroup.alpha = 0f; //this makes everything transparent
@@ -506,6 +540,7 @@ public class WasherController : MonoBehaviour
 
          isFirstOpen = false;
          //record the list into dictionary
+         if(!FinalCameraController.AllStationClothList.ContainsKey(tagName))
          FinalCameraController.AllStationClothList.Add(tagName, MachineClothList);
 
     }

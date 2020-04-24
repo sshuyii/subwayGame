@@ -88,7 +88,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 983fcfa504c9f497ca53462b46b56cbd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hitTime: 0
   myBagPosition: 0
+  isNotice: 1
   isReady: 0
 --- !u!1 &4648509231977690181
 GameObject:

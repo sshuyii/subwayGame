@@ -17,6 +17,9 @@ TagManager:
   - worn
   - Tutorial
   - Nami
+  - Npc1
+  - Npc2
+  - Npc0
   - NPC
   layers:
   - Default
@@ -54,4 +57,16 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Dots
+    uniqueID: 1825880525
+    locked: 0
+  - name: Icons
+    uniqueID: 1507833845
+    locked: 0
+  - name: Machine
+    uniqueID: 3466586211
+    locked: 0
+  - name: UI
+    uniqueID: 626976873
     locked: 0

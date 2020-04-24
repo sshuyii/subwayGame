@@ -167,7 +167,7 @@ public class InstagramButtons : MonoBehaviour
         
         
         
-        //change post text and comments
+        //change post text and comments according to post content
         if (currentSprite.name == "designDoc")
         {
             InstagramController.postText.text =

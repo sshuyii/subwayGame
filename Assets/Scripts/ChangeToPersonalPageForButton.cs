@@ -100,6 +100,7 @@ public class ChangeToPersonalPageForButton : MonoBehaviour
         
     }
 
+   
     public void DoReply()
     {
 
@@ -173,6 +174,7 @@ public class ChangeToPersonalPageForButton : MonoBehaviour
     private int clickBoss = 0;
     public void BossTalk()
     {
+        FinalCameraController.CancelAllUI();
         if(isfishTalking == false)
         {
             Show(InstagramController.FishBoss);
@@ -196,10 +198,10 @@ public class ChangeToPersonalPageForButton : MonoBehaviour
 //            privateAccount.SetActive(false);
 //            posts.SetActive(true);
             
-            //change othters
+            //change others
             InstagramController.followNico = true;
             myImage.sprite = InstagramController.unfollow;
-            int retroTime = 3;
+            int retroTime = 1;
 
             for (int i = 0; i < InstagramController.retroPostList.Count; i++)
             {
@@ -207,18 +209,19 @@ public class ChangeToPersonalPageForButton : MonoBehaviour
                     Quaternion.identity);
                 newPost.GetComponent<EntryTime>().time = retroTime;
 
+                //set post image in main page
                 newPost.transform.Find("Post").gameObject.GetComponent<Image>().sprite =
                     InstagramController.retroPostList[i];
 
+                //set profile and user name in main page
                 var profileNicoImage = newPost.transform.Find("Profile").gameObject.GetComponent<Image>();
-                
                 profileNicoImage.sprite = InstagramController.allProfile["nico"];
-
                 profileNicoImage.GetComponentInChildren<Text>().text = "Nico";
 
                 //set parent(probably a better way to do
                 newPost.transform.SetParent(InstagramController.postParent.transform);
 
+                InstagramController.postList.Add(newPost);
                 retroTime += 10;
             }
 
@@ -240,7 +243,7 @@ public class ChangeToPersonalPageForButton : MonoBehaviour
             //change othters
             InstagramController.followDesigner = true;
             myImage.sprite = InstagramController.unfollow;
-            int designerTime = 2;
+            int designerTime = -12;
 
             for (int i = 0; i < InstagramController.designerPostList.Count; i++)
             {
@@ -259,6 +262,8 @@ public class ChangeToPersonalPageForButton : MonoBehaviour
 
                 //set parent(probably a better way to do
                 newPost.transform.SetParent(InstagramController.postParent.transform);
+                InstagramController.postList.Add(newPost);
+
 
                 designerTime += 10;
             }

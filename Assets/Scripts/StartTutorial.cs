@@ -10,10 +10,13 @@ public class StartTutorial : MonoBehaviour
 {
 
     public float speedA;
+    public CanvasGroup Menu;
+    public SpriteRenderer Title;
 
-    public float startingPoint;
+    public Vector3 startingPoint;
     public float endPoint;
 
+    public GameObject iconBackground;
     public CanvasGroup MachineGroup;
     
     public bool isComic;
@@ -22,6 +25,19 @@ public class StartTutorial : MonoBehaviour
     public bool isComic2;
     public bool isComic3;
 
+    public SpriteRenderer Music;
+    public SpriteRenderer Sound;
+    public SpriteRenderer Realtime;
+
+    public Sprite noMusic;
+    public Sprite noSound;
+    
+    public Sprite noRealtime;
+    
+    private Sprite yesMusic;
+    private Sprite yesSound;
+    private Sprite yesRealtime;
+    
     private bool isTutorial;
 
     public GameObject comicBackground;
@@ -32,28 +48,89 @@ public class StartTutorial : MonoBehaviour
     public GameObject comic5;
 
 
+    public Sprite openMachine;
+    public Sprite closeMachine;
+    public SpriteRenderer Machine;
+    public SpriteRenderer credit;
+    public SpriteRenderer Shuyi;
+    public SpriteRenderer setting;
+    public CanvasGroup settingMenu;
+    
     private bool flash;
     public CanvasGroup myFlash;
     
 
     public float speed = 1f;
-
+    
     private bool startTutorial;
+    public Vector3 creditVector3;
+    public Vector3 settingVector3;
+
+    public GameObject Camera;
+
+    private Color MachineColor;
+    private Color TitleColor;
+    public CanvasGroup ComicButton;
+
+    enum MenuState
+    {
+        credit,
+        setting,
+        none
+    }
+
+    private MenuState myMenuState;
+    
     // Start is called before the first frame update
     void Start()
     {
+        myMenuState = MenuState.none;
+
+        Hide(ComicButton);
+        credit.enabled = false;
+        Shuyi.enabled = false;
+        Machine.sprite = closeMachine;
+        setting.enabled = false;
+        Music.enabled = false;
+        Sound.enabled = false;
+        Realtime.enabled = false;
+        Hide(settingMenu);
+
+        yesMusic = Music.sprite;
+        yesSound = Sound.sprite;
+        yesRealtime = Realtime.sprite;
+        
+        startingPoint = iconBackground.transform.position;
         comicBackground.SetActive(false);
         comic1.SetActive(false);
         comic2.SetActive(false);
         comic3.SetActive(false);
         comic4.SetActive(false);
         comic5.SetActive(false);
+        
+        Hide(ComicButton);
 
     }
 
     // Update is called once per frame
     void Update()
     {
+        //set state
+        if (myMenuState == MenuState.credit)
+        {
+            Camera.transform.position = Vector3.MoveTowards(Camera.transform.position,creditVector3,0.25f);
+        }
+        else if (myMenuState == MenuState.none)
+        {
+            Camera.transform.position = Vector3.MoveTowards(Camera.transform.position,new Vector3(0,0,-10), 0.25f);
+
+        }
+        else if (myMenuState == MenuState.setting)
+        {
+            Camera.transform.position = Vector3.MoveTowards(Camera.transform.position,settingVector3, 0.25f);
+
+        }
+        
         //for flash
         if (flash)
         {
@@ -78,14 +155,39 @@ public class StartTutorial : MonoBehaviour
                 
         }
 
-        //for background moving
-        if(transform.position.x < endPoint)
+        if (comicStart)
         {
-            GetComponent<RectTransform>().anchoredPosition += new Vector2(speedA, 0);
+
+            Menu.alpha -= 0.5f * Time.deltaTime;
+            MachineColor.a -= 0.5f * Time.deltaTime;
+            TitleColor.a -= 0.5f * Time.deltaTime;
+            
+            if (MachineColor.a < 0)
+            {
+                MachineColor.a = 0;
+                Menu.alpha = 0;
+                TitleColor.a = 0;
+                isComic = true;
+                comicStart = false;
+                
+                comicBackground.SetActive(true);
+                comic1.SetActive(true);
+                Show(ComicButton);
+            }
+
+            Machine.color = MachineColor;
+            Title.color = MachineColor;
+
+        }
+
+        //for background moving
+        if(iconBackground.transform.position.x < endPoint)
+        {
+            iconBackground.transform.position += new Vector3(speedA, 0, 0);
         }
         else
         {
-            GetComponent<RectTransform>().anchoredPosition = new Vector2(startingPoint, -4);
+            iconBackground.transform.position = startingPoint;
         }
 
         
@@ -119,19 +221,110 @@ public class StartTutorial : MonoBehaviour
             isTutorial = true;
         }
     }
-    
+
+    private bool comicStart;
     public void TutorialStartPre()
     {
-        Hide(MachineGroup);
+        comicStart = true;
+        //Hide(MachineGroup);
         //Comic starts
-        flash = true;
-        myFlash.alpha = 1;
-        comicBackground.SetActive(true);
+        //flash = true;
+        //myFlash.alpha = 1;
+        //comicBackground.SetActive(true);
 
         //SceneManager.LoadScene("TutorialScene", LoadSceneMode.Single);
         //comic starts to fly in
 
     }
+
+    public void clickMusic()
+    {
+        if (Music.sprite == noMusic)
+        {
+            Music.sprite = yesMusic;
+        }
+        else
+        {
+            Music.sprite = noMusic;
+        }
+            
+    }
+    public void clickSound()
+    {
+        if (Sound.sprite == noSound)
+        {
+            Sound.sprite = yesSound;
+        }
+        else
+        {
+            Sound.sprite = noSound;
+        }
+    }
+    public void clickRealtime()
+    {
+        if (Realtime.sprite == noRealtime)
+        {
+            Realtime.sprite = yesRealtime;
+        }
+        else
+        {
+            Realtime.sprite = noRealtime;
+        }
+    }
+    public void clickCredit()
+    {
+        StartCoroutine(MachineDoorOpenCredit());
+        myMenuState = MenuState.credit;
+    }
+    
+    public void clickSetting()
+    {
+        StartCoroutine(MachineDoorOpenSetting());
+        myMenuState = MenuState.setting;
+    }
+
+    public void clickMachine()
+    {
+        credit.enabled = false;
+        Shuyi.enabled = false;
+        Machine.sprite = closeMachine;
+        setting.enabled = false;
+        Music.enabled = false;
+        Sound.enabled = false;
+        Realtime.enabled = false;
+        Hide(settingMenu);
+
+        myMenuState = MenuState.none;
+
+    }
+    IEnumerator MachineDoorOpenCredit()
+    {
+        yield return new WaitForSeconds(0.5f);
+        Machine.sprite = openMachine;
+        yield return new WaitForSeconds(0.5f);
+        credit.enabled = true;
+        yield return new WaitForSeconds(0.3f);
+        Shuyi.enabled = true;
+
+
+    }
+    
+    IEnumerator MachineDoorOpenSetting()
+    {
+        yield return new WaitForSeconds(0.5f);
+        Machine.sprite = openMachine;
+        yield return new WaitForSeconds(0.5f);
+        setting.enabled = true;
+        yield return new WaitForSeconds(0.3f);
+        Show(settingMenu);
+        Music.enabled = true;
+        Sound.enabled = true;
+        Realtime.enabled = true;
+
+
+    }
+    
+    
     public void GoToChapterOne()
     {
         SceneManager.LoadScene("StreetStyle", LoadSceneMode.Single);
@@ -186,7 +379,7 @@ public class StartTutorial : MonoBehaviour
     {
         if(isTutorial)
         {
-            flash = true;
+            //flash = true;
             
         }
       

@@ -68,7 +68,7 @@ public class DoInventory : MonoBehaviour
             CalculateInventory.inventory[CalculateInventory.occupiedI].tag = this.tag;
             CalculateInventory.occupiedI++;
         }
-        else
+        else 
         {
             return;
         }

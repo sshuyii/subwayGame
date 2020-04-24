@@ -16,7 +16,8 @@ public class ScreenshotHandler : MonoBehaviour
     private CalculateInventory CalculateInventory;
 
     private AudioSource shutterSound;
-    
+
+    private int PosterTakenNum = 0;//record how many posters have been used?
     //record which posture has been used
     private Dictionary<string, bool> usedPostures = new Dictionary<string, bool>();
 
@@ -33,7 +34,7 @@ public class ScreenshotHandler : MonoBehaviour
     public Image KararaWorkImage;
 
     
-    private int entryTime = 50;
+    private int entryTime = 30;
 
     private GameObject toothpastePost;
     public int followerNum;
@@ -64,10 +65,7 @@ public class ScreenshotHandler : MonoBehaviour
     public CanvasGroup myFlash;
     private bool flash;
     
-    //two ads that need to be generated
-    public GameObject thirdAd;
-    public GameObject fourthAd;
-    
+   
     void Awake()
     {
     }
@@ -94,12 +92,27 @@ public class ScreenshotHandler : MonoBehaviour
         }
     }
 
+    private bool createPostOnce;
     private void Update()
     {
 
-
 //            print(InstagramController.AdAlreadyTakenList[InstagramController.currentBackground]);
 
+        //todo:if all posters have been used
+        //if all posters have been used
+//        if (!InstagramController.AdAlreadyTakenList.ContainsValue(true))
+//        {
+//            //if more than 20 followers, chapter 1 succeeds
+//            if (followerNum >= 20 && !createPostOnce)
+//            {
+//                InstagramController.CreatePersonalPagePost("nico", InstagramController.nicoLaterPost[3],"this is the end of chapter 1");
+//                createPostOnce = true;//should be a better way to run this function only once
+//
+//                FinalCameraController.Show(FinalCameraController.messageCG);
+//            }
+//        }
+        
+        //set follower number
         if(!FinalCameraController.isTutorial)
         {
             InstagramController.followerNum.text = followerNum.ToString();
@@ -211,11 +224,12 @@ public class ScreenshotHandler : MonoBehaviour
             newPost.GetComponent<RecordBackgroundPosture>().backgroundName = 0;
 
             
+            //todo: comments need to occur after sometime
             CommentText.text = "That RV looks amazing. I'm gonna get one for myself.";
             ProfileImage.sprite = InstagramController.allProfile["nico"];
             
             //change the post text
-            textList[0].text = "<b>Karara</b> Best way to travel.";
+            textList[0].text = "<b>Karara</b> Vocation";
             textList[1].text = "Today";
             
             //Add followers to Karara
@@ -257,11 +271,11 @@ public class ScreenshotHandler : MonoBehaviour
             //record background
             newPost.GetComponent<RecordBackgroundPosture>().backgroundName = 1;
             
-            CommentText.text = "Oranges.";
+            CommentText.text = "Flavor of life";
             ProfileImage.sprite = InstagramController.allProfile["ojisan"];
             
             //change the post text
-            textList[0].text = "<b>Karara</b> Fresh and tasty.";
+            textList[0].text = "<b>Karara</b> Fresh";
             textList[1].text = "Today";
             
             if (KararaWork)
@@ -278,11 +292,11 @@ public class ScreenshotHandler : MonoBehaviour
             //record background
             newPost.GetComponent<RecordBackgroundPosture>().backgroundName = 2;
             
-            CommentText.text = "Amusement parks nowadays are so boring.";
+            CommentText.text = "Amusement parks are boring.";
             ProfileImage.sprite = InstagramController.allProfile["nico"];
             
             //change the post text
-            textList[0].text = "<b>Karara</b> Had a lot of fun here.";
+            textList[0].text = "<b>Karara</b> Relaxing";
             textList[1].text = "Today";
             
             if (KararaWork)
@@ -294,6 +308,28 @@ public class ScreenshotHandler : MonoBehaviour
                 followerNum += 8;
             }
         }
+        else if (InstagramController.currentBackground == "Alcohol")
+        {
+            //record background
+            newPost.GetComponent<RecordBackgroundPosture>().backgroundName = 3;
+            
+//            CommentText.text = "Amusement parks are boring.";
+//            ProfileImage.sprite = InstagramController.allProfile["nico"];
+            
+            //change the post text
+            textList[0].text = "<b>Karara</b> Cheers";
+            textList[1].text = "Today";
+            
+            if (KararaWork)
+            {
+                followerNum += 3;
+            }
+            else
+            {
+                followerNum += 8;
+            }
+        }
+
         
         FinalCameraController.ChangeToApp();
     }
@@ -364,13 +400,13 @@ public class ScreenshotHandler : MonoBehaviour
         }
         else //if the posture has already been used
         {
-            myFlash.alpha = 1;
+           // myFlash.alpha = 1;
 
             FinalCameraController.Show(Notice);
                    
             if (usedPostures.ContainsKey(CalculateInventory.posNum.ToString()))
             {
-                Notice.gameObject.GetComponent<TextMeshProUGUI>().text = "I should change my posture!";
+                Notice.gameObject.GetComponentInChildren<TextMeshProUGUI>().text = "I should change my posture!";
             }
             
         }
@@ -458,35 +494,27 @@ public class ScreenshotHandler : MonoBehaviour
         if (!InstagramController.AdAlreadyTakenList[InstagramController.currentBackground])
         {
             FinalCameraController.Show(Notice);
-            Notice.gameObject.GetComponent<TextMeshProUGUI>().text = "I should change my background!";
+            Notice.gameObject.GetComponentInChildren<TextMeshProUGUI>().text = "I should change my background!";
 
             return;
         }
         InstagramController.usedAdsList.Add(photoBackground.GetComponent<Image>().sprite.name);
         
-        //enable new posters for chapter one
-        if (photoBackground.GetComponent<Image>().sprite.name == "FruitStand")
-        {
-            thirdAd.SetActive(true);
-        }
-//        else if(photoBackground.GetComponent<Image>().sprite.name == "RV")
-//        {
-//            fourthAd.SetActive(true);
-//        }
         
         TakeScreenshot(width, height);
         
         //don't take the picture in the first half of the tutorial
-        if (FinalCameraController.isTutorial && FinalCameraController.TutorialManager.tutorialNumber < 9)
+        if (FinalCameraController.isTutorial && FinalCameraController.TutorialManager.tutorialNumber < 9
+            )
         {
-            
         }
         else
         {
+            InstagramController.takenNum++;
             //instantiate new post object     
             toothpastePost = Instantiate(InstagramController.PosturePostPrefabNew, new Vector3(0, 0, 0), Quaternion.identity);
             //set parent(probably a better way to do
-            toothpastePost.transform.parent = InstagramController.postParent.transform;
+            toothpastePost.transform.SetParent(InstagramController.postParent.transform);
             
             //move to the first of the list
             InstagramController.postList.Insert(0,toothpastePost);
@@ -494,6 +522,7 @@ public class ScreenshotHandler : MonoBehaviour
             toothpastePost.GetComponent<EntryTime>().time = entryTime;
 
             entryTime += 10;
+            print("entryTime = " + entryTime);
             
             //if in the tutorial and taking the photo for the second time
             if(FinalCameraController.isTutorial && FinalCameraController.TutorialManager.tutorialNumber == 13)
@@ -587,6 +616,13 @@ public class ScreenshotHandler : MonoBehaviour
     //wait for several seconds
     IEnumerator WaitForSeconds(int seconds)
     {
+        yield return new WaitForSeconds(seconds);
+    }
+    
+    IEnumerator ChapterOneEnds(int seconds)
+    {
+        //instantiate new post object     
+        var newPost = Instantiate(InstagramController.photoPostPrefab, new Vector3(0, 0, 0), Quaternion.identity);
         yield return new WaitForSeconds(seconds);
 
     }
