@@ -60,11 +60,11 @@ public class SubwayMovement : MonoBehaviour
     public bool isMoving = false;//if true, the train is moving
     
     //doors
-    public GameObject left1;
-    public GameObject right1;
+    public RectTransform left1;
+    public RectTransform right1;
     
-    public GameObject left2;
-    public GameObject right2;
+//    public RectTransform left2;
+//    public GameObject right2;
     
     //door initial positions
     private float left1Pos;
@@ -149,10 +149,10 @@ public class SubwayMovement : MonoBehaviour
 //        CountDownTimer.text = "";
         
         //get all the doors position when game starts
-        left1Pos = left1.transform.position.x;
-        right1Pos = right1.transform.position.x;
-        left2Pos = left2.transform.position.x;
-        right2Pos = right2.transform.position.x;
+        left1Pos = left1.anchoredPosition.x;
+        right1Pos = right1.anchoredPosition.x;
+//        left2Pos = left2.transform.position.x;
+//        right2Pos = right2.transform.position.x;
 
         //record individual station dic into the general list
 //        allStationList.Add(Station0List);
@@ -281,14 +281,15 @@ public class SubwayMovement : MonoBehaviour
 //            hSR.enabled = true;
 
                 //open doors
-                if (left1.transform.position.x > left1Pos - doorWidth)
+                if (left1.anchoredPosition.x > left1Pos - doorWidth)
                 {
-                    left1.transform.position -= new Vector3(doorMovement, 0, 0);
+                    left1.anchoredPosition -= new Vector2(doorMovement, 0);
+                    print("opening left door");
                 }
 
-                if (right1.transform.position.x < right1Pos + doorWidth)
+                if (right1.anchoredPosition.x < right1Pos + doorWidth)
                 {
-                    right1.transform.position += new Vector3(doorMovement, 0, 0);
+                    right1.anchoredPosition += new Vector2(doorMovement, 0);
                 }
 
                 else
@@ -369,15 +370,24 @@ public class SubwayMovement : MonoBehaviour
 //                    arrows[currentStation].transform.rotation.eulerAngles.z));
 ////
 //                //close doors
-//                if (left1.transform.position.x < left1Pos)
-//                {
-//                    left1.transform.position += new Vector3(doorMovement, 0, 0);
-//                }
+            }
+
+            else
+            {
+                if (left1.anchoredPosition.x < left1Pos)
+                {
+                    print("closing left door" + left1.anchoredPosition);
+                    left1.anchoredPosition += new Vector2(doorMovement, 0);
+                    print("closing left door after" + left1.anchoredPosition);
+
+                }
+
 //
-//                if (right1.transform.position.x > right1Pos)
-//                {
-//                    right1.transform.position -= new Vector3(doorMovement, 0, 0);
-//                }
+                if (right1.anchoredPosition.x > right1Pos)
+                {
+                    right1.anchoredPosition -= new Vector2(doorMovement, 0);
+                }
+
 //
 //                //close backdoors
 //                if (left2.transform.position.x < left2Pos)
@@ -391,6 +401,7 @@ public class SubwayMovement : MonoBehaviour
 //                }
 //            }
             }
+
         }
 
     }
