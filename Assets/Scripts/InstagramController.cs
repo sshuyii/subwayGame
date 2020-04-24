@@ -118,7 +118,7 @@ public class InstagramController : MonoBehaviour
     public List<int> backgroundPose2;
     public List<int> backgroundPose3;
     public List<int> backgroundPose4;
-    public List<int> backgroundPose5;
+//    public List<int> backgroundPose5;
 
     
     //for npc ins that are generated during game
@@ -134,10 +134,12 @@ public class InstagramController : MonoBehaviour
     public GameObject fourthAd;
 
 
+    public TextMeshProUGUI fishText;
     
     // Start is called before the first frame update
     void Start()
     {
+
 
         //get the tutorial post into postList
         postList.Add(postParent.transform.GetChild(0).gameObject);
@@ -173,7 +175,7 @@ public class InstagramController : MonoBehaviour
         backgroundPoseDict.Add(backAdList[1].name, backgroundPose2);
         backgroundPoseDict.Add(backAdList[2].name, backgroundPose3);
         backgroundPoseDict.Add(backAdList[3].name, backgroundPose4);
-        backgroundPoseDict.Add(backAdList[4].name, backgroundPose5);
+//        backgroundPoseDict.Add(backAdList[4].name, backgroundPose5);
 
 
 
@@ -185,6 +187,10 @@ public class InstagramController : MonoBehaviour
 
     public int takenNum;
 
+
+    private int endStationPre;
+
+    private bool chapterOneEndPre;
     // Update is called once per frame
     void Update()
     {
@@ -194,35 +200,54 @@ public class InstagramController : MonoBehaviour
         //when player is not in subway4
         if(FinalCameraController.mySubwayState != FinalCameraController.SubwayState.Four)
         {
-            if (AdAlreadyTakenList["FruitStand"] && SubwayMovement.alreadyStation1)
+//            print("AdAlreadyTakenList FruitStand" + AdAlreadyTakenList["FruitStand"]);
+//            print("AdAlreadyTakenList FruitStand" + AdAlreadyTakenList["RV"]);
+
+            if (!AdAlreadyTakenList["FruitStand"] && SubwayMovement.alreadyStation1)
             {
+                print("third");
                 thirdAd.SetActive(true);
             }
-            else if (AdAlreadyTakenList["RV"] && SubwayMovement.alreadyStation2)
+            if (!AdAlreadyTakenList["RV"] && SubwayMovement.alreadyStation2)
             {
+                print("four");
+
                 fourthAd.SetActive(true);
             }
         }
         
         
         //第一次到第一站，产生一个新的post, nico
-        if (SubwayMovement.alreadyStation1 && newStationNum == 0)
+        if (FinalCameraController.myCameraState == FinalCameraController.CameraState.App)
         {
+            //啥都不发生
+        }
+        else if (SubwayMovement.alreadyStation1 && newStationNum == 0)
+        {
+            print("arring first station, nico");
+
             StartCoroutine(CreatePersonalPagePost("nico", nicoLaterPost[0], "this is created when train reaches the first station for the first time"));
+                  
             newStationNum = 1;
         }
         
         //第一次到第二站，产生一个新的post, nami
         else if (SubwayMovement.alreadyStation2 && newStationNum == 1)
         {
+            print("arriving 2 station, nami");
+
             StartCoroutine(CreatePersonalPagePost("ojisan", ojisanLaterPost[0], "this is created when train reaches the second station for the first time"));
+            
             newStationNum = 2;
 
         }
         //第一次到第二站，产生一个新的post, nami
         else if (SubwayMovement.alreadyStation0 && newStationNum == 2)
         {
+            print("arriving 3 station, nami");
+
             StartCoroutine(CreatePersonalPagePost("ojisan", ojisanLaterPost[1], "this is created when train reaches the starting station for the first time"));
+            
             newStationNum = 3;
 
         }
@@ -239,29 +264,67 @@ public class InstagramController : MonoBehaviour
 //            
 //        }
         //在两个海报前面照过相
-        if (takenNum == 1 && newPostNum == 0)
+        if (takenNum == 1 && newPostNum == 0 && FinalCameraController.myCameraState != FinalCameraController.CameraState.App)
         {
-            CreatePersonalPagePost("ojisan", ojisanLaterPost[2], "this is created when one poster is used");
+            print("1 poster used, nami");
+            StartCoroutine(CreatePersonalPagePost("ojisan", ojisanLaterPost[2], "this is created when one poster is used"));
+         
             newPostNum = 1;
         }
         
-        if (takenNum == 2 && newPostNum == 1)
+        else if (takenNum == 2 && newPostNum == 1)
         {
-            CreatePersonalPagePost("nico", nicoLaterPost[1], "this is created when two poster is used");
-            newPostNum = 2;
+            if(FinalCameraController.myCameraState != FinalCameraController.CameraState.App)
+            {
+                print("2 poster used, nico");
+
+                StartCoroutine(CreatePersonalPagePost("nico", nicoLaterPost[1],
+                    "this is created when two poster is used"));
+               
+
+                newPostNum = 2;
+            }
         }
         
         //todo:if all posters have been used
         //if all posters have been used
+        //end for chapter 1
         if (!AdAlreadyTakenList.ContainsValue(true))
         {
             //if more than 20 followers, chapter 1 succeeds
-            if (System.Convert.ToInt32(followerNum.text) >= 20 && newPostNum == 2)
+            if (System.Convert.ToInt32(followerNum.text) >= 20 && newPostNum == 2 && !chapterOneEndPre)
             {
-                StartCoroutine(CreatePersonalPagePost("nico", nicoLaterPost[2],
-                    "this is the end of chapter 1"));
+                if(FinalCameraController.myCameraState != FinalCameraController.CameraState.App)
+                {
+                    StartCoroutine(CreatePersonalPagePost("nico", nicoLaterPost[2],
+                        "this is the end of chapter 1"));
+                   
+                    newPostNum = 3;
+                }
+                
+                fishText.text = "What are you doing? Turn off your phone during work!";
+                chapterOneEndPre = true;
+                endStationPre = SubwayMovement.currentStation;
+            }
+        }
 
+        if (chapterOneEndPre)
+        {
+            if (FinalCameraController.mySubwayState == FinalCameraController.SubwayState.Two)
+            {
                 FinalCameraController.Show(FinalCameraController.messageCG);
+            }
+            else if (FinalCameraController.mySubwayState == FinalCameraController.SubwayState.One)
+            {
+                FinalCameraController.Show(FishBoss);
+            }
+            
+            //到达最近的一站之后，就停下来，车再也不动了
+            if (!SubwayMovement.isMoving && SubwayMovement.currentStation == endStationPre && FinalCameraController.myCameraState == FinalCameraController.CameraState.Subway)
+            {
+                SubwayMovement.isMoving = false;
+                FinalCameraController.ChapterOneEnd = true;
+
             }
         }
 
@@ -271,10 +334,12 @@ public class InstagramController : MonoBehaviour
     IEnumerator CreatePersonalPagePost(string NpcName, Sprite post, string postText)
     {
         //first wait for 10 seconds
-        yield return new WaitForSeconds(10f);
-
+        yield return new WaitForSeconds(5f);
+        
         //instantiate new post object     
         GameObject newPost = Instantiate(PersonalPagePrefab, new Vector3(0, 0, 0), Quaternion.identity);
+        print("create personal page posts");
+
         //set parent(probably a better way to do
         if(NpcName == "nico")
         {
@@ -288,15 +353,18 @@ public class InstagramController : MonoBehaviour
         }    
         else if (NpcName == "ojisan")
         {
+            print("create ojisan posts");
             newPost.transform.parent = OjisanPageContent.transform;
             //如果关注了ojisan,放到首页里
             if (followDesigner)
             {
                 CreatePostInMainPage("ojisan", post, postText);
             }
+            designerPostList.Add(post);
+
         }
         //todo: 和有没有关注这个人有关系，现在先强制放到首页了？
-        //move to the first of the list
+        //move to the first of the list 
         //postList.Insert(0,newPost);
             
         //change post image
@@ -316,39 +384,26 @@ public class InstagramController : MonoBehaviour
     public void CreatePostInMainPage(string npcName, Sprite post, string text)
     {
         //instantiate new post object     
-        var newPost = Instantiate(PosturePostPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+        var newPost = Instantiate(PosturePostPrefabNew, new Vector3(0, 0, 0), Quaternion.identity);
         //set parent(probably a better way to do
         newPost.transform.parent = postParent.transform;
+
+        var postSprite = post;
             
         //move to the first of the list
-        postList.Insert(0,newPost);
-            
-        //get the post child
-        Image[] postImageList = newPost.transform.Find("PostFolder").gameObject.GetComponentsInChildren<Image>();
-        
-        //get the background
-        for (int i = 0; i < postImageList.Length; i++)
-        {
-            postImageList[i].sprite = PosturePostImageList[i].sprite;
-        }
-        
-        //re-arrange children object, so the latest is displayed as the first
-        for (int i = 0; i < postList.Count; i++)
-        {
-            postList[i].transform.SetSiblingIndex(i);
-        }
-        
-        
+        postList.Add(newPost);
+        FinalCameraController.resetPostOrder();
+
         //Get profile and image
         var profile = newPost.transform.Find("Profile").gameObject.GetComponent<Image>();
 
         var profileName = profile.gameObject.GetComponentInChildren<TextMeshProUGUI>();
         
         //change sprite to the right ins photo
-        newPost.GetComponent<Image>().sprite = post;
+//        newPost.GetComponent<Image>().sprite = post;
         
         //get the post text
-        newPost.transform.Find("Post").gameObject.GetComponent<Image>().sprite = post;
+        newPost.transform.Find("Post").gameObject.GetComponent<Image>().sprite = postSprite;
         var textList = newPost.transform.Find("Post").gameObject.GetComponentsInChildren<Text>();
         
         

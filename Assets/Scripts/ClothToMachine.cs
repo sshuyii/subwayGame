@@ -159,18 +159,18 @@ public class ClothToMachine : MonoBehaviour
 
     public void returnClothYes()
     {
-        FinalCameraController.AllStationClothList.Remove(AllMachines.currentBag.tag);
+        FinalCameraController.AllStationClothList.Remove(tag);
         
         for (int i = 0; i < AllMachines.WashingMachines.Count; i++)
         {
-            if (WasherControllerList[i].CompareTag(AllMachines.currentBag.tag))
+            if (WasherControllerList[i].CompareTag(tag))
             {
 //                print("AllMachines.currentBag.tag = " + AllMachines.currentBag.tag);
 
                 //对所有inventory中带着这个洗衣机tag的衣服，把它们放回洗衣机
                 for (int u = 0; u < CalculateInventory.inventory.Count; u++)
                 {
-                    if (CalculateInventory.inventory[u].CompareTag(AllMachines.currentBag.tag))
+                    if (CalculateInventory.inventory[u].CompareTag(tag))
                     {
                         //change the inventory button image back to start
                         CalculateInventory.inventory[u].GetComponent<Image>().sprite = FinalCameraController.startSprite;
@@ -225,7 +225,6 @@ public class ClothToMachine : MonoBehaviour
                 
                 
                 
-                SubwayMovement.bagsInCar.Remove(AllMachines.currentBag);
 
                 //reset the machine's variables
                 WasherControllerList[i].transform.tag ="Untagged";
@@ -235,8 +234,19 @@ public class ClothToMachine : MonoBehaviour
 //                print("destroy");
 //                print(this.transform.parent.gameObject.name);
 
-                Destroy(AllMachines.currentBag);
+                
+                //this function is called in the notice script, so destroy itself doesn't destroy the bag
+                //need to find the bag with the same bagu
 
+                for(int y = 0; y < SubwayMovement.bagsInCar.Count; y++)
+                {
+                    if(CompareTag(SubwayMovement.bagsInCar[y].tag))
+                    {
+                        SubwayMovement.bagsInCar.Remove(SubwayMovement.bagsInCar[y]);
+                        Destroy(SubwayMovement.bagsInCar[y]);
+
+                    }
+                }
 
                 Destroy(FinalCameraController.generatedNotice);
 

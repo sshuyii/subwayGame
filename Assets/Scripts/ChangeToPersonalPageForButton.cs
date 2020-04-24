@@ -174,6 +174,7 @@ public class ChangeToPersonalPageForButton : MonoBehaviour
     private int clickBoss = 0;
     public void BossTalk()
     {
+        //根据不同时间boss说话内容会变
         FinalCameraController.CancelAllUI();
         if(isfishTalking == false)
         {

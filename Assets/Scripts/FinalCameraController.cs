@@ -16,7 +16,10 @@ public class FinalCameraController : MonoBehaviour
     public AllMachines AllMachines;
     public LevelManager LevelManager;
     private InstagramController InstagramController;
-    
+
+    public CanvasGroup ChapterOneEndComic;
+
+    public bool ChapterOneEnd;
 
     private bool fastSwipeBool;
 
@@ -389,9 +392,7 @@ public class FinalCameraController : MonoBehaviour
 //        lateReturnComic = false;
 //        lateReturnImage.enabled = false;
         Hide(fishTalk);
-
-
-         
+  
         print("clickLateComic");
     }
     
@@ -422,8 +423,19 @@ public class FinalCameraController : MonoBehaviour
        }
        else if (myAppState == AppState.Mainpage)
        {
-           lastCameraState = CameraState.Subway;
-            ChangeToSubway();
+           if (ChapterOneEnd)//第一章结束，出现漫画？如果点了一下之后进入第二章
+           {
+               
+               Show(ChapterOneEndComic);//漫画
+               Show(LevelManager.arrowButton);
+           }
+           else
+           {
+               lastCameraState = CameraState.Subway;
+               ChangeToSubway();
+           }
+
+
        }
        else if(myAppState == AppState.RetroPage || myAppState == AppState.KararaPage || myAppState == AppState.DesignerPage || myAppState == AppState.NPCPage)
        {

@@ -4,6 +4,8 @@ using TMPro;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+
 
 public class LevelManager : MonoBehaviour
 {
@@ -169,6 +171,13 @@ public class LevelManager : MonoBehaviour
 
         }
         //点击回地铁按钮就回到地铁
+        
+        //if chapter one ends
+        if (FinalCameraController.ChapterOneEnd)//点击之后进入第二章
+        {
+            SceneManager.LoadScene("StreetStyleTwo", LoadSceneMode.Single);
+            print("loadSceneTwo");
+        }
     }
     public void Hide(CanvasGroup UIGroup) {
         UIGroup.alpha = 0f; //this makes everything transparent

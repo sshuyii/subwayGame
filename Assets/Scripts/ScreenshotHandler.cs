@@ -508,7 +508,7 @@ public class ScreenshotHandler : MonoBehaviour
             )
         {
         }
-        else
+        else if(!usedPostures.ContainsKey(CalculateInventory.posNum.ToString()))//没用过这个姿势
         {
             InstagramController.takenNum++;
             //instantiate new post object     

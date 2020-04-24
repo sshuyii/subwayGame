@@ -286,16 +286,25 @@ public class SubwayMovement : MonoBehaviour
                     left1.anchoredPosition -= new Vector2(doorMovement, 0);
                     print("opening left door");
                 }
+                else
+                {
+                    left1.anchoredPosition = new Vector2(left1Pos - doorWidth, left1.anchoredPosition.y);
+                }
 
                 if (right1.anchoredPosition.x < right1Pos + doorWidth)
                 {
                     right1.anchoredPosition += new Vector2(doorMovement, 0);
                 }
-
                 else
                 {
+                    right1.anchoredPosition = new Vector2(right1Pos + doorWidth, right1.anchoredPosition.y);
+
+                
+
+                
+                
                     //don't generate new bags if there are already three bags in the car
-                    if (!FinalCameraController.isTutorial && bagFirst)
+                    if (!FinalCameraController.isTutorial && bagFirst && !FinalCameraController.ChapterOneEnd)//结束的时候不能往车上放新的包了
                     {
                         for (int i = 0; i < NameToStationBags[currentStation.ToString()].Count; i++)
                         {
@@ -376,10 +385,11 @@ public class SubwayMovement : MonoBehaviour
             {
                 if (left1.anchoredPosition.x < left1Pos)
                 {
-                    print("closing left door" + left1.anchoredPosition);
                     left1.anchoredPosition += new Vector2(doorMovement, 0);
-                    print("closing left door after" + left1.anchoredPosition);
-
+                }
+                else
+                {
+                    left1.anchoredPosition = new Vector2(left1Pos, left1.anchoredPosition.y);
                 }
 
 //
@@ -387,7 +397,10 @@ public class SubwayMovement : MonoBehaviour
                 {
                     right1.anchoredPosition -= new Vector2(doorMovement, 0);
                 }
-
+                else
+                {
+                    right1.anchoredPosition = new Vector2(right1Pos, right1.anchoredPosition.y);
+                }
 //
 //                //close backdoors
 //                if (left2.transform.position.x < left2Pos)
