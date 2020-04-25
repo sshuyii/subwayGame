@@ -208,11 +208,12 @@ public class ChangeToPersonalPageForButton : MonoBehaviour
             {
                 var newPost = Instantiate(InstagramController.PosturePostPrefabNew, new Vector3(0, 0, 0),
                     Quaternion.identity);
-                newPost.GetComponent<EntryTime>().time = retroTime;
+                newPost.GetComponent<EntryTime>().time =
+                    InstagramController.retroPostList[i].gameObject.GetComponent<EntryTime>().time;
 
                 //set post image in main page
                 newPost.transform.Find("Post").gameObject.GetComponent<Image>().sprite =
-                    InstagramController.retroPostList[i];
+                    InstagramController.retroPostList[i].sprite;
 
                 //set profile and user name in main page
                 var profileNicoImage = newPost.transform.Find("Profile").gameObject.GetComponent<Image>();
@@ -223,7 +224,6 @@ public class ChangeToPersonalPageForButton : MonoBehaviour
                 newPost.transform.SetParent(InstagramController.postParent.transform);
 
                 InstagramController.postList.Add(newPost);
-                retroTime += 10;
             }
 
             rearrangePosts();
@@ -244,29 +244,28 @@ public class ChangeToPersonalPageForButton : MonoBehaviour
             //change othters
             InstagramController.followDesigner = true;
             myImage.sprite = InstagramController.unfollow;
-            int designerTime = -12;
 
             for (int i = 0; i < InstagramController.designerPostList.Count; i++)
             {
                 var newPost = Instantiate(InstagramController.PosturePostPrefabNew, new Vector3(0, 0, 0),
                     Quaternion.identity);
-                newPost.GetComponent<EntryTime>().time = designerTime;
+                newPost.GetComponent<EntryTime>().time =  
+                    InstagramController.designerPostList[i].gameObject.GetComponent<EntryTime>().time;
+
 
                 newPost.transform.Find("Post").gameObject.GetComponent<Image>().sprite =
-                    InstagramController.designerPostList[i];
+                    InstagramController.designerPostList[i].sprite;
 
                 var profileImage = newPost.transform.Find("Profile").gameObject.GetComponent<Image>();
                 
                 profileImage.sprite = InstagramController.allProfile["ojisan"];
 
-                profileImage.GetComponentInChildren<Text>().text = "Ojisan";
+                profileImage.GetComponentInChildren<Text>().text = "Alex";
 
                 //set parent(probably a better way to do
                 newPost.transform.SetParent(InstagramController.postParent.transform);
                 InstagramController.postList.Add(newPost);
 
-
-                designerTime += 10;
             }
 
             rearrangePosts();

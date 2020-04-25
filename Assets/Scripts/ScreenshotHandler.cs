@@ -34,7 +34,6 @@ public class ScreenshotHandler : MonoBehaviour
     public Image KararaWorkImage;
 
     
-    private int entryTime = 30;
 
     private GameObject toothpastePost;
     public int followerNum;
@@ -521,10 +520,9 @@ public class ScreenshotHandler : MonoBehaviour
             //move to the first of the list
             InstagramController.postList.Insert(0,toothpastePost);
         
-            toothpastePost.GetComponent<EntryTime>().time = entryTime;
+            toothpastePost.GetComponent<EntryTime>().time = FinalCameraController.entryTime;
 
-            entryTime += 10;
-            print("entryTime = " + entryTime);
+            FinalCameraController.entryTime += 1;
             
             //if in the tutorial and taking the photo for the second time
             if(FinalCameraController.isTutorial && FinalCameraController.TutorialManager.tutorialNumber == 13)

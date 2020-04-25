@@ -81,8 +81,6 @@ public class InstagramButtons : MonoBehaviour
 
                 FinalCameraController.myAppState = FinalCameraController.AppState.KararaPage;
                 Show(FinalCameraController.KararaPage);
-
-
             }
             else if (username.text == "Nico")
             {
@@ -90,8 +88,6 @@ public class InstagramButtons : MonoBehaviour
                     new Vector3(55, Camera.main.transform.position.y, Camera.main.transform.position.z);
                 FinalCameraController.myAppState = FinalCameraController.AppState.RetroPage;
                 Show(FinalCameraController.RetroPage);
-
-
             }
             else if (username.text == "Alex")
             {
@@ -99,8 +95,6 @@ public class InstagramButtons : MonoBehaviour
                     new Vector3(55, Camera.main.transform.position.y, Camera.main.transform.position.z);
                 FinalCameraController.myAppState = FinalCameraController.AppState.DesignerPage;
                 Show(FinalCameraController.DesignerPage);
-
-
             }
         }
     }

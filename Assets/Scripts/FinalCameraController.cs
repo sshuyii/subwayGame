@@ -18,6 +18,7 @@ public class FinalCameraController : MonoBehaviour
     private InstagramController InstagramController;
 
     public CanvasGroup ChapterOneEndComic;
+    public int entryTime = 1;
 
     public bool ChapterOneEnd;
 

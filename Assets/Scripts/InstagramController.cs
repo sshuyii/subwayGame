@@ -95,8 +95,8 @@ public class InstagramController : MonoBehaviour
 
     
     //a list recording all retro girls photos
-    public List<Sprite> retroPostList = new List<Sprite>();
-    public List<Sprite> designerPostList = new List<Sprite>();
+    public List<Image> retroPostList = new List<Image>();
+    public List<Image> designerPostList = new List<Image>();
 
     
     
@@ -263,8 +263,13 @@ public class InstagramController : MonoBehaviour
 //            }
 //            
 //        }
+        //第一次到第一站，产生一个新的post, nico
+        if (FinalCameraController.myCameraState == FinalCameraController.CameraState.App)
+        {
+            //啥都不发生
+        }
         //在两个海报前面照过相
-        if (takenNum == 1 && newPostNum == 0 && FinalCameraController.myCameraState != FinalCameraController.CameraState.App)
+        else if (takenNum == 1 && newPostNum == 0)
         {
             print("1 poster used, nami");
             StartCoroutine(CreatePersonalPagePost("ojisan", ojisanLaterPost[2], "this is created when one poster is used"));
@@ -289,10 +294,11 @@ public class InstagramController : MonoBehaviour
         //todo:if all posters have been used
         //if all posters have been used
         //end for chapter 1
+        //必须当玩家不在app界面中的时候才能产生
         if (!AdAlreadyTakenList.ContainsValue(true))
         {
             //if more than 20 followers, chapter 1 succeeds
-            if (System.Convert.ToInt32(followerNum.text) >= 20 && newPostNum == 2 && !chapterOneEndPre)
+            if (System.Convert.ToInt32(followerNum.text) >= 20 && newPostNum == 2  && newStationNum == 3 && !chapterOneEndPre)
             {
                 if(FinalCameraController.myCameraState != FinalCameraController.CameraState.App)
                 {
@@ -332,8 +338,7 @@ public class InstagramController : MonoBehaviour
 
     }
 
-    private int retroTime = 31;
-    private int ojisanTime = 32;
+    
     IEnumerator CreatePersonalPagePost(string NpcName, Sprite post, string postText)
     {
         //first wait for 10 seconds
@@ -343,13 +348,14 @@ public class InstagramController : MonoBehaviour
         GameObject newPost = Instantiate(PersonalPagePrefab, new Vector3(0, 0, 0), Quaternion.identity);
         print("create personal page posts");
 
+        newPost.GetComponent<EntryTime>().time = FinalCameraController.entryTime;
+        FinalCameraController.entryTime++;
+
         //set parent(probably a better way to do
         if(NpcName == "nico")
         {
             newPost.transform.parent = RetroPageContent.transform;
-            retroPostList.Add(post);
-            newPost.GetComponent<EntryTime>().time = retroTime;
-            retroTime += 10;
+            retroPostList.Add(newPost.GetComponent<Image>());
             //如果关注了nico,放到首页里
             if (followNico)
             {
@@ -360,14 +366,12 @@ public class InstagramController : MonoBehaviour
         {
             print("create ojisan posts");
             newPost.transform.parent = OjisanPageContent.transform;
-            newPost.GetComponent<EntryTime>().time = ojisanTime;
-            ojisanTime += 10;
             //如果关注了ojisan,放到首页里
             if (followDesigner)
             {
                 CreatePostInMainPage("ojisan", post, postText,newPost.GetComponent<EntryTime>().time);
             }
-            designerPostList.Add(post);
+            designerPostList.Add(newPost.GetComponent<Image>());
 
         }
         //todo: 和有没有关注这个人有关系，现在先强制放到首页了？
@@ -407,14 +411,15 @@ public class InstagramController : MonoBehaviour
         //Get profile and image
         var profile = newPost.transform.Find("Profile").gameObject.GetComponent<Image>();
 
-        var profileName = profile.gameObject.GetComponentInChildren<TextMeshProUGUI>();
+        var profileName = profile.gameObject.GetComponentInChildren<Text>();
         
         //change sprite to the right ins photo
-//        newPost.GetComponent<Image>().sprite = post;
         
         //get the post text
         newPost.transform.Find("Post").gameObject.GetComponent<Image>().sprite = post;
         var textList = newPost.transform.Find("Post").gameObject.GetComponentsInChildren<Text>();
+        
+       
         
         
     
@@ -443,6 +448,9 @@ public class InstagramController : MonoBehaviour
                 "<b>Nico</b> " + text;
             textList[1].text = "Today";
             
+            
+            //set profile and user name in main page
+            profileName.text = "Nico";
             //个位数为1
             //之前已经有三个p: 1, 11, 21
 //            newPost.GetComponent<EntryTime>().time = time;
@@ -455,6 +463,9 @@ public class InstagramController : MonoBehaviour
             textList[0].text =
                 "<b>Ojisan</b> " + text;
             textList[1].text = "Today";
+            
+            //set profile and user name in main page
+            profileName.text = "Alex";
             
         }
     }
