@@ -102,25 +102,28 @@ public class ClothToMachine : MonoBehaviour
                 }
                 else //if the train arrives the station for the second time
                 {
-                    timeUp = true;
-                    //应该再检测一下是不是在离开站台的瞬间
-                    //检测是否有一个finish的洗衣机，里面装着这个tag的衣服
-                    if (alreadyWashed) //if this bag is already washed
+                    if(!FinalCameraController.ChapterOneEnd)
                     {
-                        //AllMachines.currentBag = this.gameObject;
-                        returnClothYes();
+                        timeUp = true;
+                        //应该再检测一下是不是在离开站台的瞬间
+                        //检测是否有一个finish的洗衣机，里面装着这个tag的衣服
+                        if (alreadyWashed) //if this bag is already washed
+                        {
+                            //AllMachines.currentBag = this.gameObject;
+                            returnClothYes();
 
-                        //enable fish comic image
-                        FinalCameraController.lateReturnComic = true;
-                        //现在是，鱼老板直接帮忙把洗好又到站的衣服换了，没有其他惩罚，转到鱼老板界面，老板告诉karara没来得及还
-                    }
-                    else if (!isOverdue) //没有洗好的衣服不要还
-                    {
-                        //instantiate an overdue label
-                        GameObject overdue = Instantiate(AllMachines.Overdue, this.gameObject.transform.position,
-                            Quaternion.identity);
-                        overdue.transform.SetParent(this.gameObject.transform);
-                        isOverdue = true;
+                            //enable fish comic image
+                            FinalCameraController.lateReturnComic = true;
+                            //现在是，鱼老板直接帮忙把洗好又到站的衣服换了，没有其他惩罚，转到鱼老板界面，老板告诉karara没来得及还
+                        }
+                        else if (!isOverdue) //没有洗好的衣服不要还
+                        {
+                            //instantiate an overdue label
+                            GameObject overdue = Instantiate(AllMachines.Overdue, this.gameObject.transform.position,
+                                Quaternion.identity);
+                            overdue.transform.SetParent(this.gameObject.transform);
+                            isOverdue = true;
+                        }
                     }
                 }
             }
@@ -242,8 +245,9 @@ public class ClothToMachine : MonoBehaviour
                 {
                     if(CompareTag(SubwayMovement.bagsInCar[y].tag))
                     {
-                        SubwayMovement.bagsInCar.Remove(SubwayMovement.bagsInCar[y]);
                         Destroy(SubwayMovement.bagsInCar[y]);
+
+                        SubwayMovement.bagsInCar.Remove(SubwayMovement.bagsInCar[y]);
 
                     }
                 }

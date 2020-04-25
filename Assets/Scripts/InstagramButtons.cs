@@ -19,7 +19,8 @@ public class InstagramButtons : MonoBehaviour
 
     private FinalCameraController FinalCameraController;
     private int myBackgroundName;
-    
+
+    private ScreenshotHandler ScreenshotHandler;
     
     // Start is called before the first frame update
     void Start()
@@ -28,6 +29,8 @@ public class InstagramButtons : MonoBehaviour
         username = GetComponentInChildren<Text>();
         
         FinalCameraController = GameObject.Find("Main Camera").GetComponent<FinalCameraController>();
+        ScreenshotHandler = GameObject.Find("Main Camera").GetComponent<ScreenshotHandler>();
+
 
         myImage = GetComponent<Image>();
         myButton = GetComponent<Button>();
@@ -223,6 +226,8 @@ public class InstagramButtons : MonoBehaviour
 
     public void ChangePosture()
     {
+        //cancel camera notice
+        Hide(ScreenshotHandler.Notice);
 
         //找到这个姿势需要用的list：InstagramController.backgroundPoseDict[InstagramController.currentBackground]
         //先比对posNum +在不在这个list里面，如果在的话就加一

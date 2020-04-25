@@ -12,9 +12,10 @@ GameObject:
   - component: {fileID: 5971461774615932866}
   - component: {fileID: 5971461774615932867}
   - component: {fileID: 5971461774615932876}
+  - component: {fileID: -5539073833204761387}
   - component: {fileID: 5971461774615932877}
   m_Layer: 5
-  m_Name: Post (3)
+  m_Name: NpcPageIns
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -130,6 +131,20 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &-5539073833204761387
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5971461774615932879}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9d7ea62accf54d359b484781a9ae10b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  time: 0
+  order: 0
 --- !u!114 &5971461774615932877
 MonoBehaviour:
   m_ObjectHideFlags: 0

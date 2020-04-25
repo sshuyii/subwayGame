@@ -406,7 +406,7 @@ public class ScreenshotHandler : MonoBehaviour
                    
             if (usedPostures.ContainsKey(CalculateInventory.posNum.ToString()))
             {
-                Notice.gameObject.GetComponentInChildren<TextMeshProUGUI>().text = "I should change my posture!";
+                Notice.gameObject.GetComponentInChildren<TextMeshProUGUI>().text = "no same posture!";
             }
             
         }
@@ -490,11 +490,13 @@ public class ScreenshotHandler : MonoBehaviour
     public void TakeScreenshot()
     {
         shutterSound.Play();
+        //hide notice bubble
+        FinalCameraController.Hide(Notice);
         //if the background is already used
         if (!InstagramController.AdAlreadyTakenList[InstagramController.currentBackground])
         {
             FinalCameraController.Show(Notice);
-            Notice.gameObject.GetComponentInChildren<TextMeshProUGUI>().text = "I should change my background!";
+            Notice.gameObject.GetComponentInChildren<TextMeshProUGUI>().text = "no same background";
 
             return;
         }
@@ -566,9 +568,9 @@ public class ScreenshotHandler : MonoBehaviour
     public void ClickNotice()
     {
         FinalCameraController.Hide(Notice);
-        myFlash.alpha = 0;
-        FinalCameraController.ChangeToSubway();
-        FinalCameraController.myHSS.GoToScreen(4);
+//        myFlash.alpha = 0;
+//        FinalCameraController.ChangeToSubway();
+//        FinalCameraController.myHSS.GoToScreen(4);
 
     }
     

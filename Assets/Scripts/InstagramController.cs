@@ -300,11 +300,12 @@ public class InstagramController : MonoBehaviour
                         "this is the end of chapter 1"));
                    
                     newPostNum = 3;
+                   fishText.text = "What are you doing? Turn off your phone during work!";
+                    chapterOneEndPre = true;
+                    endStationPre = SubwayMovement.currentStation;
                 }
                 
-                fishText.text = "What are you doing? Turn off your phone during work!";
-                chapterOneEndPre = true;
-                endStationPre = SubwayMovement.currentStation;
+               
             }
         }
 
@@ -331,6 +332,8 @@ public class InstagramController : MonoBehaviour
 
     }
 
+    private int retroTime = 31;
+    private int ojisanTime = 32;
     IEnumerator CreatePersonalPagePost(string NpcName, Sprite post, string postText)
     {
         //first wait for 10 seconds
@@ -345,20 +348,24 @@ public class InstagramController : MonoBehaviour
         {
             newPost.transform.parent = RetroPageContent.transform;
             retroPostList.Add(post);
+            newPost.GetComponent<EntryTime>().time = retroTime;
+            retroTime += 10;
             //如果关注了nico,放到首页里
             if (followNico)
             {
-                CreatePostInMainPage("nico", post, postText);
+                CreatePostInMainPage("nico", post, postText, newPost.GetComponent<EntryTime>().time);
             }
         }    
         else if (NpcName == "ojisan")
         {
             print("create ojisan posts");
             newPost.transform.parent = OjisanPageContent.transform;
+            newPost.GetComponent<EntryTime>().time = ojisanTime;
+            ojisanTime += 10;
             //如果关注了ojisan,放到首页里
             if (followDesigner)
             {
-                CreatePostInMainPage("ojisan", post, postText);
+                CreatePostInMainPage("ojisan", post, postText,newPost.GetComponent<EntryTime>().time);
             }
             designerPostList.Add(post);
 
@@ -381,15 +388,18 @@ public class InstagramController : MonoBehaviour
         
     }
 
-    public void CreatePostInMainPage(string npcName, Sprite post, string text)
+   
+    public void CreatePostInMainPage(string npcName, Sprite post, string text, int time)
     {
         //instantiate new post object     
         var newPost = Instantiate(PosturePostPrefabNew, new Vector3(0, 0, 0), Quaternion.identity);
         //set parent(probably a better way to do
         newPost.transform.parent = postParent.transform;
 
-        var postSprite = post;
             
+        //set entry time
+        newPost.GetComponent<EntryTime>().time = time;
+
         //move to the first of the list
         postList.Add(newPost);
         FinalCameraController.resetPostOrder();
@@ -403,7 +413,7 @@ public class InstagramController : MonoBehaviour
 //        newPost.GetComponent<Image>().sprite = post;
         
         //get the post text
-        newPost.transform.Find("Post").gameObject.GetComponent<Image>().sprite = postSprite;
+        newPost.transform.Find("Post").gameObject.GetComponent<Image>().sprite = post;
         var textList = newPost.transform.Find("Post").gameObject.GetComponentsInChildren<Text>();
         
         
@@ -432,6 +442,12 @@ public class InstagramController : MonoBehaviour
             textList[0].text =
                 "<b>Nico</b> " + text;
             textList[1].text = "Today";
+            
+            //个位数为1
+            //之前已经有三个p: 1, 11, 21
+//            newPost.GetComponent<EntryTime>().time = time;
+
+
         }
         else if(npcName == "ojisan")
         {
@@ -439,6 +455,7 @@ public class InstagramController : MonoBehaviour
             textList[0].text =
                 "<b>Ojisan</b> " + text;
             textList[1].text = "Today";
+            
         }
     }
 }

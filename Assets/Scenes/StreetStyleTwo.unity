@@ -15661,7 +15661,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 635915559}
-        m_MethodName: FollowNico
+        m_MethodName: FollowDesigner
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -28926,10 +28926,9 @@ MonoBehaviour:
   - {fileID: 21300000, guid: e9278f0972d134f26b3c42c0600e7db5, type: 3}
   - {fileID: 21300000, guid: cb1595fd10dce439b8847778317572ad, type: 3}
   backAdList:
-  - {fileID: 21300000, guid: f3a752c5c81e3420da4e1d37914e3abd, type: 3}
+  - {fileID: 21300000, guid: 34dc5ca17b0e6455e9d6a3f4b7435810, type: 3}
   - {fileID: 21300000, guid: a2f3d85144ea143c499ea9ee7f97411c, type: 3}
   - {fileID: 21300000, guid: 9431f981bdeb5455f9790c2913274e7b, type: 3}
-  - {fileID: 21300000, guid: 34dc5ca17b0e6455e9d6a3f4b7435810, type: 3}
   - {fileID: 21300000, guid: 274645bb0441540c1a20cc1b9f1f08a0, type: 3}
   adBodyImage: {fileID: 1604163511}
   workclothList:
@@ -28963,8 +28962,7 @@ MonoBehaviour:
   backgroundPose1: 000000000100000002000000
   backgroundPose2: 000000000100000002000000
   backgroundPose3: 000000000100000002000000
-  backgroundPose4: 000000000100000002000000
-  backgroundPose5: 03000000
+  backgroundPose4: 03000000
   nicoLaterPost:
   - {fileID: 21300000, guid: 78f429fef8ab54d39b0b861824daf736, type: 3}
   - {fileID: 21300000, guid: ea38354e64fcf4e4ab0129e8d792b579, type: 3}
@@ -28979,6 +28977,7 @@ MonoBehaviour:
     type: 3}
   thirdAd: {fileID: 787703534}
   fourthAd: {fileID: 481983280}
+  fishText: {fileID: 1032632610}
   newPostNum: 0
   newStationNum: 0
   takenNum: 0
@@ -33754,6 +33753,8 @@ MonoBehaviour:
   TouchController: {fileID: 1732494548}
   AllMachines: {fileID: 644649146}
   LevelManager: {fileID: 885306711}
+  ChapterOneEndComic: {fileID: 0}
+  ChapterOneEnd: 0
   TutorialManager: {fileID: 0}
   isSwipping: 0
   isTutorial: 0

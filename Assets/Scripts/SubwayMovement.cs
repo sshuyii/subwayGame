@@ -456,6 +456,7 @@ public class SubwayMovement : MonoBehaviour
             for (int r = 0; r < bagsInCar.Count; r++)
             {
                 //当有的站有两个特殊角色的包
+                //每个站只能有一个npc的包
 //                if (bagsInCar[r].CompareTag(NameToStationBags[stationNum.ToString()][randomIndex].tag))
                 //现在每站只有一个特殊角色的包了，所以只需要是0就可以了
                 if (bagsInCar[r].CompareTag(NameToStationBags[stationNum.ToString()][0].tag))
@@ -463,20 +464,26 @@ public class SubwayMovement : MonoBehaviour
                     print("NoSameBag = false;");
                     noSameBag = false;
                     //如果不放进来特殊角色的包，放npc的包
-                    Button npcBag = Instantiate(NPCBag, bagPos[firstEmptyPos],
-                        Quaternion.identity) as Button;
+                    //前提是上一次进来的npc的包不在车里
                     string temp = "Npc" + currentStation.ToString();
-                    npcBag.gameObject.transform.tag = temp;
-                    
-                    //this position is occupied by a bag
-                    bagPosAvailable[firstEmptyPos] = true;
 
-                    bagsInCar.Add(npcBag.gameObject);
+                    if (bagsInCar[r].CompareTag(temp))
+                    {
+                        Button npcBag = Instantiate(NPCBag, bagPos[firstEmptyPos],
+                            Quaternion.identity) as Button;
 
-                    npcBag.GetComponent<ClothToMachine>().myBagPosition = firstEmptyPos;
-                    bagNum++;
-                    npcBag.transform.SetParent(clothBagGroup.transform, false);
-                    break;
+                        npcBag.gameObject.transform.tag = temp;
+
+                        //this position is occupied by a bag
+                        bagPosAvailable[firstEmptyPos] = true;
+
+                        bagsInCar.Add(npcBag.gameObject);
+
+                        npcBag.GetComponent<ClothToMachine>().myBagPosition = firstEmptyPos;
+                        bagNum++;
+                        npcBag.transform.SetParent(clothBagGroup.transform, false);
+                        break;
+                    }
                 }
                 else
                 {

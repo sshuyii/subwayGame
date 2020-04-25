@@ -458,7 +458,6 @@ public class FinalCameraController : MonoBehaviour
         print("resetttttttposterOrder");
 
         List<int> temp = new List<int>();
-        List<GameObject> temp1 = new List<GameObject>();
 
         Dictionary<int, GameObject> tempDic = new Dictionary<int, GameObject>();
         Dictionary<GameObject, int> tempDic1 = new Dictionary<GameObject, int>();
@@ -497,6 +496,11 @@ public class FinalCameraController : MonoBehaviour
 //        {
 //            InstagramController.postList[i].transform.SetSiblingIndex(-InstagramController.postList[i].GetComponent<EntryTime>().time);
 //        }           
+        
+        //清空所有内容
+        temp.Clear();
+        tempDic.Clear();
+        tempDic1.Clear();
         
     }
     
