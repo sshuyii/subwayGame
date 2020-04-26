@@ -169,7 +169,6 @@ public class ClothToMachine : MonoBehaviour
             if (WasherControllerList[i].CompareTag(tag))
             {
 //                print("AllMachines.currentBag.tag = " + AllMachines.currentBag.tag);
-
                 //对所有inventory中带着这个洗衣机tag的衣服，把它们放回洗衣机
                 for (int u = 0; u < CalculateInventory.inventory.Count; u++)
                 {
@@ -233,6 +232,8 @@ public class ClothToMachine : MonoBehaviour
                 WasherControllerList[i].transform.tag ="Untagged";
                 WasherControllerList[i].myMachineState = AllMachines.MachineState.empty;
                 WasherControllerList[i].isFirstOpen = true;
+                WasherControllerList[i].clothNum = 4;
+
 //
 //                print("destroy");
 //                print(this.transform.parent.gameObject.name);

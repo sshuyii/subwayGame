@@ -151,14 +151,17 @@ public class WasherController : MonoBehaviour
             fullImage.enabled = false;
             emptyImage.enabled = true;
             Hide(Occupied);
+            print("emptyyyyyy");
 
         }
         else if (myMachineState == AllMachines.MachineState.full)
         {
+
             if(clothNum > 0)
             {
                 emptyImage.enabled = false;
                 fullImage.enabled = true;
+                print("fullllllll");
             }
             else
             {
@@ -191,7 +194,7 @@ public class WasherController : MonoBehaviour
         }
         
         //if click a bag of cloth, put them into the machine and start washing
-        if (myMachineState == AllMachines.MachineState.washing)
+        else if (myMachineState == AllMachines.MachineState.washing)
         {
             myAnimator.SetBool("isWashing", true);
             lightAnimator.SetBool("isWashing", true);

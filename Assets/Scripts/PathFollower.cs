@@ -7,7 +7,7 @@ public class PathFollower : MonoBehaviour
 {
     // Array of waypoints to walk from one to the next one
     [SerializeField]
-    private RectTransform[] waypoints;
+    public RectTransform[] waypoints;
 
     // Walk speed that can be set in Inspector
     [SerializeField]
@@ -49,8 +49,9 @@ public class PathFollower : MonoBehaviour
             QuickMove();
         }        
         
-        // Move Enemy
-        Move();
+        else{        
+            Move();
+        }
     }
 
 
@@ -69,11 +70,9 @@ public class PathFollower : MonoBehaviour
                 waypoints[waypointIndex].anchoredPosition,
                 instructionMoveSpeed * Time.deltaTime);
 
-            //car rotates!
-            var dir = waypoints[waypointIndex].anchoredPosition - myRT.anchoredPosition;
-            var angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-            myRT.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-                
+           
+            
+           
                 
             // If Enemy reaches position of waypoint he walked towards
             // then waypointIndex is increased by 1
@@ -82,6 +81,13 @@ public class PathFollower : MonoBehaviour
             {
                 waypointIndex += 1;
                 
+            }
+            else
+            {
+                //car rotates!
+                var dir = waypoints[waypointIndex].anchoredPosition - myRT.anchoredPosition;
+                var angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+                myRT.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
             }
         }
         else
@@ -99,11 +105,43 @@ public class PathFollower : MonoBehaviour
                 isInstruction = false;
                 waypointIndex = 0;
             }
+            else
+            {
+                //car rotates!
+                var dir = waypoints[waypointIndex].anchoredPosition - myRT.anchoredPosition;
+                var angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+                myRT.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+            }
 
         }
     
     }
 
+    
+    private int nearestStopIndex;
+
+    //waypoint index是要移动到的那个站
+    //todo: 应该有一个更通用的方式做这件事！用for loop
+    //如果快进的话，找到要立马跳到的那个站
+    //现在的waypoint index和站点的index对比，找到最近的那个站点
+    public int getNextStopIndex()
+    {
+        if (waypointIndex == 8 || waypointIndex == 9 || waypointIndex == 1 )
+        {
+            nearestStopIndex = 1;
+        }
+        else if (waypointIndex == 2 || waypointIndex == 3 || waypointIndex == 4)
+        {
+            nearestStopIndex = 4;
+        }
+        else if (waypointIndex == 5 || waypointIndex == 6 || waypointIndex == 7)
+        {
+            nearestStopIndex = 7;
+        }
+
+        return nearestStopIndex;
+    }
+    
     private float timer;
 
     private bool timeToGo;
@@ -113,9 +151,6 @@ public class PathFollower : MonoBehaviour
 //        print("isWorking");
         // If Enemy didn't reach last waypoint it can move
         // If enemy reached last waypoint then it stops
-
-        
-
         if (!trainMove)
         {
             if (SubwayMovement.isMoving)
@@ -141,13 +176,7 @@ public class PathFollower : MonoBehaviour
             myRT.anchoredPosition = Vector2.MoveTowards(myRT.anchoredPosition,
                 waypoints[waypointIndex].anchoredPosition,
                 moveSpeed * Time.deltaTime);
-
-            //car rotates!
-            var dir = waypoints[waypointIndex].anchoredPosition - myRT.anchoredPosition;
-            var angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-            myRT.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-                
-                
+    
             // If Enemy reaches position of waypoint he walked towards
             // then waypointIndex is increased by 1
             // and Enemy starts to walk to the next waypoint
@@ -155,6 +184,7 @@ public class PathFollower : MonoBehaviour
             {
                 waypointIndex += 1;
                 
+                //如果车到了站点的那几个waypoint
                 for (int i = 0; i < stationNumList.Count; i++)
                 {
                     if (waypointIndex == stationNumList[i])
@@ -163,6 +193,14 @@ public class PathFollower : MonoBehaviour
                         break;
                     }
                 }
+            }
+            else
+            {
+                //car rotates!
+                var dir = waypoints[waypointIndex].anchoredPosition - myRT.anchoredPosition;
+                var angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+                myRT.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+
             }
         }
         else if(trainMove)

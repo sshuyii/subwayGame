@@ -204,7 +204,10 @@ public class SubwayMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //如果快进，那么train要跑到最近的那一站
 
+        trainSnapToNextStation();
+        
         //test if have already arrived at stations
         //for poster generation
         //current station means the station the train is heading to
@@ -221,20 +224,22 @@ public class SubwayMovement : MonoBehaviour
             alreadyStation0 = true;
         }
 //        print("FinalCameraController.AllStationClothList.Count  =" + FinalCameraController.AllStationClothList.Count);
+        //正式游戏
         if (!FinalCameraController.isTutorial && LevelManager.clicktime > 6)
         {
             //instead of InvokeRepeating
+            //newTimer1记录在站内应该停留多长时间
             if (!isMoving)
             {
                 newTimer1 += Time.deltaTime;
             }
-
             if (newTimer1 > stayTime)
             {
                 trainMove();
                 newTimer1 = 0;
             }
 
+            //如果停在一站+走完下一站，现在马上要进入新的一站了
             newTimer2 += Time.deltaTime;
             if (newTimer2 > stayTime + moveTime)
             {
@@ -762,6 +767,11 @@ public class SubwayMovement : MonoBehaviour
 //                }
 //            }
         
+        
+    }
+
+    private void trainSnapToNextStation()
+    {
         
     }
     

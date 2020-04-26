@@ -56,8 +56,9 @@ public class LevelManager : MonoBehaviour
         
         if (skip)
         {
-            clicktime = 6;
-            Instructions.SetActive(false);
+            GameObject.Find("Main Camera").transform.position = new Vector3(0, 0, -20);
+            clicktime = 7;
+            //Instructions.SetActive(false);
             Show(subwayCG);
         }
         else
