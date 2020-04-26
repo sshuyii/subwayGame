@@ -56,6 +56,8 @@ public class PathFollower : MonoBehaviour
 
     private void QuickMove()
     {
+        instructionMoveSpeed = 3f;
+
         if (waypointIndex <= waypoints.Length - 1)
         {
             currentEulerAngles = myRT.eulerAngles;
@@ -95,6 +97,7 @@ public class PathFollower : MonoBehaviour
             {
                 instructionMoveSpeed = 0;
                 isInstruction = false;
+                waypointIndex = 0;
             }
 
         }

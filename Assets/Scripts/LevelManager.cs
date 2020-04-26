@@ -24,7 +24,6 @@ public class LevelManager : MonoBehaviour
     public GameObject bubble;
     
     
-    
     public GameObject station;
     public GameObject map;
     public GameObject bagIn;

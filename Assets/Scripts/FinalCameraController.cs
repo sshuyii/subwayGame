@@ -21,6 +21,9 @@ public class FinalCameraController : MonoBehaviour
     public int entryTime = 1;
 
     public bool ChapterOneEnd;
+    
+    public CanvasGroup fishShoutCG;
+
 
     private bool fastSwipeBool;
 
@@ -200,6 +203,22 @@ public class FinalCameraController : MonoBehaviour
 //                Hide(fishTalk);
             }
         }
+        
+        //hide shout
+        if(LevelManager.isInstruction)
+        {
+            if (mySubwayState == SubwayState.One)
+            {
+                //LevelManager.isInstruction = false;
+                Hide(fishShoutCG);
+            }
+            else
+            {
+                Show(fishShoutCG);
+            }
+        }        
+        
+        
         
         //disable swipe before player click the poster
         if (isTutorial)
@@ -519,28 +538,33 @@ public class FinalCameraController : MonoBehaviour
         {
             TutorialManager.scrollControl(true);
         }
-
         else if (LevelManager.isInstruction)//换到鱼界面
         {
-            myHSS.GoToScreen(1);
-            LevelManager.clicktime++;
+            print("Final camera controller clicktime = 7");
+            myHSS.GoToScreen(3);
+            LevelManager.clicktime = 7;
+            Show(fishShoutCG);
         }
         
-       
-        transform.position = new Vector3(0, 0, -10);
-        if (myCameraState == CameraState.Closet || myCameraState == CameraState.Map ||
-            myCameraState == CameraState.App || myCameraState == CameraState.Ad)
-        {
-            if (lastCameraState != CameraState.Closet && lastCameraState != CameraState.Map &&
-               lastCameraState != CameraState.App && myCameraState != CameraState.Ad)
+
+
+
+
+            transform.position = new Vector3(0, 0, -10);
+            if (myCameraState == CameraState.Closet || myCameraState == CameraState.Map ||
+                myCameraState == CameraState.App || myCameraState == CameraState.Ad)
             {
-                myCameraState = lastCameraState;
+                if (lastCameraState != CameraState.Closet && lastCameraState != CameraState.Map &&
+                    lastCameraState != CameraState.App && myCameraState != CameraState.Ad)
+                {
+                    myCameraState = lastCameraState;
+                }
+                else
+                {
+                    myCameraState = CameraState.Subway;
+                }
             }
-            else
-            {
-                myCameraState = CameraState.Subway;
-            }
-        }
+        
 
         //hide everything 
         Hide(Inventory);
@@ -597,12 +621,12 @@ public class FinalCameraController : MonoBehaviour
 
             if (isSwipping == false)
             {
-                //transform.position = new Vector3(0, 0, -10);
+                transform.position = new Vector3(0, 0, -10);
                 lastCameraState = myCameraState;
                 myCameraState = CameraState.App;
                 myAppState = AppState.Mainpage;
                 Show(frontPage);
-
+                
                 
             }
         }
