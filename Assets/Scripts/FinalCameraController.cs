@@ -51,6 +51,7 @@ public class FinalCameraController : MonoBehaviour
     public bool lateReturnComic;
     public CanvasGroup setting;
 
+    public ScrollRect mainpageScrollRect;
     
     public enum AppState
     {
@@ -505,6 +506,13 @@ public class FinalCameraController : MonoBehaviour
         
     }
     
+    
+    
+    public static void ScrollToTop(ScrollRect scrollRect)
+    {
+        scrollRect.normalizedPosition = new Vector2(0, 1);
+    }
+    
     public void ChangeToSubway()
     {
         if(isTutorial)
@@ -515,10 +523,10 @@ public class FinalCameraController : MonoBehaviour
         else if (LevelManager.isInstruction)//换到鱼界面
         {
             myHSS.GoToScreen(1);
-            LevelManager.clicktime = 5;
+            LevelManager.clicktime++;
         }
-        Hide(Inventory);
-        Show(subwayBackground);
+        
+       
         transform.position = new Vector3(0, 0, -10);
         if (myCameraState == CameraState.Closet || myCameraState == CameraState.Map ||
             myCameraState == CameraState.App || myCameraState == CameraState.Ad)
@@ -534,9 +542,13 @@ public class FinalCameraController : MonoBehaviour
             }
         }
 
+        //hide everything 
+        Hide(Inventory);
+        Show(subwayBackground);
         Hide(frontPage);
         Hide(appBackground);
- 
+        Hide(NPCPage);
+        HideAllPersonalPages(); 
         
         //for Tutorial
         if (isTutorial)
@@ -568,6 +580,9 @@ public class FinalCameraController : MonoBehaviour
     {
         //reset the order of all posts
         resetPostOrder();
+        
+        //go to main page top
+        ScrollToTop(mainpageScrollRect);
         
         //cancel all dialogues
         print("click ChangeToAPP");

@@ -47,6 +47,7 @@ public class BackgroundMoving : MonoBehaviour
         if(transform.position.x < endPoint)
         {
             transform.position += new Vector3(speed, 0, 0);
+          
         }
         else
         {

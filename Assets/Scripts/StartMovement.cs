@@ -11,20 +11,20 @@ public class StartMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        startingPoint = transform.localPosition.x;
     }
 
     // Update is called once per frame
     void Update()
     {
         //for background moving
-        if(transform.position.x < endPoint)
+        if(transform.localPosition.x < endPoint)
         {
-            transform.position += new Vector3(speedA, 0, 0);
+            transform.localPosition += new Vector3(speedA, 0, 0);
         }
         else
         {
-            transform.position += new Vector3(startingPoint, 0, 0);
+            transform.localPosition = new Vector3(startingPoint, transform.localPosition.y, transform.localPosition.z);
         }
         
     }

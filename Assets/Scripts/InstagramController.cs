@@ -205,13 +205,10 @@ public class InstagramController : MonoBehaviour
 
             if (!AdAlreadyTakenList["FruitStand"] && SubwayMovement.alreadyStation1)
             {
-                print("third");
                 thirdAd.SetActive(true);
             }
             if (!AdAlreadyTakenList["RV"] && SubwayMovement.alreadyStation2)
             {
-                print("four");
-
                 fourthAd.SetActive(true);
             }
         }

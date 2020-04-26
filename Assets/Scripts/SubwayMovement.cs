@@ -221,7 +221,7 @@ public class SubwayMovement : MonoBehaviour
             alreadyStation0 = true;
         }
 //        print("FinalCameraController.AllStationClothList.Count  =" + FinalCameraController.AllStationClothList.Count);
-        if (!FinalCameraController.isTutorial && LevelManager.clicktime > 4)
+        if (!FinalCameraController.isTutorial && LevelManager.clicktime > 6)
         {
             //instead of InvokeRepeating
             if (!isMoving)
@@ -657,9 +657,9 @@ public class SubwayMovement : MonoBehaviour
             if (FinalCameraController.AllStationClothList.Count == 0)//if all clothes are returned
             {
                 //if level one has just started
-                if (!FinalCameraController.isTutorial && FinalCameraController.LevelManager.clicktime == 3)
+                if (!FinalCameraController.isTutorial && FinalCameraController.LevelManager.clicktime == 5)
                 {
-                    FinalCameraController.LevelManager.clicktime = 4;
+                    FinalCameraController.LevelManager.clicktime = 6;
                 }
                 if (isDetailed)
                 {

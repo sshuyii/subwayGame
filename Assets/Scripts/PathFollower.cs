@@ -24,6 +24,9 @@ public class PathFollower : MonoBehaviour
     private bool trainMove;
     private Vector3 currentEulerAngles;
 
+    public bool isInstruction;
+    private float instructionMoveSpeed = 4f;
+
     // Use this for initialization
     private void Start () {
 
@@ -41,8 +44,61 @@ public class PathFollower : MonoBehaviour
     // Update is called once per frame
     private void Update () {
 
+        if(isInstruction)//绕一圈
+        {
+            QuickMove();
+        }        
+        
         // Move Enemy
         Move();
+    }
+
+
+    private void QuickMove()
+    {
+        if (waypointIndex <= waypoints.Length - 1)
+        {
+            currentEulerAngles = myRT.eulerAngles;
+
+            //print(waypointIndex + "<1");
+            // Move Enemy from current waypoint to the next one
+            // using MoveTowards method
+            myRT.anchoredPosition = Vector2.MoveTowards(myRT.anchoredPosition,
+                waypoints[waypointIndex].anchoredPosition,
+                instructionMoveSpeed * Time.deltaTime);
+
+            //car rotates!
+            var dir = waypoints[waypointIndex].anchoredPosition - myRT.anchoredPosition;
+            var angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+            myRT.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+                
+                
+            // If Enemy reaches position of waypoint he walked towards
+            // then waypointIndex is increased by 1
+            // and Enemy starts to walk to the next waypoint
+            if (myRT.anchoredPosition == waypoints[waypointIndex].anchoredPosition)
+            {
+                waypointIndex += 1;
+                
+            }
+        }
+        else
+        {
+            //到了第一站会先停下来
+//            waypointIndex = 0;
+            
+            myRT.anchoredPosition = Vector2.MoveTowards(myRT.anchoredPosition,
+                waypoints[0].anchoredPosition,
+                instructionMoveSpeed * Time.deltaTime);
+            
+            if (myRT.anchoredPosition == waypoints[0].anchoredPosition)
+            {
+                instructionMoveSpeed = 0;
+                isInstruction = false;
+            }
+
+        }
+    
     }
 
     private float timer;
