@@ -175,7 +175,9 @@ public class ScreenshotHandler : MonoBehaviour
         if(!FinalCameraController.isTutorial)
         {
             usedPostures.Add(CalculateInventory.posNum.ToString(), true);
-        }        //usedBackground.Add(InstagramController.currentBackground, true);
+        }        
+        
+        //usedBackground.Add(InstagramController.currentBackground, true);
         
         //instantiate new post object     
         var newPost = Instantiate(InstagramController.photoPostPrefab, new Vector3(0, 0, 0), Quaternion.identity);
@@ -189,49 +191,54 @@ public class ScreenshotHandler : MonoBehaviour
 
         //change sprite to the newly taken photo
         newPost.GetComponent<Image>().sprite = Sprite.Create(sprites,rec,new Vector2(0,0),100f);
-        
-        //get the post text
-        toothpastePost.transform.Find("Post").gameObject.GetComponent<Image>().sprite = Sprite.Create(sprites,rec,new Vector2(0,0),100f);
-        var textList = toothpastePost.transform.Find("Post").gameObject.GetComponentsInChildren<Text>();
-        
-        
-    
-        //create comments
-        var newComment = Instantiate(InstagramController.commentPrefab, new Vector3(0, 0, 0), Quaternion.identity, toothpastePost.transform.Find("Comments"));
-        //set parent(probably a better way to do
+
+
+        if (!FinalCameraController.isTutorial)
+        {
+            //get the post text
+            toothpastePost.transform.Find("Post").gameObject.GetComponent<Image>().sprite =
+                Sprite.Create(sprites, rec, new Vector2(0, 0), 100f);
+            var textList = toothpastePost.transform.Find("Post").gameObject.GetComponentsInChildren<Text>();
+
+
+
+            //create comments
+            var newComment = Instantiate(InstagramController.commentPrefab, new Vector3(0, 0, 0), Quaternion.identity,
+                toothpastePost.transform.Find("Comments"));
+            //set parent(probably a better way to do
 //        newComment.transform.parent = toothpastePost.transform.Find("Comments");
 
-        newComment.transform.localPosition = new Vector3(0f, 0f, 0);
+            newComment.transform.localPosition = new Vector3(0f, 0f, 0);
 
-        //get the text child
-        var CommentText = newComment.GetComponentInChildren<TextMeshProUGUI>();
-        
-        
-        print(CommentText.name);
-        //get the profile
-        var ProfileImage = newComment.GetComponent<Image>();
-        
-        InstagramController.replyParent = toothpastePost.transform.Find("Reply");
+            //get the text child
+            var CommentText = newComment.GetComponentInChildren<TextMeshProUGUI>();
 
-        //now this background cannot be used again
-        InstagramController.AdAlreadyTakenList[InstagramController.currentBackground] = false;
-        
-        //generate different comment for each post
-        if (InstagramController.currentBackground == "RV")
-        {
-            //record background
-            newPost.GetComponent<RecordBackgroundPosture>().backgroundName = 0;
 
-            
-            //todo: comments need to occur after sometime
-            CommentText.text = "That RV looks amazing. I'm gonna get one for myself.";
-            ProfileImage.sprite = InstagramController.allProfile["nico"];
-            
-            //change the post text
-            textList[0].text = "<b>Karara</b> Vocation";
-            textList[1].text = "Today";
-            
-            //Add followers to Karara
+            print(CommentText.name);
+            //get the profile
+            var ProfileImage = newComment.GetComponent<Image>();
+
+            InstagramController.replyParent = toothpastePost.transform.Find("Reply");
+
+            //now this background cannot be used again
+            InstagramController.AdAlreadyTakenList[InstagramController.currentBackground] = false;
+
+            //generate different comment for each post
+            if (InstagramController.currentBackground == "RV")
+            {
+                //record background
+                newPost.GetComponent<RecordBackgroundPosture>().backgroundName = 0;
+
+
+                //todo: comments need to occur after sometime
+                CommentText.text = "That RV looks amazing. I'm gonna get one for myself.";
+                ProfileImage.sprite = InstagramController.allProfile["nico"];
+
+                //change the post text
+                textList[0].text = "<b>Karara</b> Vocation";
+                textList[1].text = "Today";
+
+                //Add followers to Karara
 //            if (KararaTop == "TopA1")
 //            {
 //                followerNum += 8;
@@ -249,87 +256,87 @@ public class ScreenshotHandler : MonoBehaviour
 //            {
 //                followerNum += 3;}
 //
-            if (KararaWork)
-            {
-                followerNum += 3;
+                if (KararaWork)
+                {
+                    followerNum += 3;
+                }
+                else
+                {
+                    followerNum += 8;
+                }
+
             }
-            else
-            {
-                followerNum += 8;
-            }
-                
-        }
 //        else if (InstagramController.currentBackground == "Toothpaste")
 //        {
 //            CommentText.text = "I like the way you dress.";
 //            ProfileImage.sprite = InstagramController.allProfile["ojisan"];
 //            
 //        }
-        else if(InstagramController.currentBackground == "FruitStand")
-        {
-            //record background
-            newPost.GetComponent<RecordBackgroundPosture>().backgroundName = 1;
-            
-            CommentText.text = "Flavor of life";
-            ProfileImage.sprite = InstagramController.allProfile["ojisan"];
-            
-            //change the post text
-            textList[0].text = "<b>Karara</b> Fresh";
-            textList[1].text = "Today";
-            
-            if (KararaWork)
+            else if (InstagramController.currentBackground == "FruitStand")
             {
-                followerNum += 3;
+                //record background
+                newPost.GetComponent<RecordBackgroundPosture>().backgroundName = 1;
+
+                CommentText.text = "Flavor of life";
+                ProfileImage.sprite = InstagramController.allProfile["ojisan"];
+
+                //change the post text
+                textList[0].text = "<b>Karara</b> Fresh";
+                textList[1].text = "Today";
+
+                if (KararaWork)
+                {
+                    followerNum += 3;
+                }
+                else
+                {
+                    followerNum += 8;
+                }
             }
-            else
+            else if (InstagramController.currentBackground == "Park")
             {
-                followerNum += 8;
+                //record background
+                newPost.GetComponent<RecordBackgroundPosture>().backgroundName = 2;
+
+                CommentText.text = "Amusement parks are boring.";
+                ProfileImage.sprite = InstagramController.allProfile["nico"];
+
+                //change the post text
+                textList[0].text = "<b>Karara</b> Relaxing";
+                textList[1].text = "Today";
+
+                if (KararaWork)
+                {
+                    followerNum += 3;
+                }
+                else
+                {
+                    followerNum += 8;
+                }
             }
-        }
-        else if (InstagramController.currentBackground == "Park")
-        {
-            //record background
-            newPost.GetComponent<RecordBackgroundPosture>().backgroundName = 2;
-            
-            CommentText.text = "Amusement parks are boring.";
-            ProfileImage.sprite = InstagramController.allProfile["nico"];
-            
-            //change the post text
-            textList[0].text = "<b>Karara</b> Relaxing";
-            textList[1].text = "Today";
-            
-            if (KararaWork)
+            else if (InstagramController.currentBackground == "Alcohol")
             {
-                followerNum += 3;
-            }
-            else
-            {
-                followerNum += 8;
-            }
-        }
-        else if (InstagramController.currentBackground == "Alcohol")
-        {
-            //record background
-            newPost.GetComponent<RecordBackgroundPosture>().backgroundName = 3;
-            
+                //record background
+                newPost.GetComponent<RecordBackgroundPosture>().backgroundName = 3;
+
 //            CommentText.text = "Amusement parks are boring.";
 //            ProfileImage.sprite = InstagramController.allProfile["nico"];
-            
-            //change the post text
-            textList[0].text = "<b>Karara</b> Cheers";
-            textList[1].text = "Today";
-            
-            if (KararaWork)
-            {
-                followerNum += 3;
-            }
-            else
-            {
-                followerNum += 8;
-            }
-        }
 
-        
+                //change the post text
+                textList[0].text = "<b>Karara</b> Cheers";
+                textList[1].text = "Today";
+
+                if (KararaWork)
+                {
+                    followerNum += 3;
+                }
+                else
+                {
+                    followerNum += 8;
+                }
+            }
+
+        }
         FinalCameraController.ChangeToApp();
     }
     
@@ -490,7 +497,11 @@ public class ScreenshotHandler : MonoBehaviour
     {
         shutterSound.Play();
         //hide notice bubble
-        FinalCameraController.Hide(Notice);
+        if(!FinalCameraController.isTutorial)
+        {
+            FinalCameraController.Hide(Notice);
+        }        
+        
         //if the background is already used
         if (!InstagramController.AdAlreadyTakenList[InstagramController.currentBackground])
         {

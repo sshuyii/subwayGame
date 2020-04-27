@@ -127,7 +127,10 @@ public class FinalCameraController : MonoBehaviour
     void Start()
     {
         
-        Hide(setting);
+        if(!isTutorial)
+        {
+            Hide(setting);
+        }
         myCameraState = CameraState.Subway;
         myAppState = AppState.Mainpage;
         
@@ -205,7 +208,7 @@ public class FinalCameraController : MonoBehaviour
         }
         
         //hide shout
-        if(LevelManager.isInstruction)
+        if(!isTutorial && LevelManager.isInstruction)
         {
             if (mySubwayState == SubwayState.One)
             {
@@ -606,8 +609,10 @@ public class FinalCameraController : MonoBehaviour
         resetPostOrder();
         
         //go to main page top
-        ScrollToTop(mainpageScrollRect);
-        
+        if(!isTutorial)
+        {
+            ScrollToTop(mainpageScrollRect);
+        }        
         //cancel all dialogues
         print("click ChangeToAPP");
         

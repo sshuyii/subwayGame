@@ -151,7 +151,6 @@ public class WasherController : MonoBehaviour
             fullImage.enabled = false;
             emptyImage.enabled = true;
             Hide(Occupied);
-            print("emptyyyyyy");
 
         }
         else if (myMachineState == AllMachines.MachineState.full)
@@ -161,7 +160,6 @@ public class WasherController : MonoBehaviour
             {
                 emptyImage.enabled = false;
                 fullImage.enabled = true;
-                print("fullllllll");
             }
             else
             {

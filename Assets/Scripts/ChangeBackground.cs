@@ -88,7 +88,9 @@ public class ChangeBackground :MonoBehaviour
                 }
                 else if (FinalCameraController.TutorialManager.tutorialNumber == 15)
                 {
+                    print("transform name = " + transform.name);
                     photoBackground.sprite = InstagramController.allBackAd[transform.name];
+                    
                     InstagramController.currentBackground = transform.name;
 
                     FinalCameraController.GoAdvertisement();

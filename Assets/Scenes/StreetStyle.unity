@@ -12522,7 +12522,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 0b5a10bdfc14a4922a35657634c379e1, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 690ac7e4c7dc845a28960fe9f74cae8f, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -21224,7 +21224,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 7c09214c9f416491da94d7186d87e04e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e3fd17e7c4d2b4755a783fd08ea49d80, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -22777,7 +22777,7 @@ MonoBehaviour:
   instructionText: {fileID: 349118687}
   isInstruction: 0
   Instructions: {fileID: 1501432817}
-  skip: 1
+  skip: 0
   fishBubble: {fileID: 1237400775147006898}
   fishText: {fileID: 1032632610}
   clicktime: 0
@@ -29287,8 +29287,8 @@ MonoBehaviour:
   - {fileID: 21300000, guid: e93727c60a64e40f58be60855a56506f, type: 3}
   ojisanLaterPost:
   - {fileID: 21300000, guid: 06604ed4a1d6546e7a68ec92d365bf02, type: 3}
-  - {fileID: 21300000, guid: 9f6a05a23936748e093634066a041ccc, type: 3}
-  - {fileID: 21300000, guid: 7167e354d207e4d3db3029501108e2e9, type: 3}
+  - {fileID: 21300000, guid: dfe889ec5fcb64a00a6b06005d78bbdc, type: 3}
+  - {fileID: 21300000, guid: 865716a49d25b442a808bdf571402aae, type: 3}
   RetroPageContent: {fileID: 1510632306}
   OjisanPageContent: {fileID: 1947120161}
   PersonalPagePrefab: {fileID: 5971461774615932879, guid: e72d801017d3c4e16871cce6a776f3cb,

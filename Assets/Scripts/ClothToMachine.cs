@@ -163,6 +163,8 @@ public class ClothToMachine : MonoBehaviour
     public void returnClothYes()
     {
         FinalCameraController.AllStationClothList.Remove(tag);
+        //去掉这个洗衣机上的tag
+        
         
         for (int i = 0; i < AllMachines.WashingMachines.Count; i++)
         {
@@ -170,6 +172,7 @@ public class ClothToMachine : MonoBehaviour
             {
 //                print("AllMachines.currentBag.tag = " + AllMachines.currentBag.tag);
                 //对所有inventory中带着这个洗衣机tag的衣服，把它们放回洗衣机
+                
                 for (int u = 0; u < CalculateInventory.inventory.Count; u++)
                 {
                     if (CalculateInventory.inventory[u].CompareTag(tag))
@@ -249,7 +252,6 @@ public class ClothToMachine : MonoBehaviour
                         Destroy(SubwayMovement.bagsInCar[y]);
 
                         SubwayMovement.bagsInCar.Remove(SubwayMovement.bagsInCar[y]);
-
                     }
                 }
 
@@ -282,8 +284,11 @@ public class ClothToMachine : MonoBehaviour
  
     public void putClothIn()
     {
-        FinalCameraController.LevelManager.isInstruction = false;
-
+        if(!FinalCameraController.isTutorial)
+        {
+            FinalCameraController.LevelManager.isInstruction = false;
+        }
+        
         FinalCameraController.CancelAllUI();
 
         if(FinalCameraController.isSwipping == false)

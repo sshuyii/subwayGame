@@ -682,6 +682,9 @@ public class TutorialManager : MonoBehaviour
                 tutorialDialogueState = DialogueState.karara;
                 screamImage.enabled = true;
                 Hide(arrowButton);
+                
+                //show closet button
+                Show(closet.GetComponent<CanvasGroup>());
             }
             else
             {
@@ -832,6 +835,7 @@ public class TutorialManager : MonoBehaviour
                 //pressScreenshot = false;
                 if (temp)
                 {
+                    FinalCameraController.ChangeToSubway();
                     DialogueRT.anchoredPosition -= new Vector2(0, 300);
                     temp = false;
                     tutorialDialogueState = DialogueState.fish;

@@ -171,10 +171,13 @@ public class InstagramController : MonoBehaviour
         for (int i = 0; i < backAdList.Count; i++)
         {
         }
-        backgroundPoseDict.Add(backAdList[0].name, backgroundPose1);
-        backgroundPoseDict.Add(backAdList[1].name, backgroundPose2);
-        backgroundPoseDict.Add(backAdList[2].name, backgroundPose3);
-        backgroundPoseDict.Add(backAdList[3].name, backgroundPose4);
+        if(!FinalCameraController.isTutorial)
+        {
+            backgroundPoseDict.Add(backAdList[0].name, backgroundPose1);
+            backgroundPoseDict.Add(backAdList[1].name, backgroundPose2);
+            backgroundPoseDict.Add(backAdList[2].name, backgroundPose3);
+            backgroundPoseDict.Add(backAdList[3].name, backgroundPose4);
+        }
 //        backgroundPoseDict.Add(backAdList[4].name, backgroundPose5);
 
 
@@ -198,58 +201,64 @@ public class InstagramController : MonoBehaviour
         
         //enable new posters for chapter one
         //when player is not in subway4
-        if(FinalCameraController.mySubwayState != FinalCameraController.SubwayState.Four)
+        if (!FinalCameraController.isTutorial)
         {
+            if (FinalCameraController.mySubwayState != FinalCameraController.SubwayState.Four)
+            {
 //            print("AdAlreadyTakenList FruitStand" + AdAlreadyTakenList["FruitStand"]);
 //            print("AdAlreadyTakenList FruitStand" + AdAlreadyTakenList["RV"]);
 
-            if (!AdAlreadyTakenList["FruitStand"] && SubwayMovement.alreadyStation1)
-            {
-                thirdAd.SetActive(true);
+                if (!AdAlreadyTakenList["FruitStand"] && SubwayMovement.alreadyStation1)
+                {
+                    thirdAd.SetActive(true);
+                }
+
+                if (!AdAlreadyTakenList["RV"] && SubwayMovement.alreadyStation2)
+                {
+                    fourthAd.SetActive(true);
+                }
             }
-            if (!AdAlreadyTakenList["RV"] && SubwayMovement.alreadyStation2)
+
+
+            //第一次到第一站，产生一个新的post, nico
+            if (FinalCameraController.myCameraState == FinalCameraController.CameraState.App)
             {
-                fourthAd.SetActive(true);
+                //啥都不发生
             }
-        }
-        
-        
-        //第一次到第一站，产生一个新的post, nico
-        if (FinalCameraController.myCameraState == FinalCameraController.CameraState.App)
-        {
-            //啥都不发生
-        }
-        else if (SubwayMovement.alreadyStation1 && newStationNum == 0)
-        {
-            print("arring first station, nico");
+            else if (SubwayMovement.alreadyStation1 && newStationNum == 0)
+            {
+                print("arring first station, nico");
 
-            StartCoroutine(CreatePersonalPagePost("nico", nicoLaterPost[0], "this is created when train reaches the first station for the first time"));
-                  
-            newStationNum = 1;
-        }
-        
-        //第一次到第二站，产生一个新的post, nami
-        else if (SubwayMovement.alreadyStation2 && newStationNum == 1)
-        {
-            print("arriving 2 station, nami");
+                StartCoroutine(CreatePersonalPagePost("nico", nicoLaterPost[0],
+                    "this is created when train reaches the first station for the first time"));
 
-            StartCoroutine(CreatePersonalPagePost("ojisan", ojisanLaterPost[0], "this is created when train reaches the second station for the first time"));
-            
-            newStationNum = 2;
+                newStationNum = 1;
+            }
 
-        }
-        //第一次到第二站，产生一个新的post, nami
-        else if (SubwayMovement.alreadyStation0 && newStationNum == 2)
-        {
-            print("arriving 3 station, nami");
+            //第一次到第二站，产生一个新的post, nami
+            else if (SubwayMovement.alreadyStation2 && newStationNum == 1)
+            {
+                print("arriving 2 station, nami");
 
-            StartCoroutine(CreatePersonalPagePost("ojisan", ojisanLaterPost[1], "this is created when train reaches the starting station for the first time"));
-            
-            newStationNum = 3;
+                StartCoroutine(CreatePersonalPagePost("ojisan", ojisanLaterPost[0],
+                    "this is created when train reaches the second station for the first time"));
 
-        }
-        
-        
+                newStationNum = 2;
+
+            }
+            //第一次到第二站，产生一个新的post, nami
+            else if (SubwayMovement.alreadyStation0 && newStationNum == 2)
+            {
+                print("arriving 3 station, nami");
+
+                StartCoroutine(CreatePersonalPagePost("ojisan", ojisanLaterPost[1],
+                    "this is created when train reaches the starting station for the first time"));
+
+                newStationNum = 3;
+
+            }
+
+
 //
 //        //to decide how many posters have been used
 //        for (int i = 0; i < backAdList.Count; i++)
@@ -260,78 +269,79 @@ public class InstagramController : MonoBehaviour
 //            }
 //            
 //        }
-        //第一次到第一站，产生一个新的post, nico
-        if (FinalCameraController.myCameraState == FinalCameraController.CameraState.App)
-        {
-            //啥都不发生
-        }
-        //在两个海报前面照过相
-        else if (takenNum == 1 && newPostNum == 0)
-        {
-            print("1 poster used, nami");
-            StartCoroutine(CreatePersonalPagePost("ojisan", ojisanLaterPost[2], "this is created when one poster is used"));
-         
-            newPostNum = 1;
-        }
-        
-        else if (takenNum == 2 && newPostNum == 1)
-        {
-            if(FinalCameraController.myCameraState != FinalCameraController.CameraState.App)
+            //第一次到第一站，产生一个新的post, nico
+            if (FinalCameraController.myCameraState == FinalCameraController.CameraState.App)
             {
-                print("2 poster used, nico");
-
-                StartCoroutine(CreatePersonalPagePost("nico", nicoLaterPost[1],
-                    "this is created when two poster is used"));
-               
-
-                newPostNum = 2;
+                //啥都不发生
             }
-        }
-        
-        //todo:if all posters have been used
-        //if all posters have been used
-        //end for chapter 1
-        //必须当玩家不在app界面中的时候才能产生
-        if (!AdAlreadyTakenList.ContainsValue(true))
-        {
-            //if more than 20 followers, chapter 1 succeeds
-            if (System.Convert.ToInt32(followerNum.text) >= 20 && newPostNum == 2  && newStationNum == 3 && !chapterOneEndPre)
+            //在两个海报前面照过相
+            else if (takenNum == 1 && newPostNum == 0)
             {
-                if(FinalCameraController.myCameraState != FinalCameraController.CameraState.App)
+                print("1 poster used, nami");
+                StartCoroutine(CreatePersonalPagePost("ojisan", ojisanLaterPost[2],
+                    "this is created when one poster is used"));
+
+                newPostNum = 1;
+            }
+
+            else if (takenNum == 2 && newPostNum == 1)
+            {
+                if (FinalCameraController.myCameraState != FinalCameraController.CameraState.App)
                 {
-                    StartCoroutine(CreatePersonalPagePost("nico", nicoLaterPost[2],
-                        "this is the end of chapter 1"));
-                   
-                    newPostNum = 3;
-                   fishText.text = "What are you doing? Turn off your phone during work!";
-                    chapterOneEndPre = true;
-                    endStationPre = SubwayMovement.currentStation;
+                    print("2 poster used, nico");
+
+                    StartCoroutine(CreatePersonalPagePost("nico", nicoLaterPost[1],
+                        "this is created when two poster is used"));
+
+
+                    newPostNum = 2;
                 }
-                
-               
+            }
+
+            //todo:if all posters have been used
+            //if all posters have been used
+            //end for chapter 1
+            //必须当玩家不在app界面中的时候才能产生
+            if (!AdAlreadyTakenList.ContainsValue(true))
+            {
+                //if more than 20 followers, chapter 1 succeeds
+                if (System.Convert.ToInt32(followerNum.text) >= 20 && newPostNum == 2 && newStationNum == 3 &&
+                    !chapterOneEndPre)
+                {
+                    if (FinalCameraController.myCameraState != FinalCameraController.CameraState.App)
+                    {
+                        StartCoroutine(CreatePersonalPagePost("nico", nicoLaterPost[2],
+                            "this is the end of chapter 1"));
+
+                        newPostNum = 3;
+                        fishText.text = "What are you doing? Turn off your phone during work!";
+                        chapterOneEndPre = true;
+                        endStationPre = SubwayMovement.currentStation;
+                    }
+                }
+            }
+
+            if (chapterOneEndPre)
+            {
+                if (FinalCameraController.mySubwayState == FinalCameraController.SubwayState.Two)
+                {
+                    FinalCameraController.Show(FinalCameraController.messageCG);
+                }
+                else if (FinalCameraController.mySubwayState == FinalCameraController.SubwayState.One)
+                {
+                    FinalCameraController.Show(FishBoss);
+                }
+
+                //到达最近的一站之后，就停下来，车再也不动了
+                if (!SubwayMovement.isMoving && SubwayMovement.currentStation == endStationPre &&
+                    FinalCameraController.myCameraState == FinalCameraController.CameraState.Subway)
+                {
+                    SubwayMovement.isMoving = false;
+                    FinalCameraController.ChapterOneEnd = true;
+
+                }
             }
         }
-
-        if (chapterOneEndPre)
-        {
-            if (FinalCameraController.mySubwayState == FinalCameraController.SubwayState.Two)
-            {
-                FinalCameraController.Show(FinalCameraController.messageCG);
-            }
-            else if (FinalCameraController.mySubwayState == FinalCameraController.SubwayState.One)
-            {
-                FinalCameraController.Show(FishBoss);
-            }
-            
-            //到达最近的一站之后，就停下来，车再也不动了
-            if (!SubwayMovement.isMoving && SubwayMovement.currentStation == endStationPre && FinalCameraController.myCameraState == FinalCameraController.CameraState.Subway)
-            {
-                SubwayMovement.isMoving = false;
-                FinalCameraController.ChapterOneEnd = true;
-
-            }
-        }
-
 
     }
 

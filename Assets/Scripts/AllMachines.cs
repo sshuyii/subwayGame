@@ -110,19 +110,23 @@ public class AllMachines : MonoBehaviour
                 openBagsDic.Add(openBags[i].name, openBags[i]);
             }      
         }
-        openBagsDic.Add("Npc0", openBags[3]);
-        openBagsDic.Add("Npc1", openBags[3]);
-        openBagsDic.Add("Npc2", openBags[3]);
 
 
-        //use a dictionary to record all temp list with names as the tag
-        nameToTemp.Add("Bella", bellaClothesTemp);
-        nameToTemp.Add("Alex", alexClothesTemp);
-        nameToTemp.Add("Nami", namiClothesTemp);
-        nameToTemp.Add("Npc0", npcClothesTemp);
-        nameToTemp.Add("Npc1", npcClothesTemp);
-        nameToTemp.Add("Npc2", npcClothesTemp);
+        if (openBags.Count > 3)
+        {
+            openBagsDic.Add("Npc0", openBags[3]);
+            openBagsDic.Add("Npc1", openBags[3]);
+            openBagsDic.Add("Npc2", openBags[3]);
 
+
+            //use a dictionary to record all temp list with names as the tag
+            nameToTemp.Add("Bella", bellaClothesTemp);
+            nameToTemp.Add("Alex", alexClothesTemp);
+            nameToTemp.Add("Nami", namiClothesTemp);
+            nameToTemp.Add("Npc0", npcClothesTemp);
+            nameToTemp.Add("Npc1", npcClothesTemp);
+            nameToTemp.Add("Npc2", npcClothesTemp);
+        }
 
     }
 
