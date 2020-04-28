@@ -583,9 +583,11 @@ public class ScreenshotHandler : MonoBehaviour
 
     }
     
+    //todo: crop image not by perfect pixels, but relative to the screen size
     Texture2D CropImage()
     {
         Texture2D tex = new Texture2D(width, width, TextureFormat.RGB24, false);
+        
         
         //Height of image in pixels
         for (int y = 0; y < tex.height; y++)
@@ -593,7 +595,7 @@ public class ScreenshotHandler : MonoBehaviour
             //Width of image in pixels
             for (int x = 0; x < tex.width; x++)
             {
-                Color cPixelColour = renderResult.GetPixel(x , y + 200);
+                Color cPixelColour = renderResult.GetPixel(x , y + Mathf.FloorToInt(0.225f * height));
                 tex.SetPixel(x, y, cPixelColour);
             }
         }
