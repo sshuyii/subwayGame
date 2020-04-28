@@ -111,7 +111,6 @@ public class ClothToMachine : MonoBehaviour
                         {
                             //AllMachines.currentBag = this.gameObject;
                             returnClothYes();
-
                             //enable fish comic image
                             FinalCameraController.lateReturnComic = true;
                             //现在是，鱼老板直接帮忙把洗好又到站的衣服换了，没有其他惩罚，转到鱼老板界面，老板告诉karara没来得及还
@@ -163,8 +162,17 @@ public class ClothToMachine : MonoBehaviour
     public void returnClothYes()
     {
         FinalCameraController.AllStationClothList.Remove(tag);
+        FinalCameraController.alreadyNotice = false;
         //去掉这个洗衣机上的tag
-        
+
+        AllMachines.nameToTemp[tag].Clear();
+        //reset the temp list, so all the clothes are in the temp list
+        for (int i = 0; i < AllMachines.nameToPermenant[tag].Count; i++)
+        {
+            
+            AllMachines.nameToTemp[tag].Add(AllMachines.nameToPermenant[tag][i]);
+        }
+
         
         for (int i = 0; i < AllMachines.WashingMachines.Count; i++)
         {
@@ -183,6 +191,9 @@ public class ClothToMachine : MonoBehaviour
                         print("returnrnrnrnrnrnrn");
                         //then 
                         CalculateInventory.occupiedI = CalculateInventory.occupiedI - 1;
+                        //reset the tag of the inventory item
+                        CalculateInventory.inventory[u].tag = "Untagged";
+
                     }
                 }
                 //todo: can be simpler

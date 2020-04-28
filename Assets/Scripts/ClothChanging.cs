@@ -196,6 +196,7 @@ public class ClothChanging : MonoBehaviour
         if(FinalCameraController.TouchController.doubleTouch)
         {
             print("return cloth is working and double touched");
+            this.tag = "untagged";
 
             for (int i = 0; i < AllMachines.WashingMachines.Count; i++)
             {

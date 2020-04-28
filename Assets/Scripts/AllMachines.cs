@@ -12,6 +12,8 @@ public class AllMachines : MonoBehaviour
     //a list to record all customer's names
     public List<string> CustomerNameList = new List<string>();
     public Dictionary<string, List<Sprite>> nameToTemp = new Dictionary<string, List<Sprite>>();
+    public Dictionary<string, List<Sprite>> nameToPermenant = new Dictionary<string, List<Sprite>>();
+
     
     public GameObject returnNotice;
 
@@ -111,7 +113,7 @@ public class AllMachines : MonoBehaviour
             }      
         }
 
-
+        //this is to exclude the tutorial because tutorial only has one bag
         if (openBags.Count > 3)
         {
             openBagsDic.Add("Npc0", openBags[3]);
@@ -126,6 +128,15 @@ public class AllMachines : MonoBehaviour
             nameToTemp.Add("Npc0", npcClothesTemp);
             nameToTemp.Add("Npc1", npcClothesTemp);
             nameToTemp.Add("Npc2", npcClothesTemp);
+            
+            //use a dictionary to record all cloth list with names as the tag
+            nameToPermenant.Add("Bella", BellaClothes);
+            nameToPermenant.Add("Alex", AlexClothes);
+            nameToPermenant.Add("Nami", NamiClothes);
+            nameToPermenant.Add("Npc0", NpcClothes);
+            nameToPermenant.Add("Npc1", NpcClothes);
+            nameToPermenant.Add("Npc2", NpcClothes);
+             
         }
 
     }

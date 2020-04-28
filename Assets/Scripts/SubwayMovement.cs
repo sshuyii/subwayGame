@@ -307,6 +307,7 @@ public class SubwayMovement : MonoBehaviour
                     print("FinalCameraController.ChapterOneEnd = " + FinalCameraController.ChapterOneEnd);
                     
                     //don't generate new bags if there are already three bags in the car
+                    //bagfirst保证只运行一次
                     if (!FinalCameraController.isTutorial && bagFirst && !FinalCameraController.ChapterOneEnd)//结束的时候不能往车上放新的包了
                     {
                         print("NameToStationBags[currentStation.ToString()].Count = " + NameToStationBags[currentStation.ToString()].Count );
@@ -386,7 +387,7 @@ public class SubwayMovement : MonoBehaviour
     void GenerateBag(int stationNum)
     {
         print("generateBag");
-        //如果现在车里不够三个包
+        //如果现在车里不够三个包才产生新包
         if (bagNum < 3)
         {
             //注意：这里不能完全随机产生，不能两次产生一样的包
@@ -417,7 +418,7 @@ public class SubwayMovement : MonoBehaviour
                 //每个站只能有一个npc的包
 //                if (bagsInCar[r].CompareTag(NameToStationBags[stationNum.ToString()][randomIndex].tag))
                 //现在每站只有一个特殊角色的包了，所以只需要是0就可以了
-                if (bagsInCar[r].CompareTag(NameToStationBags[stationNum.ToString()][0].tag))
+                if (bagsInCar[r].CompareTag(NameToStationBags[stationNum.ToString()][0].tag))//如果车里已经有同样tag的包
                 {
                     print("NoSameBag = false;");
                     noSameBag = false;
@@ -425,7 +426,7 @@ public class SubwayMovement : MonoBehaviour
                     //前提是上一次进来的npc的包不在车里
                     string temp = "Npc" + currentStation.ToString();
 
-                    if (bagsInCar[r].CompareTag(temp))
+                    if (!bagsInCar[r].CompareTag(temp))//如果车里没有上一个npc的包,那么产生npc的包，然后结束generateBag
                     {
                         Button npcBag = Instantiate(NPCBag, bagPos[firstEmptyPos],
                             Quaternion.identity) as Button;
@@ -440,22 +441,23 @@ public class SubwayMovement : MonoBehaviour
                         npcBag.GetComponent<ClothToMachine>().myBagPosition = firstEmptyPos;
                         bagNum++;
                         npcBag.transform.SetParent(clothBagGroup.transform, false);
-                        break;
-                    }
+                        
+                    }//如果车里有了npc的包，也有了同样tag的包那么也结束generateBag
+                    return;
                 }
-                else
-                {
-                    print("NoSameBag = true");
-                    noSameBag = true;
-                }
+//                else//如果车里没有同样tag的包
+//                {
+//                    print("NoSameBag = true");
+//                    noSameBag = true;
+//                }
             }
 
-           
+            //不需要noSameBag这个bool，因为如果有一样包的话，本来也就直接return，结束generateBag了，不会进行到这一步
             //only generate a new bag if there is an empty position
             //如果同一个tag的包已经在车厢里了，那么就不要放进来这个人的包:noSameBag
           
-                if(noSameBag)
-                {
+//                if(noSameBag)
+//                {
                     //首先一定产生特殊npc的包
                     bag = Instantiate(NameToStationBags[stationNum.ToString()][0], bagPos[firstEmptyPos],
                         Quaternion.identity) as Button;
@@ -468,11 +470,13 @@ public class SubwayMovement : MonoBehaviour
                     bag.GetComponent<ClothToMachine>().myBagPosition = firstEmptyPos;
                     bagNum++;
                     bag.transform.SetParent(clothBagGroup.transform, false);
-                }
-                
+                    
                     //然后可能产生npc bag
                     //it is decided in the function whether there's an empty position for bag, so no worries for that 
                     GenerateNpcBag();
+//                }
+                
+                    
                 
 
             }
