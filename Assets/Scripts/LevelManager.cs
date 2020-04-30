@@ -21,16 +21,13 @@ public class LevelManager : MonoBehaviour
     public GameObject car;
     private CanvasGroup carCG;
     private PathFollower PathFollower;
-    public GameObject bubble;
     
     
     public GameObject station;
-    public GameObject map;
     public GameObject bagIn;
     public Sprite bagOut;
     private FinalCameraController FinalCameraController;
 
-    public GameObject InstructionBubble;
     public CanvasGroup arrowButton;
 
     public CanvasGroup instructionCG;
@@ -60,23 +57,25 @@ public class LevelManager : MonoBehaviour
             clicktime = 7;
             //Instructions.SetActive(false);
             Show(subwayCG);
+            Hide(instructionCG);
+            Hide(FinalCameraController.SubwayMap);
+            bagIn.SetActive(false);
+            Hide(chapterOne);
+
+
         }
         else
         {
-            isInstruction = true;
-            Hide(GoBackSubway);
-            Hide(subwayCG);
+            isInstruction = true;            
         
 //            Show(startScreen);
-
+            Hide(instructionCG);
             Instructions.SetActive(true);
-            map.SetActive(false);
             bagIn.SetActive(false);
-            bubble.SetActive(false);
             Show(chapterOne);
             Show(arrowButton);
-            Hide(Stations);
-            Hide(carCG);
+            Hide(FinalCameraController.SubwayMap);
+            Hide(GoBackSubway);
         }
     }
 
@@ -86,7 +85,6 @@ public class LevelManager : MonoBehaviour
         if (clicktime == 6)//已经点开了station detail
         {
             Hide(instructionCG);
-            bubble.SetActive(false);
             Show(GoBackSubway); 
             Hide(hintArrowCG);
             PathFollower.isInstruction = true;
@@ -96,7 +94,7 @@ public class LevelManager : MonoBehaviour
             Show(fishBubble);
             StartCoroutine(AnimateText(fishText, "Karara! See the bags? Time for work!", false, null, Vector2.zero));//clicktime = 6;
             //Show(arrowButton);
-            
+            PathFollower.isGame = true;
             Hide(arrowButton);
             Hide(clear);
         }
@@ -153,8 +151,6 @@ public class LevelManager : MonoBehaviour
         
         Hide(chapterOne);
         
-        map.SetActive(true);//显示地图
-        bubble.SetActive(true);
 
         FinalCameraController.ChangeToMap();
         yield return new WaitForSeconds(0.5f);
@@ -163,8 +159,7 @@ public class LevelManager : MonoBehaviour
         Show(instructionCG);
         StartCoroutine(AnimateText(instructionText, "The laundromat is in a subway car", false, null, Vector2.zero));//clicktime = 1;
         Show(arrowButton);
-        Show(carCG);
-
+        Show(FinalCameraController.SubwayMap);
 
 //        instructionText.text = "Clothes are delivered in at each station.";
     }

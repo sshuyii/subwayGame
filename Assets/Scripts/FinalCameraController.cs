@@ -19,7 +19,8 @@ public class FinalCameraController : MonoBehaviour
 
     public CanvasGroup ChapterOneEndComic;
     public int entryTime = 1;
-
+    public CanvasGroup TakePhoto;
+    public CanvasGroup Posture;
     public bool ChapterOneEnd;
     
     public CanvasGroup fishShoutCG;
@@ -55,6 +56,9 @@ public class FinalCameraController : MonoBehaviour
     public CanvasGroup setting;
 
     public ScrollRect mainpageScrollRect;
+
+    public CanvasGroup SubwayMap;
+  
     
     public enum AppState
     {
@@ -147,6 +151,8 @@ public class FinalCameraController : MonoBehaviour
         Hide(frontPage);
         Hide(postpage);
         HideAllPersonalPages();
+        Hide(TakePhoto);
+        Hide(Posture);
 
        
 
@@ -552,7 +558,8 @@ public class FinalCameraController : MonoBehaviour
 
 
 
-
+            Hide(TakePhoto);
+            Hide(Posture);
             transform.position = new Vector3(0, 0, -10);
             if (myCameraState == CameraState.Closet || myCameraState == CameraState.Map ||
                 myCameraState == CameraState.App || myCameraState == CameraState.Ad)
@@ -575,6 +582,8 @@ public class FinalCameraController : MonoBehaviour
         Hide(frontPage);
         Hide(appBackground);
         Hide(NPCPage);
+        Hide(SubwayMap);
+        
         HideAllPersonalPages(); 
         
         //for Tutorial
@@ -618,6 +627,7 @@ public class FinalCameraController : MonoBehaviour
         
         //cancel red dot
         InstagramController.redDot.SetActive(false);
+        Hide(TakePhoto);
 
        if(alreadyClothUI == false)        
         {
@@ -655,6 +665,7 @@ public class FinalCameraController : MonoBehaviour
                 lastCameraState = myCameraState;
                 myCameraState = CameraState.Map;
                 transform.position = new Vector3(0, 13, -10);
+                Show(SubwayMap);
             }
         }
         else
@@ -682,7 +693,8 @@ public class FinalCameraController : MonoBehaviour
     {
         Hide(subwayBackground);
 
-      
+        Show(TakePhoto);
+        Show(Posture);
         lastCameraState = myCameraState;
         transform.position = new Vector3(24, 0, -10);
         myCameraState = CameraState.Ad;

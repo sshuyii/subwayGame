@@ -150,6 +150,7 @@ public class WasherController : MonoBehaviour
         {
             fullImage.enabled = false;
             emptyImage.enabled = true;
+            DoorImage.sprite = AllMachines.closedDoor;
             Hide(Occupied);
 
         }

@@ -6,6 +6,8 @@ using UnityEngine.PlayerLoop;
 using UnityEngine.UI;
 using TMPro;
 using UnityEditor;
+using UnityEngine.UIElements;
+using Image = UnityEngine.UI.Image;
 
 public class ScreenshotHandler : MonoBehaviour
 {
@@ -184,7 +186,8 @@ public class ScreenshotHandler : MonoBehaviour
 
         //set parent(probably a better way to do
         newPost.transform.parent = InstagramController.filmParent.transform;
-        
+        newPost.transform.localScale = Vector3.one;
+
         Texture2D sprites = CropImage();
 
         Rect rec = new Rect(0, 0, sprites.width, sprites.height);
@@ -423,8 +426,10 @@ public class ScreenshotHandler : MonoBehaviour
     {
         if (takeScreenshotOnNextFrame)
         {
-            takeScreenshotOnNextFrame = false;
+            takeScreenshotOnNextFrame = false;        
+            
             RenderTexture renderTexture = myCamera.targetTexture;
+
 
             renderResult =
                 new Texture2D(renderTexture.width, renderTexture.height, TextureFormat.ARGB32, false);
@@ -527,7 +532,7 @@ public class ScreenshotHandler : MonoBehaviour
             toothpastePost = Instantiate(InstagramController.PosturePostPrefabNew, new Vector3(0, 0, 0), Quaternion.identity);
             //set parent(probably a better way to do
             toothpastePost.transform.SetParent(InstagramController.postParent.transform);
-            
+            toothpastePost.transform.localScale = Vector3.one;
             //move to the first of the list
             InstagramController.postList.Insert(0,toothpastePost);
         
@@ -595,7 +600,7 @@ public class ScreenshotHandler : MonoBehaviour
             //Width of image in pixels
             for (int x = 0; x < tex.width; x++)
             {
-                Color cPixelColour = renderResult.GetPixel(x , y + Mathf.FloorToInt(0.225f * height));
+                Color cPixelColour = renderResult.GetPixel(x ,  y + height/2 - Mathf.FloorToInt(0.5f * width));
                 tex.SetPixel(x, y, cPixelColour);
             }
         }
@@ -626,17 +631,6 @@ public class ScreenshotHandler : MonoBehaviour
     }
     
     
-    //wait for several seconds
-    IEnumerator WaitForSeconds(int seconds)
-    {
-        yield return new WaitForSeconds(seconds);
-    }
-    
-    IEnumerator ChapterOneEnds(int seconds)
-    {
-        //instantiate new post object     
-        var newPost = Instantiate(InstagramController.photoPostPrefab, new Vector3(0, 0, 0), Quaternion.identity);
-        yield return new WaitForSeconds(seconds);
-
-    }
+  
+  
 }

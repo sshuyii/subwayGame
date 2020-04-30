@@ -222,6 +222,7 @@ public class ChangeToPersonalPageForButton : MonoBehaviour
 
                 //set parent(probably a better way to do
                 newPost.transform.SetParent(InstagramController.postParent.transform);
+                newPost.transform.localScale = Vector3.one;
 
                 InstagramController.postList.Add(newPost);
             }
@@ -265,6 +266,7 @@ public class ChangeToPersonalPageForButton : MonoBehaviour
                 //set parent(probably a better way to do
                 newPost.transform.SetParent(InstagramController.postParent.transform);
                 InstagramController.postList.Add(newPost);
+                newPost.transform.localScale = Vector3.one;
 
             }
 

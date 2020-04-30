@@ -205,7 +205,6 @@ public class SubwayMovement : MonoBehaviour
     {
         //如果快进，那么train要跑到最近的那一站
 
-        trainSnapToNextStation();
         
         //test if have already arrived at stations
         //for poster generation
@@ -255,7 +254,7 @@ public class SubwayMovement : MonoBehaviour
 
             if (!FinalCameraController.isTutorial)
             {
-                NumberRecalculate(realTimer, ClothCountDownText);
+//                NumberRecalculate(realTimer, ClothCountDownText);
 
                 //start the timer once the train's in station
                 if (!isMoving)
@@ -727,10 +726,7 @@ public class SubwayMovement : MonoBehaviour
         
     }
 
-    private void trainSnapToNextStation()
-    {
-        
-    }
+  
     
     public void Hide(CanvasGroup UIGroup) {
         UIGroup.alpha = 0f; //this makes everything transparent

@@ -25,8 +25,9 @@ public class PathFollower : MonoBehaviour
     private Vector3 currentEulerAngles;
 
     public bool isInstruction;
-    private float instructionMoveSpeed = 4f;
+    private float instructionMoveSpeed;
 
+    public bool isGame;
     // Use this for initialization
     private void Start () {
 
@@ -41,15 +42,21 @@ public class PathFollower : MonoBehaviour
 
     }
 	
+   
     // Update is called once per frame
     private void Update () {
+
 
         if(isInstruction)//绕一圈
         {
             QuickMove();
-        }        
-        
-        else{        
+        }    
+        else if (!isInstruction && !isGame)
+        {
+            myRT.rotation = Quaternion.Euler(Vector3.zero);
+        }
+        else if(isGame)
+        {        
             Move();
         }
     }
@@ -57,7 +64,7 @@ public class PathFollower : MonoBehaviour
 
     private void QuickMove()
     {
-        instructionMoveSpeed = 3f;
+        instructionMoveSpeed = 500f;
 
         if (waypointIndex <= waypoints.Length - 1)
         {
@@ -70,9 +77,7 @@ public class PathFollower : MonoBehaviour
                 waypoints[waypointIndex].anchoredPosition,
                 instructionMoveSpeed * Time.deltaTime);
 
-           
-            
-           
+
                 
             // If Enemy reaches position of waypoint he walked towards
             // then waypointIndex is increased by 1
@@ -92,26 +97,36 @@ public class PathFollower : MonoBehaviour
         }
         else
         {
-            //到了第一站会先停下来
-//            waypointIndex = 0;
+            //到了第一站会先停下来,所以这一行disable了
+            //waypointIndex = 0;
             
+            //马上要到第一站了
             myRT.anchoredPosition = Vector2.MoveTowards(myRT.anchoredPosition,
                 waypoints[0].anchoredPosition,
                 instructionMoveSpeed * Time.deltaTime);
+//            myRT.rotation = Quaternion.AngleAxis(0, Vector3.forward);
+
+            myRT.rotation = Quaternion.Euler(Vector3.right);
             
+            //如果到了第一站
             if (myRT.anchoredPosition == waypoints[0].anchoredPosition)
             {
+                //那么停下来
                 instructionMoveSpeed = 0;
                 isInstruction = false;
-                waypointIndex = 0;
+//                waypointIndex = 0;
+//                myRT.rotation = Quaternion.AngleAxis(90, Vector3.forward);
+                myRT.rotation = Quaternion.Euler(Vector3.zero);
+
             }
-            else
-            {
-                //car rotates!
-                var dir = waypoints[waypointIndex].anchoredPosition - myRT.anchoredPosition;
-                var angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-                myRT.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-            }
+//            else
+//            {
+//                myRT.rotation = Quaternion.Euler(Vector3.right);
+//
+//                //car rotates!
+//                var dir = waypoints[waypointIndex].anchoredPosition - myRT.anchoredPosition;
+//                var angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+//            }
 
         }
     

@@ -249,10 +249,11 @@ public class InstagramController : MonoBehaviour
             //第一次到第二站，产生一个新的post, nami
             else if (SubwayMovement.alreadyStation0 && newStationNum == 2)
             {
-                print("arriving 3 station, nami");
+                print("arriving 3 station, nico");
 
-                StartCoroutine(CreatePersonalPagePost("ojisan", ojisanLaterPost[1],
-                    "this is created when train reaches the starting station for the first time"));
+                StartCoroutine(CreatePersonalPagePost("nico", nicoLaterPost[2],
+                    "this is the end of chapter 1"));
+                
 
                 newStationNum = 3;
 
@@ -310,9 +311,12 @@ public class InstagramController : MonoBehaviour
                 {
                     if (FinalCameraController.myCameraState != FinalCameraController.CameraState.App)
                     {
-                        StartCoroutine(CreatePersonalPagePost("nico", nicoLaterPost[2],
-                            "this is the end of chapter 1"));
+//                        StartCoroutine(CreatePersonalPagePost("nico", nicoLaterPost[2],
+//                            "this is the end of chapter 1"));
 
+                        //下一章ojisan要搬家了，所以这个是最后一张post
+                        StartCoroutine(CreatePersonalPagePost("ojisan", ojisanLaterPost[1],
+                            "this is created when train reaches the starting station for the first time"));
                         newPostNum = 3;
                         fishText.text = "What are you doing? Turn off your phone during work!";
                         chapterOneEndPre = true;
@@ -352,16 +356,17 @@ public class InstagramController : MonoBehaviour
         yield return new WaitForSeconds(5f);
         
         //instantiate new post object     
-        GameObject newPost = Instantiate(PersonalPagePrefab, new Vector3(0, 0, 0), Quaternion.identity);
+        GameObject newPost = Instantiate(photoPostPrefab, new Vector3(0, 0, 0), Quaternion.identity);
         print("create personal page posts");
 
+        newPost.GetComponent<Image>().sprite = post;
         newPost.GetComponent<EntryTime>().time = FinalCameraController.entryTime;
         FinalCameraController.entryTime++;
 
         //set parent(probably a better way to do
         if(NpcName == "nico")
         {
-            newPost.transform.parent = RetroPageContent.transform;
+            newPost.transform.SetParent(RetroPageContent.transform);
             retroPostList.Add(newPost.GetComponent<Image>());
             //如果关注了nico,放到首页里
             if (followNico)
@@ -372,7 +377,7 @@ public class InstagramController : MonoBehaviour
         else if (NpcName == "ojisan")
         {
             print("create ojisan posts");
-            newPost.transform.parent = OjisanPageContent.transform;
+            newPost.transform.SetParent(OjisanPageContent.transform);
             //如果关注了ojisan,放到首页里
             if (followDesigner)
             {
@@ -386,7 +391,6 @@ public class InstagramController : MonoBehaviour
         //postList.Insert(0,newPost);
             
         //change post image
-        newPost.GetComponent<Image>().sprite = post;
         
         redDot.SetActive(true);
 
@@ -405,8 +409,8 @@ public class InstagramController : MonoBehaviour
         //instantiate new post object     
         var newPost = Instantiate(PosturePostPrefabNew, new Vector3(0, 0, 0), Quaternion.identity);
         //set parent(probably a better way to do
-        newPost.transform.parent = postParent.transform;
-
+        newPost.transform.SetParent(postParent.transform);
+        newPost.transform.localScale = Vector3.one;
             
         //set entry time
         newPost.GetComponent<EntryTime>().time = time;

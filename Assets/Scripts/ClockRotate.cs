@@ -14,7 +14,7 @@ public class ClockRotate : MonoBehaviour
 
 
     private PathFollower PathFollower;
-    private GameObject car;
+    public GameObject car;
     private AllMachines AllMachines;
 
     public bool fastForward;
@@ -34,8 +34,8 @@ public class ClockRotate : MonoBehaviour
     {
         SubwayMovement = GameObject.Find("---StationController").GetComponent<SubwayMovement>();
         AllMachines = GameObject.Find("---ClothInMachineController").GetComponent<AllMachines>();
-        PathFollower = GameObject.Find("SubwayMapCar").GetComponent<PathFollower>();
         car = GameObject.Find("SubwayMapCar");
+        PathFollower = car.GetComponent<PathFollower>();
 
         //used when the timer is always on screen
         //zRotation = 360 / (SubwayMovement.stayTime + SubwayMovement.moveTime);

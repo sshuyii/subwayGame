@@ -2400,7 +2400,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1138886479}
   m_Direction: 0
   m_Value: 0.49999994
-  m_Size: 0.4615384
+  m_Size: 0.46153837
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -6673,16 +6673,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1012601519}
     m_Modifications:
-    - target: {fileID: 1630564389944166422, guid: fc50aa520c0fb414abc730cf079447e5,
-        type: 3}
-      propertyPath: m_Name
-      value: Notice
-      objectReference: {fileID: 0}
-    - target: {fileID: 1630564389944166422, guid: fc50aa520c0fb414abc730cf079447e5,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 1630564389944166423, guid: fc50aa520c0fb414abc730cf079447e5,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -6787,6 +6777,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1630564389944166422, guid: fc50aa520c0fb414abc730cf079447e5,
+        type: 3}
+      propertyPath: m_Name
+      value: Notice
+      objectReference: {fileID: 0}
+    - target: {fileID: 1630564389944166422, guid: fc50aa520c0fb414abc730cf079447e5,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fc50aa520c0fb414abc730cf079447e5, type: 3}
@@ -22071,7 +22071,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: -465.80002, y: 0}
+  m_AnchoredPosition: {x: -465.80005, y: 0}
   m_SizeDelta: {x: 462, y: 820}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &1179528994
@@ -30887,7 +30887,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 180549296}
   m_HandleRect: {fileID: 180549295}
   m_Direction: 0
-  m_Value: 0.50000036
+  m_Value: 0.5
   m_Size: 0.89599985
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -30979,10 +30979,10 @@ MonoBehaviour:
   clothBags:
   - {fileID: 1911849397198779274, guid: 7c179cee8c4d849ddbaf1ade9fbac8dc, type: 3}
   - {fileID: 307228934063611808, guid: 5b95f2af963a046f88a4c5c675b2ed2b, type: 3}
+  bagFirst: 1
   clothBagGroup: {fileID: 1406092518}
   dSR1: {fileID: 1000878047}
   dSR2: {fileID: 1515656813}
-  emptyNum: 0
   firstEmptyPos: 0
   bagNum: 0
   stationNames: []
@@ -31681,6 +31681,8 @@ MonoBehaviour:
   LevelManager: {fileID: 0}
   ChapterOneEndComic: {fileID: 0}
   entryTime: 1
+  TakePhoto: {fileID: 0}
+  Posture: {fileID: 0}
   ChapterOneEnd: 0
   fishShoutCG: {fileID: 0}
   TutorialManager: {fileID: 1522229831}
@@ -31699,6 +31701,7 @@ MonoBehaviour:
   lateReturnComic: 0
   setting: {fileID: 0}
   mainpageScrollRect: {fileID: 0}
+  SubwayMap: {fileID: 0}
   lastAppState: 0
   mySubwayState: 0
   alreadyNotice: 0
