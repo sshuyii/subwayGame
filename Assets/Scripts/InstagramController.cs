@@ -227,10 +227,10 @@ public class InstagramController : MonoBehaviour
             }
             else if (SubwayMovement.alreadyStation1 && newStationNum == 0)
             {
-                print("arring first station, nico");
+                print("arriving first station, nico");
 
                 StartCoroutine(CreatePersonalPagePost("nico", nicoLaterPost[0],
-                    "this is created when train reaches the first station for the first time"));
+                    "I feel like the icecream"));
 
                 newStationNum = 1;
             }
@@ -241,18 +241,18 @@ public class InstagramController : MonoBehaviour
                 print("arriving 2 station, nami");
 
                 StartCoroutine(CreatePersonalPagePost("ojisan", ojisanLaterPost[0],
-                    "this is created when train reaches the second station for the first time"));
+                    "Homemade salad"));
 
                 newStationNum = 2;
 
             }
-            //第一次到第二站，产生一个新的post, nami
+            //第一次到第二站，产生一个新的post, nico
             else if (SubwayMovement.alreadyStation0 && newStationNum == 2)
             {
                 print("arriving 3 station, nico");
 
                 StartCoroutine(CreatePersonalPagePost("nico", nicoLaterPost[2],
-                    "this is the end of chapter 1"));
+                    "Crazy is my daily routine"));
                 
 
                 newStationNum = 3;
@@ -279,8 +279,8 @@ public class InstagramController : MonoBehaviour
             else if (takenNum == 1 && newPostNum == 0)
             {
                 print("1 poster used, nami");
-                StartCoroutine(CreatePersonalPagePost("ojisan", ojisanLaterPost[2],
-                    "this is created when one poster is used"));
+                StartCoroutine(CreatePersonalPagePost("ojisan", ojisanLaterPost[1],
+                    "Stay healthy"));
 
                 newPostNum = 1;
             }
@@ -292,8 +292,8 @@ public class InstagramController : MonoBehaviour
                     print("2 poster used, nico");
 
                     StartCoroutine(CreatePersonalPagePost("nico", nicoLaterPost[1],
-                        "this is created when two poster is used"));
-
+                        "Night in the wood"));
+                    
 
                     newPostNum = 2;
                 }
@@ -315,8 +315,9 @@ public class InstagramController : MonoBehaviour
 //                            "this is the end of chapter 1"));
 
                         //下一章ojisan要搬家了，所以这个是最后一张post
-                        StartCoroutine(CreatePersonalPagePost("ojisan", ojisanLaterPost[1],
-                            "this is created when train reaches the starting station for the first time"));
+                        StartCoroutine(CreatePersonalPagePost("ojisan", ojisanLaterPost[2],
+                            "embrace yourself"));
+                      
                         newPostNum = 3;
                         fishText.text = "What are you doing? Turn off your phone during work!";
                         chapterOneEndPre = true;
@@ -378,8 +379,8 @@ public class InstagramController : MonoBehaviour
         {
             print("create ojisan posts");
             newPost.transform.SetParent(OjisanPageContent.transform);
-            //如果关注了ojisan,放到首页里
-            if (followDesigner)
+            //如果关注了ojisan,放到首页里,或者如果是第一章最后一个post，强制放进首页
+            if (followDesigner || chapterOneEndPre)
             {
                 CreatePostInMainPage("ojisan", post, postText,newPost.GetComponent<EntryTime>().time);
             }
@@ -429,10 +430,7 @@ public class InstagramController : MonoBehaviour
         //get the post text
         newPost.transform.Find("Post").gameObject.GetComponent<Image>().sprite = post;
         var textList = newPost.transform.Find("Post").gameObject.GetComponentsInChildren<Text>();
-        
-       
-        
-        
+
     
         //create comments
         var newComment = Instantiate(commentPrefab, new Vector3(0, 0, 0), Quaternion.identity, newPost.transform.Find("Comments"));

@@ -457,7 +457,7 @@ public class FinalCameraController : MonoBehaviour
            {
                
                Show(ChapterOneEndComic);//漫画
-               Show(LevelManager.arrowButton);
+//               Show(LevelManager.arrowButton);
            }
            else
            {
@@ -554,9 +554,6 @@ public class FinalCameraController : MonoBehaviour
             LevelManager.clicktime = 7;
             Show(fishShoutCG);
         }
-        
-
-
 
             Hide(TakePhoto);
             Hide(Posture);

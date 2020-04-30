@@ -63,7 +63,6 @@ public class TutorialManager : MonoBehaviour
 
     public bool wearNothing;
    
-    public GameObject TakeScreenshot;
 
 
     public GameObject KararaStanding;
@@ -271,7 +270,7 @@ public class TutorialManager : MonoBehaviour
             for (int i = 0; i < (textContent.Length + 1); i++)
             {
                 text.text = textContent.Substring(0, i);
-                yield return new WaitForSeconds(.01f);
+                yield return new WaitForSeconds(.005f);
 
                 showHintArrow = false;
                 if (i == textContent.Length)
@@ -457,8 +456,11 @@ public class TutorialManager : MonoBehaviour
             gobackButton.SetActive(false);
         }
 
-       
-        if (tutorialNumber == 2)
+        if (tutorialNumber == 1)
+        {
+            Hide(arrowButton);
+        }
+        else if (tutorialNumber == 2)
         {
             if (clicktime == 7 && lastTextFinish)
             {
@@ -762,7 +764,7 @@ public class TutorialManager : MonoBehaviour
             //还好包了
             KararaStandingImage.sprite = KararaWorkCloth;
 
-            
+            myHSS.GoToScreen(1);
             if(clicktime == 19)
             {
                 Hide(hintArrowCG);
@@ -885,6 +887,7 @@ public class TutorialManager : MonoBehaviour
             RectTransform.anchoredPosition = new Vector3(85, RectTransform.anchoredPosition.y);
             KararaStandingImage.enabled = true;
             KararaDisappear(false);
+            Hide(arrowButton);
         }
         else if (FinalCameraController.mySubwayState == FinalCameraController.SubwayState.One && tutorialNumber == 1)
         {
@@ -950,17 +953,7 @@ public class TutorialManager : MonoBehaviour
         print("loadScene");
     }
     
-    IEnumerator ChangeText(string dialogueText, bool isclick)
-    {
-        yield return new WaitForSecondsRealtime(0.1f);
-        fishText.text = dialogueText;
-        if (isclick)
-        {
-            clicktime++;
-        }
-    }
 
-   
     public void DoFishDialogue(bool trueOrFalse)
     {
         //disable the dialogues
@@ -1194,7 +1187,6 @@ public class TutorialManager : MonoBehaviour
             }
             else if (tutorialNumber == 2)
             {
-
                 stopDisappear = true;
                 if (clicktime == 3)
                 {
@@ -1283,7 +1275,7 @@ public class TutorialManager : MonoBehaviour
                     myHSS.GoToScreen(2);
                     StartCoroutine(AnimateText(fishText, "Click the bag to return it!", true, door,
                         bagdoorV)); //clicktime = 19
-
+                    FinalCameraController.mySubwayState = FinalCameraController.SubwayState.Two;
                     Hide(arrowButton);
                     //clicktime++;
                 }

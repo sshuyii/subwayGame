@@ -508,7 +508,7 @@ public class ScreenshotHandler : MonoBehaviour
         }        
         
         //if the background is already used
-        if (!InstagramController.AdAlreadyTakenList[InstagramController.currentBackground])
+        if (!InstagramController.AdAlreadyTakenList[InstagramController.currentBackground] && !FinalCameraController.isTutorial)
         {
             FinalCameraController.Show(Notice);
             Notice.gameObject.GetComponentInChildren<TextMeshProUGUI>().text = "no same background";
@@ -521,9 +521,11 @@ public class ScreenshotHandler : MonoBehaviour
         TakeScreenshot(width, height);
         
         //don't take the picture in the first half of the tutorial
-        if (FinalCameraController.isTutorial && FinalCameraController.TutorialManager.tutorialNumber < 9
-            )
+        if (FinalCameraController.isTutorial && FinalCameraController.TutorialManager.tutorialNumber < 9)
         {
+            flash = true;
+            myFlash.alpha = 1;
+            return;
         }
         else if(!usedPostures.ContainsKey(CalculateInventory.posNum.ToString()))//没用过这个姿势
         {

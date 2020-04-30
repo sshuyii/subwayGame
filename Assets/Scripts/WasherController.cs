@@ -129,6 +129,10 @@ public class WasherController : MonoBehaviour
             Hide(ClothUI);
             Show(CalculateInventory.InventoryFull);
             fulltemp = true;
+            
+            //close all machine doors
+            DoorImage.sprite = AllMachines.closedDoor;
+            StartCoroutine(MachineFold());
         }
 
         if (CalculateInventory.occupiedI < 6)
@@ -164,7 +168,7 @@ public class WasherController : MonoBehaviour
             }
             else
             {
-                
+                StartCoroutine(MachineFold());
             }
         }
         else if(myMachineState == AllMachines.MachineState.finished)

@@ -165,14 +165,16 @@ public class ClothToMachine : MonoBehaviour
         FinalCameraController.alreadyNotice = false;
         //去掉这个洗衣机上的tag
 
-        AllMachines.nameToTemp[tag].Clear();
-        //reset the temp list, so all the clothes are in the temp list
-        for (int i = 0; i < AllMachines.nameToPermenant[tag].Count; i++)
+        if(!FinalCameraController.isTutorial)
         {
-            
-            AllMachines.nameToTemp[tag].Add(AllMachines.nameToPermenant[tag][i]);
-        }
+            AllMachines.nameToTemp[tag].Clear();
+            //reset the temp list, so all the clothes are in the temp list
+            for (int i = 0; i < AllMachines.nameToPermenant[tag].Count; i++)
+            {
 
+                AllMachines.nameToTemp[tag].Add(AllMachines.nameToPermenant[tag][i]);
+            }
+        }
         
         for (int i = 0; i < AllMachines.WashingMachines.Count; i++)
         {
@@ -315,7 +317,7 @@ public class ClothToMachine : MonoBehaviour
                     this.gameObject.transform.SetParent(WasherControllerList[0].gameObject.transform);
 
                     transform.position =
-                        AllMachines.WashingMachines[0].transform.position + new Vector3(0, -2.9f, 0);
+                        AllMachines.WashingMachines[0].transform.position + new Vector3(0, -2.5f, 0);
 
                     FinalCameraController.TutorialManager.scrollControl(true);
 
