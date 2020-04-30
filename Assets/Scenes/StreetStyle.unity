@@ -17975,7 +17975,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 312960733}
   m_HandleRect: {fileID: 312960732}
   m_Direction: 0
-  m_Value: 0.4999989
+  m_Value: 0.4999978
   m_Size: 0.89599985
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -32045,7 +32045,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1144778276}
   m_HandleRect: {fileID: 1144778275}
   m_Direction: 0
-  m_Value: 0.49999988
+  m_Value: 0.49999976
   m_Size: 0.5714285
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -40918,6 +40918,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1075207435}
     m_Modifications:
+    - target: {fileID: 7174128394850666517, guid: 1845ce3ac0635440c9f57edf3acaed4e,
+        type: 3}
+      propertyPath: m_Name
+      value: Handle+
+      objectReference: {fileID: 0}
+    - target: {fileID: 7174128394850666517, guid: 1845ce3ac0635440c9f57edf3acaed4e,
+        type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 7174128394850666522, guid: 1845ce3ac0635440c9f57edf3acaed4e,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -41022,16 +41032,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 7174128394850666517, guid: 1845ce3ac0635440c9f57edf3acaed4e,
-        type: 3}
-      propertyPath: m_Name
-      value: Handle+
-      objectReference: {fileID: 0}
-    - target: {fileID: 7174128394850666517, guid: 1845ce3ac0635440c9f57edf3acaed4e,
-        type: 3}
-      propertyPath: m_Layer
-      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1845ce3ac0635440c9f57edf3acaed4e, type: 3}
@@ -66103,6 +66103,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2069949061}
     m_Modifications:
+    - target: {fileID: 7174128394850666517, guid: 1845ce3ac0635440c9f57edf3acaed4e,
+        type: 3}
+      propertyPath: m_Name
+      value: Handle+
+      objectReference: {fileID: 0}
     - target: {fileID: 7174128394850666522, guid: 1845ce3ac0635440c9f57edf3acaed4e,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -66207,11 +66212,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 7174128394850666517, guid: 1845ce3ac0635440c9f57edf3acaed4e,
-        type: 3}
-      propertyPath: m_Name
-      value: Handle+
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1845ce3ac0635440c9f57edf3acaed4e, type: 3}
