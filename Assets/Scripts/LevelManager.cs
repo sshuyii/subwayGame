@@ -43,6 +43,8 @@ public class LevelManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Resources.UnloadUnusedAssets();
+
         FinalCameraController = GameObject.Find("Main Camera").GetComponent<FinalCameraController>();
 
 //        instructionText = InstructionBubble.GetComponentInChildren<TextMeshProUGUI>();
@@ -62,19 +64,18 @@ public class LevelManager : MonoBehaviour
             bagIn.SetActive(false);
             Hide(chapterOne);
 
-
         }
         else
         {
             isInstruction = true;            
         
 //            Show(startScreen);
-            Hide(instructionCG);
+            Show(instructionCG);
             Instructions.SetActive(true);
             bagIn.SetActive(false);
             Show(chapterOne);
             Show(arrowButton);
-            Hide(FinalCameraController.SubwayMap);
+            Show(FinalCameraController.SubwayMap);
             Hide(GoBackSubway);
         }
     }

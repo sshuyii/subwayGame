@@ -16,6 +16,7 @@ public class TutorialManager : MonoBehaviour
 {
     public GameObject DialogueBubble;
 
+    public CanvasGroup hintArrowInventory;
     public CanvasGroup ChapterOne;
     public CanvasGroup closetSubway;
     public GameObject screenshot;
@@ -162,7 +163,8 @@ public class TutorialManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
+        Resources.UnloadUnusedAssets();
         audioClick = GetComponent<AudioSource>();
 
         Hide(GestureCG);
@@ -698,6 +700,8 @@ public class TutorialManager : MonoBehaviour
 //            kararaText.text = "Disco";
             //箭头给到换衣界面的衣服UI
             Show(hintArrowCG);
+            //新方式给箭头，有两个箭头，其中一个专门给closet
+            Show(hintArrowInventory);
             tutorialDialogueState = DialogueState.none;
             hintArrow.transform.SetParent(Inventory.transform);
             hintArrow.GetComponent<RectTransform>().anchoredPosition = inventoryV;
@@ -705,6 +709,8 @@ public class TutorialManager : MonoBehaviour
         else if(tutorialNumber == 14 && clicktime == 14)//穿上disco衣服
         {
 //            kararaText.text = "Cool";
+            Hide(hintArrowInventory);
+
             StartCoroutine(AnimateText(kararaText, "Cool", true, Inventory, subwayV));   //clicktime = 15
 
             tutorialDialogueState = DialogueState.karara;
@@ -764,11 +770,12 @@ public class TutorialManager : MonoBehaviour
             //还好包了
             KararaStandingImage.sprite = KararaWorkCloth;
 
-            myHSS.GoToScreen(1);
+//            myHSS.GoToScreen(1);
             if(clicktime == 19)
             {
                 Hide(hintArrowCG);
 
+                print("clicktime = 19, tutorialNumber = 17");
                 //如果转到第一个页面，那么鱼老板讲话
                 if (FinalCameraController.mySubwayState == FinalCameraController.SubwayState.One)
                 {
@@ -789,15 +796,6 @@ public class TutorialManager : MonoBehaviour
             }
           
         }
-        else if(tutorialNumber == 18)
-        {
-            fishText.text = "The end of my day, easy!";
-            arrow.enabled = true;
-            Show(arrowButton);
-
-//            StartCoroutine("StoryStart");
-        }
-        
         
         
         //only show Karara when she's in the subway scene
@@ -1275,7 +1273,7 @@ public class TutorialManager : MonoBehaviour
                     myHSS.GoToScreen(2);
                     StartCoroutine(AnimateText(fishText, "Click the bag to return it!", true, door,
                         bagdoorV)); //clicktime = 19
-                    FinalCameraController.mySubwayState = FinalCameraController.SubwayState.Two;
+                    //FinalCameraController.mySubwayState = FinalCameraController.SubwayState.Two;
                     Hide(arrowButton);
                     //clicktime++;
                 }

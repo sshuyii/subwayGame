@@ -105,7 +105,6 @@ public class FinalCameraController : MonoBehaviour
 
     private bool isLerp = false;
 
-    public CanvasGroup GoBack;
     public CameraState lastCameraState;
 
     public CameraState myCameraState;
@@ -290,14 +289,12 @@ public class FinalCameraController : MonoBehaviour
             if (myCameraState == CameraState.App)
             {
                 Hide(inventory);
-                Hide(GoBack);
                 //Hide(basicUI);
                 Show(appBackground);
             }
             else
             {
                 Hide(inventory);
-                Show(GoBack);
                 //Hide(basicUI);
                 Hide(appBackground);
             }
@@ -308,7 +305,6 @@ public class FinalCameraController : MonoBehaviour
             Show(inventory);
             //Hide(basicUI);
 
-            Show(GoBack);
             Hide(appBackground);
 
         }
@@ -316,7 +312,6 @@ public class FinalCameraController : MonoBehaviour
         else
         {
             Hide(inventory);
-            Hide(GoBack);
             //Show(basicUI);
             Hide(appBackground);
         }
@@ -546,6 +541,8 @@ public class FinalCameraController : MonoBehaviour
         if(isTutorial)
         {
             TutorialManager.scrollControl(true);
+            myCameraState = CameraState.Subway;
+
         }
         else if (LevelManager.isInstruction)//换到鱼界面
         {
@@ -697,18 +694,7 @@ public class FinalCameraController : MonoBehaviour
         myCameraState = CameraState.Ad;
     }
     
-    public void GoMainpage()
-    {
-        transform.position = new Vector3(35, 0, -10);        
-        Show(frontPage);
 
-    }
-    public void GoPersonalpage()
-    {
-        transform.position = new Vector3(55, 0, -10);        
-        //Hide(mainpage);
-
-    }
 
     public void HideAllPersonalPages()
     {

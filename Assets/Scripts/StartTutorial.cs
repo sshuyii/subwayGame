@@ -17,7 +17,6 @@ public class StartTutorial : MonoBehaviour
     public float endPoint;
 
     public GameObject iconBackground;
-    public CanvasGroup MachineGroup;
     
     public bool isComic;
     public bool isComic0;
