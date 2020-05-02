@@ -163,12 +163,11 @@ public class InstagramButtons : MonoBehaviour
         
         
         
-        
         //change post text and comments according to post content
-        if (currentSprite.name == "designDoc")
+        InstagramController.postText.text = GetComponent<EntryTime>().postText;
+
+        if (currentSprite.name == "designer_self")
         {
-            InstagramController.postText.text =
-                "<b>Ojisan</b> Just found this sketch from the bottom of my bookshelf. I doubt the design might already be outdated nowadays.";
             var reply1 = Instantiate(InstagramController.commentPrefab, new Vector3(0, 0, 0), Quaternion.identity, InstagramController.postReplyParent.transform);
             reply1.GetComponentInChildren<Image>().sprite = InstagramController.NPCspriteList[1];
             var replyText1 = reply1.GetComponentInChildren<TextMeshProUGUI>();
@@ -178,8 +177,8 @@ public class InstagramButtons : MonoBehaviour
         
         else if(currentSprite.name == "Gallery")
         {
-            InstagramController.postText.text =
-                "<b>Nico</b> Who took this picture of me???";
+//            InstagramController.postText.text =
+//                "<b>Nico</b> Who took this picture of me???";
             var reply1 = Instantiate(InstagramController.commentPrefab, new Vector3(0, 0, 0), Quaternion.identity, InstagramController.postReplyParent.transform);
             reply1.GetComponentInChildren<Image>().sprite = InstagramController.NPCspriteList[3];
             var replyText1 = reply1.GetComponentInChildren<TextMeshProUGUI>();
@@ -188,8 +187,8 @@ public class InstagramButtons : MonoBehaviour
         }
         else if(currentSprite.name == "icecream")
         {
-            InstagramController.postText.text =
-                "<b>Nico</b> Nightmare. I screamed.";
+//            InstagramController.postText.text =
+//                "<b>Nico</b> Nightmare. I screamed.";
             var reply1 = Instantiate(InstagramController.commentPrefab, new Vector3(0, 0, 0), Quaternion.identity, InstagramController.postReplyParent.transform);
             reply1.GetComponentInChildren<Image>().sprite = InstagramController.NPCspriteList[3];
             var replyText1 = reply1.GetComponentInChildren<TextMeshProUGUI>();
@@ -199,14 +198,14 @@ public class InstagramButtons : MonoBehaviour
         
         else if(currentSprite.name == "akunohana")
         {
-            InstagramController.postText.text =
-                "<b>Nico</b> Human nature is a joke";
+//            InstagramController.postText.text =
+//                "<b>Nico</b> Human nature is a joke";
 
         }
         else if(currentSprite.name == "gotoschool")
         {
-            InstagramController.postText.text =
-                "<b>Nico</b> First day of school. Feels okay.";
+//            InstagramController.postText.text =
+//                "<b>Nico</b> First day of school. Feels okay.";
             var reply1 = Instantiate(InstagramController.commentPrefab, new Vector3(0, 0, 0), Quaternion.identity, InstagramController.postReplyParent.transform);
             reply1.GetComponentInChildren<Image>().sprite = InstagramController.NPCspriteList[3];
             var replyText1 = reply1.GetComponentInChildren<TextMeshProUGUI>();

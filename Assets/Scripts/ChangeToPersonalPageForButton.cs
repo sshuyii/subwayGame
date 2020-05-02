@@ -220,6 +220,10 @@ public class ChangeToPersonalPageForButton : MonoBehaviour
                 profileNicoImage.sprite = InstagramController.allProfile["nico"];
                 profileNicoImage.GetComponentInChildren<Text>().text = "Nico";
 
+                //set post text 
+                newPost.transform.Find("Post").gameObject.GetComponentInChildren<Text>().text = InstagramController.retroPostList[i].gameObject.GetComponent<EntryTime>().postText;
+
+                
                 //set parent(probably a better way to do
                 newPost.transform.SetParent(InstagramController.postParent.transform);
                 newPost.transform.localScale = Vector3.one;

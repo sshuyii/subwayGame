@@ -356,6 +356,7 @@ public class InstagramController : MonoBehaviour
         //first wait for 10 seconds
         yield return new WaitForSeconds(5f);
         
+        
         //instantiate new post object     
         GameObject newPost = Instantiate(photoPostPrefab, new Vector3(0, 0, 0), Quaternion.identity);
         print("create personal page posts");
@@ -364,11 +365,16 @@ public class InstagramController : MonoBehaviour
         newPost.GetComponent<EntryTime>().time = FinalCameraController.entryTime;
         FinalCameraController.entryTime++;
 
+       
+
+        
         //set parent(probably a better way to do
         if(NpcName == "nico")
         {
             newPost.transform.SetParent(RetroPageContent.transform);
             retroPostList.Add(newPost.GetComponent<Image>());
+            //set post text
+            newPost.GetComponent<EntryTime>().postText = "<b>Nico</b> " + postText;
             //如果关注了nico,放到首页里
             if (followNico)
             {
@@ -379,6 +385,8 @@ public class InstagramController : MonoBehaviour
         {
             print("create ojisan posts");
             newPost.transform.SetParent(OjisanPageContent.transform);
+            //set post text
+            newPost.GetComponent<EntryTime>().postText = "<b>Ojisan</b> " + postText;
             //如果关注了ojisan,放到首页里,或者如果是第一章最后一个post，强制放进首页
             if (followDesigner || chapterOneEndPre)
             {

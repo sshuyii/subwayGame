@@ -7,6 +7,8 @@ public class EntryTime : MonoBehaviour
     public int time;
 
     public int order;
+
+    public string postText;
     // Start is called before the first frame update
     void Start()
     {

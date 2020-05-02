@@ -1389,6 +1389,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   time: -12
   order: 0
+  postText: <b>Ojisan</b>  Someone
 --- !u!114 &37440346
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1804,6 +1805,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   time: -3
   order: 0
+  postText: <b>Nico</b>  First day of school.
 --- !u!114 &41787746
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3793,6 +3795,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   time: -9
   order: 0
+  postText: <b>Ojisan</b>  Ramen
 --- !u!114 &110099804
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7130,6 +7133,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   time: -1
   order: 0
+  postText: 
 --- !u!114 &246396425
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8966,6 +8970,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   time: -8
   order: 0
+  postText: <b>Ojisan</b>  Salad
 --- !u!114 &317103724
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15312,6 +15317,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   time: -4
   order: 0
+  postText: <b>Nico</b>  Human nature is a joke.
 --- !u!114 &571107370
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23268,7 +23274,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 884359951}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -200}
   m_LocalScale: {x: 142.13722, y: 142.13722, z: 142.13722}
   m_Children:
   - {fileID: 1188479564}
@@ -32260,7 +32266,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -17}
-  m_SizeDelta: {x: 892, y: 1440}
+  m_SizeDelta: {x: 892, y: 1500}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!225 &1233730054
 CanvasGroup:
@@ -34150,6 +34156,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   time: -10
   order: 0
+  postText: <b>Ojisan</b>  Food
 --- !u!114 &1313266479
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -36023,6 +36030,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   time: 0
   order: 0
+  postText: 
 --- !u!114 &1396524916
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -40710,6 +40718,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   time: -11
   order: 0
+  postText: <b>Nico</b>  WHo took this picture of me?
 --- !u!114 &1599168233
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -52641,11 +52650,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2069949061}
     m_Modifications:
-    - target: {fileID: 7174128394850666517, guid: 1845ce3ac0635440c9f57edf3acaed4e,
-        type: 3}
-      propertyPath: m_Name
-      value: Handle+
-      objectReference: {fileID: 0}
     - target: {fileID: 7174128394850666522, guid: 1845ce3ac0635440c9f57edf3acaed4e,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -52750,6 +52754,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7174128394850666517, guid: 1845ce3ac0635440c9f57edf3acaed4e,
+        type: 3}
+      propertyPath: m_Name
+      value: Handle+
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1845ce3ac0635440c9f57edf3acaed4e, type: 3}
