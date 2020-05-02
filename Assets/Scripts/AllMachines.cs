@@ -14,6 +14,8 @@ public class AllMachines : MonoBehaviour
     public Dictionary<string, List<Sprite>> nameToTemp = new Dictionary<string, List<Sprite>>();
     public Dictionary<string, List<Sprite>> nameToPermenant = new Dictionary<string, List<Sprite>>();
 
+
+    public bool isReturning;
     
     public GameObject returnNotice;
 

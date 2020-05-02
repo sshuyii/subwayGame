@@ -18,6 +18,7 @@ public class CalculateInventory : MonoBehaviour
     public bool wearingShoe;
     public bool wearingWorkCloth;
 
+    public Sprite disappear;
     public CanvasGroup InventoryFull;
     
     public Sprite transparent;

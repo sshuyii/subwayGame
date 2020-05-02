@@ -259,8 +259,9 @@ public class WasherController : MonoBehaviour
         yield return new WaitForSeconds(0.1f);
 
         GenerateCloth(this.transform.gameObject.tag);
-        Show(ClothUI);
         
+        Show(ClothUI);
+               
         pressOK = true;
         if(FinalCameraController.isTutorial && FinalCameraController.TutorialManager.tutorialNumber == 8)
         {
@@ -325,9 +326,12 @@ public class WasherController : MonoBehaviour
             }
             else if (myMachineState == AllMachines.MachineState.finished)
             {
-                if (FinalCameraController.isTutorial && FinalCameraController.TutorialManager.tutorialNumber > 12)
+                if (FinalCameraController.isTutorial)
                 {
-                    return;
+                    if(FinalCameraController.TutorialManager.tutorialNumber > 11)
+                    {
+                        return;
+                    }                
                 }
                 if(pressOK)
                 {
@@ -385,9 +389,12 @@ public class WasherController : MonoBehaviour
                     Show(Occupied);
                     
                     //show message and closet UI
-                    Show(FinalCameraController.clothCG);
-                    Show(FinalCameraController.messageCG);
-                    FinalCameraController.isShown = true;      
+                    if(!FinalCameraController.isTutorial)
+                    {
+                        Show(FinalCameraController.clothCG);
+                        Show(FinalCameraController.messageCG);
+                        FinalCameraController.isShown = true;
+                    }
 
                 }
             

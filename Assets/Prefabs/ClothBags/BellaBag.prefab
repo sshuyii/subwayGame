@@ -145,7 +145,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 983fcfa504c9f497ca53462b46b56cbd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hitTime: 0
   myBagPosition: 0
+  isNotice: 0
   isReady: 0
 --- !u!1 &2057545283722965551
 GameObject:
@@ -380,12 +382,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1da52b48498ce4804a2f3f4fd2994ba1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  zRotation: 0
   bagEmptyNum: 0
   machineEmptyNum: 0
-  YellowClock: {fileID: 7499516323433884657}
+  car: {fileID: 0}
   fastForward: 0
+  YellowClock: {fileID: 7499516323433884657}
+  zRotation: 0
   bubble: {fileID: 0}
+  isFast: 0
 --- !u!114 &7212973958326114443
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -82,7 +82,7 @@ public class DoInventory : MonoBehaviour
 //            {
 //                FinalCameraController.TutorialManager.tutorialNumber = 12;
 //            }
-            if (FinalCameraController.TutorialManager.tutorialNumber == 9) //拿了第二件衣服
+            if (FinalCameraController.TutorialManager.tutorialNumber == 9||FinalCameraController.TutorialManager.tutorialNumber == 11) //拿了第二件衣服
             {
                 FinalCameraController.TutorialManager.tutorialNumber = 12;
                 //in tutorial, if click a cloth, cloth the entire ui interface

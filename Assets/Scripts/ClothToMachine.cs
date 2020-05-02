@@ -96,7 +96,7 @@ public class ClothToMachine : MonoBehaviour
             {
                 bagTimer += Time.deltaTime;
                 //如果还没转够整整一圈，enable timer
-                if (bagTimer < 3 * SubwayMovement.moveTime + 4 * SubwayMovement.stayTime)
+                if (bagTimer < 3 * SubwayMovement.moveTime + 3.5 * SubwayMovement.stayTime)
                 {
                     timeUp = false;
                 }
@@ -109,10 +109,20 @@ public class ClothToMachine : MonoBehaviour
                         //检测是否有一个finish的洗衣机，里面装着这个tag的衣服
                         if (alreadyWashed) //if this bag is already washed
                         {
-                            //AllMachines.currentBag = this.gameObject;
-                            returnClothYes();
+                            //一次只能还一个包
+                            //如果已经有包在还了，就直接还
+                            if(!AllMachines.isReturning)
+                            {
+                                //AllMachines.currentBag = this.gameObject;
+                                FinalCameraController.lateReturnComic = true;
+                                print("lateReturncomic =" + FinalCameraController.lateReturnComic);
+                                StartCoroutine(returnClothYes());
+                            }
+                            else
+                            {
+                                returnClothYesDirectly();
+                            }
                             //enable fish comic image
-                            FinalCameraController.lateReturnComic = true;
                             //现在是，鱼老板直接帮忙把洗好又到站的衣服换了，没有其他惩罚，转到鱼老板界面，老板告诉karara没来得及还
                         }
                         else if (!isOverdue) //没有洗好的衣服不要还
@@ -157,10 +167,41 @@ public class ClothToMachine : MonoBehaviour
             CalculateInventory.blackPantsASR.sprite = CalculateInventory.allAdCloth["BlackPants"];
         }
     }
-    
 
-    public void returnClothYes()
+
+    IEnumerator returnClothYes ()
     {
+        AllMachines.isReturning = true;
+        FinalCameraController.ChangeToSubway();
+
+
+        //找到那个洗衣机
+        for (int a = 0; a < AllMachines.WashingMachines.Count; a++)
+        {
+            if (WasherControllerList[a].CompareTag(tag))
+            {
+                FinalCameraController.returnMachineNum = a;
+            }
+        }
+
+        int temp = 0;
+        //转到这个洗衣机在的页面
+        if (FinalCameraController.returnMachineNum == 0)
+        {
+            temp = 2;
+        }
+        else
+        {
+            temp = 3;
+        }
+        
+        FinalCameraController.myHSS.GoToScreen(temp);
+        
+        yield return new WaitForSeconds(1f);
+        print("bag disappear");
+
+        //包消失
+        
         FinalCameraController.AllStationClothList.Remove(tag);
         FinalCameraController.alreadyNotice = false;
         //去掉这个洗衣机上的tag
@@ -171,7 +212,6 @@ public class ClothToMachine : MonoBehaviour
             //reset the temp list, so all the clothes are in the temp list
             for (int i = 0; i < AllMachines.nameToPermenant[tag].Count; i++)
             {
-
                 AllMachines.nameToTemp[tag].Add(AllMachines.nameToPermenant[tag][i]);
             }
         }
@@ -180,6 +220,8 @@ public class ClothToMachine : MonoBehaviour
         {
             if (WasherControllerList[i].CompareTag(tag))
             {
+                FinalCameraController.returnMachineNum = i;
+
 //                print("AllMachines.currentBag.tag = " + AllMachines.currentBag.tag);
                 //对所有inventory中带着这个洗衣机tag的衣服，把它们放回洗衣机
                 
@@ -195,7 +237,6 @@ public class ClothToMachine : MonoBehaviour
                         CalculateInventory.occupiedI = CalculateInventory.occupiedI - 1;
                         //reset the tag of the inventory item
                         CalculateInventory.inventory[u].tag = "Untagged";
-
                     }
                 }
                 //todo: can be simpler
@@ -240,9 +281,6 @@ public class ClothToMachine : MonoBehaviour
                     CalculateInventory.wearingShoe = false;
 
                 }
-                
-                
-                
 
                 //reset the machine's variables
                 WasherControllerList[i].transform.tag ="Untagged";
@@ -250,41 +288,204 @@ public class ClothToMachine : MonoBehaviour
                 WasherControllerList[i].isFirstOpen = true;
                 WasherControllerList[i].clothNum = 4;
 
-//
 //                print("destroy");
 //                print(this.transform.parent.gameObject.name);
 
+                GameObject bagToReturn = new GameObject();
                 
-                //this function is called in the notice script, so destroy itself doesn't destroy the bag
-                //need to find the bag with the same bagu
-
-                for(int y = 0; y < SubwayMovement.bagsInCar.Count; y++)
+                for (int y = 0; y < SubwayMovement.bagsInCar.Count; y++)
                 {
-                    if(CompareTag(SubwayMovement.bagsInCar[y].tag))
+                    if (CompareTag(SubwayMovement.bagsInCar[y].tag))
                     {
-                        Destroy(SubwayMovement.bagsInCar[y]);
-
-                        SubwayMovement.bagsInCar.Remove(SubwayMovement.bagsInCar[y]);
+                        bagToReturn = SubwayMovement.bagsInCar[y];
                     }
                 }
-
-                Destroy(FinalCameraController.generatedNotice);
-
-
-                //reset hitTime so the machine contain different bag of clothes next time
-                //don't really need to reset because hitTime is only related to bags
-//                hitTime = 0;
-                if (FinalCameraController.isTutorial && FinalCameraController.TutorialManager.tutorialNumber == 16)
+                
+                //如果是晚还包的话
+                //必须后destroy这个包，因为destroy在每个frame的最后执行，如果先destroy的话，Coroutine就不会被执行了
+                if (FinalCameraController.lateReturnComic && !FinalCameraController.isTutorial)//call这一整个function之前就已经是true了
                 {
-                    FinalCameraController.TutorialManager.tutorialNumber = 17;
-                    FinalCameraController.TutorialManager.screamImage.enabled = true;
-                    FinalCameraController.TutorialManager.scrollControl(true);
+                    //先播放一个包不见的动画
+                    bagToReturn.GetComponent<Image>().sprite = CalculateInventory.disappear;
+                    
+                    yield return new WaitForSeconds(0.2f);
+
+                    bagToReturn.GetComponent<Image>().sprite = CalculateInventory.transparent;
+
+                    yield return new WaitForSeconds(0.5f);
+            
+                    FinalCameraController.myHSS.GoToScreen(1);
+                    yield return new WaitForSeconds(0.2f);
+            
+                    FinalCameraController.Show(FinalCameraController.fishTalk);
+                    FinalCameraController.fishTalkText.text = "Return your customers' clothes in time! How can you have such bad memory!";
+                    FinalCameraController.lateReturnComic = false;
+                   
                 }
+              
+
+                    //this function is called in the notice script, so destroy itself doesn't destroy the bag
+                    //need to find the bag with the same bagu
+
+                    for (int y = 0; y < SubwayMovement.bagsInCar.Count; y++)
+                    {
+                        if (CompareTag(SubwayMovement.bagsInCar[y].tag))
+                        {
+                            Destroy(SubwayMovement.bagsInCar[y]);
+
+                            SubwayMovement.bagsInCar.Remove(SubwayMovement.bagsInCar[y]);
+                        }
+                    }
+
+                    Destroy(FinalCameraController.generatedNotice);
+                    AllMachines.isReturning = false;
+                
+              
             }
         }
+        
+        
     }
 
 
+
+    
+    public void returnClothYesDirectly()
+    {
+
+        //包消失
+        
+        FinalCameraController.AllStationClothList.Remove(tag);
+        FinalCameraController.alreadyNotice = false;
+        //去掉这个洗衣机上的tag
+
+        if(!FinalCameraController.isTutorial)
+        {
+            AllMachines.nameToTemp[tag].Clear();
+            //reset the temp list, so all the clothes are in the temp list
+            for (int i = 0; i < AllMachines.nameToPermenant[tag].Count; i++)
+            {
+                AllMachines.nameToTemp[tag].Add(AllMachines.nameToPermenant[tag][i]);
+            }
+        }
+        
+        for (int i = 0; i < AllMachines.WashingMachines.Count; i++)
+        {
+            if (WasherControllerList[i].CompareTag(tag))
+            {
+                FinalCameraController.returnMachineNum = i;
+
+//                print("AllMachines.currentBag.tag = " + AllMachines.currentBag.tag);
+                //对所有inventory中带着这个洗衣机tag的衣服，把它们放回洗衣机
+                
+                for (int u = 0; u < CalculateInventory.inventory.Count; u++)
+                {
+                    if (CalculateInventory.inventory[u].CompareTag(tag))
+                    {
+                        //change the inventory button image back to start
+                        CalculateInventory.inventory[u].GetComponent<Image>().sprite = FinalCameraController.startSprite;
+                        
+                        print("returnrnrnrnrnrnrn");
+                        //then 
+                        CalculateInventory.occupiedI = CalculateInventory.occupiedI - 1;
+                        //reset the tag of the inventory item
+                        CalculateInventory.inventory[u].tag = "Untagged";
+                    }
+                }
+                //todo: can be simpler
+                //如果karara身上正好穿着这件衣服，那么在地铁、换装、广告界面都要脱下来
+                if (CalculateInventory.everythingSR.CompareTag(this.tag))
+                {
+                    CalculateInventory.everythingSR.sprite = CalculateInventory.transparent;
+                    CalculateInventory.everythingASR.sprite = CalculateInventory.transparent;
+                    CalculateInventory.everythingSSR.sprite = CalculateInventory.transparent;
+                    
+                    CalculateInventory.wearingEverything = false;
+                    //如果穿的是这件衣服的话
+                    
+                    ChangeToUnderwear("everything");
+                }
+                if (CalculateInventory.topSR.CompareTag(tag))
+                {
+                    CalculateInventory.topSR.sprite = CalculateInventory.transparent;
+                    CalculateInventory.topASR.sprite = CalculateInventory.transparent;
+                    CalculateInventory.topSSR.sprite = CalculateInventory.transparent;
+                    
+                    ChangeToUnderwear("top");
+                    CalculateInventory.wearingTop = false;
+
+                }
+                if (CalculateInventory.otherSR.CompareTag(tag))
+                {
+                    CalculateInventory.otherSR.sprite = CalculateInventory.transparent;
+                    CalculateInventory.otherASR.sprite = CalculateInventory.transparent;
+                    CalculateInventory.otherSSR.sprite = CalculateInventory.transparent;
+                    
+                    ChangeToUnderwear("bottom");
+                    CalculateInventory.wearingBottom = false;
+
+                }
+                if (CalculateInventory.shoeSR.CompareTag(tag))
+                {
+                    CalculateInventory.shoeSR.sprite = CalculateInventory.transparent;
+                    CalculateInventory.shoeASR.sprite = CalculateInventory.transparent;
+                    CalculateInventory.shoeSSR.sprite = CalculateInventory.transparent;
+                    
+                    CalculateInventory.wearingShoe = false;
+
+                }
+
+                //reset the machine's variables
+                WasherControllerList[i].transform.tag ="Untagged";
+                WasherControllerList[i].myMachineState = AllMachines.MachineState.empty;
+                WasherControllerList[i].isFirstOpen = true;
+                WasherControllerList[i].clothNum = 4;
+
+//                print("destroy");
+//                print(this.transform.parent.gameObject.name);
+
+                GameObject bagToReturn = new GameObject();
+                
+                for (int y = 0; y < SubwayMovement.bagsInCar.Count; y++)
+                {
+                    if (CompareTag(SubwayMovement.bagsInCar[y].tag))
+                    {
+                        bagToReturn = SubwayMovement.bagsInCar[y];
+                    }
+                }
+             
+              
+
+                    //this function is called in the notice script, so destroy itself doesn't destroy the bag
+                    //need to find the bag with the same bagu
+
+                    for (int y = 0; y < SubwayMovement.bagsInCar.Count; y++)
+                    {
+                        if (CompareTag(SubwayMovement.bagsInCar[y].tag))
+                        {
+                            Destroy(SubwayMovement.bagsInCar[y]);
+
+                            SubwayMovement.bagsInCar.Remove(SubwayMovement.bagsInCar[y]);
+                        }
+                    }
+
+                    Destroy(FinalCameraController.generatedNotice);
+                    
+                    //reset hitTime so the machine contain different bag of clothes next time
+                    //don't really need to reset because hitTime is only related to bags
+//                hitTime = 0;
+                    if (FinalCameraController.isTutorial && FinalCameraController.TutorialManager.tutorialNumber == 16)
+                    {
+                        FinalCameraController.TutorialManager.tutorialNumber = 17;
+                        FinalCameraController.TutorialManager.screamImage.enabled = true;
+                        FinalCameraController.TutorialManager.scrollControl(true);
+                        Destroy(FinalCameraController.TutorialManager.bag);
+                    }
+            }
+        }
+        
+        
+    }
     public void returnClothNo()
     {
         
@@ -308,6 +509,7 @@ public class ClothToMachine : MonoBehaviour
         {
             if (hitTime == 0)
             {
+                //for tutorial
                 if (FinalCameraController.isTutorial)
                 {
                     WasherControllerList[0].myMachineState = AllMachines.MachineState.bagUnder;

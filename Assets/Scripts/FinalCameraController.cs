@@ -22,10 +22,12 @@ public class FinalCameraController : MonoBehaviour
     public CanvasGroup TakePhoto;
     public CanvasGroup Posture;
     public bool ChapterOneEnd;
+    public CanvasGroup Mask;
     
     public CanvasGroup fishShoutCG;
 
 
+    public int returnMachineNum;//this is used to record the machine that should be turned to when retucn cloth
     private bool fastSwipeBool;
 
     public TutorialManager TutorialManager;
@@ -165,6 +167,7 @@ public class FinalCameraController : MonoBehaviour
 
     public void CancelAllUI()
     {
+        print("cancelallui");
         if (!isTutorial)
         {
             //touch anywhere on screen, close Karara UI
@@ -177,7 +180,6 @@ public class FinalCameraController : MonoBehaviour
             {
                 Hide(generatedNotice.GetComponent<CanvasGroup>());
             }
-        
 
         for (int i = 0; i < AllMachines.WashingMachines.Count; i++)
             {
@@ -253,17 +255,17 @@ public class FinalCameraController : MonoBehaviour
             myHSS.GoToScreen(1);
         }
 
-        if (lateReturnComic)
-        {
-//            GoSubwayPart();
-//            lateReturnImage.enabled = true;
-            ChangeToSubway();
-            myHSS.GoToScreen(1);
-            Show(fishTalk);
-            fishTalkText.text = "Return your customers' clothes in time! How can you have such bad memory!";
-            lateReturnComic = false;
-
-        }
+//        if (lateReturnComic)
+//        {
+////            GoSubwayPart();
+////            lateReturnImage.enabled = true;
+//            ChangeToSubway();
+//            myHSS.GoToScreen(1);
+//            Show(fishTalk);
+//            fishTalkText.text = "Return your customers' clothes in time! How can you have such bad memory!";
+//            lateReturnComic = false;
+//
+//        }
         
         if (TouchController.isSwiping == true)
         {
@@ -280,6 +282,7 @@ public class FinalCameraController : MonoBehaviour
         if(myCameraState == CameraState.Subway)
         {
             CheckScreenNum();
+            Show(subwayBackground);
         }
         
         
@@ -304,7 +307,7 @@ public class FinalCameraController : MonoBehaviour
         {
             Show(inventory);
             //Hide(basicUI);
-
+            Hide(subwayBackground);
             Hide(appBackground);
 
         }
@@ -379,14 +382,20 @@ public class FinalCameraController : MonoBehaviour
     public void ChangeToCloth()
     {
         Show(Inventory);
+        Mask.alpha = 0;
              
+        print("ChangeToCLoth");
         if (isTutorial)
         {
             TutorialManager.scrollControl(false);
 
+            print("ChangeToCLoth before 13");
+
             if(TutorialManager.tutorialNumber < 13)
             {
                 TutorialManager.tutorialNumber = 13;
+                print("ChangeToCLoth13");
+
             }
         }
         
@@ -394,12 +403,15 @@ public class FinalCameraController : MonoBehaviour
         {
             Hide(subwayBackground);
 
+            print("alreadyCLoth = false" + isSwipping);
+
             if (isSwipping == false)
             {
                 //print("myCameraState = " + myCameraState);
                 lastCameraState = myCameraState;
                 myCameraState = CameraState.Closet;
                 transform.position = new Vector3(-25, 0, -10);
+                print("actually change");
             }
         }
         else
@@ -538,6 +550,7 @@ public class FinalCameraController : MonoBehaviour
     
     public void ChangeToSubway()
     {
+        Mask.alpha = 1;
         if(isTutorial)
         {
             TutorialManager.scrollControl(true);
