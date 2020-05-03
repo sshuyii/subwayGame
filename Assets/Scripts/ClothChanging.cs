@@ -196,7 +196,6 @@ public class ClothChanging : MonoBehaviour
         if(FinalCameraController.TouchController.doubleTouch)
         {
             print("return cloth is working and double touched");
-            this.tag = "Untagged";
 
             for (int i = 0; i < AllMachines.WashingMachines.Count; i++)
             {
@@ -214,6 +213,8 @@ public class ClothChanging : MonoBehaviour
                             takeOffCloth();
                             CalculateInventory.occupiedI = CalculateInventory.occupiedI - 1;
                             AllMachines.WashingMachines[i].GetComponent<WasherController>().clothNum++;
+                            this.tag = "Untagged";
+
                             break;
                         }
                     }
@@ -663,7 +664,7 @@ public class ClothChanging : MonoBehaviour
     {
         foreach (var returnImage in CalculateInventory.returnImageList)
         {
-            returnImage.enabled = false;
+//            returnImage.enabled = false;
         }
     }
     private void buttonChangeBack()
