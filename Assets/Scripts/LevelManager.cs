@@ -69,6 +69,8 @@ public class LevelManager : MonoBehaviour
         {
             isInstruction = true;            
         
+            
+            GameObject.Find("Main Camera").transform.position = new Vector3(0,14, 20);
 //            Show(startScreen);
             Show(instructionCG);
             Instructions.SetActive(true);
@@ -77,7 +79,13 @@ public class LevelManager : MonoBehaviour
             Show(arrowButton);
             Show(FinalCameraController.SubwayMap);
             Hide(GoBackSubway);
+            Hide(subwayCG);
+            FinalCameraController.myCameraState = FinalCameraController.CameraState.Map;
+            StartCoroutine(StartChapterOne());//start map tutorial directly
+
         }
+        
+
     }
 
     // Update is called once per frame
@@ -172,7 +180,7 @@ public class LevelManager : MonoBehaviour
         if (clicktime == 0)
         {
             //once start, show a screen
-            StartCoroutine(StartChapterOne());
+//            StartCoroutine(StartChapterOne());
         }
         else if (clicktime == 1 && lastTextFinish)
         {

@@ -472,12 +472,26 @@ public class SubwayMovement : MonoBehaviour
                     
                     //然后可能产生npc bag
                     //it is decided in the function whether there's an empty position for bag, so no worries for that 
-                    GenerateNpcBag();
-//                }
-                
-                    
-                
+                    //能不能产生要看车里有没有上一个站台进来的npc的包
 
+                    for (int r = 0; r < bagsInCar.Count; r++)
+                    {
+                        //当有的站有两个特殊角色的包
+                        //每个站只能有一个npc的包
+//                if (bagsInCar[r].CompareTag(NameToStationBags[stationNum.ToString()][randomIndex].tag))
+                        //现在每站只有一个特殊角色的包了，所以只需要是0就可以了
+                        if (bagsInCar[r].CompareTag(NameToStationBags[stationNum.ToString()][0].tag)) //如果车里已经有同样tag的包
+                        {
+                            string temp = "Npc" + currentStation.ToString();
+
+                            if (!bagsInCar[r].CompareTag(temp)) //如果车里没有上一个npc的包,那么产生npc的包，然后结束generateBag
+                            {
+                                GenerateNpcBag();
+                            }
+                        }
+                    }
+
+//                }
             }
             //previousIndex = randomIndex;
         
@@ -511,6 +525,8 @@ public class SubwayMovement : MonoBehaviour
     }
     public void trainMove()
     {
+        FinalCameraController.fishTalkText.text = "Concentrate on your work! Do the laundry!";
+
         if(currentStation < 2)
         {
             currentStation++;

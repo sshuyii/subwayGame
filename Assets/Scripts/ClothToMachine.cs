@@ -318,7 +318,7 @@ public class ClothToMachine : MonoBehaviour
                     yield return new WaitForSeconds(0.2f);
             
                     FinalCameraController.Show(FinalCameraController.fishTalk);
-                    FinalCameraController.fishTalkText.text = "Return your customers' clothes in time! How can you have such bad memory!";
+                    FinalCameraController.fishTalkText.text = "Return your customers' clothes on time! Such bad memory!";
                     FinalCameraController.lateReturnComic = false;
                    
                 }

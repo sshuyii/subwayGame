@@ -366,13 +366,14 @@ public class InstagramController : MonoBehaviour
         FinalCameraController.entryTime++;
 
        
-
         
         //set parent(probably a better way to do
         if(NpcName == "nico")
         {
             newPost.transform.SetParent(RetroPageContent.transform);
             retroPostList.Add(newPost.GetComponent<Image>());
+            newPost.transform.localScale = Vector3.one;
+
             //set post text
             newPost.GetComponent<EntryTime>().postText = "<b>Nico</b> " + postText;
             //如果关注了nico,放到首页里
@@ -385,6 +386,8 @@ public class InstagramController : MonoBehaviour
         {
             print("create ojisan posts");
             newPost.transform.SetParent(OjisanPageContent.transform);
+            newPost.transform.localScale = Vector3.one;
+
             //set post text
             newPost.GetComponent<EntryTime>().postText = "<b>Ojisan</b> " + postText;
             //如果关注了ojisan,放到首页里,或者如果是第一章最后一个post，强制放进首页

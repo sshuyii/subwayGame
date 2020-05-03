@@ -182,14 +182,14 @@ public class WasherController : MonoBehaviour
             else if (clothNum == 0)
             {
                 //close door if there is no cloth in machine
-//                if (shut == 1)
-//                {
-//                    shut = 0;
-//                    Hide(ClothUI);
-//                    StartCoroutine(MachineFold());
-//                    //ClothUiAnimator.SetBool("isUnfold",false);
-//                    DoorImage.sprite = AllMachines.closedDoor;
-//                }
+                if (shut == 1)
+                {
+                    shut = 0;
+                    Hide(ClothUI);
+                    StartCoroutine(MachineFold());
+                    //ClothUiAnimator.SetBool("isUnfold",false);
+                    DoorImage.sprite = AllMachines.closedDoor;
+                }
                 
                 emptyImage.enabled = true;
                 fullImage.enabled = false;

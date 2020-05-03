@@ -136,7 +136,7 @@ public class FinalCameraController : MonoBehaviour
         {
             Hide(setting);
         }
-        myCameraState = CameraState.Subway;
+//        myCameraState = CameraState.Subway;
         myAppState = AppState.Mainpage;
         
         myHSS = GameObject.Find("Horizontal Scroll Snap").GetComponent<HorizontalScrollSnap>();
@@ -255,17 +255,21 @@ public class FinalCameraController : MonoBehaviour
             myHSS.GoToScreen(1);
         }
 
-//        if (lateReturnComic)
-//        {
-////            GoSubwayPart();
-////            lateReturnImage.enabled = true;
+        
+        if (lateReturnComic)
+        {
+//            GoSubwayPart();
+//            lateReturnImage.enabled = true;
 //            ChangeToSubway();
 //            myHSS.GoToScreen(1);
 //            Show(fishTalk);
 //            fishTalkText.text = "Return your customers' clothes in time! How can you have such bad memory!";
 //            lateReturnComic = false;
-//
-//        }
+
+        }
+        else
+        {
+        }
         
         if (TouchController.isSwiping == true)
         {

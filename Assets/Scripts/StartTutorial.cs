@@ -172,6 +172,7 @@ public class StartTutorial : MonoBehaviour
                 comicBackground.SetActive(true);
                 comic1.SetActive(true);
                 Show(ComicButton);
+                Hide(Menu);
             }
 
             Machine.color = MachineColor;
