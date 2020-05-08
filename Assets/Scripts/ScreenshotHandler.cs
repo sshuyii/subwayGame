@@ -229,6 +229,7 @@ public class ScreenshotHandler : MonoBehaviour
             InstagramController.AdAlreadyTakenList[InstagramController.currentBackground] = false;
 
             //generate different comment for each post
+
             if (InstagramController.currentBackground == "RV")
             {
                 //record background
@@ -240,6 +241,7 @@ public class ScreenshotHandler : MonoBehaviour
                 ProfileImage.sprite = InstagramController.allProfile["nico"];
 
                 //change the post text
+                newPost.GetComponent<EntryTime>().postText = "<b>Karara</b> Vocation";
                 textList[0].text = "<b>Karara</b> Vocation";
                 textList[1].text = "Today";
 
@@ -286,6 +288,7 @@ public class ScreenshotHandler : MonoBehaviour
                 ProfileImage.sprite = InstagramController.allProfile["ojisan"];
 
                 //change the post text
+                newPost.GetComponent<EntryTime>().postText = "<b>Karara</b> Fresh";
                 textList[0].text = "<b>Karara</b> Fresh";
                 textList[1].text = "Today";
 
@@ -307,6 +310,8 @@ public class ScreenshotHandler : MonoBehaviour
                 ProfileImage.sprite = InstagramController.allProfile["nico"];
 
                 //change the post text
+                newPost.GetComponent<EntryTime>().postText = "<b>Karara</b> Relaxing";
+
                 textList[0].text = "<b>Karara</b> Relaxing";
                 textList[1].text = "Today";
 
@@ -328,6 +333,8 @@ public class ScreenshotHandler : MonoBehaviour
 //            ProfileImage.sprite = InstagramController.allProfile["nico"];
 
                 //change the post text
+                newPost.GetComponent<EntryTime>().postText = "<b>Karara</b> Cheers";
+
                 textList[0].text = "<b>Karara</b> Cheers";
                 textList[1].text = "Today";
 
