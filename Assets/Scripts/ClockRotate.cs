@@ -40,12 +40,6 @@ public class ClockRotate : MonoBehaviour
         //used when the timer is always on screen
         //zRotation = 360 / (SubwayMovement.stayTime + SubwayMovement.moveTime);
 
-        if (!isFast)
-        {
-            //now the timer is placed on the bag
-            zRotation = 360 / (3 *(SubwayMovement.stayTime + SubwayMovement.moveTime));
-            YellowClock.fillAmount = 0;
-        }
         
        
 
@@ -55,6 +49,16 @@ public class ClockRotate : MonoBehaviour
         myButton = GetComponent<Button>();
         selfImage = GetComponent<Image>();
         selfImage.enabled = false;
+        
+        if (!isFast)
+        {
+            //now the timer is placed on the bag
+            zRotation = 360 / (3 *(SubwayMovement.stayTime + SubwayMovement.moveTime));
+            YellowClock.fillAmount = 1;
+            selfImage.enabled = true;
+
+        }
+
     }
 
     // Update is called once per frame
@@ -62,16 +66,16 @@ public class ClockRotate : MonoBehaviour
     {
         if(!isFast)
         {
-            myRectT.Rotate(new Vector3(0, 0, -zRotation * Time.deltaTime));
-            YellowClock.fillAmount +=
+//            myRectT.Rotate(new Vector3(0, 0, -zRotation * Time.deltaTime));
+            YellowClock.fillAmount -=
                 1 / (3 * (SubwayMovement.stayTime + SubwayMovement.moveTime) + SubwayMovement.stayTime) *
                 Time.deltaTime;
         }
         
         bagEmptyNum = 0;
         machineEmptyNum = 0;
-        
-        if(!fastForward)
+
+        if (!fastForward && isFast)
         {
             //Calculate how many bagPos are available
             for (int i = 0; i < 3; i++)
@@ -99,24 +103,25 @@ public class ClockRotate : MonoBehaviour
                     }
                 }
             }
+
+
+            //上面两个都没有break，说明地铁里没有包，洗衣机也没有被占用，地铁还在行走
+            if (bagEmptyNum == 3 && machineEmptyNum == 3 && SubwayMovement.isMoving)
+            {
+                fastForward = true;
+                //SubwayMovement.Show(bubble);
+                //myButton.enabled = true;
+                selfImage.enabled = true;
+            }
+            else if (!SubwayMovement.isMoving)
+            {
+                fastForward = false;
+                selfImage.enabled = false;
+                //SubwayMovement.Hide(bubble);
+                //myButton.enabled = false;
+            }
         }
 
-        //上面两个都没有break，说明地铁里没有包，洗衣机也没有被占用，地铁还在行走
-        if (bagEmptyNum == 3 && machineEmptyNum == 3 && SubwayMovement.isMoving)
-        {
-            fastForward = true;
-            //SubwayMovement.Show(bubble);
-            //myButton.enabled = true;
-            selfImage.enabled = true;
-        }
-        else if(!SubwayMovement.isMoving)
-        {
-            fastForward = false;
-            selfImage.enabled = false;
-            //SubwayMovement.Hide(bubble);
-            //myButton.enabled = false;
-        }
-        
     }
 
     //click the clock and then skip the rest of the station

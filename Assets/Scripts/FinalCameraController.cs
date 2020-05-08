@@ -17,6 +17,7 @@ public class FinalCameraController : MonoBehaviour
     public LevelManager LevelManager;
     private InstagramController InstagramController;
 
+    public CanvasGroup disableInputCG;
     public CanvasGroup ChapterOneEndComic;
     public int entryTime = 1;
     public CanvasGroup TakePhoto;
@@ -283,7 +284,7 @@ public class FinalCameraController : MonoBehaviour
             
         //print(HorizontalScrollSnap.CurrentPage);
         //change camera state to page number
-        if(myCameraState == CameraState.Subway)
+        if(myCameraState == CameraState.Subway && !isSwipping)
         {
             CheckScreenNum();
             Show(subwayBackground);
@@ -342,21 +343,25 @@ public class FinalCameraController : MonoBehaviour
     
     void CheckScreenNum()
     {
-        if (HorizontalScrollSnap.CurrentPage == 1 && HorizontalScrollSnap._settled)
+        if (HorizontalScrollSnap.CurrentPage == 1 && HorizontalScrollSnap._settled && !HorizontalScrollSnap._moveStarted)
         {
+
             mySubwayState = SubwayState.One;
         }
-        else if (HorizontalScrollSnap.CurrentPage == 2 && HorizontalScrollSnap._settled)
+        else if (HorizontalScrollSnap.CurrentPage == 2 && HorizontalScrollSnap._settled && !HorizontalScrollSnap._moveStarted)
         {
             mySubwayState = SubwayState.Two;
+
         }
-        else if (HorizontalScrollSnap.CurrentPage == 3 && HorizontalScrollSnap._settled)
+        else if (HorizontalScrollSnap.CurrentPage == 3 && HorizontalScrollSnap._settled && !HorizontalScrollSnap._moveStarted)
         {
             mySubwayState = SubwayState.Three;
+
         }
-        else if (HorizontalScrollSnap.CurrentPage == 4 && HorizontalScrollSnap._settled)
+        else if (HorizontalScrollSnap.CurrentPage == 4 && HorizontalScrollSnap._settled && !HorizontalScrollSnap._moveStarted)
         {
             mySubwayState = SubwayState.Four;
+
         }
         else
         {
@@ -485,7 +490,6 @@ public class FinalCameraController : MonoBehaviour
            Hide(postpage);
            Hide(NPCPage);
 
-
            myAppState = AppState.Mainpage;
            resetPostOrder();
 
@@ -594,6 +598,7 @@ public class FinalCameraController : MonoBehaviour
         Hide(appBackground);
         Hide(NPCPage);
         Hide(SubwayMap);
+        Hide(postpage);
         
         HideAllPersonalPages(); 
         
@@ -735,5 +740,10 @@ public class FinalCameraController : MonoBehaviour
             Show(setting);
             isSetting = true;
         }
+    }
+
+    public void DisableInput(bool temp)
+    {
+        disableInputCG.blocksRaycasts = temp;
     }
 }

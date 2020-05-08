@@ -33,6 +33,7 @@ public class ClothToMachine : MonoBehaviour
     public int myBagPosition;
 
     public bool isNotice;
+    public Image secondImage;
 
     
     //a timer to record how much time has passed since the bag is on the car
@@ -72,6 +73,11 @@ public class ClothToMachine : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(!FinalCameraController.isTutorial)
+        {
+            secondImage.sprite = myImage.sprite;
+        }       
+        
         if(!isNotice)
         {
             timer += Time.deltaTime;

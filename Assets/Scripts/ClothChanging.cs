@@ -11,8 +11,8 @@ public class ClothChanging : MonoBehaviour
     private Vector3 startPos;
     public Sprite transparent;
 
-    public Image checkImage;
-    public GameObject crossImage;
+//    public Image checkImage;
+//    public GameObject crossImage;
 
     public CanvasGroup Occupied;
 
@@ -108,7 +108,7 @@ public class ClothChanging : MonoBehaviour
         {
             if (TouchController.isLongTap)
             {
-                crossImage.SetActive(true);
+//                crossImage.SetActive(true);
                 tapStart = false;
 
                 CalculateInventory.isreturning = true;
@@ -223,10 +223,7 @@ public class ClothChanging : MonoBehaviour
         }
     }
 
-    public void ReturnClothNo()
-    {
-        crossImage.SetActive(false);
-    }
+   
 
 
     private void takeOffCloth() 
@@ -553,9 +550,7 @@ public class ClothChanging : MonoBehaviour
                 }
                 else
                 {
-                    //if click on the question marks
-                    checkImage.enabled = true;
-                    selfButton.enabled = false;
+                    
 
                     firstTime = false;
                 }
@@ -678,13 +673,13 @@ public class ClothChanging : MonoBehaviour
                 {
                     print("toppppppp");
                     CalculateInventory.topButton.enabled = true;
-                    CalculateInventory.topButton.GetComponent<ClothChanging>().checkImage.enabled = false;
+//                    CalculateInventory.topButton.GetComponent<ClothChanging>().checkImage.enabled = false;
                 }
                 else if (CalculateInventory.wearingEverything)
                 {
                     //set everything button back
                     CalculateInventory.everythingButton.enabled = true;
-                    CalculateInventory.everythingButton.GetComponent<ClothChanging>().checkImage.enabled = false;
+//                    CalculateInventory.everythingButton.GetComponent<ClothChanging>().checkImage.enabled = false;
                 }
             }
             else if (currentSprite.name.Contains("Bottom") || currentSprite.name != CalculateInventory.otherSR.sprite.name)
@@ -692,20 +687,20 @@ public class ClothChanging : MonoBehaviour
                 if (CalculateInventory.wearingBottom)
                 {
                     CalculateInventory.bottomButton.enabled = true;
-                    CalculateInventory.bottomButton.GetComponent<ClothChanging>().checkImage.enabled = false;
+//                    CalculateInventory.bottomButton.GetComponent<ClothChanging>().checkImage.enabled = false;
                 }
 
                 else if (CalculateInventory.wearingEverything)
                 {
                     //set everything button back
                     CalculateInventory.everythingButton.enabled = true;
-                    CalculateInventory.everythingButton.GetComponent<ClothChanging>().checkImage.enabled = false;
+//                    CalculateInventory.everythingButton.GetComponent<ClothChanging>().checkImage.enabled = false;
                 }
             }
             else if (currentSprite.name.Contains("Shoe") && CalculateInventory.wearingShoe)
             {
                 CalculateInventory.shoeButton.enabled = true;
-                CalculateInventory.shoeButton.GetComponent<ClothChanging>().checkImage.enabled = false;
+//                CalculateInventory.shoeButton.GetComponent<ClothChanging>().checkImage.enabled = false;
             }
             else if (currentSprite.name.Contains("Everything") ||
                      currentSprite.name != CalculateInventory.everythingSR.sprite.name)
@@ -715,20 +710,20 @@ public class ClothChanging : MonoBehaviour
                     {
                         //set top and bottom buttons back
                         CalculateInventory.topButton.enabled = true;
-                        CalculateInventory.topButton.GetComponent<ClothChanging>().checkImage.enabled = false;
+//                        CalculateInventory.topButton.GetComponent<ClothChanging>().checkImage.enabled = false;
                     }
 
                     if (CalculateInventory.wearingBottom)
                     {
                         CalculateInventory.bottomButton.enabled = true;
-                        CalculateInventory.bottomButton.GetComponent<ClothChanging>().checkImage.enabled = false;
+//                        CalculateInventory.bottomButton.GetComponent<ClothChanging>().checkImage.enabled = false;
                     }
 
                     if (CalculateInventory.wearingEverything)
                     {
 
                         CalculateInventory.everythingButton.enabled = true;
-                        CalculateInventory.everythingButton.GetComponent<ClothChanging>().checkImage.enabled = false;
+//                        CalculateInventory.everythingButton.GetComponent<ClothChanging>().checkImage.enabled = false;
                     }
 
                 }

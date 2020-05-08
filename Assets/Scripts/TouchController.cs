@@ -105,7 +105,12 @@ public class TouchController : MonoBehaviour
                     isSwiping = true;
                     
                     //disable dialogue bubble if swiped
-                    if(FinalCameraController.isTutorial && !FinalCameraController.TutorialManager.stopDisappear)
+                    //important: don't disable if it shouldn't be disabled
+                    //for example, in the middle of someone talking
+                    if(FinalCameraController.isTutorial && !FinalCameraController.TutorialManager.stopDisappear 
+                                                        && FinalCameraController.TutorialManager.tutorialNumber != 3 
+                                                        && FinalCameraController.TutorialManager.tutorialNumber != 0
+                                                        && FinalCameraController.TutorialManager.tutorialNumber < 15 )
                     {
                         FinalCameraController.Hide(FinalCameraController.TutorialManager.GestureCG);
                         FinalCameraController.TutorialManager.screamImage.enabled = false;

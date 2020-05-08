@@ -62,7 +62,7 @@ public class InstagramButtons : MonoBehaviour
 
     public void ChangeToPersonalPage()
     {
-        if (FinalCameraController.isTutorial)
+        if (FinalCameraController.isTutorial && FinalCameraController.TutorialManager.tutorialNumber == 17)
         {
             FinalCameraController.Show(FinalCameraController.TutorialManager.finalComic);
         }
@@ -140,6 +140,19 @@ public class InstagramButtons : MonoBehaviour
                 InstagramController.postText.text = "<b>Karara</b> Amusement parks nowadays are so boring.";
             }
         }
+        else if (FinalCameraController.lastAppState == FinalCameraController.AppState.RetroPage)
+        {
+            InstagramController.gotoProfile.sprite = InstagramController.allProfile["nico"];
+            InstagramController.gotoText.GetComponent<Text>().text = "nico";
+        }
+        else if (FinalCameraController.lastAppState == FinalCameraController.AppState.DesignerPage)
+        {
+            InstagramController.gotoProfile.sprite = InstagramController.allProfile["ojisan"];
+            InstagramController.gotoText.GetComponent<Text>().text = "Ojisan";
+        }
+        
+        
+        
         for (int i = 0; i < InstagramController.retroPostList.Count; i++)
         {
             if (InstagramController.retroPostList[i] == currentSprite)

@@ -166,7 +166,7 @@ public class WasherController : MonoBehaviour
                 emptyImage.enabled = false;
                 fullImage.enabled = true;
             }
-            else
+            else if(!FinalCameraController.isTutorial)
             {
                 StartCoroutine(MachineFold());
             }
@@ -174,6 +174,15 @@ public class WasherController : MonoBehaviour
         else if(myMachineState == AllMachines.MachineState.finished)
         {
            
+            
+            //每次滑动的时候都把洗衣机的ui关掉
+            if (FinalCameraController.mySubwayState == FinalCameraController.SubwayState.None && !FinalCameraController.isTutorial)
+            {
+                StartCoroutine(MachineFold());
+                DoorImage.sprite = AllMachines.closedDoor;
+            }
+            
+            
             if(clothNum > 0)
             {
                 emptyImage.enabled = false;
@@ -247,6 +256,8 @@ public class WasherController : MonoBehaviour
     IEnumerator MachineUnfold()
     {
         pressOK = false;
+        //disable any input
+        FinalCameraController.DisableInput(true);
         if (FinalCameraController.isTutorial && FinalCameraController.TutorialManager.tutorialNumber > 12)
         {
             yield break;
@@ -263,15 +274,17 @@ public class WasherController : MonoBehaviour
         Show(ClothUI);
                
         pressOK = true;
-        if(FinalCameraController.isTutorial && FinalCameraController.TutorialManager.tutorialNumber == 8)
+        FinalCameraController.DisableInput(false);
+
+        if(FinalCameraController.isTutorial && FinalCameraController.TutorialManager.tutorialNumber == 8 && FinalCameraController.TutorialManager.clicktime == 10)
         {
-              //之前是立刻关上门，鱼开始说话 
+//              //之前是立刻关上门，鱼开始说话 
 //            shut = 0;
 //            Hide(ClothUI);
 //            Hide(backgroundUI3);
-////            yield return new WaitForSeconds(0.1f);
+//            yield return new WaitForSeconds(0.1f);
 //            Hide(backgroundUI2);
-////            yield return new WaitForSeconds(0.2f);
+//            yield return new WaitForSeconds(0.2f);
 //            Hide(backgroundUI);
 //            yield return new WaitForSeconds(0.1f);
 //        
@@ -289,13 +302,19 @@ public class WasherController : MonoBehaviour
     IEnumerator MachineFold()
     {
         pressOK = false;
+        FinalCameraController.DisableInput(true);
+
         Hide(backgroundUI3);
         yield return new WaitForSeconds(0.1f);
         Hide(backgroundUI2);
         yield return new WaitForSeconds(0.2f);
         Hide(backgroundUI);
 
+        Show(Occupied);
+        Hide(ClothUI);
         pressOK = true;
+        FinalCameraController.DisableInput(false);
+
         if (FinalCameraController.isTutorial && FinalCameraController.TutorialManager.tutorialNumber == 9 || FinalCameraController.isTutorial && FinalCameraController.TutorialManager.tutorialNumber == 11)
         {
             FinalCameraController.TutorialManager.tutorialNumber = 10;

@@ -246,7 +246,6 @@ public class TutorialManager : MonoBehaviour
 
         DialogueBubbleAC = DialogueBubble.GetComponentInChildren<Animator>();
 
-
         hintArrowCG = hintArrow.GetComponent<CanvasGroup>();
     }
 
@@ -264,6 +263,7 @@ public class TutorialManager : MonoBehaviour
     public IEnumerator AnimateText(TextMeshProUGUI text, string textContent, bool showArrow, GameObject hintObject, Vector2 arrowPosition)
     {
         clicktime++;
+        FinalCameraController.DisableInput(true);
         lastTextFinish = false;
         Hide(hintArrowCG);
 
@@ -272,23 +272,23 @@ public class TutorialManager : MonoBehaviour
             for (int i = 0; i < (textContent.Length + 1); i++)
             {
                 text.text = textContent.Substring(0, i);
-                yield return new WaitForSeconds(.005f);
+                yield return new WaitForSeconds(.001f);
 
                 showHintArrow = false;
                 if (i == textContent.Length)
                 {
+                    FinalCameraController.DisableInput(false);
                     yield return new WaitForSeconds(.005f);
 
-
-                    if (tutorialNumber == 3)
+                    if (tutorialNumber == 3)//是在说话之后才disable的，会导致如果在说话中途滑动，可能会出现对话框消失的情况
                     {
                         scrollControl(false);
+                        FinalCameraController.DisableInput(false);
                     }
                     else if (tutorialNumber == 15)
                     {
-                        yield return new WaitForSeconds(.005f);
+                        FinalCameraController.DisableInput(true);
 
-                        scrollControl(false);
                     }
                     else if (tutorialNumber == 16)
                     {
@@ -403,6 +403,9 @@ public class TutorialManager : MonoBehaviour
                 kararaDialogueRT.localScale = new Vector3(0.5f, 0.5f, 0.5f);
 
             }
+            else if(FinalCameraController.mySubwayState == FinalCameraController.SubwayState.None)
+            {
+            }
         }
         else if(FinalCameraController.myCameraState == FinalCameraController.CameraState.Ad)
         {
@@ -483,7 +486,12 @@ public class TutorialManager : MonoBehaviour
         else if (tutorialNumber == 3)
         {
             //stop moving
-            myHSS.GoToScreen(2);
+//            myHSS.GoToScreen(2);
+            if (FinalCameraController.mySubwayState == FinalCameraController.SubwayState.Two)
+            {
+                scrollControl(false);
+                print("number == 3, stop screen");
+            }
             if(clicktime == 7)
             {
                 //包已经在洗衣机下面
@@ -504,6 +512,7 @@ public class TutorialManager : MonoBehaviour
                 tutorialDialogueState = DialogueState.fishElse;
                 StartCoroutine(AnimateText(fishText, "Click the button to start!",true, startButton, machineV));
                 tutorialNumber = 5;
+                FinalCameraController.mySubwayState = FinalCameraController.SubwayState.Two;
             }
         }
         else if (tutorialNumber == 6)//此时衣服开始洗
@@ -519,48 +528,27 @@ public class TutorialManager : MonoBehaviour
         }
         else if(tutorialNumber == 8)
         {
-            myHSS.GoToScreen(2);
+//            myHSS.GoToScreen(2);
 
             //洗衣机洗好了之后自然出现了这个
             if(clicktime == 9)
             {
                 tutorialDialogueState = DialogueState.karara;
                 StartCoroutine(AnimateText(kararaText, "Open Door",true, door, doorV));//clicktime == 10
-                //ProfileImage.sprite = KararaProfile;
-                //arrow.enabled = true;
-                //Show(arrowButton);
-//                clicktime = 11;
+
             }
-//            else if (clicktime == 7 && FinalCameraController.mySubwayState == FinalCameraController.SubwayState.One)
-//            {
-//                Hide(arrowButton);
-//                
-//               
-//            }
-//            else if(clicktime == 8)
-//            {
-//                if(FinalCameraController.mySubwayState == FinalCameraController.SubwayState.Two)
-//                {
-//                    tutorialDialogueState = DialogueState.karara;
-//                    kararaText.text = "......";
-//                    Show(arrowButton);
-//                    clicktime = 9;
-//                }
-//                else
-//                {
-//                    Hide(arrowButton);
-//                }
-//            }
         }
         //如果打开了门
         else if(tutorialNumber == 9)//如果karara把门第一次打开了
         {
             stopDisappear = false;
+
             if(clicktime == 10 && lastTextFinish)
             {
                 if(!temp)
                 {
                     temp = true;
+
                     StartCoroutine(FishCloseDoor());
                 }
                 else 
@@ -592,20 +580,10 @@ public class TutorialManager : MonoBehaviour
                         Show(hintArrowCG);
                         hintArrow.transform.SetParent(ClothUI.transform);
                         hintArrow.GetComponent<RectTransform>().anchoredPosition = clothV;
-
-//                        time++;
-//                        if (time > 90)
-//                        {
-//                            kararaText.text = "Get Cloth";
-//                        }
-//                        else if(time > 30)
-//                        {
-//                            kararaText.text = "Nah";
-//                            if(temp)
-//                            {
-//                                kararaText.text = "Nah";
-//                            }
-//                        }
+                    }
+                    else if (FinalCameraController.mySubwayState == FinalCameraController.SubwayState.None)
+                    {
+                        tutorialDialogueState = DialogueState.none;
                     }
                 }
                     
@@ -624,7 +602,7 @@ public class TutorialManager : MonoBehaviour
             if (FinalCameraController.mySubwayState == FinalCameraController.SubwayState.One)
             {
                 tutorialDialogueState = DialogueState.fishElse;
-                fishText.text = "What are you doing? Close the door!";
+                fishText.text = "Don't open the door!";
                 screamImage.enabled = false;
                 Hide(arrowButton);
             }
@@ -641,6 +619,10 @@ public class TutorialManager : MonoBehaviour
                 hintArrow.transform.SetParent(door.transform);
                 hintArrow.GetComponent<RectTransform>().anchoredPosition = doorV;
 
+            }
+            else if (FinalCameraController.mySubwayState == FinalCameraController.SubwayState.None)
+            {
+                tutorialDialogueState = DialogueState.none;
             }
         }
         else if(tutorialNumber == 11)//如果又把门打开了
@@ -665,6 +647,10 @@ public class TutorialManager : MonoBehaviour
                 Show(hintArrowCG);
                 hintArrow.transform.SetParent(ClothUI.transform);
                 hintArrow.GetComponent<RectTransform>().anchoredPosition = clothV;
+            }
+            else if (FinalCameraController.mySubwayState == FinalCameraController.SubwayState.None)
+            {
+                tutorialDialogueState = DialogueState.none;
             }
         }
 //        else if(tutorialNumber == 12)//如果点了衣服
@@ -733,26 +719,39 @@ public class TutorialManager : MonoBehaviour
             arrow.enabled = true;
             Hide(arrowButton);
         }
-        else if(tutorialNumber == 15 && clicktime == 15)//回到地铁scene
+        else if(tutorialNumber == 15)//回到地铁scene
         {
 //            kararaText.text = "Poster";
-            StartCoroutine(AnimateText(kararaText, "Disco", true, poster, posterV));   //clicktime = 16
+            if(clicktime == 15)
+            {
+                FinalCameraController.DisableInput(true);
+                StartCoroutine(AnimateText(kararaText, "Disco", true, poster, posterV)); //clicktime = 16
 
-            myHSS.GoToScreen(4);
-            Hide(arrowButton);
-            Hide(KararaSittingCanvasGroup);
-            KararaStandingImage.enabled = true;
-            KararaStandingImage.sprite = KararaDisco;
-            //show karara
-            KararaStanding.transform.SetParent(ScreenFour.transform);
+                myHSS.GoToScreen(4);
+                Hide(arrowButton);
+                Hide(KararaSittingCanvasGroup);
+                KararaStandingImage.enabled = true;
+                KararaStandingImage.sprite = KararaDisco;
+                //show karara
+                KararaStanding.transform.SetParent(ScreenFour.transform);
 
-            KararaRectT.anchoredPosition = 
-                new Vector3(-72, KararaRectT.anchoredPosition.y);
+                KararaRectT.anchoredPosition =
+                    new Vector3(-72, KararaRectT.anchoredPosition.y);
 //            var RectTransform = KararaStanding.GetComponent<RectTransform>();
 //            RectTransform.anchoredPosition = new Vector3(85, RectTransform.anchoredPosition.y);
-            KararaStandingImage.enabled = true;
-            KararaDisappear(false);
-            
+                KararaStandingImage.enabled = true;
+                KararaDisappear(false);
+            }
+
+            else if (clicktime == 16)
+            {
+                if(FinalCameraController.mySubwayState == FinalCameraController.SubwayState.Four)
+                {
+//                            scrollControl(false);
+                    FinalCameraController.DisableInput(false);
+
+                }      
+            }
             //disable swipping screen
            
             
@@ -952,10 +951,15 @@ public class TutorialManager : MonoBehaviour
 
     IEnumerator FishCloseDoor()
     {
+
+        FinalCameraController.DisableInput(true);
+        scrollControl(true);
         yield return new WaitForSeconds(0.4f);
         myHSS.GoToScreen(1);
         yield return new WaitForSeconds(0.4f);
-        
+        FinalCameraController.DisableInput(false);
+
+
     }
 
     IEnumerator StoryStart()
@@ -1010,8 +1014,10 @@ public class TutorialManager : MonoBehaviour
             }
         }
     }
-    IEnumerator TrainMoveIn() 
+    IEnumerator TrainMoveIn()
     {
+        FinalCameraController.DisableInput(true);
+
         yield return new WaitForSeconds(0.5f);
         
         for(int i = 0; i < 5; i ++)
@@ -1034,7 +1040,9 @@ public class TutorialManager : MonoBehaviour
                 arrow.enabled = false;
                 Hide(arrowButton);//player should click poster
                 //arrow beside poster
-                scrollControl(false);
+                if (FinalCameraController.mySubwayState == FinalCameraController.SubwayState.Four)
+                {
+                }            
             }
         }
     }
@@ -1171,8 +1179,6 @@ public class TutorialManager : MonoBehaviour
             {
                 if (clicktime == 2)
                 {
-                    scrollControl(true);
-
                     backToSubway = false;
 
                     myFlash.alpha = 0;
@@ -1204,6 +1210,8 @@ public class TutorialManager : MonoBehaviour
                 stopDisappear = true;
                 if (clicktime == 3)
                 {
+                    scrollControl(true);
+
                     if(FinalCameraController.mySubwayState == FinalCameraController.SubwayState.One)
                     {
                         scrollControl(false);
@@ -1242,30 +1250,16 @@ public class TutorialManager : MonoBehaviour
                     //结束之后clicktime = 7
                 }
             }
-            else if (tutorialNumber == 8)//衣服洗好了
-            {
-                if (clicktime == 10 && lastTextFinish)
-                {
-                    StartCoroutine(AnimateText(kararaText, "Open door", true, door, doorV)); //clicktime = 11
-                    Hide(arrowButton);
-                }
-                else if (clicktime == 6)
-                {
-//                if(tempClick)
+//            else if (tutorialNumber == 8)//衣服洗好了
+//            {
+//                if (clicktime == 10 && lastTextFinish)
 //                {
-//                    myHSS.GoToScreen(1);
+//                    StartCoroutine(AnimateText(kararaText, "Open door", true, door, doorV)); //clicktime = 11
 //                    Hide(arrowButton);
+//                }
 //
-//                    tempClick = false;
-//                }                
-//                tutorialDialogueState = DialogueState.fish;
-//                fishText.text = "What are you waiting for! Do the laundry!";
-//                StartCoroutine(WaitAndChange());
-
-                }
-
-            }
-           
+//            }
+//           
             else if (tutorialNumber == 16) //照完相出来
             {
                 if (clicktime == 17)
@@ -1325,7 +1319,7 @@ public class TutorialManager : MonoBehaviour
                     Hide(arrowButton);
                 }
             }
-            else if (tutorialNumber == 18)
+            else if (tutorialNumber == 18)//在展示漫画
             {
                 print("startSceneeeee");
                 StartCoroutine(StoryStart());
