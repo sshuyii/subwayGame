@@ -175,7 +175,7 @@ public class ChangeToPersonalPageForButton : MonoBehaviour
     public void BossTalk()
     {
         //根据不同时间boss说话内容会变
-        FinalCameraController.CancelAllUI();
+        FinalCameraController.CancelAllUI(false);
         if(isfishTalking == false)
         {
             Show(InstagramController.FishBoss);

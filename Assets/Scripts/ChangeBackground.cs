@@ -57,7 +57,7 @@ public class ChangeBackground :MonoBehaviour
             {
                 InstagramController.CalculateInventory.resetPosture();
     
-                FinalCameraController.CancelAllUI();
+                FinalCameraController.CancelAllUI(false);
                 photoBackground.sprite = InstagramController.allBackAd[transform.name];
                 InstagramController.currentBackground = transform.name;
     

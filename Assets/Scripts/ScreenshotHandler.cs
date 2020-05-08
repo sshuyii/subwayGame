@@ -420,7 +420,6 @@ public class ScreenshotHandler : MonoBehaviour
                 Notice.gameObject.GetComponentInChildren<TextMeshProUGUI>().text = "no same posture!";
                 isTaken = false;
             }
-            
         }
         
     }

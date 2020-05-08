@@ -166,7 +166,7 @@ public class FinalCameraController : MonoBehaviour
     }
 
 
-    public void CancelAllUI()
+    public void CancelAllUI(bool clickMachine)
     {
         print("cancelallui");
         if (!isTutorial)
@@ -191,7 +191,10 @@ public class FinalCameraController : MonoBehaviour
                 Hide(temp.backgroundUI3);
                 Hide(temp.backgroundUI2);
                 Hide(temp.ClothUI);
-                temp.shut = 0;
+                if(!clickMachine)
+                {
+                    temp.shut = 0;
+                }                
                 if(temp.myMachineState == AllMachines.MachineState.finished)
                 {
                     Show(temp.Occupied);
@@ -292,7 +295,7 @@ public class FinalCameraController : MonoBehaviour
 
         if (isSwipping)
         {
-            CancelAllUI();
+            CancelAllUI(false);
         }
             
         //print(HorizontalScrollSnap.CurrentPage);
@@ -340,7 +343,7 @@ public class FinalCameraController : MonoBehaviour
 
     public void BossTalk()
     {
-        CancelAllUI();
+        CancelAllUI(false);
         if(isfishTalking == false)
         {
             Show(fishTalk);
@@ -386,7 +389,7 @@ public class FinalCameraController : MonoBehaviour
     public void clickKarara()
     {
         print("clickKarara");
-        CancelAllUI();
+        CancelAllUI(false);
 
         if(!isShown)
         {
@@ -743,7 +746,7 @@ public class FinalCameraController : MonoBehaviour
     private bool isSetting;
     public void clickSetting()
     { 
-        CancelAllUI();
+        CancelAllUI(false);
         if (isSetting)
         {
             Hide(setting);

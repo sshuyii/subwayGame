@@ -428,7 +428,7 @@ public class WasherController : MonoBehaviour
     public void clickMachine()
     {
        
-            FinalCameraController.CancelAllUI();
+            FinalCameraController.CancelAllUI(true);
             print("presssssssed");
 
                 if (shut == 0)

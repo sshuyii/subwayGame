@@ -511,7 +511,7 @@ public class ClothToMachine : MonoBehaviour
             FinalCameraController.LevelManager.isInstruction = false;
         }
         
-        FinalCameraController.CancelAllUI();
+        FinalCameraController.CancelAllUI(false);
 
         if(FinalCameraController.isSwipping == false)
         {
