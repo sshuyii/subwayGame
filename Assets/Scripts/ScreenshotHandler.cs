@@ -144,6 +144,7 @@ public class ScreenshotHandler : MonoBehaviour
             {
                 FinalCameraController.TutorialManager.pressScreenshot = true;
                 flash = false;
+                FinalCameraController.DisableInput(false);
             }
         }
     }
@@ -500,6 +501,7 @@ public class ScreenshotHandler : MonoBehaviour
     
     public void TakeScreenshot()
     {
+        FinalCameraController.DisableInput(true);
         shutterSound.Play();
         //hide notice bubble
         if(!FinalCameraController.isTutorial)

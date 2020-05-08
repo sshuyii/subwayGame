@@ -497,7 +497,7 @@ public class TutorialManager : MonoBehaviour
             {
                 //包已经在洗衣机下面
                 tutorialDialogueState = DialogueState.fishElse;
-                StartCoroutine(AnimateText(fishText, "Click the bag! Put the cloth into the machine!",true, bag, bagV));
+                StartCoroutine(AnimateText(fishText, "Click the bag! Put clothes into the machine!",true, bag, bagV));
                 //now clicktime = 8;
 //                fishText.text = "Click the bag! Put the cloth into the machine!";
             }

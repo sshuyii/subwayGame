@@ -603,6 +603,7 @@ MonoBehaviour:
   myBagPosition: 0
   isNotice: 0
   secondImage: {fileID: 0}
+  isNoticePrefab: 0
   isReady: 0
 --- !u!114 &43332599
 MonoBehaviour:
@@ -4709,7 +4710,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1080887006}
   m_HandleRect: {fileID: 1080887005}
   m_Direction: 0
-  m_Value: 0.4999997
+  m_Value: 0.4999995
   m_Size: 0.55813956
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -11373,7 +11374,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 658480114}
   m_HandleRect: {fileID: 658480113}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -22954,6 +22955,7 @@ MonoBehaviour:
   myBagPosition: 0
   isNotice: 0
   secondImage: {fileID: 0}
+  isNoticePrefab: 0
   isReady: 0
 --- !u!114 &992414587
 MonoBehaviour:
@@ -23267,6 +23269,7 @@ MonoBehaviour:
   myBagPosition: 0
   isNotice: 0
   secondImage: {fileID: 0}
+  isNoticePrefab: 0
   isReady: 0
 --- !u!114 &1009955832
 MonoBehaviour:
@@ -26202,6 +26205,7 @@ MonoBehaviour:
   myBagPosition: 0
   isNotice: 0
   secondImage: {fileID: 0}
+  isNoticePrefab: 0
   isReady: 0
 --- !u!114 &1109529007
 MonoBehaviour:
@@ -37652,8 +37656,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: '"<b>Ojisan</b> Just found this sketch from the bottom of my bookshelf.
-    I doubt the design might already be outdated nowadays."'
+  m_Text: '"<b>Ojisan</b> Showtime'
 --- !u!222 &1618168721
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -40404,7 +40407,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1991396396}
   m_HandleRect: {fileID: 1991396395}
   m_Direction: 0
-  m_Value: 0.49999976
+  m_Value: 0.49999967
   m_Size: 0.57142854
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -46016,6 +46019,7 @@ MonoBehaviour:
   myBagPosition: 0
   isNotice: 0
   secondImage: {fileID: 0}
+  isNoticePrefab: 0
   isReady: 0
 --- !u!114 &2014225807
 MonoBehaviour:
@@ -49139,6 +49143,7 @@ MonoBehaviour:
   myBagPosition: 0
   isNotice: 0
   secondImage: {fileID: 0}
+  isNoticePrefab: 0
   isReady: 0
 --- !u!114 &2130286240
 MonoBehaviour:

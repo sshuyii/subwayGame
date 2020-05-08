@@ -91,6 +91,8 @@ MonoBehaviour:
   hitTime: 0
   myBagPosition: 0
   isNotice: 1
+  secondImage: {fileID: 0}
+  isNoticePrefab: 1
   isReady: 0
 --- !u!1 &4648509231977690181
 GameObject:

@@ -249,8 +249,8 @@ public class WasherController : MonoBehaviour
 //                    DoorImage.sprite = AllMachines.closedDoor;
 //                }
                 
-//                emptyImage.enabled = true;
-//                fullImage.enabled = false;
+                emptyImage.enabled = true;
+                fullImage.enabled = false;
             }
         }
         
@@ -464,11 +464,7 @@ public class WasherController : MonoBehaviour
                         Show(FinalCameraController.messageCG);
                         FinalCameraController.isShown = true;
                     }
-
                 }
-            
-        
-
     }
 
 //    IEnumerator WaitFor2Seconds()

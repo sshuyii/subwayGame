@@ -34,6 +34,7 @@ public class ClothToMachine : MonoBehaviour
 
     public bool isNotice;
     public Image secondImage;
+    public bool isNoticePrefab;
 
     
     //a timer to record how much time has passed since the bag is on the car
@@ -74,7 +75,7 @@ public class ClothToMachine : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(!FinalCameraController.isTutorial)
+        if(!FinalCameraController.isTutorial && !isNoticePrefab)
         {
             secondImage.sprite = myImage.sprite;
         }       
