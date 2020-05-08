@@ -138,6 +138,7 @@ public class ScreenshotHandler : MonoBehaviour
                 {
                     myFlash.alpha = 0;
                     flash = false;
+                    isTaken = false;//闪光灯结束了的话就可以再照相了
                 }
             }
             else
@@ -504,9 +505,10 @@ public class ScreenshotHandler : MonoBehaviour
     {
         if (isTaken)
         {
+            print("taking photo disabled");
             return;
         }
-
+        print("taking photo enabled");
         isTaken = true;
         shutterSound.Play();
         //hide notice bubble
