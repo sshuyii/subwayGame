@@ -170,9 +170,7 @@ public class FinalCameraController : MonoBehaviour
     {
         print("cancelallui");
         if (!isTutorial)
-        {
-           
-            
+        { 
             //touch anywhere on screen, close Karara UI
             Hide(clothCG);
             Hide(messageCG);
@@ -188,12 +186,17 @@ public class FinalCameraController : MonoBehaviour
             {
                 Hide(fishTalk);
                 Hide(setting);
-                Hide(AllMachines.WashingMachines[i].GetComponent<WasherController>().backgroundUI);
-                Hide(AllMachines.WashingMachines[i].GetComponent<WasherController>().backgroundUI3);
-                Hide(AllMachines.WashingMachines[i].GetComponent<WasherController>().backgroundUI2);
-                Hide(AllMachines.WashingMachines[i].GetComponent<WasherController>().ClothUI);
-
-
+                WasherController temp = AllMachines.WashingMachines[i].GetComponent<WasherController>();
+                Hide(temp.backgroundUI);
+                Hide(temp.backgroundUI3);
+                Hide(temp.backgroundUI2);
+                Hide(temp.ClothUI);
+                temp.shut = 0;
+                if(temp.myMachineState == AllMachines.MachineState.finished)
+                {
+                    Show(temp.Occupied);
+                }
+                temp.DoorImage.sprite = AllMachines.closedDoor;
             }
         }
      
@@ -287,6 +290,10 @@ public class FinalCameraController : MonoBehaviour
             isSwipping = false;
         }
 
+        if (isSwipping)
+        {
+            CancelAllUI();
+        }
             
         //print(HorizontalScrollSnap.CurrentPage);
         //change camera state to page number
@@ -379,9 +386,10 @@ public class FinalCameraController : MonoBehaviour
     public void clickKarara()
     {
         print("clickKarara");
+        CancelAllUI();
+
         if(!isShown)
         {
-            CancelAllUI();
             Show(clothCG);
             Show(messageCG);
             isShown = true;

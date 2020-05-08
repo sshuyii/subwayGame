@@ -144,7 +144,7 @@ public class ScreenshotHandler : MonoBehaviour
             {
                 FinalCameraController.TutorialManager.pressScreenshot = true;
                 flash = false;
-                FinalCameraController.DisableInput(false);
+                isTaken = false;
             }
         }
     }
@@ -497,11 +497,17 @@ public class ScreenshotHandler : MonoBehaviour
         myCamera.targetTexture = RenderTexture.GetTemporary(width, height, 16);
         takeScreenshotOnNextFrame = true;
     }
-    
-    
+
+
+    private bool isTaken;
     public void TakeScreenshot()
     {
-        FinalCameraController.DisableInput(true);
+        if (isTaken)
+        {
+            return;
+        }
+
+        isTaken = true;
         shutterSound.Play();
         //hide notice bubble
         if(!FinalCameraController.isTutorial)

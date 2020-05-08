@@ -630,6 +630,7 @@ public class ClothToMachine : MonoBehaviour
                                     {
                                         if(FinalCameraController.TutorialManager.tutorialNumber == 16)
                                         {
+//                                            FinalCameraController.DisableInput(true);
                                             FinalCameraController.TutorialManager.scrollControl(false);
                                             //then return all clothes in the machine
                                             FinalCameraController.generatedNotice = Instantiate(AllMachines.returnNotice,
@@ -639,6 +640,9 @@ public class ClothToMachine : MonoBehaviour
                                             FinalCameraController.generatedNotice.tag = this.tag;
                                             FinalCameraController.generatedNotice.transform.SetParent(WasherControllerList[2].gameObject.transform);
                                             //change karara back into work cloth
+                                            
+                                            FinalCameraController.alreadyNotice = true;
+
                                         }
                                         else if (FinalCameraController.TutorialManager.tutorialNumber == 9)
                                         {
@@ -653,6 +657,8 @@ public class ClothToMachine : MonoBehaviour
                                             new Vector3(0, 0, 0),
                                             Quaternion.identity, WasherControllerList[i].gameObject.transform);
                                         FinalCameraController.generatedNotice.tag = this.tag;
+                                        FinalCameraController.alreadyNotice = true;
+
 
                                         if (i == 1)
                                         {
@@ -662,7 +668,6 @@ public class ClothToMachine : MonoBehaviour
                                         {
                                             FinalCameraController.generatedNotice.transform.SetParent(WasherControllerList[i].gameObject.transform);
                                         }
-                                        FinalCameraController.alreadyNotice = true;
 
                                     }
                                 }

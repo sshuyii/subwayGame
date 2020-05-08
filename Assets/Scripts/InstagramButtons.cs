@@ -64,6 +64,7 @@ public class InstagramButtons : MonoBehaviour
     {
         if (FinalCameraController.isTutorial && FinalCameraController.TutorialManager.tutorialNumber == 17)
         {
+            FinalCameraController.TutorialManager.tutorialDialogueState = TutorialManager.DialogueState.none;
             FinalCameraController.Show(FinalCameraController.TutorialManager.finalComic);
         }
             

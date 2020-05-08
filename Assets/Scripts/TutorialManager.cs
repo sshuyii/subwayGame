@@ -748,7 +748,7 @@ public class TutorialManager : MonoBehaviour
             {
                 if(FinalCameraController.mySubwayState == FinalCameraController.SubwayState.Four)
                 {
-//                            scrollControl(false);
+                            scrollControl(false);
                     FinalCameraController.DisableInput(false);
 
                 }      
@@ -783,6 +783,8 @@ public class TutorialManager : MonoBehaviour
             {
                 StartCoroutine(AnimateText(fishText, "Click the bag to return it!", true, door,
                     bagdoorV)); //clicktime = 19
+                scrollControl(false);
+
             }
         }
         else if(tutorialNumber == 17)
@@ -1284,7 +1286,11 @@ public class TutorialManager : MonoBehaviour
                 {
                     scrollControl(true);
                     myHSS.GoToScreen(2);
-                    
+                    if (FinalCameraController.mySubwayState == FinalCameraController.SubwayState.Two)
+                    {
+                        scrollControl(false);
+
+                    }
                   
                     //FinalCameraController.mySubwayState = FinalCameraController.SubwayState.Two;
                     Hide(arrowButton);

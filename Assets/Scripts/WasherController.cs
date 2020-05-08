@@ -47,7 +47,7 @@ public class WasherController : MonoBehaviour
     public int clothNum;
 
 //    private Button[] btns;
-    private int shut = 0;
+    public int shut = 0;
     //public Vector3 offsetTap;
     //public GameObject subway;
 
