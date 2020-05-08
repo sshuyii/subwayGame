@@ -27,6 +27,8 @@ public class FinalCameraController : MonoBehaviour
     
     public CanvasGroup fishShoutCG;
 
+    public bool machineOpen;
+
 
     public int returnMachineNum;//this is used to record the machine that should be turned to when retucn cloth
     private bool fastSwipeBool;
@@ -186,20 +188,19 @@ public class FinalCameraController : MonoBehaviour
             {
                 Hide(fishTalk);
                 Hide(setting);
-                WasherController temp = AllMachines.WashingMachines[i].GetComponent<WasherController>();
-                Hide(temp.backgroundUI);
-                Hide(temp.backgroundUI3);
-                Hide(temp.backgroundUI2);
-                Hide(temp.ClothUI);
+                Hide(AllMachines.WasherControllerList[i].backgroundUI);
+                Hide(AllMachines.WasherControllerList[i].backgroundUI3);
+                Hide(AllMachines.WasherControllerList[i].backgroundUI2);
+                Hide(AllMachines.WasherControllerList[i].ClothUI);
                 if(!clickMachine)
                 {
-                    temp.shut = 0;
+                    AllMachines.WasherControllerList[i].shut = 0;
                 }                
-                if(temp.myMachineState == AllMachines.MachineState.finished)
+                if(AllMachines.WasherControllerList[i].myMachineState == AllMachines.MachineState.finished)
                 {
-                    Show(temp.Occupied);
+                    Show(AllMachines.WasherControllerList[i].Occupied);
                 }
-                temp.DoorImage.sprite = AllMachines.closedDoor;
+                AllMachines.WasherControllerList[i].DoorImage.sprite = AllMachines.closedDoor;
             }
         }
      
@@ -207,6 +208,20 @@ public class FinalCameraController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
+        //see if a machine is open
+        for (int i = 0; i < AllMachines.WasherControllerList.Count; i++)
+        {
+            if (!AllMachines.WasherControllerList[i].pressOK)
+            {
+                break;
+            }
+            else
+            {
+                machineOpen = false;
+            }
+
+        }
         //code below doesn't work because it doesn't tell if is touch a button but UI element
         // Check if there is a touch
         if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
@@ -293,7 +308,7 @@ public class FinalCameraController : MonoBehaviour
             isSwipping = false;
         }
 
-        if (isSwipping)
+        if (isSwipping && !machineOpen)
         {
             CancelAllUI(false);
         }

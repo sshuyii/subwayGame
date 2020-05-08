@@ -55,6 +55,7 @@ public class AllMachines : MonoBehaviour
     //all the machines
     public List<GameObject> WashingMachines = new List<GameObject>();
 
+    public List<WasherController> WasherControllerList = new List<WasherController>();
 
     public int washTime;
 
@@ -86,6 +87,13 @@ public class AllMachines : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        for (int i = 0; i < WashingMachines.Count; i++)
+        {
+            WasherControllerList.Add(WashingMachines[i].GetComponent<WasherController>());
+        }
+
+        
+        
         //make a copy of the list of clothes
         for (int i = 0; i < AlexClothes.Count; i++)
         {

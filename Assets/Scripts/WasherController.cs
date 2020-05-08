@@ -96,6 +96,8 @@ public class WasherController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        
         realTimer = AllMachines.washTime - timer;
         if (Mathf.RoundToInt(timer / 60) < 10)
         {
@@ -427,7 +429,8 @@ public class WasherController : MonoBehaviour
     
     public void clickMachine()
     {
-       
+
+        FinalCameraController.machineOpen = true;
             FinalCameraController.CancelAllUI(true);
             print("presssssssed");
 
@@ -467,13 +470,6 @@ public class WasherController : MonoBehaviour
                 }
     }
 
-//    IEnumerator WaitFor2Seconds()
-//    {
-//        yield return new WaitForSeconds(0.8f);
-//        Show(ClothUI);
-//
-//    }
-    
     void Hide(CanvasGroup UIGroup) {
         UIGroup.alpha = 0f; //this makes everything transparent
         UIGroup.blocksRaycasts = false; //this prevents the UI element to receive input events
