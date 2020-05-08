@@ -214,6 +214,7 @@ public class FinalCameraController : MonoBehaviour
         {
             if (!AllMachines.WasherControllerList[i].pressOK)
             {
+                machineOpen = true;
                 break;
             }
             else

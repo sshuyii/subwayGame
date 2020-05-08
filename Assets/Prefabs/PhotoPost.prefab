@@ -146,6 +146,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   time: 0
   order: 0
+  postText: <b>Karara</b>  showtime
 --- !u!114 &-6732609313760496175
 MonoBehaviour:
   m_ObjectHideFlags: 0
