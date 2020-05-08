@@ -418,6 +418,7 @@ public class ScreenshotHandler : MonoBehaviour
             if (usedPostures.ContainsKey(CalculateInventory.posNum.ToString()))
             {
                 Notice.gameObject.GetComponentInChildren<TextMeshProUGUI>().text = "no same posture!";
+                isTaken = false;
             }
             
         }
@@ -522,7 +523,7 @@ public class ScreenshotHandler : MonoBehaviour
         {
             FinalCameraController.Show(Notice);
             Notice.gameObject.GetComponentInChildren<TextMeshProUGUI>().text = "no same background";
-
+            isTaken = false;
             return;
         }
         InstagramController.usedAdsList.Add(photoBackground.GetComponent<Image>().sprite.name);
