@@ -569,6 +569,14 @@ public class ClothChanging : MonoBehaviour
 
         CancelReturn();
 
+        
+        //点了工作服的话一定没穿任何衣服
+        CalculateInventory.wearingTop = false;
+        CalculateInventory.wearingBottom = false;
+        CalculateInventory.wearingEverything = false;
+
+
+        
 //        workCloth.enabled = !workCloth.enabled;
 //        workClothS.enabled = !workClothS.enabled;
 //        CalculateInventory.workClothASR.enabled = !CalculateInventory.workClothASR.enabled;

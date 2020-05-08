@@ -35247,7 +35247,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DialogueBubble: {fileID: 1431000927}
-  DisableInput: {fileID: 1484702137}
   hintArrowInventory: {fileID: 1139771532}
   ChapterOne: {fileID: 1216268729}
   closetSubway: {fileID: 108336267}

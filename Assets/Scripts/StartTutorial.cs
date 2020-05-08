@@ -277,6 +277,8 @@ public class StartTutorial : MonoBehaviour
         myMenuState = MenuState.credit;
     }
     
+    
+    
     public void clickSetting()
     {
         StartCoroutine(MachineDoorOpenSetting());

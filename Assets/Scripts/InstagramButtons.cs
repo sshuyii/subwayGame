@@ -247,7 +247,7 @@ public class InstagramButtons : MonoBehaviour
             InstagramController.currentPostNum = 0;
         }
         
-        //设定到底要用哪个姿势,把工作服和underwearduan都换好
+        //设定到底要用哪个姿势,把工作服和underwear都换好
         CalculateInventory.posNum =
             InstagramController.backgroundPoseDict[InstagramController.currentBackground][InstagramController.currentPostNum];
         
@@ -256,7 +256,7 @@ public class InstagramButtons : MonoBehaviour
         InstagramController.adBodyImage.sprite = InstagramController.postureList[CalculateInventory.posNum];
         InstagramController.workClothImage.sprite = InstagramController.workclothList[CalculateInventory.posNum];
         
-        
+        //换工作服
         if(CalculateInventory.wearingTop == false)
         {
             CalculateInventory.whiteShirtASR.sprite = CalculateInventory.allAdCloth["WhiteShirt"];
