@@ -145,8 +145,16 @@ public class WasherController : MonoBehaviour
         {
             Destroy(FinalCameraController.generatedNotice);
             FinalCameraController.alreadyNotice = false;
-            Hide(ClothUI);
-            FinalCameraController.alreadyClothUI = false;
+//            FinalCameraController.alreadyClothUI = false;
+            
+//            //hide all cloth ui
+//            Hide(backgroundUI3);
+//            Hide(backgroundUI2);
+//            Hide(backgroundUI);
+//
+//            Show(Occupied);
+//            Hide(ClothUI);
+//            DoorImage.sprite = AllMachines.closedDoor;
 
         }
         
@@ -168,7 +176,7 @@ public class WasherController : MonoBehaviour
             }
             else if(!FinalCameraController.isTutorial)
             {
-                StartCoroutine(MachineFold());
+//                StartCoroutine(MachineFold());
             }
         }
         else if(myMachineState == AllMachines.MachineState.finished)
@@ -176,10 +184,49 @@ public class WasherController : MonoBehaviour
            
             
             //每次滑动的时候都把洗衣机的ui关掉
-            if (FinalCameraController.mySubwayState == FinalCameraController.SubwayState.None && !FinalCameraController.isTutorial)
+            //这样可能会导致刚滑到某个页面的时候点了洗衣机，只出现衣服ui而不出现clothUI
+//            if (FinalCameraController.mySubwayState == FinalCameraController.SubwayState.None && !FinalCameraController.isTutorial)
+//            {
+//
+//                pressOK = false;
+//                Hide(backgroundUI3);
+//                Hide(backgroundUI2);
+//                Hide(backgroundUI);
+//
+//                Show(Occupied);
+//                Hide(ClothUI);
+//                DoorImage.sprite = AllMachines.closedDoor;
+//            }
+
+              //下面这段有相同问题
+            if (!FinalCameraController.isTutorial)
             {
-                StartCoroutine(MachineFold());
-                DoorImage.sprite = AllMachines.closedDoor;
+                if (FinalCameraController.mySubwayState == FinalCameraController.SubwayState.Two)
+                {
+                    if (number != 1)
+                    {
+                        Hide(backgroundUI3);
+                        Hide(backgroundUI2);
+                        Hide(backgroundUI);
+
+                        Show(Occupied);
+                        Hide(ClothUI);
+                        DoorImage.sprite = AllMachines.closedDoor;
+                    }
+                }
+                else if (FinalCameraController.mySubwayState == FinalCameraController.SubwayState.Three)
+                {
+                    if (number == 1)
+                    {
+                        Hide(backgroundUI3);
+                        Hide(backgroundUI2);
+                        Hide(backgroundUI);
+
+                        Show(Occupied);
+                        Hide(ClothUI);
+                        DoorImage.sprite = AllMachines.closedDoor;
+                    }
+                }
             }
             
             
@@ -191,17 +238,19 @@ public class WasherController : MonoBehaviour
             else if (clothNum == 0)
             {
                 //close door if there is no cloth in machine
-                if (shut == 1)
-                {
-                    shut = 0;
-                    Hide(ClothUI);
-                    StartCoroutine(MachineFold());
-                    //ClothUiAnimator.SetBool("isUnfold",false);
-                    DoorImage.sprite = AllMachines.closedDoor;
-                }
+                //拿完了之后应该直接关掉，但如果玩家点了，还是应该打开
+                //现在写在doInventory每次拿完衣服之后了
+//                if (shut == 1 && CalculateInventory.InventoryFull)
+//                {
+//                    shut = 0;
+//                    Hide(ClothUI);
+//                    StartCoroutine(MachineFold());
+//                    //ClothUiAnimator.SetBool("isUnfold",false);
+//                    DoorImage.sprite = AllMachines.closedDoor;
+//                }
                 
-                emptyImage.enabled = true;
-                fullImage.enabled = false;
+//                emptyImage.enabled = true;
+//                fullImage.enabled = false;
             }
         }
         
@@ -255,6 +304,7 @@ public class WasherController : MonoBehaviour
 
     IEnumerator MachineUnfold()
     {
+        
         pressOK = false;
         //disable any input
         FinalCameraController.DisableInput(true);
@@ -299,7 +349,7 @@ public class WasherController : MonoBehaviour
 
     }
     
-    IEnumerator MachineFold()
+    public IEnumerator MachineFold()
     {
         pressOK = false;
         FinalCameraController.DisableInput(true);

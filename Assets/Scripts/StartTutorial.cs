@@ -9,6 +9,7 @@ using Image = UnityEngine.UI.Image;
 public class StartTutorial : MonoBehaviour
 {
 
+    public AudioSource clickButton;
     public float speedA;
     public CanvasGroup Menu;
     public SpriteRenderer Title;
@@ -225,6 +226,7 @@ public class StartTutorial : MonoBehaviour
     private bool comicStart;
     public void TutorialStartPre()
     {
+        clickButton.Play();
         comicStart = true;
         //Hide(MachineGroup);
         //Comic starts
@@ -239,6 +241,8 @@ public class StartTutorial : MonoBehaviour
 
     public void clickMusic()
     {
+        clickButton.Play();
+
         if (Music.sprite == noMusic)
         {
             Music.sprite = yesMusic;
@@ -251,6 +255,8 @@ public class StartTutorial : MonoBehaviour
     }
     public void clickSound()
     {
+        clickButton.Play();
+
         if (Sound.sprite == noSound)
         {
             Sound.sprite = yesSound;
@@ -262,6 +268,8 @@ public class StartTutorial : MonoBehaviour
     }
     public void clickRealtime()
     {
+        clickButton.Play();
+
         if (Realtime.sprite == noRealtime)
         {
             Realtime.sprite = yesRealtime;
@@ -273,6 +281,8 @@ public class StartTutorial : MonoBehaviour
     }
     public void clickCredit()
     {
+        clickButton.Play();
+
         StartCoroutine(MachineDoorOpenCredit());
         myMenuState = MenuState.credit;
     }
@@ -281,12 +291,16 @@ public class StartTutorial : MonoBehaviour
     
     public void clickSetting()
     {
+        clickButton.Play();
+
         StartCoroutine(MachineDoorOpenSetting());
         myMenuState = MenuState.setting;
     }
 
     public void clickMachine()
     {
+        clickButton.Play();
+
         credit.enabled = false;
         Shuyi.enabled = false;
         Machine.sprite = closeMachine;
@@ -329,6 +343,8 @@ public class StartTutorial : MonoBehaviour
     
     public void GoToChapterOne()
     {
+        clickButton.Play();
+
         SceneManager.LoadScene("StreetStyle", LoadSceneMode.Single);
         //comic starts to fly in
 
@@ -411,6 +427,8 @@ public class StartTutorial : MonoBehaviour
 //        }
         else if(isComic)
         {
+            clickButton.Play();
+
             clickTime++;
             if (clickTime == 1)
             {

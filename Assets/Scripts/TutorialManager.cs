@@ -292,7 +292,8 @@ public class TutorialManager : MonoBehaviour
                     }
                     else if (tutorialNumber == 16)
                     {
-                        scrollControl(false);
+//                        FinalCameraController.DisableInput(true);
+
                     }
                    
                     lastTextFinish = true;
@@ -778,6 +779,11 @@ public class TutorialManager : MonoBehaviour
 
                 Show(arrowButton);
             }
+            else if (clicktime == 18 && FinalCameraController.mySubwayState == FinalCameraController.SubwayState.Two)
+            {
+                StartCoroutine(AnimateText(fishText, "Click the bag to return it!", true, door,
+                    bagdoorV)); //clicktime = 19
+            }
         }
         else if(tutorialNumber == 17)
         {
@@ -811,6 +817,7 @@ public class TutorialManager : MonoBehaviour
             }
           
         }
+        
         
         
         //only show Karara when she's in the subway scene
@@ -1273,12 +1280,12 @@ public class TutorialManager : MonoBehaviour
                     KararaStandingImage.enabled = true;
                     tutorialDialogueState = DialogueState.fish;
                 }
-                else if (clicktime == 18)
+                else if (clicktime == 18 && lastTextFinish)
                 {
                     scrollControl(true);
                     myHSS.GoToScreen(2);
-                    StartCoroutine(AnimateText(fishText, "Click the bag to return it!", true, door,
-                        bagdoorV)); //clicktime = 19
+                    
+                  
                     //FinalCameraController.mySubwayState = FinalCameraController.SubwayState.Two;
                     Hide(arrowButton);
                     //clicktime++;

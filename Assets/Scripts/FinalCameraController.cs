@@ -171,6 +171,8 @@ public class FinalCameraController : MonoBehaviour
         print("cancelallui");
         if (!isTutorial)
         {
+           
+            
             //touch anywhere on screen, close Karara UI
             Hide(clothCG);
             Hide(messageCG);
@@ -187,6 +189,11 @@ public class FinalCameraController : MonoBehaviour
                 Hide(fishTalk);
                 Hide(setting);
                 Hide(AllMachines.WashingMachines[i].GetComponent<WasherController>().backgroundUI);
+                Hide(AllMachines.WashingMachines[i].GetComponent<WasherController>().backgroundUI3);
+                Hide(AllMachines.WashingMachines[i].GetComponent<WasherController>().backgroundUI2);
+                Hide(AllMachines.WashingMachines[i].GetComponent<WasherController>().ClothUI);
+
+
                 Hide(AllMachines.WashingMachines[i].GetComponent<WasherController>().ClothUI);
             }
         }

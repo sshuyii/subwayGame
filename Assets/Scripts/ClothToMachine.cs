@@ -48,6 +48,7 @@ public class ClothToMachine : MonoBehaviour
 
 
         myImage = GetComponent<Image>();
+//        secondImage = GetComponentInChildren<Image>();
         hitTime = 0;
         
         ClothInMachineController = GameObject.Find("---ClothInMachineController");

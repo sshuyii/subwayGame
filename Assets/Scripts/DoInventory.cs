@@ -48,30 +48,39 @@ public class DoInventory : MonoBehaviour
             //print("pressed");
             //get the machine this cloth belongs to
             //if all clothes in the machine are taken, close door
-            GetComponentInParent<WasherController>().clothNum--;//洗衣机里的衣服少一
+            WasherController = GetComponentInParent<WasherController>();
+            WasherController.clothNum--;//洗衣机里的衣服少一
+            
+            //如果洗衣机里没衣服了，那么直接关上
+            if (WasherController.clothNum == 0)
+            {
+                StartCoroutine(WasherController.MachineFold());
+                return;
+            }
 
 
-        selfButton = GetComponent<Button>();
-        currentSprite = selfButton.image.sprite;
-        print("currentSpriteName = " + currentSprite.name);
 
-        Sprite buttonSprite = currentSprite;
-        print("SpriteName = " + currentSprite.name);
+            selfButton = GetComponent<Button>();
+              currentSprite = selfButton.image.sprite;
+            print("currentSpriteName = " + currentSprite.name);
+    
+            Sprite buttonSprite = currentSprite;
+            print("SpriteName = " + currentSprite.name);
 
-        print("occupiedI = " + CalculateInventory.occupiedI);
+            print("occupiedI = " + CalculateInventory.occupiedI);
 
        
-        if (CalculateInventory.occupiedI < 6)
-        {
-            //inventory used to be buttons
-            CalculateInventory.inventory[CalculateInventory.occupiedI].GetComponent<Image>().sprite = buttonSprite;
-            CalculateInventory.inventory[CalculateInventory.occupiedI].tag = this.tag;
-            CalculateInventory.occupiedI++;
-        }
-        else 
-        {
-            return;
-        }
+            if (CalculateInventory.occupiedI < 6)
+            {
+                //inventory used to be buttons
+                CalculateInventory.inventory[CalculateInventory.occupiedI].GetComponent<Image>().sprite = buttonSprite;
+                CalculateInventory.inventory[CalculateInventory.occupiedI].tag = this.tag;
+                CalculateInventory.occupiedI++;
+            }
+            else 
+            {
+                return;
+            }
         
       
         //for tutorial
@@ -95,35 +104,6 @@ public class DoInventory : MonoBehaviour
                 FinalCameraController.Hide(FinalCameraController.TutorialManager.arrowButton);
             }
         }
-
-
-
-        //CalculateInventory.inventory[CalculateInventory.occupiedI].GetComponent<SpriteRenderer>().sprite = buttonSprite;
-
-
-
-
-/*three fixed inventory: top shoe bottom
-//        //if the current button is labeled as top
-//        if (buttonSprite.name.Contains("Top")
-//        )
-//        {
-////            print("change to top");
-//            CalculateInventory.top.image.sprite = currentSprite;
-//        }
-//        else if(buttonSprite.name.Contains("shoe"))
-//        {
-////            print("change to shoe");
-//
-//            CalculateInventory.shoe.image.sprite = currentSprite;
-//        }
-//        else if(buttonSprite.name.Contains("Bottom"))
-//        {
-////            print("change to bottom");
-//
-//            CalculateInventory.other.image.sprite = currentSprite;
-//        }
-*/
 
         //image disappear
         selfButton.image.enabled = false;

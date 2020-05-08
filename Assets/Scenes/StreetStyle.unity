@@ -10618,7 +10618,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: -458.99997, y: 0}
+  m_AnchoredPosition: {x: -459, y: 0}
   m_SizeDelta: {x: 461, y: 820}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &430877124
@@ -12767,7 +12767,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 312960733}
   m_HandleRect: {fileID: 312960732}
   m_Direction: 0
-  m_Value: 0.4999989
+  m_Value: 0.49999854
   m_Size: 0.89599997
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -21515,7 +21515,7 @@ MonoBehaviour:
   instructionText: {fileID: 1479834278}
   isInstruction: 0
   Instructions: {fileID: 1501432817}
-  skip: 0
+  skip: 1
   fishBubble: {fileID: 1237400775147006898}
   fishText: {fileID: 1032632610}
   clicktime: 1
@@ -23486,7 +23486,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1144778275}
   m_Direction: 0
   m_Value: 0.49999976
-  m_Size: 0.5714285
+  m_Size: 0.57142854
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -32668,9 +32668,9 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 1b24ad4f2406e429a9e46705041d2f50, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 6302667f31285421e8074ecdbcb6f181, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.75
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -39289,7 +39289,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Takahira
+  m_text: Nico
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7f5d1df738e3e4c87920f885c02f93d0, type: 2}
   m_sharedMaterial: {fileID: -1414822660105612867, guid: 7f5d1df738e3e4c87920f885c02f93d0,
@@ -39359,7 +39359,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 1642401841}
-    characterCount: 8
+    characterCount: 4
     spriteCount: 0
     spaceCount: 0
     wordCount: 1
@@ -44211,6 +44211,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1906526715}
+        m_MethodName: ReturnCloth
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1906526719
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -48554,7 +48565,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2125717425}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
