@@ -391,6 +391,7 @@ public class ClothToMachine : MonoBehaviour
                     if (CalculateInventory.inventory[u].CompareTag(tag))
                     {
                         //change the inventory button image back to start
+                        print(tag + CalculateInventory.inventory[u].name);
                         CalculateInventory.inventory[u].GetComponent<Image>().sprite = FinalCameraController.startSprite;
                         
                         print("returnrnrnrnrnrnrn");

@@ -615,8 +615,9 @@ public class WasherController : MonoBehaviour
          isFirstOpen = false;
          //record the list into dictionary
          if(!FinalCameraController.AllStationClothList.ContainsKey(tagName))
-         FinalCameraController.AllStationClothList.Add(tagName, MachineClothList);
-
+         {
+             FinalCameraController.AllStationClothList.Add(tagName, MachineClothList);
+         }
     }
         
        

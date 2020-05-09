@@ -43,7 +43,7 @@ public class DoInventory : MonoBehaviour
     public void AddClothToInventory()
     {
 
-        if (FinalCameraController.isSwipping == false)
+        if (FinalCameraController.isSwipping == false && CalculateInventory.occupiedI < 6)
         {
             //print("pressed");
             //get the machine this cloth belongs to
@@ -70,28 +70,27 @@ public class DoInventory : MonoBehaviour
 
             print("occupiedI = " + CalculateInventory.occupiedI);
 
-       
-            if (CalculateInventory.occupiedI < 6)
+            int firstEmptyInventory = new int();
+            //这里应该找到第一个空着的inventory位置
+            for (int i = 0; i < CalculateInventory.inventory.Count; i++)
             {
+                if (CalculateInventory.inventory[i].CompareTag("Untagged"))
+                {
+                    firstEmptyInventory = i;
+                    break;
+                }
+                    
+            }
                 //inventory used to be buttons
-                CalculateInventory.inventory[CalculateInventory.occupiedI].GetComponent<Image>().sprite = buttonSprite;
-                CalculateInventory.inventory[CalculateInventory.occupiedI].tag = this.tag;
+                CalculateInventory.inventory[firstEmptyInventory].GetComponent<Image>().sprite = buttonSprite;
+                CalculateInventory.inventory[firstEmptyInventory].tag = this.tag;
                 CalculateInventory.occupiedI++;
-            }
-            else 
-            {
-                return;
-            }
+           
         
       
         //for tutorial
         if (FinalCameraController.isTutorial) //打开了洗衣机的门，真的拿了衣服
         {
-
-//            if (FinalCameraController.TutorialManager.tutorialNumber == 9)//拿了第一件衣服
-//            {
-//                FinalCameraController.TutorialManager.tutorialNumber = 12;
-//            }
             if (FinalCameraController.TutorialManager.tutorialNumber == 9||FinalCameraController.TutorialManager.tutorialNumber == 11) //拿了第二件衣服
             {
                 FinalCameraController.TutorialManager.tutorialNumber = 12;

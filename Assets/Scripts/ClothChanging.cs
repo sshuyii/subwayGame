@@ -209,7 +209,7 @@ public class ClothChanging : MonoBehaviour
                             buttonList[a].GetComponent<Image>().enabled = true;
                             myImage.sprite = startSprite;
                             //crossImage.SetActive(false);
-
+                    
                             takeOffCloth();
                             CalculateInventory.occupiedI = CalculateInventory.occupiedI - 1;
                             AllMachines.WashingMachines[i].GetComponent<WasherController>().clothNum++;

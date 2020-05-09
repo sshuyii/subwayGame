@@ -39,7 +39,7 @@ public class TouchController : MonoBehaviour
 
     private float swipeSpeed;
 
-    public bool doubleTouch = true;
+    public bool doubleTouch;
 
     //for typewriter use
     private string[] typeText;
@@ -67,7 +67,7 @@ public class TouchController : MonoBehaviour
             {
                 if (Input.GetTouch(i).tapCount == 2)
                 {
-//                    Debug.Log("Double Tap");
+                    Debug.Log("Double Tap");
                     doubleTouch = true;
                 }  
             }
