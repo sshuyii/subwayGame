@@ -406,10 +406,9 @@ public class FinalCameraController : MonoBehaviour
     {
         print("clickKarara");
         
-
         if(!isShown)
         {
-            CancelAllUI(false);
+            CancelAllUI(false);//进行完了isshown一定是false?
 
             Show(clothCG);
             Show(messageCG);

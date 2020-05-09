@@ -44,7 +44,7 @@ public class DoInventory : MonoBehaviour
     {
 
         if (FinalCameraController.isSwipping == false)
-        {
+        {            
             WasherController = GetComponentInParent<WasherController>();
 
             if (CalculateInventory.occupiedI < 6)

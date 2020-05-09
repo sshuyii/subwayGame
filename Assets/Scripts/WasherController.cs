@@ -77,6 +77,7 @@ public class WasherController : MonoBehaviour
     public void CloseFullNotice()
     {
         Hide(CalculateInventory.InventoryFull);
+        CalculateInventory.fulltemp = false;
     }
 
     public void ClickStart()
@@ -448,12 +449,12 @@ public class WasherController : MonoBehaviour
                     //如果是通过点洗衣机关门的话，展示karara头上的两个对话框
 
                     //show message and closet UI
-                    if(!FinalCameraController.isTutorial)
-                    {
-                        Show(FinalCameraController.clothCG);
-                        Show(FinalCameraController.messageCG);
-                        FinalCameraController.isShown = true;
-                    }
+//                    if(!FinalCameraController.isTutorial)
+//                    {
+//                        Show(FinalCameraController.clothCG);
+//                        Show(FinalCameraController.messageCG);
+//                        FinalCameraController.isShown = true;
+//                    }
                 }
     }
 

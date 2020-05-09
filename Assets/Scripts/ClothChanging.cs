@@ -372,7 +372,12 @@ public class ClothChanging : MonoBehaviour
                 {
                     if (currentSprite.name.Contains("Top"))
                     {
+                        if (CalculateInventory.wearingTop)
+                        {
+                            CalculateInventory.topButton.gameObject.GetComponent<ClothChanging>().isWearing = false;
 
+                        }
+                        
                         //buttonChangeBack();
                         CalculateInventory.wearingTop = true;
                         CalculateInventory.wearingEverything = false;
@@ -431,6 +436,11 @@ public class ClothChanging : MonoBehaviour
                     {
                         //buttonChangeBack();
 
+                        if (CalculateInventory.wearingBottom)
+                        {
+                            CalculateInventory.bottomButton.gameObject.GetComponent<ClothChanging>().isWearing = false;
+
+                        }
                         CalculateInventory.wearingBottom = true;
                         CalculateInventory.wearingEverything = false;
 
@@ -471,6 +481,11 @@ public class ClothChanging : MonoBehaviour
                     else if (currentSprite.name.Contains("Shoe"))
                     {
                         //buttonChangeBack();
+                        if (CalculateInventory.wearingShoe)
+                        {
+                            CalculateInventory.shoeButton.gameObject.GetComponent<ClothChanging>().isWearing = false;
+
+                        }
 
                         CalculateInventory.wearingShoe = true;
 
@@ -500,7 +515,11 @@ public class ClothChanging : MonoBehaviour
                     {
                         //buttonChangeBack();
 
+                        if (CalculateInventory.wearingEverything)
+                        {
+                            CalculateInventory.everythingButton.gameObject.GetComponent<ClothChanging>().isWearing = false;
 
+                        }
                         CalculateInventory.wearingEverything = true;
                         CalculateInventory.wearingTop = false;
                         CalculateInventory.wearingBottom = false;

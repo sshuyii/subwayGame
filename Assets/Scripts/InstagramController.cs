@@ -337,13 +337,14 @@ public class InstagramController : MonoBehaviour
                     FinalCameraController.Show(FishBoss);
                 }
 
+                FinalCameraController.ChapterOneEnd = true;
+
                 //到达最近的一站之后，就停下来，车再也不动了
                 if (!SubwayMovement.isMoving && SubwayMovement.currentStation == endStationPre &&
                     FinalCameraController.myCameraState == FinalCameraController.CameraState.Subway)
                 {
                     SubwayMovement.isMoving = false;
                     FinalCameraController.ChapterOneEnd = true;
-
                 }
             }
         }
