@@ -158,12 +158,14 @@ public class TutorialManager : MonoBehaviour
     }
     
     public DialogueState tutorialDialogueState;
-    
+    private CanvasGroup closetCG;
      
     // Start is called before the first frame update
     void Start()
     {
 
+
+        closetCG = closet.GetComponent<CanvasGroup>();
         Resources.UnloadUnusedAssets();
         audioClick = GetComponent<AudioSource>();
 
@@ -665,15 +667,15 @@ public class TutorialManager : MonoBehaviour
         {
             clicktime = 14;
 
-            if (clicktime == 11|| clicktime == 12 || clicktime == 10)
-            {
-                StartCoroutine(AnimateText(kararaText, "Put on", true, closet, closetV));   //clicktime = 13
-//                //箭头给到换衣界面的衣服UI
-//                Show(hintArrowCG);
-//                tutorialDialogueState = DialogueState.none;
-//                hintArrow.transform.SetParent(closet.transform f11);
-//                hintArrow.GetComponent<RectTransform>().anchoredPosition = closetV;
-            }
+//            if (clicktime == 11|| clicktime == 12 || clicktime == 10)
+//            {
+//                StartCoroutine(AnimateText(kararaText, "Put on", true, closet, closetV));   //clicktime = 13
+////                //箭头给到换衣界面的衣服UI
+////                Show(hintArrowCG);
+////                tutorialDialogueState = DialogueState.none;
+////                hintArrow.transform.SetParent(closet.transform f11);
+////                hintArrow.GetComponent<RectTransform>().anchoredPosition = closetV;
+//            }
             if (FinalCameraController.mySubwayState == FinalCameraController.SubwayState.One)
             {
                 tutorialDialogueState = DialogueState.fishElse;
@@ -687,7 +689,7 @@ public class TutorialManager : MonoBehaviour
                 tutorialDialogueState = DialogueState.karara;
                 screamImage.enabled = true;
                 Hide(arrowButton);
-                
+                Show(closetCG);
                 //show closet button
 //                Show(closet.GetComponent<CanvasGroup>());
             }

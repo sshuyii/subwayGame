@@ -8,7 +8,8 @@ public class CalculateInventory : MonoBehaviour
 {
     private InstagramController InstagramController;
     private FinalCameraController FinalCameraController;
-    
+
+    public bool fulltemp;
     public int posNum = 0;
     public bool isreturning;
 
@@ -184,7 +185,12 @@ public class CalculateInventory : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+      
 
+        if (occupiedI < 6)
+        {
+            fulltemp = false;
+        }
         
     }
     

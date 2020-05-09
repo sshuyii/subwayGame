@@ -19,7 +19,7 @@ public class ClothChanging : MonoBehaviour
     //used for lont tap
     private bool tapStart = false;
         
-    private bool firstTime;
+    public bool isWearing;
     
     private CalculateInventory CalculateInventory;
     private FinalCameraController FinalCameraController;
@@ -67,7 +67,6 @@ public class ClothChanging : MonoBehaviour
 
         inventoryButtonList = new List<Button>();
 
-        firstTime = true;
 //        selfButton.onClick.AddListener(AddClothToInventory);
 
         //currentSprite = GetComponent<SpriteRenderer>().sprite;
@@ -110,6 +109,7 @@ public class ClothChanging : MonoBehaviour
             {
 //                crossImage.SetActive(true);
                 tapStart = false;
+                print("islongtap");
 
                 CalculateInventory.isreturning = true;
             }
@@ -365,195 +365,313 @@ public class ClothChanging : MonoBehaviour
             if (CalculateInventory.allCloth.ContainsKey(currentSprite.name))
             {
 
+                isWearing = !isWearing;
                 //checkImage.enabled = true;
 
-                if (currentSprite.name.Contains("Top"))
+                if(isWearing)
                 {
-                   
-                    //buttonChangeBack();
-                    CalculateInventory.wearingTop = true;
-                    CalculateInventory.wearingEverything = false;
-
-
-                    //record the button
-                    CalculateInventory.topButton = selfButton;
-
-                    //change inventory clothes
-                    CalculateInventory.topSR.sprite = CalculateInventory.allCloth[currentSprite.name];
-                    print(currentSprite.name);
-
-                    //change subway clothes
-                    CalculateInventory.topSSR.sprite = CalculateInventory.allSubwayCloth[currentSprite.name];
-
-
-
-                    CalculateInventory.whiteShirt.enabled = false;
-                    CalculateInventory.workCloth.enabled = false;
-
-
-                    CalculateInventory.workClothS.enabled = false;
-                    CalculateInventory.whiteShirtS.enabled = false;
-
-
-                    //change clothes in advertisement
-                    print("Given key = " + currentSprite.name);
-                    CalculateInventory.topASR.sprite = CalculateInventory.allAdCloth[currentSprite.name];
-
-                    //Take off workcloth
-                    CalculateInventory.workClothASR.enabled = false;
-                    CalculateInventory.whiteShirtASR.sprite = transparent;
-                    //CalculateInventory.blackPantsASR.sprite = CalculateInventory.allAdCloth["BlackPants"];
-
-
-                    //take off one piece
-                    CalculateInventory.everythingSR.sprite = transparent;
-                    CalculateInventory.everythingASR.sprite = transparent;
-                    CalculateInventory.everythingSSR.sprite = transparent;
-
-                    
-                    //change the tag on all clothes on karara
-                    CalculateInventory.topSR.gameObject.tag = this.tag;
-                    CalculateInventory.topASR.gameObject.tag = this.tag;
-                    CalculateInventory.topSSR.gameObject.tag = this.tag;
-
-                    
-                    //player talks
-                    if (currentSprite.name.Contains("A1"))
+                    if (currentSprite.name.Contains("Top"))
                     {
-                        //text.text = "<b>Karara</b>: Do people wear Hawaii shirts in Hawaii?";
+
+                        //buttonChangeBack();
+                        CalculateInventory.wearingTop = true;
+                        CalculateInventory.wearingEverything = false;
+
+
+                        //record the button
+                        CalculateInventory.topButton = selfButton;
+
+                        //change inventory clothes
+                        CalculateInventory.topSR.sprite = CalculateInventory.allCloth[currentSprite.name];
+                        print(currentSprite.name);
+
+                        //change subway clothes
+                        CalculateInventory.topSSR.sprite = CalculateInventory.allSubwayCloth[currentSprite.name];
+
+
+
+                        CalculateInventory.whiteShirt.enabled = false;
+                        CalculateInventory.workCloth.enabled = false;
+
+
+                        CalculateInventory.workClothS.enabled = false;
+                        CalculateInventory.whiteShirtS.enabled = false;
+
+
+                        //change clothes in advertisement
+                        print("Given key = " + currentSprite.name);
+                        CalculateInventory.topASR.sprite = CalculateInventory.allAdCloth[currentSprite.name];
+
+                        //Take off workcloth
+                        CalculateInventory.workClothASR.enabled = false;
+                        CalculateInventory.whiteShirtASR.sprite = transparent;
+                        //CalculateInventory.blackPantsASR.sprite = CalculateInventory.allAdCloth["BlackPants"];
+
+
+                        //take off one piece
+                        CalculateInventory.everythingSR.sprite = transparent;
+                        CalculateInventory.everythingASR.sprite = transparent;
+                        CalculateInventory.everythingSSR.sprite = transparent;
+
+
+                        //change the tag on all clothes on karara
+                        CalculateInventory.topSR.gameObject.tag = this.tag;
+                        CalculateInventory.topASR.gameObject.tag = this.tag;
+                        CalculateInventory.topSSR.gameObject.tag = this.tag;
+
+
+                        //player talks
+                        if (currentSprite.name.Contains("A1"))
+                        {
+                            //text.text = "<b>Karara</b>: Do people wear Hawaii shirts in Hawaii?";
+                        }
+
                     }
+                    else if (currentSprite.name.Contains("Bottom"))
+                    {
+                        //buttonChangeBack();
 
-                }
-                else if (currentSprite.name.Contains("Bottom"))
-                {
-                    //buttonChangeBack();
-
-                    CalculateInventory.wearingBottom = true;
-                    CalculateInventory.wearingEverything = false;
+                        CalculateInventory.wearingBottom = true;
+                        CalculateInventory.wearingEverything = false;
 
 
-                    //record the button
-                    CalculateInventory.bottomButton = selfButton;
+                        //record the button
+                        CalculateInventory.bottomButton = selfButton;
 
 
-                    CalculateInventory.otherSR.sprite = CalculateInventory.allCloth[currentSprite.name];
-                    CalculateInventory.otherSSR.sprite = CalculateInventory.allSubwayCloth[currentSprite.name];
-                    //change clothes in advertisement
-                    CalculateInventory.otherASR.sprite = CalculateInventory.allAdCloth[currentSprite.name];
-                    //Take off workcloth
-                    CalculateInventory.workClothASR.enabled = false;
-                    //CalculateInventory.whiteShirtASR.sprite = CalculateInventory.allAdCloth["WhiteShirt"];
-                    CalculateInventory.blackPantsASR.sprite = transparent;
+                        CalculateInventory.otherSR.sprite = CalculateInventory.allCloth[currentSprite.name];
+                        CalculateInventory.otherSSR.sprite = CalculateInventory.allSubwayCloth[currentSprite.name];
+                        //change clothes in advertisement
+                        CalculateInventory.otherASR.sprite = CalculateInventory.allAdCloth[currentSprite.name];
+                        //Take off workcloth
+                        CalculateInventory.workClothASR.enabled = false;
+                        //CalculateInventory.whiteShirtASR.sprite = CalculateInventory.allAdCloth["WhiteShirt"];
+                        CalculateInventory.blackPantsASR.sprite = transparent;
 
 
-                    //take off one piece
-                    CalculateInventory.everythingSR.sprite = transparent;
-                    CalculateInventory.everythingASR.sprite = transparent;
-                    CalculateInventory.everythingSSR.sprite = transparent;
+                        //take off one piece
+                        CalculateInventory.everythingSR.sprite = transparent;
+                        CalculateInventory.everythingASR.sprite = transparent;
+                        CalculateInventory.everythingSSR.sprite = transparent;
 
 
-                    //change the tag on all clothes on karara
-                    CalculateInventory.otherSR.gameObject.tag = this.tag;
-                    CalculateInventory.otherASR.gameObject.tag = this.tag;
-                    CalculateInventory.otherSSR.gameObject.tag = this.tag;
-                    print("change bottom");
+                        //change the tag on all clothes on karara
+                        CalculateInventory.otherSR.gameObject.tag = this.tag;
+                        CalculateInventory.otherASR.gameObject.tag = this.tag;
+                        CalculateInventory.otherSSR.gameObject.tag = this.tag;
+                        print("change bottom");
 
-                    CalculateInventory.workCloth.enabled = false;
-                    CalculateInventory.blackPants.enabled = false;
+                        CalculateInventory.workCloth.enabled = false;
+                        CalculateInventory.blackPants.enabled = false;
 
-                    CalculateInventory.workClothS.enabled = false;
-                    CalculateInventory.blackPantsS.enabled = false;
+                        CalculateInventory.workClothS.enabled = false;
+                        CalculateInventory.blackPantsS.enabled = false;
 
-                }
-                else if (currentSprite.name.Contains("Shoe"))
-                {
-                    //buttonChangeBack();
+                    }
+                    else if (currentSprite.name.Contains("Shoe"))
+                    {
+                        //buttonChangeBack();
 
-                    CalculateInventory.wearingShoe = true;
+                        CalculateInventory.wearingShoe = true;
 
-                    //record the button
-                    CalculateInventory.shoeButton = selfButton;
-
-
-                    CalculateInventory.shoeSR.sprite = CalculateInventory.allCloth[currentSprite.name];
-                    CalculateInventory.shoeSSR.sprite = CalculateInventory.allSubwayCloth[currentSprite.name];
-                    //change clothes in advertisement
-                    CalculateInventory.shoeASR.sprite = CalculateInventory.allAdCloth[currentSprite.name];
-
-                    print("change shoe");
-
-                    CalculateInventory.workShoeSR.enabled = false;
-                    CalculateInventory.workShoeSSR.enabled = false;
-                    CalculateInventory.workShoeASR.sprite = transparent;
-                    
-                     
-                    //change the tag on all clothes on karara
-                    CalculateInventory.shoeSR.gameObject.tag = this.tag;
-                    CalculateInventory.shoeASR.gameObject.tag = this.tag;
-                    CalculateInventory.shoeSSR.gameObject.tag = this.tag;
-
-                }
-                else if (currentSprite.name.Contains("Everything"))
-                {
-                    //buttonChangeBack();
-                    
-
-                    CalculateInventory.wearingEverything = true;
-                    CalculateInventory.wearingTop = false;
-                    CalculateInventory.wearingBottom = false;
-
-                    //record the button
-                    CalculateInventory.everythingButton = selfButton;
-
-                    
-                    CalculateInventory.everythingSR.sprite = CalculateInventory.allCloth[currentSprite.name];
-                    CalculateInventory.everythingSSR.sprite = CalculateInventory.allSubwayCloth[currentSprite.name];
-                    //change clothes in advertisement
-                    CalculateInventory.everythingASR.sprite = CalculateInventory.allAdCloth[currentSprite.name];
-                    //Take off workcloth
-                    CalculateInventory.workClothASR.enabled = false;
-
-                    //take off other cloths
-                    CalculateInventory.otherSR.sprite = transparent;
-                    CalculateInventory.topSR.sprite = transparent;
-
-                    CalculateInventory.otherASR.sprite = transparent;
-                    CalculateInventory.topASR.sprite = transparent;
-
-                    CalculateInventory.otherSSR.sprite = transparent;
-                    CalculateInventory.topSSR.sprite = transparent;
+                        //record the button
+                        CalculateInventory.shoeButton = selfButton;
 
 
-                    print("change everything");
+                        CalculateInventory.shoeSR.sprite = CalculateInventory.allCloth[currentSprite.name];
+                        CalculateInventory.shoeSSR.sprite = CalculateInventory.allSubwayCloth[currentSprite.name];
+                        //change clothes in advertisement
+                        CalculateInventory.shoeASR.sprite = CalculateInventory.allAdCloth[currentSprite.name];
 
-                    CalculateInventory.workCloth.enabled = false;
+                        print("change shoe");
 
-                    CalculateInventory.workClothS.enabled = false;
+                        CalculateInventory.workShoeSR.enabled = false;
+                        CalculateInventory.workShoeSSR.enabled = false;
+                        CalculateInventory.workShoeASR.sprite = transparent;
 
-                    CalculateInventory.topSR.sprite = transparent;
-                    CalculateInventory.otherSR.sprite = transparent;
 
-                    CalculateInventory.blackPants.enabled = true;
-                    CalculateInventory.whiteShirt.enabled = true;
+                        //change the tag on all clothes on karara
+                        CalculateInventory.shoeSR.gameObject.tag = this.tag;
+                        CalculateInventory.shoeASR.gameObject.tag = this.tag;
+                        CalculateInventory.shoeSSR.gameObject.tag = this.tag;
 
-                    CalculateInventory.whiteShirtS.enabled = true;
-                    CalculateInventory.blackPantsS.enabled = true;
+                    }
+                    else if (currentSprite.name.Contains("Everything"))
+                    {
+                        //buttonChangeBack();
 
-                    CalculateInventory.whiteShirtASR.sprite = CalculateInventory.allAdCloth["WhiteShirt"];
-                    CalculateInventory.blackPantsASR.sprite = CalculateInventory.allAdCloth["BlackPants"];
 
-                     
-                    //change the tag on all clothes on karara
-                    CalculateInventory.everythingSR.gameObject.tag = this.tag;
-                    CalculateInventory.everythingASR.gameObject.tag = this.tag;
-                    CalculateInventory.everythingSSR.gameObject.tag = this.tag;
+                        CalculateInventory.wearingEverything = true;
+                        CalculateInventory.wearingTop = false;
+                        CalculateInventory.wearingBottom = false;
+
+                        //record the button
+                        CalculateInventory.everythingButton = selfButton;
+
+
+                        CalculateInventory.everythingSR.sprite = CalculateInventory.allCloth[currentSprite.name];
+                        CalculateInventory.everythingSSR.sprite = CalculateInventory.allSubwayCloth[currentSprite.name];
+                        //change clothes in advertisement
+                        CalculateInventory.everythingASR.sprite = CalculateInventory.allAdCloth[currentSprite.name];
+                        //Take off workcloth
+                        CalculateInventory.workClothASR.enabled = false;
+
+                        //take off other cloths
+                        CalculateInventory.otherSR.sprite = transparent;
+                        CalculateInventory.topSR.sprite = transparent;
+
+                        CalculateInventory.otherASR.sprite = transparent;
+                        CalculateInventory.topASR.sprite = transparent;
+
+                        CalculateInventory.otherSSR.sprite = transparent;
+                        CalculateInventory.topSSR.sprite = transparent;
+
+
+                        print("change everything");
+
+                        CalculateInventory.workCloth.enabled = false;
+
+                        CalculateInventory.workClothS.enabled = false;
+
+                        CalculateInventory.topSR.sprite = transparent;
+                        CalculateInventory.otherSR.sprite = transparent;
+
+                        CalculateInventory.blackPants.enabled = true;
+                        CalculateInventory.whiteShirt.enabled = true;
+
+                        CalculateInventory.whiteShirtS.enabled = true;
+                        CalculateInventory.blackPantsS.enabled = true;
+
+                        CalculateInventory.whiteShirtASR.sprite = CalculateInventory.allAdCloth["WhiteShirt"];
+                        CalculateInventory.blackPantsASR.sprite = CalculateInventory.allAdCloth["BlackPants"];
+
+
+                        //change the tag on all clothes on karara
+                        CalculateInventory.everythingSR.gameObject.tag = this.tag;
+                        CalculateInventory.everythingASR.gameObject.tag = this.tag;
+                        CalculateInventory.everythingSSR.gameObject.tag = this.tag;
+                    }
                 }
                 else
                 {
-                    
+                     if (currentSprite.name.Contains("Top"))
+                    {
 
-                    firstTime = false;
+                        //buttonChangeBack();
+                        CalculateInventory.wearingTop = false;
+
+                        //change inventory clothes
+                        CalculateInventory.topSR.sprite = CalculateInventory.transparent;
+
+                        //change subway clothes
+                        CalculateInventory.topSSR.sprite = CalculateInventory.transparent;
+
+
+                        CalculateInventory.whiteShirt.enabled = true;
+
+                        CalculateInventory.whiteShirtS.enabled = true;
+
+
+                        //change clothes in advertisement
+                        CalculateInventory.topASR.sprite = CalculateInventory.transparent;
+
+
+                        //change the tag on all clothes on karara
+                        CalculateInventory.topSR.gameObject.tag = "Untagged";
+                        CalculateInventory.topASR.gameObject.tag = "Untagged";
+                        CalculateInventory.topSSR.gameObject.tag = "Untagged";
+
+
+                        //player talks
+                        if (currentSprite.name.Contains("A1"))
+                        {
+                            //text.text = "<b>Karara</b>: Do people wear Hawaii shirts in Hawaii?";
+                        }
+
+                    }
+                    else if (currentSprite.name.Contains("Bottom"))
+                    {
+                        //buttonChangeBack();
+                        CalculateInventory.wearingBottom = false;
+
+                        //change inventory clothes
+                        CalculateInventory.otherSR.sprite = CalculateInventory.transparent;
+
+                        //change subway clothes
+                        CalculateInventory.otherSSR.sprite = CalculateInventory.transparent;
+
+
+                        CalculateInventory.blackPants.enabled = true;
+
+                        CalculateInventory.blackPantsS.enabled = true;
+
+
+                        //change clothes in advertisement
+                        CalculateInventory.otherASR.sprite = CalculateInventory.transparent;
+
+
+                        //change the tag on all clothes on karara
+                        CalculateInventory.otherSR.gameObject.tag = "Untagged";
+                        CalculateInventory.otherASR.gameObject.tag = "Untagged";
+                        CalculateInventory.otherSSR.gameObject.tag = "Untagged";
+
+
+                    }
+                    else if (currentSprite.name.Contains("Shoe"))
+                    {
+                        //buttonChangeBack();
+                        CalculateInventory.wearingShoe = false;
+
+                        //change inventory clothes
+                        CalculateInventory.shoeSR.sprite = CalculateInventory.transparent;
+
+                        //change subway clothes
+                        CalculateInventory.shoeSSR.sprite = CalculateInventory.transparent;
+
+
+                        //change clothes in advertisement
+                        CalculateInventory.shoeASR.sprite = CalculateInventory.transparent;
+
+
+                        //change the tag on all clothes on karara
+                        CalculateInventory.shoeSR.gameObject.tag = "Untagged";
+                        CalculateInventory.shoeASR.gameObject.tag = "Untagged";
+                        CalculateInventory.shoeSSR.gameObject.tag = "Untagged";
+
+                    }
+                    else if (currentSprite.name.Contains("Everything"))
+                    {
+                        //buttonChangeBack();
+                        CalculateInventory.wearingEverything = false;
+
+                        //change inventory clothes
+                        CalculateInventory.everythingSR.sprite = CalculateInventory.transparent;
+
+                        //change subway clothes
+                        CalculateInventory.everythingSSR.sprite = CalculateInventory.transparent;
+
+
+                        CalculateInventory.whiteShirt.enabled = true;
+                        CalculateInventory.blackPants.enabled = true;
+
+
+                        CalculateInventory.whiteShirtS.enabled = true;
+                        CalculateInventory.blackPantsS.enabled = true;
+
+
+                        //change clothes in advertisement
+                        CalculateInventory.everythingASR.sprite = CalculateInventory.transparent;
+
+
+                        //change the tag on all clothes on karara
+                        CalculateInventory.everythingSR.gameObject.tag = "Untagged";
+                        CalculateInventory.everythingASR.gameObject.tag = "Untagged";
+                        CalculateInventory.everythingSSR.gameObject.tag = "Untagged";
+
+                    }
+
                 }
+               
             }
         }
     }

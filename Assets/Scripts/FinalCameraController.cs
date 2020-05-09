@@ -405,10 +405,12 @@ public class FinalCameraController : MonoBehaviour
     public void clickKarara()
     {
         print("clickKarara");
-        CancelAllUI(false);
+        
 
         if(!isShown)
         {
+            CancelAllUI(false);
+
             Show(clothCG);
             Show(messageCG);
             isShown = true;

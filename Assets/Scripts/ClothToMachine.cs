@@ -239,7 +239,7 @@ public class ClothToMachine : MonoBehaviour
                     {
                         //change the inventory button image back to start
                         CalculateInventory.inventory[u].GetComponent<Image>().sprite = FinalCameraController.startSprite;
-                        
+                        CalculateInventory.inventory[u].GetComponent<ClothChanging>().isWearing = false;
                         print("returnrnrnrnrnrnrn");
                         //then 
                         CalculateInventory.occupiedI = CalculateInventory.occupiedI - 1;
@@ -393,6 +393,8 @@ public class ClothToMachine : MonoBehaviour
                         //change the inventory button image back to start
                         print(tag + CalculateInventory.inventory[u].name);
                         CalculateInventory.inventory[u].GetComponent<Image>().sprite = FinalCameraController.startSprite;
+                        CalculateInventory.inventory[u].GetComponent<ClothChanging>().isWearing = false;
+
                         
                         print("returnrnrnrnrnrnrn");
                         //then 

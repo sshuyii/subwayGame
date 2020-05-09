@@ -125,22 +125,7 @@ public class WasherController : MonoBehaviour
                                 Mathf.RoundToInt(realTimer % 60).ToString();
             }
         }
-        //if already five items taken
-        if (CalculateInventory.occupiedI > 5 && fulltemp == false)
-        {
-            Hide(ClothUI);
-            Show(CalculateInventory.InventoryFull);
-            fulltemp = true;
-            
-            //close all machine doors
-            DoorImage.sprite = AllMachines.closedDoor;
-            StartCoroutine(MachineFold());
-        }
-
-        if (CalculateInventory.occupiedI < 6)
-        {
-            fulltemp = false;
-        }
+       
                 
         //close all ui if swipping the screen
         if (FinalCameraController.isSwipping && !FinalCameraController.isTutorial)
@@ -366,6 +351,7 @@ public class WasherController : MonoBehaviour
         Hide(ClothUI);
         pressOK = true;
         FinalCameraController.DisableInput(false);
+        FinalCameraController.clickKarara();
 
         if (FinalCameraController.isTutorial && FinalCameraController.TutorialManager.tutorialNumber == 9 || FinalCameraController.isTutorial && FinalCameraController.TutorialManager.tutorialNumber == 11)
         {
@@ -459,7 +445,8 @@ public class WasherController : MonoBehaviour
                     //change door to closed sprite
                     DoorImage.sprite = AllMachines.closedDoor;
                     Show(Occupied);
-                    
+                    //如果是通过点洗衣机关门的话，展示karara头上的两个对话框
+
                     //show message and closet UI
                     if(!FinalCameraController.isTutorial)
                     {

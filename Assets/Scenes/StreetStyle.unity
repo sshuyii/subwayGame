@@ -9688,6 +9688,7 @@ MonoBehaviour:
   text: {fileID: 1638445851}
   transparent: {fileID: 21300000, guid: d7f409a287fc14824a84a822ef378d81, type: 3}
   Occupied: {fileID: 0}
+  isWearing: 0
 --- !u!114 &403047202
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9733,17 +9734,6 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 403047201}
         m_MethodName: ChangeCloth
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 403047201}
-        m_MethodName: ReturnCloth
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -12916,8 +12906,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 312960733}
   m_HandleRect: {fileID: 312960732}
   m_Direction: 0
-  m_Value: 0.49999815
-  m_Size: 0.89600015
+  m_Value: 0.49999854
+  m_Size: 0.89599997
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -13044,8 +13034,6 @@ GameObject:
   - component: {fileID: 538202699}
   - component: {fileID: 538202698}
   - component: {fileID: 538202695}
-  - component: {fileID: 538202697}
-  - component: {fileID: 538202696}
   m_Layer: 5
   m_Name: 4
   m_TagString: Untagged
@@ -13087,46 +13075,7 @@ MonoBehaviour:
   text: {fileID: 1638445851}
   transparent: {fileID: 21300000, guid: d7f409a287fc14824a84a822ef378d81, type: 3}
   Occupied: {fileID: 0}
---- !u!114 &538202696
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 538202693}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Delegates:
-  - eventID: 2
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 538202695}
-          m_MethodName: ReturnClothPre
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
---- !u!114 &538202697
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 538202693}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e801af14bb6ff642a16a53be53348be, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  isWearing: 0
 --- !u!114 &538202698
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13172,17 +13121,6 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 538202695}
         m_MethodName: ChangeCloth
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 538202695}
-        m_MethodName: ReturnCloth
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -14439,7 +14377,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 734380867}
   m_HandleRect: {fileID: 734380866}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -21334,8 +21272,8 @@ MonoBehaviour:
   isMoving: 0
   left1: {fileID: 842372352}
   right1: {fileID: 1173038159}
-  moveTime: 45
-  stayTime: 12
+  moveTime: 30
+  stayTime: 7
   detailList0:
   - {fileID: 732222273}
   - {fileID: 2012225406}
@@ -21800,7 +21738,7 @@ MonoBehaviour:
   instructionText: {fileID: 1479834278}
   isInstruction: 0
   Instructions: {fileID: 1501432817}
-  skip: 0
+  skip: 1
   fishBubble: {fileID: 1237400775147006898}
   fishText: {fileID: 1032632610}
   clicktime: 1
@@ -21832,7 +21770,7 @@ AudioSource:
   m_PlayOnAwake: 1
   m_Volume: 0.6
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -23866,8 +23804,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1144778276}
   m_HandleRect: {fileID: 1144778275}
   m_Direction: 0
-  m_Value: 0.49999955
-  m_Size: 0.57142836
+  m_Value: 0.49999976
+  m_Size: 0.57142854
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -24089,7 +24027,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 499448898}
   m_HandleRect: {fileID: 499448897}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -26619,8 +26557,6 @@ GameObject:
   - component: {fileID: 1090699673}
   - component: {fileID: 1090699672}
   - component: {fileID: 1090699669}
-  - component: {fileID: 1090699671}
-  - component: {fileID: 1090699670}
   m_Layer: 5
   m_Name: 3
   m_TagString: Untagged
@@ -26662,46 +26598,7 @@ MonoBehaviour:
   text: {fileID: 1638445851}
   transparent: {fileID: 21300000, guid: d7f409a287fc14824a84a822ef378d81, type: 3}
   Occupied: {fileID: 0}
---- !u!114 &1090699670
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1090699667}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Delegates:
-  - eventID: 2
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 1090699669}
-          m_MethodName: ReturnClothPre
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
---- !u!114 &1090699671
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1090699667}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e801af14bb6ff642a16a53be53348be, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  isWearing: 0
 --- !u!114 &1090699672
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26747,17 +26644,6 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1090699669}
         m_MethodName: ChangeCloth
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1090699669}
-        m_MethodName: ReturnCloth
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -27538,8 +27424,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 840803401}
   m_HandleRect: {fileID: 840803400}
   m_Direction: 0
-  m_Value: 0.4999994
-  m_Size: 0.55813926
+  m_Value: 0.4999997
+  m_Size: 0.55813956
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -28748,7 +28634,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1857826847}
   m_HandleRect: {fileID: 1857826846}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -30796,8 +30682,6 @@ GameObject:
   - component: {fileID: 1257879325}
   - component: {fileID: 1257879324}
   - component: {fileID: 1257879321}
-  - component: {fileID: 1257879323}
-  - component: {fileID: 1257879322}
   m_Layer: 5
   m_Name: 5
   m_TagString: Untagged
@@ -30839,46 +30723,7 @@ MonoBehaviour:
   text: {fileID: 1638445851}
   transparent: {fileID: 21300000, guid: d7f409a287fc14824a84a822ef378d81, type: 3}
   Occupied: {fileID: 0}
---- !u!114 &1257879322
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1257879319}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Delegates:
-  - eventID: 2
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 1257879321}
-          m_MethodName: ReturnClothPre
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
---- !u!114 &1257879323
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1257879319}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e801af14bb6ff642a16a53be53348be, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  isWearing: 0
 --- !u!114 &1257879324
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -30924,17 +30769,6 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1257879321}
         m_MethodName: ChangeCloth
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1257879321}
-        m_MethodName: ReturnCloth
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -31158,9 +30992,7 @@ GameObject:
   - component: {fileID: 1274085214}
   - component: {fileID: 1274085213}
   - component: {fileID: 1274085212}
-  - component: {fileID: 1274085211}
   - component: {fileID: 1274085209}
-  - component: {fileID: 1274085210}
   m_Layer: 5
   m_Name: 2
   m_TagString: Untagged
@@ -31183,46 +31015,7 @@ MonoBehaviour:
   text: {fileID: 1638445851}
   transparent: {fileID: 21300000, guid: d7f409a287fc14824a84a822ef378d81, type: 3}
   Occupied: {fileID: 0}
---- !u!114 &1274085210
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1274085208}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Delegates:
-  - eventID: 2
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 1274085209}
-          m_MethodName: ReturnClothPre
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
---- !u!114 &1274085211
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1274085208}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: da72bbbe7447d42f3ba1c2bce272527b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  isWearing: 0
 --- !u!114 &1274085212
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -31268,17 +31061,6 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1274085209}
         m_MethodName: ChangeCloth
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1274085209}
-        m_MethodName: ReturnCloth
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -39127,6 +38909,7 @@ MonoBehaviour:
   text: {fileID: 0}
   transparent: {fileID: 21300000, guid: d7f409a287fc14824a84a822ef378d81, type: 3}
   Occupied: {fileID: 0}
+  isWearing: 0
 --- !u!114 &1619251268
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -39246,6 +39029,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b96c89b5a5df425c9a72f41f66df766, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fulltemp: 0
   posNum: 0
   isreturning: 0
   wearingTop: 0
@@ -44739,8 +44523,6 @@ GameObject:
   - component: {fileID: 1906526719}
   - component: {fileID: 1906526718}
   - component: {fileID: 1906526715}
-  - component: {fileID: 1906526717}
-  - component: {fileID: 1906526716}
   m_Layer: 5
   m_Name: 6
   m_TagString: Untagged
@@ -44782,46 +44564,7 @@ MonoBehaviour:
   text: {fileID: 1638445851}
   transparent: {fileID: 21300000, guid: d7f409a287fc14824a84a822ef378d81, type: 3}
   Occupied: {fileID: 0}
---- !u!114 &1906526716
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1906526713}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Delegates:
-  - eventID: 2
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 1906526715}
-          m_MethodName: ReturnClothPre
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
---- !u!114 &1906526717
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1906526713}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e801af14bb6ff642a16a53be53348be, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  isWearing: 0
 --- !u!114 &1906526718
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -44867,17 +44610,6 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1906526715}
         m_MethodName: ChangeCloth
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1906526715}
-        m_MethodName: ReturnCloth
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -48974,7 +48706,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1471366908}
   m_HandleRect: {fileID: 1471366907}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
