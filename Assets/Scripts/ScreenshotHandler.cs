@@ -114,13 +114,15 @@ public class ScreenshotHandler : MonoBehaviour
 //        }
         
         //set follower number
+        //todo: 应该在换衣服按钮那里决定是不是穿着工作服，而不是在这里每一帧都判断一次
         if(!FinalCameraController.isTutorial)
         {
             InstagramController.followerNum.text = followerNum.ToString();
             InstagramController.subFollowerNum.text = followerNum.ToString();
-            if (KararaWorkImage.sprite.name == "workCloth")
+            if (CalculateInventory.wearingWorkCloth)
             {
                 KararaWork = true;
+       
             }
             else
             {
@@ -271,7 +273,6 @@ public class ScreenshotHandler : MonoBehaviour
                 {
                     followerNum += 8;
                 }
-
             }
 //        else if (InstagramController.currentBackground == "Toothpaste")
 //        {

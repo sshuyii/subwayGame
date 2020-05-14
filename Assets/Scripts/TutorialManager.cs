@@ -475,7 +475,7 @@ public class TutorialManager : MonoBehaviour
             {
                 bag = Instantiate(clothBag, bagPos, Quaternion.identity) as GameObject;
                 bag.transform.SetParent(clothBagGroup.transform, false);
-                arrow.enabled = false;
+//                arrow.enabled = false;
                 Hide(arrowButton);//so the bag can be picked
                 
                 //show the arrow after the bag has been instantiated
@@ -499,7 +499,7 @@ public class TutorialManager : MonoBehaviour
             {
                 //包已经在洗衣机下面
                 tutorialDialogueState = DialogueState.fishElse;
-                StartCoroutine(AnimateText(fishText, "Click the bag! Put clothes into the machine!",true, bag, bagV));
+                StartCoroutine(AnimateText(fishText, "Tap the bag! Put the clothes into the machine!",true, bag, bagV));
                 //now clicktime = 8;
 //                fishText.text = "Click the bag! Put the cloth into the machine!";
             }
@@ -513,7 +513,7 @@ public class TutorialManager : MonoBehaviour
             {
                 //衣服已经进了洗衣机，还没开始洗
                 tutorialDialogueState = DialogueState.fishElse;
-                StartCoroutine(AnimateText(fishText, "Click the button to start!",true, startButton, machineV));
+                StartCoroutine(AnimateText(fishText, "Tap the button to start!",true, startButton, machineV));
                 tutorialNumber = 5;
                 FinalCameraController.mySubwayState = FinalCameraController.SubwayState.Two;
             }
@@ -719,7 +719,7 @@ public class TutorialManager : MonoBehaviour
             StartCoroutine(AnimateText(kararaText, "Cool", true, Inventory, subwayV));   //clicktime = 15
 
             tutorialDialogueState = DialogueState.karara;
-            arrow.enabled = true;
+//            arrow.enabled = true;
             Hide(arrowButton);
         }
         else if(tutorialNumber == 15)//回到地铁scene
@@ -783,7 +783,7 @@ public class TutorialManager : MonoBehaviour
             }
             else if (clicktime == 18 && FinalCameraController.mySubwayState == FinalCameraController.SubwayState.Two)
             {
-                StartCoroutine(AnimateText(fishText, "Click the bag to return it!", true, door,
+                StartCoroutine(AnimateText(fishText, "Tap the bag to return it!", true, door,
                     bagdoorV)); //clicktime = 19
                 scrollControl(false);
 
@@ -880,7 +880,7 @@ public class TutorialManager : MonoBehaviour
 
                 //scrollControl(true);//enable player to swipe
 
-                arrow.enabled = false;
+//                arrow.enabled = false;
 //                clicktime = 1;
                 backToSubway = true;
                 Show(arrowButton);
@@ -922,7 +922,7 @@ public class TutorialManager : MonoBehaviour
             tutorialDialogueState = DialogueState.fish;
             StartCoroutine(AnimateText(fishText, "Karara! You're finally here!",false, null, Vector2.zero));//结束之后clicktime = 3
 
-            arrow.enabled = true;
+//            arrow.enabled = true;
 
             
             //enable click the screen
@@ -1030,7 +1030,7 @@ public class TutorialManager : MonoBehaviour
         FinalCameraController.DisableInput(true);
 
         yield return new WaitForSeconds(0.5f);
-        
+        myHSS.transitionSpeed = 2f;
         for(int i = 0; i < 5; i ++)
         {
             yield return new WaitForSeconds(0);
@@ -1042,18 +1042,15 @@ public class TutorialManager : MonoBehaviour
                 yield return new WaitForSeconds(1);
 
                 KararaDisappear(false);                
-                yield return new WaitForSeconds(1);
+                yield return new WaitForSeconds(2);
 
+             
+                
+                myHSS.transitionSpeed = 7.5f;
                 //show karara dialogue
                 tutorialDialogueState = DialogueState.karara;
                 StartCoroutine(AnimateText(kararaText, "poster", true, poster, posterV));
-//                kararaText.text = "poster";
-                arrow.enabled = false;
                 Hide(arrowButton);//player should click poster
-                //arrow beside poster
-                if (FinalCameraController.mySubwayState == FinalCameraController.SubwayState.Four)
-                {
-                }            
             }
         }
     }
@@ -1115,7 +1112,7 @@ public class TutorialManager : MonoBehaviour
         myHSS.enabled = true;
         FinalCameraController.subwayScrollRect.enabled = true;
 
-        arrow.enabled = false;
+//        arrow.enabled = false;
 
         if (temp)
         {
@@ -1279,7 +1276,7 @@ public class TutorialManager : MonoBehaviour
                         Vector2.zero)); //clicktime = 18
 
 //                fishText.text = "Now return the clothes! Immediately!";
-                    arrow.enabled = false;
+//                    arrow.enabled = false;
                     Show(arrowButton);
                     KararaStandingImage.enabled = true;
                     tutorialDialogueState = DialogueState.fish;

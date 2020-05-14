@@ -10,6 +10,9 @@ public class SubwayMovement : MonoBehaviour
 {
     private FinalCameraController FinalCameraController;
 
+    public AudioSource doorSound;
+    private bool doorSoundPlay = true;
+    
     private int NpcCount = 0;
     private LevelManager LevelManager;
     public int currentStation;
@@ -113,7 +116,6 @@ public class SubwayMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start() 
     {
-
         FinalCameraController = GameObject.Find("Main Camera").GetComponent<FinalCameraController>();
 
         if(!FinalCameraController.isTutorial)
@@ -284,8 +286,15 @@ public class SubwayMovement : MonoBehaviour
 //            hSR.enabled = true;
 
                 //open doors
+
                 if (left1.anchoredPosition.x > left1Pos - doorWidth)
                 {
+                    if(doorSoundPlay)
+                    {
+                        doorSound.Play();
+                        doorSoundPlay = false;
+                    }        
+                    
                     left1.anchoredPosition -= new Vector2(doorMovement, 0);
                     print("opening left door");
                 }
@@ -309,7 +318,7 @@ public class SubwayMovement : MonoBehaviour
                     //bagfirst保证只运行一次
                     if (!FinalCameraController.isTutorial && bagFirst && !FinalCameraController.ChapterOneEnd)//结束的时候不能往车上放新的包了
                     {
-                        print("NameToStationBags[currentStation.ToString()].Count = " + NameToStationBags[currentStation.ToString()].Count );
+                        print("NameToStationBags[currentStation.ToString()].Count = " + NameToStationBags[currentStation.ToString()].Count);
                         for (int i = 0; i < NameToStationBags[currentStation.ToString()].Count; i++)
                         {
                             print("NameToStationBags[currentStation.ToString()].Count" +
@@ -336,10 +345,16 @@ public class SubwayMovement : MonoBehaviour
 //                    right2.transform.position += new Vector3(doorMovement, 0, 0);
 //                }
                 }
-            }
-
+            }//close doors
+            //this actually happens when the train has started moving
             else
             {
+                if(!doorSoundPlay)
+                {
+                    doorSound.Play();
+                    doorSoundPlay = true;
+                }
+
                 if (left1.anchoredPosition.x < left1Pos)
                 {
                     left1.anchoredPosition += new Vector2(doorMovement, 0);
@@ -371,17 +386,13 @@ public class SubwayMovement : MonoBehaviour
 //                }
 //            }
             }
-
         }
-
     }
 
     Button bag;
     private int previousIndex = 2;
 
-   
 
-   
     //this is used to create new bags in the car
     void GenerateBag(int stationNum)
     {
@@ -490,7 +501,6 @@ public class SubwayMovement : MonoBehaviour
                             }
                         }
                     }
-
 //                }
             }
             //previousIndex = randomIndex;
@@ -641,7 +651,6 @@ public class SubwayMovement : MonoBehaviour
                 if (isDetailed)
                 {
                     Show(clear);
-                     
                 }
                 else
                 {

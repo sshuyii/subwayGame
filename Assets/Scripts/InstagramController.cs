@@ -193,7 +193,7 @@ public class InstagramController : MonoBehaviour
 
     private int endStationPre;
 
-    private bool chapterOneEndPre;
+   
     // Update is called once per frame
     void Update()
     {
@@ -306,27 +306,37 @@ public class InstagramController : MonoBehaviour
             if (!AdAlreadyTakenList.ContainsValue(true))
             {
                 //if more than 20 followers, chapter 1 succeeds
-                if (System.Convert.ToInt32(followerNum.text) >= 20 && newPostNum == 2 && newStationNum == 3 &&
-                    !chapterOneEndPre)
+                if (newPostNum == 2 && newStationNum == 3 &&
+                    !FinalCameraController.chapterOneSucceed && !FinalCameraController.chapterOneFail)
                 {
+                    endStationPre = SubwayMovement.currentStation;
+
                     if (FinalCameraController.myCameraState != FinalCameraController.CameraState.App)
                     {
-//                        StartCoroutine(CreatePersonalPagePost("nico", nicoLaterPost[2],
-//                            "this is the end of chapter 1"));
 
-                        //下一章ojisan要搬家了，所以这个是最后一张post
-                        StartCoroutine(CreatePersonalPagePost("ojisan", ojisanLaterPost[2],
-                            "embrace yourself"));
-                      
-                        newPostNum = 3;
-                        fishText.text = "What are you doing? Turn off your phone during work!";
-                        chapterOneEndPre = true;
-                        endStationPre = SubwayMovement.currentStation;
+                        if(System.Convert.ToInt32(followerNum.text) >= 30)
+                        {
+                            //下一章ojisan要搬家了，所以这个是最后一张post
+                            StartCoroutine(CreatePersonalPagePost("ojisan", ojisanLaterPost[2],
+                                "embrace yourself"));
+
+                            newPostNum = 3;
+                            fishText.text = "What are you doing? Turn off your phone during work!";
+                            FinalCameraController.chapterOneSucceed = true;
+                        }
+                        else//如果没到30fo，失败了
+                        {
+                            //什么时机出现这个漫画？
+                            //到最近的一站之后，转到鱼的界面
+
+                            FinalCameraController.chapterOneFail = true;
+                          
+                        }
                     }
                 }
             }
 
-            if (chapterOneEndPre)
+            if (FinalCameraController.chapterOneSucceed)
             {
                 if (FinalCameraController.mySubwayState == FinalCameraController.SubwayState.Two)
                 {
@@ -347,6 +357,20 @@ public class InstagramController : MonoBehaviour
                     FinalCameraController.ChapterOneEnd = true;
                 }
             }
+            else if (FinalCameraController.chapterOneFail)
+            {
+                //到达最近的一站之后，就停下来，车再也不动了
+                if (!SubwayMovement.isMoving && SubwayMovement.currentStation == endStationPre &&
+                    FinalCameraController.myCameraState == FinalCameraController.CameraState.Subway)
+                {
+                    SubwayMovement.isMoving = false;
+                   
+
+                    FinalCameraController.ChapterOneEnd = true;
+                }
+                
+            }
+
         }
 
     }
@@ -392,7 +416,7 @@ public class InstagramController : MonoBehaviour
             //set post text
             newPost.GetComponent<EntryTime>().postText = "<b>Ojisan</b> " + postText;
             //如果关注了ojisan,放到首页里,或者如果是第一章最后一个post，强制放进首页
-            if (followDesigner || chapterOneEndPre)
+            if (followDesigner || FinalCameraController.chapterOneSucceed)
             {
                 CreatePostInMainPage("ojisan", post, postText,newPost.GetComponent<EntryTime>().time);
             }

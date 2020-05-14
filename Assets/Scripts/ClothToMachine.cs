@@ -15,6 +15,7 @@ public class ClothToMachine : MonoBehaviour
     private AllMachines AllMachines;
     private SubwayMovement SubwayMovement;
 
+    private AudioSource myAudio;
 
     private List<WasherController> WasherControllerList;
 
@@ -47,6 +48,7 @@ public class ClothToMachine : MonoBehaviour
         //find the horizontal scroll snap script
         myHSS = GameObject.Find("Horizontal Scroll Snap").GetComponent<HorizontalScrollSnap>();
 
+        myAudio = GetComponent<AudioSource>();
 
         myImage = GetComponent<Image>();
 //        secondImage = GetComponentInChildren<Image>();
@@ -519,7 +521,10 @@ public class ClothToMachine : MonoBehaviour
         if(FinalCameraController.isSwipping == false)
         {
             if (hitTime == 0)
-            {
+            {                
+                myAudio.pitch = 0.5f;
+
+                myAudio.Play();
                 //for tutorial
                 if (FinalCameraController.isTutorial)
                 {
@@ -581,6 +586,9 @@ public class ClothToMachine : MonoBehaviour
             
             else if (hitTime == 1)
             {
+                myAudio.pitch = 0.6f;
+                myAudio.Play();
+
                 //点第二次换成打开的包
                 print("tag = " + tag);
                 myImage.sprite = AllMachines.openBagsDic[this.tag];

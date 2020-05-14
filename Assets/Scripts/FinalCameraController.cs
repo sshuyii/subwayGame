@@ -27,8 +27,11 @@ public class FinalCameraController : MonoBehaviour
     
     public CanvasGroup fishShoutCG;
 
+    public CanvasGroup ChapterOneFailCG;
     public bool machineOpen;
 
+    public bool chapterOneSucceed;
+    public bool chapterOneFail;
 
     public int returnMachineNum;//this is used to record the machine that should be turned to when retucn cloth
     private bool fastSwipeBool;
@@ -355,6 +358,24 @@ public class FinalCameraController : MonoBehaviour
             //Show(basicUI);
             Hide(appBackground);
         }
+        
+        //如果没到达30fo
+        if (chapterOneFail)
+        {
+            StartCoroutine(ChapterOneFailComic());
+        }
+    }
+
+    IEnumerator ChapterOneFailComic()
+    {
+        DisableInput(true);
+        yield return new WaitForSeconds(1f);
+        
+        ChangeToSubway();
+        myHSS.GoToScreen(2);
+
+
+        Show(ChapterOneFailCG);
     }
 
     public void BossTalk()
@@ -505,9 +526,11 @@ public class FinalCameraController : MonoBehaviour
        {
            if (ChapterOneEnd)//第一章结束，出现漫画？如果点了一下之后进入第二章
            {
-               
-               Show(ChapterOneEndComic);//漫画
-//               Show(LevelManager.arrowButton);
+               if(chapterOneSucceed)
+               {
+                   Show(ChapterOneEndComic); //漫画
+               }
+              
            }
            else
            {
