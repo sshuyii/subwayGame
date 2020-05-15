@@ -7792,7 +7792,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 20
+  m_text: '17
+
+'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 88b1d3f3c51c54356b0fd4d07d6ea5b6, type: 2}
   m_sharedMaterial: {fileID: -704318881088993884, guid: 88b1d3f3c51c54356b0fd4d07d6ea5b6,
@@ -7862,9 +7864,9 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 297421308}
-    characterCount: 2
+    characterCount: 3
     spriteCount: 0
-    spaceCount: 0
+    spaceCount: 1
     wordCount: 1
     linkCount: 0
     lineCount: 1
@@ -13068,8 +13070,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 312960733}
   m_HandleRect: {fileID: 312960732}
   m_Direction: 0
-  m_Value: 0.49999815
-  m_Size: 0.89599985
+  m_Value: 0.49999854
+  m_Size: 0.89599997
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -14539,7 +14541,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 734380867}
   m_HandleRect: {fileID: 734380866}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -21523,8 +21525,8 @@ MonoBehaviour:
   isMoving: 0
   left1: {fileID: 842372352}
   right1: {fileID: 1173038159}
-  moveTime: 23
-  stayTime: 10
+  moveTime: 50
+  stayTime: 12
   detailList0:
   - {fileID: 732222273}
   - {fileID: 2012225406}
@@ -21666,7 +21668,7 @@ MonoBehaviour:
   - {fileID: 268251429}
   distance: 500
   waypointIndex: 0
-  stationNumList: 010000000400000007000000
+  stationNumList: 010000000400000008000000
   isInstruction: 0
   isGame: 0
 --- !u!225 &875242438
@@ -24055,8 +24057,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1144778276}
   m_HandleRect: {fileID: 1144778275}
   m_Direction: 0
-  m_Value: 0.49999988
-  m_Size: 0.5714285
+  m_Value: 0.49999976
+  m_Size: 0.57142854
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -24278,7 +24280,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 499448898}
   m_HandleRect: {fileID: 499448897}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -27675,8 +27677,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 840803401}
   m_HandleRect: {fileID: 840803400}
   m_Direction: 0
-  m_Value: 0.4999998
-  m_Size: 0.5581395
+  m_Value: 0.4999997
+  m_Size: 0.55813956
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -28982,7 +28984,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1857826847}
   m_HandleRect: {fileID: 1857826846}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -29706,7 +29708,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 20
+  m_text: 30
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 88b1d3f3c51c54356b0fd4d07d6ea5b6, type: 2}
   m_sharedMaterial: {fileID: -704318881088993884, guid: 88b1d3f3c51c54356b0fd4d07d6ea5b6,
@@ -33193,7 +33195,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.65492177, g: 0.6886792, b: 0.54249734, a: 0}
+  m_BackGroundColor: {r: 0.7254902, g: 0.7607843, b: 0.77254903, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
