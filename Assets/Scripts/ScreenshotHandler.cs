@@ -121,8 +121,15 @@ public class ScreenshotHandler : MonoBehaviour
             InstagramController.subFollowerNum.text = followerNum.ToString();
             if (CalculateInventory.wearingWorkCloth)
             {
-                KararaWork = true;
-       
+                if(!CalculateInventory.wearingTop && !CalculateInventory.wearingBottom && !CalculateInventory.wearingShoe && !CalculateInventory.wearingEverything)
+                {
+                    KararaWork = true;
+                }
+                else
+                {
+                    KararaWork = false;
+                }
+                
             }
             else
             {

@@ -21,6 +21,6 @@ public class Restart : MonoBehaviour
 
     public void RestartOne()
     {
-        SceneManager.LoadScene("StreetStyle", LoadSceneMode.Single);
+        SceneManager.LoadScene("StartScene", LoadSceneMode.Single);
     }
 }
