@@ -21991,7 +21991,7 @@ MonoBehaviour:
   instructionText: {fileID: 1479834278}
   isInstruction: 0
   Instructions: {fileID: 1501432817}
-  skip: 1
+  skip: 0
   fishBubble: {fileID: 1237400775147006898}
   fishText: {fileID: 1032632610}
   clicktime: 1

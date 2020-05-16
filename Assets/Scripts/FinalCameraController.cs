@@ -181,7 +181,7 @@ public class FinalCameraController : MonoBehaviour
             Hide(messageCG);
             isShown = false;
             //close fish talking
-            Hide(fishTalk);
+//            Hide(fishTalk);
             if (alreadyNotice)
             {
                 Hide(generatedNotice.GetComponent<CanvasGroup>());
@@ -189,8 +189,7 @@ public class FinalCameraController : MonoBehaviour
 
             for (int i = 0; i < AllMachines.WashingMachines.Count; i++)
             {
-                Hide(fishTalk);
-                Hide(setting);
+               
                 Hide(AllMachines.WasherControllerList[i].backgroundUI);
                 Hide(AllMachines.WasherControllerList[i].backgroundUI3);
                 Hide(AllMachines.WasherControllerList[i].backgroundUI2);

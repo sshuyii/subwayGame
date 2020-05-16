@@ -379,16 +379,22 @@ public class TutorialManager : MonoBehaviour
         //don't show fish dialogue if not in fish page
         if (FinalCameraController.myCameraState == FinalCameraController.CameraState.Subway)
         {
-            if (FinalCameraController.mySubwayState == FinalCameraController.SubwayState.Two ||
-                FinalCameraController.mySubwayState == FinalCameraController.SubwayState.Three)
+            if (FinalCameraController.mySubwayState == FinalCameraController.SubwayState.Two)
             {
                 kararaDialogueRT.anchoredPosition = new Vector3(0, -570);
                 kararaTextRT.localScale = new Vector3(2f, -2f, 2f);
                 kararaDialogueRT.localScale = new Vector3(0.5f, -0.5f, 0.5f);
                 
             }
-            else if(FinalCameraController.mySubwayState == FinalCameraController.SubwayState.Four)
+            else if(FinalCameraController.mySubwayState == FinalCameraController.SubwayState.Four ||
+                    FinalCameraController.mySubwayState == FinalCameraController.SubwayState.Three)
             {
+//                if (tutorialNumber == 0)
+//                {
+//                    kararaDialogueRT.anchoredPosition = leftPosition - new Vector2(100, 0);
+//
+//                }
+//                else { kararaDialogueRT.anchoredPosition = leftPosition;}
                 kararaDialogueRT.anchoredPosition = leftPosition;
                 kararaTextRT.localScale = new Vector3(2f, 2f, 2f);
 
@@ -408,6 +414,11 @@ public class TutorialManager : MonoBehaviour
             }
             else if(FinalCameraController.mySubwayState == FinalCameraController.SubwayState.None)
             {
+                if (tutorialNumber == 0)
+                {
+                    kararaDialogueRT.anchoredPosition = leftPosition;
+
+                }
             }
         }
         else if(FinalCameraController.myCameraState == FinalCameraController.CameraState.Ad)
@@ -1051,6 +1062,7 @@ public class TutorialManager : MonoBehaviour
                 tutorialDialogueState = DialogueState.karara;
                 StartCoroutine(AnimateText(kararaText, "poster", true, poster, posterV));
                 Hide(arrowButton);//player should click poster
+                scrollControl(false);
             }
         }
     }
@@ -1192,6 +1204,7 @@ public class TutorialManager : MonoBehaviour
                     myFlash.alpha = 0;
                     pressScreenshot = false;
 
+                    scrollControl(true);
 
                     Show(GestureCG);
                     //screamImage.enabled = true;
